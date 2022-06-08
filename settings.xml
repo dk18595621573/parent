@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <pluginGroups>
+    </pluginGroups>
+
+    <servers>
+        <server>
+            <id>xingshiapp-xswc-cloud</id>
+            <username>cloud-1654571764818</username>
+            <password>137611566d3c640ef6700a9db9c1029a96da320c</password>
+        </server>
+    </servers>
+
+    <mirrors>
+        <mirror>
+            <id>nexus-tencentyun</id>
+            <!-- 此配置避免了本仓库制品的拉取流量被切换到腾讯云镜像源，保证您在使用镜像加速的同时可以从本仓库拉取制品 -->
+            <mirrorOf>!xingshiapp-xswc-cloud</mirrorOf>
+            <name>Nexus tencentyun</name>
+            <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <id>Repository Proxy</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>xingshiapp-xswc-cloud</id>
+                    <name>cloud</name>
+                    <url>https://xingshiapp-maven.pkg.coding.net/repository/xswc/cloud/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>Repository Proxy</activeProfile>
+    </activeProfiles>
+</settings>
