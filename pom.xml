@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.cloud</groupId>
+    <artifactId>cloud-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <description>醒市无仓平台</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>11</java.version>
+        <cloud.version>1.0.0-SNAPSHOT</cloud.version>
+
+        <druid.version>1.2.8</druid.version>
+        <bitwalker.version>1.21</bitwalker.version>
+        <knife4j.version>3.0.3</knife4j.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
+        <pagehelper-boot.version>1.4.1</pagehelper-boot.version>
+        <fastjson.version>1.2.80</fastjson.version>
+        <oshi.version>6.1.2</oshi.version>
+        <jna.version>5.10.0</jna.version>
+        <commons.io.version>2.11.0</commons.io.version>
+        <commons.fileupload.version>1.4</commons.fileupload.version>
+        <commons.collections.version>3.2.2</commons.collections.version>
+        <poi.version>4.1.2</poi.version>
+        <velocity.version>2.3</velocity.version>
+        <jwt.version>0.9.1</jwt.version>
+        <hutool.version>5.4.1</hutool.version>
+        <weixin-java.version>4.3.0</weixin-java.version>
+        <redisson.version>3.16.1</redisson.version>
+
+        <springboot.version>2.5.13</springboot.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <lombok.version>1.18.24</lombok.version>
+    </properties>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- SpringBoot的依赖配置-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springboot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- 阿里数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!-- 解析客户端操作系统、浏览器等 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${bitwalker.version}</version>
+            </dependency>
+
+            <!-- SpringBoot集成mybatis-plus框架 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!--  SpringBoot集成wx-java -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-pay</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+
+            <!-- SpringBoot集成pagehelper分页 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-boot.version}</version>
+            </dependency>
+
+            <!-- 获取系统信息 -->
+            <dependency>
+                <groupId>com.github.oshi</groupId>
+                <artifactId>oshi-core</artifactId>
+                <version>${oshi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna-platform</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+
+            <!-- 接口文档 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- mapstruct bean 对象装换 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- io常用工具类 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+
+            <!-- 文件上传工具类 -->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons.fileupload.version}</version>
+            </dependency>
+
+            <!-- excel工具 -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <!-- velocity代码生成使用模板 -->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+
+            <!-- collections工具类 -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons.collections.version}</version>
+            </dependency>
+
+            <!-- redisson工具 -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-http</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-json</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-cache</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-crypto</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-extra</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- Token生成与解析-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <!-- 验证码 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+
+            <!-- 通用工具-->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>cloud-common</artifactId>
+                <version>${cloud.version}</version>
+            </dependency>
+
+            <!-- 组件扩展-->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>cloud-framework</artifactId>
+                <version>${cloud.version}</version>
+            </dependency>
+
+            <!-- 权限模块 -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>cloud-security</artifactId>
+                <version>${cloud.version}</version>
+            </dependency>
+
+            <!-- webmvc -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>cloud-webmvc</artifactId>
+                <version>${cloud.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <modules>
+        <module>cloud-common</module>
+        <module>cloud-framework</module>
+        <module>cloud-security</module>
+        <module>cloud-webmvc</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.1.1.RELEASE</version>
+                    <configuration>
+                        <finalName>${project.name}</finalName>
+                        <layout>JAR</layout>
+                        <classifier>exec</classifier>
+                        <mainClass>${starter-class}</mainClass>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.34.1</version>
+                    <configuration>
+                        <registry>xs-repo2.tencentcloudcr.com</registry>
+                        <authConfig>
+                            <push>
+                                <username>100015484651</username>
+                                <password>
+                                    eyJhbGciOiJSUzI1NiIsImtpZCI6IlkzU0k6RUlUVjo0MjVWOlZGUUY6QlVYMjo3RjRNOjZOMlc6VVhOWjpXUEtJOk1YN1A6TlFJNDpYSERWIn0.eyJvd25lclVpbiI6IjEwMDAxNDk3MTgxMiIsIm9wZXJhdG9yVWluIjoiMTAwMDE1NDg0NjUxIiwidG9rZW5JZCI6ImM5cmliNjVtcjJhOGhkaWFtZjhnIiwiZXhwIjoxOTY3MzM1NTc2LCJuYmYiOjE2NTE5NzU1NzYsImlhdCI6MTY1MTk3NTU3Nn0.UwuXAGO7ioN7iRiJ-Hm3cUC1PuZsqntDyMRXokp0QLv6z0FBaoEPO32Mvw1MaLhcVLsTBxynOf_4T2aLsrYIEboXAw-SlK2eJKtzGjnJy1NSUE3xi3R5seB4Y_AZyEOXrmCb144WQ1ultcml5W1TnUyPw4ZuxCRZ4Hd6pPM8XWVMJumvT2VfMV8JcuUDu67cb2pmiOwXuRZzpLfTfkGVnB1STBFkplXUgJV0VHD7kXFgZhQaII3WA_9h_jR6KFW0tkymIBoi_ulZwmtHYX_ZktBHXYIsuAlVNF4dewCmc6sXop3j2U6sBvaljIMGSvtmWPJIy7tGqERhmexuAhwDsg
+                                </password>
+                            </push>
+                        </authConfig>
+                        <images>
+                            <image>
+                                <name>xswc/${project.artifactId}:${project.version}</name>
+                                <build>
+                                    <args>
+                                        <JAR_FILE>target/${project.name}-exec.jar</JAR_FILE>
+                                    </args>
+                                    <dockerFileDir>${project.basedir}/</dockerFileDir>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <parameters>true</parameters>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <release>${java.version}</release>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <compilerArgument>-parameters</compilerArgument>
+                        <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <!--必须与 settings.xml 的 id 一致-->
+            <id>xingshiapp-xswc-cloud</id>
+            <name>cloud</name>
+            <url>https://xingshiapp-maven.pkg.coding.net/repository/xswc/cloud/</url>
+        </repository>
+    </distributionManagement>
+
+</project>
