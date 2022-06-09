@@ -1,8 +1,8 @@
 package com.cloud.webmvc.interceptor;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.annotation.RepeatSubmit;
 import com.cloud.common.core.domain.AjaxResult;
+import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.framework.utils.ServletUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,7 +26,7 @@ public abstract class RepeatSubmitInterceptor implements HandlerInterceptor {
             if (annotation != null) {
                 if (this.isRepeatSubmit(request, annotation)) {
                     AjaxResult ajaxResult = AjaxResult.error(annotation.message());
-                    ServletUtils.renderString(response, JSONObject.toJSONString(ajaxResult));
+                    ServletUtils.renderString(response, JsonUtil.toJson(ajaxResult));
                     return false;
                 }
             }

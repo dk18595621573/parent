@@ -1,8 +1,8 @@
 package com.cloud.security.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.cloud.common.core.domain.entity.SysUser;
 import com.cloud.common.core.domain.model.RequestUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -45,7 +45,7 @@ public class LoginUser extends RequestUser implements UserDetails {
 //    }
 
 
-    @JSONField(serialize = false)
+    @JsonIgnore()
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -59,7 +59,7 @@ public class LoginUser extends RequestUser implements UserDetails {
     /**
      * 账户是否未过期,过期无法验证
      */
-    @JSONField(serialize = false)
+    @JsonIgnore()
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -70,7 +70,7 @@ public class LoginUser extends RequestUser implements UserDetails {
      *
      * @return
      */
-    @JSONField(serialize = false)
+    @JsonIgnore()
     @Override
     public boolean isAccountNonLocked() {
         return true;
@@ -81,7 +81,7 @@ public class LoginUser extends RequestUser implements UserDetails {
      *
      * @return
      */
-    @JSONField(serialize = false)
+    @JsonIgnore()
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
@@ -92,7 +92,7 @@ public class LoginUser extends RequestUser implements UserDetails {
      *
      * @return
      */
-    @JSONField(serialize = false)
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

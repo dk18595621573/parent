@@ -1,9 +1,10 @@
 package com.cloud.security.web.handle;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSON;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.domain.AjaxResult;
 import com.cloud.common.utils.StringUtils;
+import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.framework.utils.ServletUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,20 +17,18 @@ import java.io.Serializable;
 
 /**
  * 认证失败处理类 返回未授权
- * 
+ *
  * @author author
  */
 @Component
-public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, Serializable
-{
+public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, Serializable {
     private static final long serialVersionUID = -8970718410437077606L;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
-            throws IOException
-    {
+        throws IOException {
         int code = HttpStatus.UNAUTHORIZED;
         String msg = StringUtils.format("请求访问：{}，认证失败，无法访问系统资源", request.getRequestURI());
-        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(code, msg)));
+        ServletUtils.renderString(response, JsonUtil.toJson(AjaxResult.error(code, msg)));
     }
 }

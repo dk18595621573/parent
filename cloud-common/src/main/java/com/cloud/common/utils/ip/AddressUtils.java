@@ -1,20 +1,22 @@
 package com.cloud.common.utils.ip;
 
+import cn.hutool.json.JSONObject;
+import com.cloud.common.utils.json.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.http.HttpUtils;
 
+import java.util.Map;
+
 /**
  * 获取地址类
- * 
+ *
  * @author author
  */
-public class AddressUtils
-{
+public class AddressUtils {
     private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
     // IP地址查询
@@ -23,30 +25,23 @@ public class AddressUtils
     // 未知地址
     public static final String UNKNOWN = "XX XX";
 
-    public static String getRealAddressByIP(String ip)
-    {
+    public static String getRealAddressByIP(String ip) {
         // 内网不查询
-        if (IpUtils.internalIp(ip))
-        {
+        if (IpUtils.internalIp(ip)) {
             return "内网IP";
         }
-        if (SystemConfig.isAddressEnabled())
-        {
-            try
-            {
+        if (SystemConfig.isAddressEnabled()) {
+            try {
                 String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", Constants.GBK);
-                if (StringUtils.isEmpty(rspStr))
-                {
+                if (StringUtils.isEmpty(rspStr)) {
                     log.error("获取地理位置异常 {}", ip);
                     return UNKNOWN;
                 }
-                JSONObject obj = JSONObject.parseObject(rspStr);
-                String region = obj.getString("pro");
-                String city = obj.getString("city");
+                Map obj = JsonUtil.parse(rspStr, Map.class);
+                String region = (String) obj.get("pro");
+                String city = (String) obj.get("city");
                 return String.format("%s %s", region, city);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 log.error("获取地理位置异常 {}", ip);
             }
         }

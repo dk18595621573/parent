@@ -1,9 +1,10 @@
 package com.cloud.webmvc.aspect;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSON;
 import com.cloud.common.annotation.Log;
 import com.cloud.common.enums.BusinessStatus;
 import com.cloud.common.enums.HttpMethod;
+import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.framework.utils.ServletUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.ip.IpUtils;
@@ -115,7 +116,7 @@ public class LogAspect {
         }
         // 是否需要保存response，参数和值
         if (log.isSaveResponseData() && StringUtils.isNotNull(jsonResult)) {
-            operLog.setJsonResult(StringUtils.substring(JSON.toJSONString(jsonResult), 0, 2000));
+            operLog.setJsonResult(StringUtils.substring(JsonUtil.toJson(jsonResult), 0, 2000));
         }
     }
 
@@ -145,8 +146,7 @@ public class LogAspect {
             for (Object o : paramsArray) {
                 if (StringUtils.isNotNull(o) && !isFilterObject(o)) {
                     try {
-                        Object jsonObj = JSON.toJSON(o);
-                        params.append(jsonObj.toString()).append(" ");
+                        params.append(JsonUtil.toJson(o)).append(" ");
                     } catch (Exception e) {
                     }
                 }

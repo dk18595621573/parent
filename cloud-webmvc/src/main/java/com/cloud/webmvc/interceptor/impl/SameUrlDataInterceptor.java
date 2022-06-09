@@ -1,10 +1,10 @@
 package com.cloud.webmvc.interceptor.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloud.common.annotation.RepeatSubmit;
 import com.cloud.common.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.core.redis.RedisCache;
+import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.webmvc.filter.RepeatedlyRequestWrapper;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.http.HttpHelper;
@@ -47,7 +47,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
 
         // body参数为空，获取Parameter的数据
         if (StringUtils.isEmpty(nowParams)) {
-            nowParams = JSONObject.toJSONString(request.getParameterMap());
+            nowParams = JsonUtil.toJson(request.getParameterMap());
         }
         Map<String, Object> nowDataMap = new HashMap<String, Object>();
         nowDataMap.put(REPEAT_PARAMS, nowParams);

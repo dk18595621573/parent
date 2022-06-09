@@ -22,6 +22,7 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
         <pagehelper-boot.version>1.4.1</pagehelper-boot.version>
+        <jackson-datatype-jsr310.version>2.9.9</jackson-datatype-jsr310.version>
         <fastjson.version>1.2.80</fastjson.version>
         <oshi.version>6.1.2</oshi.version>
         <jna.version>5.10.0</jna.version>
@@ -169,11 +170,11 @@
                 <version>${redisson.version}</version>
             </dependency>
 
-            <!-- 阿里JSON解析器 -->
+            <!-- JSON解析器 -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson-datatype-jsr310.version}</version>
             </dependency>
 
             <!-- hutool -->

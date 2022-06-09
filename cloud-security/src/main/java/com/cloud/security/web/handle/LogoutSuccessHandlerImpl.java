@@ -1,10 +1,10 @@
 package com.cloud.security.web.handle;
 
-import com.alibaba.fastjson.JSON;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.domain.AjaxResult;
 import com.cloud.common.utils.StringUtils;
+import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.framework.manager.AsyncManager;
 import com.cloud.framework.manager.factory.AsyncFactory;
 import com.cloud.framework.utils.ServletUtils;
@@ -46,6 +46,6 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
             // 记录用户退出日志
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(userName, Constants.LOGOUT, "退出成功"));
         }
-        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(HttpStatus.SUCCESS, "退出成功")));
+        ServletUtils.renderString(response, JsonUtil.toJson(AjaxResult.error(HttpStatus.SUCCESS, "退出成功")));
     }
 }
