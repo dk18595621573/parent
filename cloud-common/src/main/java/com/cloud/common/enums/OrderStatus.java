@@ -12,6 +12,7 @@ public enum OrderStatus {
     TO_BE_DELIVERED(4,"待发货"),
     SHIPPED(5,"已发货"),
     COMPLETED(6,"已完成"),
+    AFTER_SALE(7,"退货退单"),
     ;
 
 
