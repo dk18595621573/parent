@@ -2,6 +2,7 @@ package com.cloud.security.model;
 
 import com.cloud.common.core.domain.entity.SysUser;
 import com.cloud.common.core.domain.model.RequestUser;
+import com.cloud.common.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import java.util.Set;
 public class LoginUser extends RequestUser implements UserDetails {
     private static final long serialVersionUID = 1L;
 
+    private String username;
     /**
      * 用户信息
      */
@@ -45,7 +47,11 @@ public class LoginUser extends RequestUser implements UserDetails {
 //    }
 
 
-    @JsonIgnore()
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
+    @JsonIgnore
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -53,13 +59,13 @@ public class LoginUser extends RequestUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return StringUtils.defaultString(this.username, user.getUserName());
     }
 
     /**
      * 账户是否未过期,过期无法验证
      */
-    @JsonIgnore()
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -70,7 +76,7 @@ public class LoginUser extends RequestUser implements UserDetails {
      *
      * @return
      */
-    @JsonIgnore()
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
@@ -81,7 +87,7 @@ public class LoginUser extends RequestUser implements UserDetails {
      *
      * @return
      */
-    @JsonIgnore()
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
