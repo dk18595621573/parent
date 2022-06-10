@@ -1,5 +1,7 @@
 package com.cloud.framework.config;
 
+import com.cloud.common.core.redis.JsonRedisTemplate;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -21,21 +23,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
     @Bean
+    @ConditionalOnMissingBean
     @SuppressWarnings(value = {"unchecked", "rawtypes"})
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate<Object, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory);
-
-        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
-
-        // 使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(serializer);
-
-        // Hash的key也采用StringRedisSerializer的序列化方式
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashValueSerializer(serializer);
-
+    public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate template = new JsonRedisTemplate(connectionFactory);
         template.afterPropertiesSet();
         return template;
     }
