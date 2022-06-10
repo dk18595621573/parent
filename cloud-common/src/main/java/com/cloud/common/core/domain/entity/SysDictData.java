@@ -3,6 +3,7 @@ package com.cloud.common.core.domain.entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.cloud.common.annotation.Excel;
@@ -133,6 +134,7 @@ public class SysDictData extends BaseEntity {
         this.listClass = listClass;
     }
 
+    @JsonIgnore
     public boolean getDefault() {
         return UserConstants.YES.equals(this.isDefault) ? true : false;
     }
