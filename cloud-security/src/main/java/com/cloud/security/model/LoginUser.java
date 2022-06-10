@@ -17,8 +17,6 @@ import java.util.Set;
  */
 public class LoginUser extends RequestUser implements UserDetails {
     private static final long serialVersionUID = 1L;
-
-    private String username;
     /**
      * 用户信息
      */
@@ -47,19 +45,10 @@ public class LoginUser extends RequestUser implements UserDetails {
 //    }
 
 
-    public void setUsername(final String username) {
-        this.username = username;
-    }
-
     @JsonIgnore
     @Override
     public String getPassword() {
         return user.getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return StringUtils.defaultString(this.username, user.getUserName());
     }
 
     /**

@@ -20,6 +20,11 @@ public class RequestUser implements Serializable {
     private Long userId;
 
     /**
+     * 用户账号
+     */
+    private String username;
+
+    /**
      * 部门ID
      */
     private Long deptId;
