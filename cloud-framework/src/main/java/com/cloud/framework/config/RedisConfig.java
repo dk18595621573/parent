@@ -27,7 +27,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate template = new JsonRedisTemplate(connectionFactory);
-        template.afterPropertiesSet();
         return template;
     }
 

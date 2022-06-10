@@ -21,11 +21,11 @@ public class JsonRedisTemplate extends RedisTemplate<String, Object> {
     public JsonRedisTemplate(final RedisConnectionFactory connectionFactory) {
         Objects.requireNonNull(connectionFactory, "connectionFactory 不能为null");
 
-        setKeySerializer(STRING_REDIS_SERIALIZER);
-        setValueSerializer(JACKSON_2_JSON_REDIS_SERIALIZER);
+        this.setKeySerializer(STRING_REDIS_SERIALIZER);
+        this.setValueSerializer(JACKSON_2_JSON_REDIS_SERIALIZER);
 
-        setHashKeySerializer(STRING_REDIS_SERIALIZER);
-        setHashValueSerializer(JACKSON_2_JSON_REDIS_SERIALIZER);
+        this.setHashKeySerializer(STRING_REDIS_SERIALIZER);
+        this.setHashValueSerializer(JACKSON_2_JSON_REDIS_SERIALIZER);
 
         setConnectionFactory(connectionFactory);
         afterPropertiesSet();
