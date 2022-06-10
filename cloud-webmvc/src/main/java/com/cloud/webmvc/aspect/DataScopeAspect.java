@@ -1,6 +1,7 @@
 package com.cloud.webmvc.aspect;
 
 import com.cloud.common.annotation.DataScope;
+import com.cloud.common.constant.Constants;
 import com.cloud.common.core.domain.BaseEntity;
 import com.cloud.common.core.domain.entity.SysRole;
 import com.cloud.common.core.domain.entity.SysUser;
@@ -62,7 +63,7 @@ public class DataScopeAspect {
         if (StringUtils.isNotNull(loginUser)) {
             SysUser currentUser = loginUser.getUser();
             // 如果是超级管理员，则不过滤数据
-            if (StringUtils.isNotNull(currentUser) && !currentUser.isAdmin()) {
+            if (StringUtils.isNotNull(currentUser) && !Constants.isAdmin(currentUser.getUserId())) {
                 dataScopeFilter(joinPoint, currentUser, controllerDataScope.deptAlias(),
                     controllerDataScope.userAlias());
             }
