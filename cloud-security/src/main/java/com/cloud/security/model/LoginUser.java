@@ -51,6 +51,11 @@ public class LoginUser extends RequestUser implements UserDetails {
         return user.getPassword();
     }
 
+    @Override
+    public String getUsername() {
+        return StringUtils.defaultString(super.getUsername(), user.getUserName());
+    }
+
     /**
      * 账户是否未过期,过期无法验证
      */
