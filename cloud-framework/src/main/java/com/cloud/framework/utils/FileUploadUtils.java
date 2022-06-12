@@ -89,8 +89,8 @@ public class FileUploadUtils {
      * @throws InvalidExtensionException            文件校验异常
      */
     public static String upload(String baseDir, MultipartFile file, String[] allowedExtension)
-        throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
-        InvalidExtensionException {
+            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
+            InvalidExtensionException {
         int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
             throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
@@ -110,7 +110,7 @@ public class FileUploadUtils {
      */
     public static final String extractFilename(MultipartFile file) {
         return StringUtils.format("{}/{}_{}.{}", DateUtils.datePath(),
-            FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
+                FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
     }
 
     /**
@@ -122,7 +122,7 @@ public class FileUploadUtils {
      * @throws InvalidExtensionException
      */
     public static final void assertAllowed(MultipartFile file, String[] allowedExtension)
-        throws FileSizeLimitExceededException, InvalidExtensionException {
+            throws FileSizeLimitExceededException, InvalidExtensionException {
         long size = file.getSize();
         if (size > DEFAULT_MAX_SIZE) {
             throw new FileSizeLimitExceededException(DEFAULT_MAX_SIZE / 1024 / 1024);
@@ -133,16 +133,16 @@ public class FileUploadUtils {
         if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
             if (allowedExtension == MimeTypeUtils.IMAGE_EXTENSION) {
                 throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
-                    fileName);
+                        fileName);
             } else if (allowedExtension == MimeTypeUtils.FLASH_EXTENSION) {
                 throw new InvalidExtensionException.InvalidFlashExtensionException(allowedExtension, extension,
-                    fileName);
+                        fileName);
             } else if (allowedExtension == MimeTypeUtils.MEDIA_EXTENSION) {
                 throw new InvalidExtensionException.InvalidMediaExtensionException(allowedExtension, extension,
-                    fileName);
+                        fileName);
             } else if (allowedExtension == MimeTypeUtils.VIDEO_EXTENSION) {
                 throw new InvalidExtensionException.InvalidVideoExtensionException(allowedExtension, extension,
-                    fileName);
+                        fileName);
             } else {
                 throw new InvalidExtensionException(allowedExtension, extension, fileName);
             }

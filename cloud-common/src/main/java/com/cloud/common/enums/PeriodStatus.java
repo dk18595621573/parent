@@ -1,12 +1,11 @@
 package com.cloud.common.enums;
 
 /**
- *  账期类型枚举（1:字典；-1:自定义）
+ * 账期类型枚举（1:字典；-1:自定义）
  */
 public enum PeriodStatus {
-    YES(1L,"字典"),
-    NO(-1L,"自定义")
-    ;
+    YES(1L, "字典"),
+    NO(-1L, "自定义");
 
 
     private final Long code;

@@ -2,12 +2,10 @@ package com.cloud.common.enums;
 
 /**
  * 操作状态
- * 
- * @author author
  *
+ * @author author
  */
-public enum BusinessStatus
-{
+public enum BusinessStatus {
     /**
      * 成功
      */

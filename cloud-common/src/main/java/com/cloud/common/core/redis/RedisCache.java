@@ -115,8 +115,8 @@ public class RedisCache {
     /**
      * 缓存List数据
      *
-     * @param key      缓存的键值
-     * @param data    待缓存的数据
+     * @param key  缓存的键值
+     * @param data 待缓存的数据
      * @return 缓存的对象
      */
     public <T> long addCacheList(final String key, final T data) {

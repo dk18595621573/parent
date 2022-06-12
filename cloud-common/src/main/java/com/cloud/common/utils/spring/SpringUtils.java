@@ -121,6 +121,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
 
     /**
      * 发布事件
+     *
      * @param event event
      */
     public static void publishEvent(Object event) {

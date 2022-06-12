@@ -6,8 +6,7 @@ package com.cloud.common.enums;
  * @author author
  */
 
-public enum LimitType
-{
+public enum LimitType {
     /**
      * 默认策略全局限流
      */

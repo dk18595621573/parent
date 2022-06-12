@@ -32,7 +32,7 @@ public class ApplicationConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public LogService logService(){
+    public LogService logService() {
         return new SimpleLogServiceImpl();
     }
 }

@@ -191,7 +191,7 @@ public class ExcelUtil<T> {
             titleCell.setCellStyle(styles.get("title"));
             titleCell.setCellValue(title);
             sheet.addMergedRegion(new CellRangeAddress(titleRow.getRowNum(), titleRow.getRowNum(), titleRow.getRowNum(),
-                this.fields.size() - 1));
+                    this.fields.size() - 1));
         }
     }
 
@@ -626,7 +626,7 @@ public class ExcelUtil<T> {
             if (StringUtils.isNotEmpty(imagePath)) {
                 byte[] data = ImageUtils.getImage(imagePath);
                 getDrawingPatriarch(cell.getSheet()).createPicture(anchor,
-                    cell.getSheet().getWorkbook().addPicture(data, getImageType(data)));
+                        cell.getSheet().getWorkbook().addPicture(data, getImageType(data)));
             }
         }
     }

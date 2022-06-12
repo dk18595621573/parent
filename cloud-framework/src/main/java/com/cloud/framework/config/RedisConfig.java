@@ -32,7 +32,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     @ConditionalOnProperty(prefix = "cloud.redis.listener", name = "enabled", havingValue = "true")
-    public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory){
+    public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         return container;
@@ -52,16 +52,16 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     private String limitScriptText() {
         return "local key = KEYS[1]\n" +
-            "local count = tonumber(ARGV[1])\n" +
-            "local time = tonumber(ARGV[2])\n" +
-            "local current = redis.call('get', key);\n" +
-            "if current and tonumber(current) > count then\n" +
-            "    return tonumber(current);\n" +
-            "end\n" +
-            "current = redis.call('incr', key)\n" +
-            "if tonumber(current) == 1 then\n" +
-            "    redis.call('expire', key, time)\n" +
-            "end\n" +
-            "return tonumber(current);";
+                "local count = tonumber(ARGV[1])\n" +
+                "local time = tonumber(ARGV[2])\n" +
+                "local current = redis.call('get', key);\n" +
+                "if current and tonumber(current) > count then\n" +
+                "    return tonumber(current);\n" +
+                "end\n" +
+                "current = redis.call('incr', key)\n" +
+                "if tonumber(current) == 1 then\n" +
+                "    redis.call('expire', key, time)\n" +
+                "end\n" +
+                "return tonumber(current);";
     }
 }

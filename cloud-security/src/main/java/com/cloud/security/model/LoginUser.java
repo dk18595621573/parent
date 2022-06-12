@@ -25,7 +25,7 @@ public class LoginUser extends RequestUser implements UserDetails {
     public LoginUser() {
     }
 
-//    public LoginUser(SysUser user, Set<String> permissions) {
+    //    public LoginUser(SysUser user, Set<String> permissions) {
 //        this.user = user;
 //        this.permissions = permissions;
 //    }

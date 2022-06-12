@@ -5,19 +5,19 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 import com.cloud.common.constant.Constants;
 import com.cloud.common.enums.LimitType;
 
 /**
  * 限流注解
- * 
+ *
  * @author author
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RateLimiter
-{
+public @interface RateLimiter {
     /**
      * 限流key
      */

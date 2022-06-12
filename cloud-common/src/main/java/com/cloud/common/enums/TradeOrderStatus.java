@@ -8,10 +8,10 @@ package com.cloud.common.enums;
  */
 public enum TradeOrderStatus {
 
-    CONFIRMING(1,"待确认"),
-    INVALID(2,"已失效"),
-    CLOSED(3,"已成交"),
-    ROBBED(4,"被抢走"),
+    CONFIRMING(1, "待确认"),
+    INVALID(2, "已失效"),
+    CLOSED(3, "已成交"),
+    ROBBED(4, "被抢走"),
     ;
 
 

@@ -42,7 +42,7 @@ public class ExceptionUtil {
      */
     public static RuntimeException unchecked(final Throwable e) {
         if (e instanceof IllegalAccessException || e instanceof IllegalArgumentException
-            || e instanceof NoSuchMethodException) {
+                || e instanceof NoSuchMethodException) {
             return new IllegalArgumentException(e);
         } else if (e instanceof InvocationTargetException) {
             return new RuntimeException(((InvocationTargetException) e).getTargetException());

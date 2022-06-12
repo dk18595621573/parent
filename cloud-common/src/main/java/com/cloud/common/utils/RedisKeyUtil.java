@@ -21,7 +21,7 @@ public class RedisKeyUtil {
     /**
      * 生成redis key.
      *
-     * @param fields    字段
+     * @param fields 字段
      * @return String
      */
     public static String generate(final String... fields) {
@@ -40,7 +40,7 @@ public class RedisKeyUtil {
     /**
      * 生成redis 过期 key.
      *
-     * @param fields    字段
+     * @param fields 字段
      * @return String
      */
     public static String generateExpireKey(final String... fields) {
@@ -58,6 +58,7 @@ public class RedisKeyUtil {
 
     /**
      * 分解redis key
+     *
      * @param key redis key
      * @return
      */

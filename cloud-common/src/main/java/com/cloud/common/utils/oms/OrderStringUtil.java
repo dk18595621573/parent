@@ -12,6 +12,7 @@ import java.util.UUID;
 public class OrderStringUtil {
     /**
      * 生成支付订单号
+     *
      * @param orderNo 订单号
      * @return 字符串
      */
@@ -21,6 +22,7 @@ public class OrderStringUtil {
 
     /**
      * 生成支付订单号
+     *
      * @return 字符串
      */
     public static String randomPayOrderNo() {
@@ -29,6 +31,7 @@ public class OrderStringUtil {
 
     /**
      * 生成UUID字符串，用于缓存支付信息
+     *
      * @return UUID字符串
      */
     public static String randomUUID() {
@@ -37,6 +40,7 @@ public class OrderStringUtil {
 
     /**
      * 生成随机（重复概率非常低）的订单号
+     *
      * @return 订单号
      */
     public static String randomUniqueNumber() {
@@ -44,15 +48,17 @@ public class OrderStringUtil {
     }
 
     /**
-     *  雪花算法生成订单号
+     * 雪花算法生成订单号
+     *
      * @return
      */
-    public static String snowflakeNumber(){
+    public static String snowflakeNumber() {
         return "O".concat(String.valueOf(Constants.snowflake.nextId()));
     }
 
     /**
      * 随机（重复概率非常低）的字符串
+     *
      * @param prefix 前缀
      * @return 字符串
      */

@@ -106,25 +106,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
 
         httpSecurity
-            // CSRF禁用，因为不使用session
-            .csrf().disable()
-            // 认证失败处理类
-            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-            // 基于token，所以不需要session
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            // 过滤请求
-            .authorizeRequests()
-            // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-            .antMatchers("/login", "/register", "/captchaImage").anonymous()
-            .antMatchers(
-                HttpMethod.GET,
-                "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**"
-            ).permitAll()
-            .antMatchers(allowPathArr).permitAll()
-            // 除上面外的所有请求全部需要鉴权认证
-            .anyRequest().authenticated()
-            .and()
-            .headers().frameOptions().disable();
+                // CSRF禁用，因为不使用session
+                .csrf().disable()
+                // 认证失败处理类
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                // 基于token，所以不需要session
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                // 过滤请求
+                .authorizeRequests()
+                // 对于登录login 注册register 验证码captchaImage 允许匿名访问
+                .antMatchers("/login", "/register", "/captchaImage").anonymous()
+                .antMatchers(
+                        HttpMethod.GET,
+                        "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**"
+                ).permitAll()
+                .antMatchers(allowPathArr).permitAll()
+                // 除上面外的所有请求全部需要鉴权认证
+                .anyRequest().authenticated()
+                .and()
+                .headers().frameOptions().disable();
         httpSecurity.logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
         // 添加JWT filter
         httpSecurity.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

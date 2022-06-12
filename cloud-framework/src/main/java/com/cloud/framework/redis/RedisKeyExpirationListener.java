@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 必须先开启监听.
- *   cloud.redis.listener.enabled=true
+ * cloud.redis.listener.enabled=true
  *
  * @author zenghao
  * @date 2022/5/17
@@ -47,7 +47,7 @@ public class RedisKeyExpirationListener extends KeyspaceEventMessageListener {
             return;
         }
         int len = keys.length;
-        String module = (len > 2) ? keys[len -2] : null;
+        String module = (len > 2) ? keys[len - 2] : null;
         SpringUtils.publishEvent(new RedisKeyExpirationEvent(this, module, keys[len - 1]));
     }
 

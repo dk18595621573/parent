@@ -228,7 +228,7 @@ public class XLockAutoConfiguration {
         XLockProperties.ClusterConfig clusterConfig = xLockProperties.getClusterServer();
         String[] addressArr = clusterConfig.getNodeAddresses().split(XLockConsts.COMMA);
         Arrays.asList(addressArr).forEach(
-            address -> clusterServerConfig.addNodeAddress(String.format("%s%s", XLockConsts.REDIS_URL_PREFIX, address))
+                address -> clusterServerConfig.addNodeAddress(String.format("%s%s", XLockConsts.REDIS_URL_PREFIX, address))
         );
         clusterServerConfig.setScanInterval(clusterConfig.getScanInterval());
 
@@ -276,7 +276,7 @@ public class XLockAutoConfiguration {
         XLockProperties.SentinelConfig sentinelConfig = xLockProperties.getSentinelServer();
         String[] addressArr = sentinelConfig.getSentinelAddresses().split(XLockConsts.COMMA);
         Arrays.asList(addressArr).forEach(
-            address -> sentinelServersConfig.addSentinelAddress(String.format("%s%s", XLockConsts.REDIS_URL_PREFIX, address))
+                address -> sentinelServersConfig.addSentinelAddress(String.format("%s%s", XLockConsts.REDIS_URL_PREFIX, address))
         );
 
         ReadMode readMode = getReadMode(sentinelConfig.getReadMode());
@@ -327,7 +327,7 @@ public class XLockAutoConfiguration {
 
         String[] addressArr = replicatedConfig.getNodeAddresses().split(XLockConsts.COMMA);
         Arrays.asList(addressArr).forEach(
-            address -> replicatedServersConfig.addNodeAddress(String.format("%s%s", XLockConsts.REDIS_URL_PREFIX, address))
+                address -> replicatedServersConfig.addNodeAddress(String.format("%s%s", XLockConsts.REDIS_URL_PREFIX, address))
         );
         ReadMode readMode = getReadMode(replicatedConfig.getReadMode());
         if (Objects.isNull(readMode)) {
@@ -437,7 +437,7 @@ public class XLockAutoConfiguration {
             Map<String, Integer> weights = new HashMap<>(16);
             String[] weightMaps = customerWeightMaps.split(XLockConsts.SEMICOLON);
             Arrays.asList(weightMaps).forEach(
-                weightMap -> weights.put(XLockConsts.REDIS_URL_PREFIX + weightMap.split(XLockConsts.COMMA)[0], Integer.parseInt(weightMap.split(XLockConsts.COMMA)[1]))
+                    weightMap -> weights.put(XLockConsts.REDIS_URL_PREFIX + weightMap.split(XLockConsts.COMMA)[0], Integer.parseInt(weightMap.split(XLockConsts.COMMA)[1]))
             );
             return new WeightedRoundRobinBalancer(weights, defaultWeight);
         }
