@@ -136,7 +136,7 @@ public class SysDictData extends BaseEntity {
 
     @JsonIgnore
     public boolean getDefault() {
-        return UserConstants.YES.equals(this.isDefault) ? true : false;
+        return UserConstants.YES.equals(this.isDefault);
     }
 
     public String getIsDefault() {

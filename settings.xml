@@ -43,6 +43,21 @@
                     </snapshots>
                 </repository>
             </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>xingshiapp-xswc-cloud</id>
+                    <name>cloud</name>
+                    <url>https://xingshiapp-maven.pkg.coding.net/repository/xswc/cloud/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
         </profile>
     </profiles>
     <activeProfiles>
