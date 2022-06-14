@@ -6,11 +6,11 @@ package com.cloud.common.enums;
  */
 public enum OrderImeiStatus {
     /** 发货前提供串码 */
-    pre_delivery(1, "发货前提供串码"),
+    PRE_DELIVERY(1, "发货前提供串码"),
     /** 发货后提供串码 */
-    after_delivery(2, "发货后提供串码"),
+    AFTER_DELIVERY(2, "发货后提供串码"),
     /** 不需要提供串码 */
-    no_imei(3, "不需要提供串码");
+    NO_IMEI(3, "不需要提供串码");
 
     private final Integer code;
     private final String msg;
