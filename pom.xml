@@ -20,7 +20,7 @@
         <bitwalker.version>1.21</bitwalker.version>
         <knife4j.version>3.0.3</knife4j.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-        <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.0</mybatis-plus.version>
         <pagehelper-boot.version>1.4.1</pagehelper-boot.version>
         <jackson-datatype-jsr310.version>2.9.9</jackson-datatype-jsr310.version>
         <fastjson.version>1.2.80</fastjson.version>
