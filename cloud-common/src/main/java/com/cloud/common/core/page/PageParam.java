@@ -40,7 +40,7 @@ public class PageParam implements Serializable {
     }
 
     public PageParam(final Integer page, final Integer size, final String orderBy, final Boolean reasonable) {
-        this.page = Objects.isNull(page) || page < 1 ? DEFAULT_PAGE : page;
+        this.page = Objects.isNull(page) || page < DEFAULT_PAGE ? DEFAULT_PAGE : page;
         if (size == null || size < 1) {
             this.size = DEFAULT_SIZE;
         } else {

@@ -9,7 +9,7 @@ import com.cloud.common.core.domain.AjaxResult;
 import com.cloud.common.core.text.Convert;
 import com.cloud.common.exception.UtilException;
 import com.cloud.common.utils.DateUtils;
-import com.cloud.common.utils.DictUtils;
+import com.cloud.common.utils.dict.DictUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.file.FileTypeUtils;
 import com.cloud.common.utils.file.FileUtils;
@@ -151,7 +151,7 @@ public class ExcelUtil<T> {
     /**
      * 统计列表
      */
-    private Map<Integer, Double> statistics = new HashMap<Integer, Double>();
+    private final Map<Integer, Double> statistics = new HashMap<Integer, Double>();
 
     /**
      * 数字格式
@@ -316,27 +316,25 @@ public class ExcelUtil<T> {
                     } else if (Boolean.TYPE == fieldType || Boolean.class == fieldType) {
                         val = Convert.toBool(val, false);
                     }
-                    if (StringUtils.isNotNull(fieldType)) {
-                        String propertyName = field.getName();
-                        if (StringUtils.isNotEmpty(attr.targetAttr())) {
-                            propertyName = field.getName() + "." + attr.targetAttr();
-                        } else if (StringUtils.isNotEmpty(attr.readConverterExp())) {
-                            val = reverseByExp(Convert.toStr(val), attr.readConverterExp(), attr.separator());
-                        } else if (StringUtils.isNotEmpty(attr.dictType())) {
-                            val = reverseDictByExp(Convert.toStr(val), attr.dictType(), attr.separator());
-                        } else if (!attr.handler().equals(ExcelHandlerAdapter.class)) {
-                            val = dataFormatHandlerAdapter(val, attr);
-                        } else if (ColumnType.IMAGE == attr.cellType() && StringUtils.isNotEmpty(pictures)) {
-                            PictureData image = pictures.get(row.getRowNum() + "_" + entry.getKey());
-                            if (image == null) {
-                                val = "";
-                            } else {
-                                byte[] data = image.getData();
-                                val = FileUtils.writeImportBytes(data);
-                            }
+                    String propertyName = field.getName();
+                    if (StringUtils.isNotEmpty(attr.targetAttr())) {
+                        propertyName = field.getName() + "." + attr.targetAttr();
+                    } else if (StringUtils.isNotEmpty(attr.readConverterExp())) {
+                        val = reverseByExp(Convert.toStr(val), attr.readConverterExp(), attr.separator());
+                    } else if (StringUtils.isNotEmpty(attr.dictType())) {
+                        val = reverseDictByExp(Convert.toStr(val), attr.dictType(), attr.separator());
+                    } else if (!attr.handler().equals(ExcelHandlerAdapter.class)) {
+                        val = dataFormatHandlerAdapter(val, attr);
+                    } else if (ColumnType.IMAGE == attr.cellType() && StringUtils.isNotEmpty(pictures)) {
+                        PictureData image = pictures.get(row.getRowNum() + "_" + entry.getKey());
+                        if (image == null) {
+                            val = "";
+                        } else {
+                            byte[] data = image.getData();
+                            val = FileUtils.writeImportBytes(data);
                         }
-                        ReflectUtils.invokeSetter(entity, propertyName, val);
                     }
+                    ReflectUtils.invokeSetter(entity, propertyName, val);
                 }
                 list.add(entity);
             }
@@ -658,7 +656,7 @@ public class ExcelUtil<T> {
      * 创建表格样式
      */
     public void setDataValidation(Excel attr, Row row, int column) {
-        if (attr.name().indexOf("注：") >= 0) {
+        if (attr.name().contains("注：")) {
             sheet.setColumnWidth(column, 6000);
         } else {
             // 设置列宽
@@ -707,7 +705,7 @@ public class ExcelUtil<T> {
                 addStatisticsData(column, Convert.toStr(value), attr);
             }
         } catch (Exception e) {
-            log.error("导出Excel失败{}", e);
+            log.error("导出Excel失败", e);
         }
         return cell;
     }
