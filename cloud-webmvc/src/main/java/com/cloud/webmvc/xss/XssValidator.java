@@ -1,4 +1,4 @@
-package com.cloud.common.xss;
+package com.cloud.webmvc.xss;
 
 import com.cloud.common.utils.StringUtils;
 

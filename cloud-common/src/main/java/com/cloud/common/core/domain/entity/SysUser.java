@@ -4,9 +4,7 @@ import com.cloud.common.annotation.Excel;
 import com.cloud.common.annotation.Excel.ColumnType;
 import com.cloud.common.annotation.Excel.Type;
 import com.cloud.common.annotation.Excels;
-import com.cloud.common.constant.Constants;
 import com.cloud.common.core.domain.BaseEntity;
-import com.cloud.common.xss.Xss;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.experimental.Accessors;
@@ -161,7 +159,7 @@ public class SysUser extends BaseEntity {
         this.deptId = deptId;
     }
 
-    @Xss(message = "用户昵称不能包含脚本字符")
+    //TODO @Xss(message = "用户昵称不能包含脚本字符")
     @Size(min = 0, max = 30, message = "用户昵称长度不能超过30个字符")
     public String getNickName() {
         return nickName;
@@ -171,7 +169,7 @@ public class SysUser extends BaseEntity {
         this.nickName = nickName;
     }
 
-    @Xss(message = "用户账号不能包含脚本字符")
+    //TODO @Xss(message = "用户账号不能包含脚本字符")
     @NotBlank(message = "用户账号不能为空")
     @Size(min = 0, max = 30, message = "用户账号长度不能超过30个字符")
     public String getUserName() {

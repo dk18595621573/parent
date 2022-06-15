@@ -1,6 +1,7 @@
 package com.cloud.webmvc.filter;
 
 import com.cloud.common.utils.StringUtils;
+import com.cloud.webmvc.xss.XssHttpServletRequestWrapper;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
