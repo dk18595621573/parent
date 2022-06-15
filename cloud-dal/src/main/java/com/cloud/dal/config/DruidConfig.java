@@ -1,4 +1,4 @@
-package com.cloud.framework.config;
+package com.cloud.dal.config;
 
 import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
 import com.alibaba.druid.util.Utils;

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-security</artifactId>
+    <artifactId>cloud-dal</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -17,35 +17,16 @@
     </properties>
 
     <dependencies>
-        <!-- SpringWeb模块 -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
 
-        <!-- spring security 安全认证 -->
+        <!-- 阿里数据库连接池 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.cloud</groupId>
             <artifactId>cloud-common</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.cloud</groupId>
-            <artifactId>cloud-framework</artifactId>
-        </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>

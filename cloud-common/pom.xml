@@ -5,7 +5,7 @@
     <parent>
         <artifactId>cloud-parent</artifactId>
         <groupId>com.cloud</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -23,6 +23,7 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
 
+        <!-- ##############以下需要移动到dal模块################### -->
         <!-- SpringBoot集成mybatis-plus框架 -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -43,6 +44,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- ################################# -->
 
         <!-- 自定义验证注解 -->
         <dependency>

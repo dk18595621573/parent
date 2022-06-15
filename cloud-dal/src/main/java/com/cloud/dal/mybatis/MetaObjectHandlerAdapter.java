@@ -1,4 +1,4 @@
-package com.cloud.framework.mybatis;
+package com.cloud.dal.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.handlers.StrictFill;

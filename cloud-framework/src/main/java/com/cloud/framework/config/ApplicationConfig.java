@@ -2,7 +2,6 @@ package com.cloud.framework.config;
 
 import com.cloud.framework.log.LogService;
 import com.cloud.framework.log.SimpleLogServiceImpl;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +18,6 @@ import java.util.TimeZone;
 @Configuration
 // 表示通过aop框架暴露该代理对象,AopContext能够访问
 @EnableAspectJAutoProxy(exposeProxy = true)
-// 指定要扫描的Mapper类的包的路径
-@MapperScan("com.cloud.**.mapper")
 public class ApplicationConfig {
     /**
      * 时区配置

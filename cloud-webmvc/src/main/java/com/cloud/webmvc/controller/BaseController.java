@@ -2,15 +2,12 @@ package com.cloud.webmvc.controller;
 
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.domain.AjaxResult;
-import com.cloud.webmvc.domain.PageDomain;
-import com.cloud.webmvc.domain.TableDataInfo;
-import com.cloud.webmvc.domain.TableSupport;
+import com.cloud.common.core.page.Page;
 import com.cloud.common.utils.DateUtils;
-import com.cloud.webmvc.utils.PageUtils;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.sql.SqlUtil;
 import com.cloud.security.model.LoginUser;
 import com.cloud.security.utils.SecurityUtils;
+import com.cloud.webmvc.domain.TableDataInfo;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,40 +41,14 @@ public class BaseController {
     }
 
     /**
-     * 设置请求分页数据
-     */
-    protected void startPage() {
-        PageUtils.startPage();
-    }
-
-    /**
-     * 设置请求排序数据
-     */
-    protected void startOrderBy() {
-        PageDomain pageDomain = TableSupport.buildPageRequest();
-        if (StringUtils.isNotEmpty(pageDomain.getOrderBy())) {
-            String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
-            PageUtils.orderBy(orderBy);
-        }
-    }
-
-    /**
-     * 清理分页的线程变量
-     */
-    protected void clearPage() {
-        PageUtils.clearPage();
-    }
-
-    /**
      * 响应请求分页数据
      */
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    protected TableDataInfo getDataTable(List<?> list) {
+    protected TableDataInfo getDataTable(Page<?> page) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.SUCCESS);
         rspData.setMsg("查询成功");
-        rspData.setRows(list);
-        rspData.setTotal(new PageInfo(list).getTotal());
+        rspData.setRows(page.getData());
+        rspData.setTotal(page.getTotal());
         return rspData;
     }
 

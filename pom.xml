@@ -6,7 +6,7 @@
 
     <groupId>com.cloud</groupId>
     <artifactId>cloud-parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <description>醒市无仓平台</description>
 
@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <cloud.version>1.0.0-SNAPSHOT</cloud.version>
+        <cloud-parent.version>1.0.1-SNAPSHOT</cloud-parent.version>
 
         <druid.version>1.2.8</druid.version>
         <bitwalker.version>1.21</bitwalker.version>
@@ -238,28 +238,35 @@
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-common</artifactId>
-                <version>${cloud.version}</version>
+                <version>${cloud-parent.version}</version>
+            </dependency>
+
+            <!-- 数据访问层 -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>cloud-dal</artifactId>
+                <version>${cloud-parent.version}</version>
             </dependency>
 
             <!-- 组件扩展-->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-framework</artifactId>
-                <version>${cloud.version}</version>
+                <version>${cloud-parent.version}</version>
             </dependency>
 
             <!-- 权限模块 -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-security</artifactId>
-                <version>${cloud.version}</version>
+                <version>${cloud-parent.version}</version>
             </dependency>
 
             <!-- webmvc -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-webmvc</artifactId>
-                <version>${cloud.version}</version>
+                <version>${cloud-parent.version}</version>
             </dependency>
 
         </dependencies>
@@ -279,6 +286,7 @@
         <module>cloud-framework</module>
         <module>cloud-security</module>
         <module>cloud-webmvc</module>
+        <module>cloud-dal</module>
     </modules>
     <packaging>pom</packaging>
 
