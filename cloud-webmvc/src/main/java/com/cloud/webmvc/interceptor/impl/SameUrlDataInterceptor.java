@@ -3,7 +3,7 @@ package com.cloud.webmvc.interceptor.impl;
 import com.cloud.common.annotation.RepeatSubmit;
 import com.cloud.common.config.SystemConfig;
 import com.cloud.common.constant.Constants;
-import com.cloud.common.core.redis.RedisCache;
+import com.cloud.framework.redis.RedisCache;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.webmvc.filter.RepeatedlyRequestWrapper;
 import com.cloud.common.utils.StringUtils;

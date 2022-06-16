@@ -269,6 +269,13 @@
                 <version>${cloud-parent.version}</version>
             </dependency>
 
+            <!-- webmvc -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>xlock-spring-boot-starter</artifactId>
+                <version>${cloud-parent.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -287,6 +294,7 @@
         <module>cloud-security</module>
         <module>cloud-webmvc</module>
         <module>cloud-dal</module>
+        <module>cloud-starter</module>
     </modules>
     <packaging>pom</packaging>
 
