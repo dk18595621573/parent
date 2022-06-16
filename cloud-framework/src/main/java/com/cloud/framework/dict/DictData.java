@@ -1,6 +1,5 @@
 package com.cloud.framework.dict;
 
-import com.cloud.common.annotation.Excel;
 import lombok.Data;
 
 import java.io.Serializable;
