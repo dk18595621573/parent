@@ -1,12 +1,14 @@
 package com.cloud.security.model;
 
-import com.cloud.common.core.domain.entity.SysUser;
 import com.cloud.common.core.domain.model.RequestUser;
-import com.cloud.common.utils.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
@@ -15,45 +17,48 @@ import java.util.Set;
  *
  * @author author
  */
+@Data
 public class LoginUser extends RequestUser implements UserDetails {
     private static final long serialVersionUID = 1L;
-    /**
-     * 用户信息
-     */
-    private SysUser user;
-
-    public LoginUser() {
-    }
-
-    //    public LoginUser(SysUser user, Set<String> permissions) {
-//        this.user = user;
-//        this.permissions = permissions;
-//    }
-//
-    public LoginUser(Long userId, Long deptId, SysUser user, Set<String> permissions) {
-        this.setUserId(userId);
-        this.setDeptId(deptId);
-        this.setPermissions(permissions);
-        this.user = user;
-    }
-//
-//    public LoginUser(Long userId, Long deptId, Set<String> permissions) {
-//        this.userId = userId;
-//        this.deptId = deptId;
-//        this.user = new SysUser();
-//        this.permissions = permissions;
-//    }
-
 
     @JsonIgnore
-    @Override
-    public String getPassword() {
-        return user.getPassword();
+    private String password;
+
+    /**
+     * 角色列表
+     */
+    private Set<Role> roles;
+
+    /**
+     * 部门信息.
+     */
+    private Dept dept;
+
+    public LoginUser(Long userId, Dept dept, String username, String password) {
+        this.setUserId(userId);
+        this.setDeptId(dept.getDeptId());
+        this.setUsername(username);
+        this.dept = dept;
+        this.password = password;
     }
 
-    @Override
-    public String getUsername() {
-        return StringUtils.defaultString(super.getUsername(), user.getUserName());
+    public LoginUser(Long userId, Dept dept, String username, String password, Set<Role> roles) {
+        this.setUserId(userId);
+        this.setDeptId(dept.getDeptId());
+        this.setUsername(username);
+        this.dept = dept;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public LoginUser(Long userId, Dept dept, String username, String password, Set<Role> roles, Set<String> permissions) {
+        this.setUserId(userId);
+        this.setDeptId(dept.getDeptId());
+        this.setUsername(username);
+        this.setPermissions(permissions);
+        this.dept = dept;
+        this.password = password;
+        this.roles = roles;
     }
 
     /**
@@ -98,17 +103,55 @@ public class LoginUser extends RequestUser implements UserDetails {
         return true;
     }
 
-
-    public SysUser getUser() {
-        return user;
-    }
-
-    public void setUser(SysUser user) {
-        this.user = user;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    /**
+     * 角色信息。
+     */
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Role implements Serializable {
+        /**
+         * 角色ID
+         */
+        private Long roleId;
+
+        /**
+         * 角色名称
+         */
+        private String roleName;
+
+        /**
+         * 角色权限
+         */
+        private String roleKey;
+
+        /**
+         * 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限；5：仅本人数据权限）
+         */
+        private String dataScope;
+    }
+
+    /**
+     * 部门信息
+     */
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Dept implements Serializable {
+        /**
+         * 部门ID
+         */
+        private Long deptId;
+
+        /**
+         * 部门名称
+         */
+        private String deptName;
+
     }
 }

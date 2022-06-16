@@ -1,12 +1,13 @@
 package com.cloud.security.service;
 
-import com.cloud.common.core.domain.entity.SysRole;
+import cn.hutool.core.collection.CollUtil;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.security.model.LoginUser;
 import com.cloud.security.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -87,20 +88,7 @@ public class PermissionService {
      * @return 用户是否具备某角色
      */
     public boolean hasRole(String role) {
-        if (StringUtils.isEmpty(role)) {
-            return false;
-        }
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getUser().getRoles())) {
-            return false;
-        }
-        for (SysRole sysRole : loginUser.getUser().getRoles()) {
-            String roleKey = sysRole.getRoleKey();
-            if (SUPER_ADMIN.equals(roleKey) || roleKey.equals(StringUtils.trim(role))) {
-                return true;
-            }
-        }
-        return false;
+        return hasAnyRoles(SUPER_ADMIN + ROLE_DELIMETER + StringUtils.trim(role));
     }
 
     /**
@@ -110,7 +98,7 @@ public class PermissionService {
      * @return 用户是否不具备某角色
      */
     public boolean lacksRole(String role) {
-        return hasRole(role) != true;
+        return !hasRole(role);
     }
 
     /**
@@ -124,15 +112,10 @@ public class PermissionService {
             return false;
         }
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getUser().getRoles())) {
+        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getRoles())) {
             return false;
         }
-        for (String role : roles.split(ROLE_DELIMETER)) {
-            if (hasRole(role)) {
-                return true;
-            }
-        }
-        return false;
+        return CollUtil.containsAny(loginUser.getRoles(), Arrays.asList(roles.split(ROLE_DELIMETER)));
     }
 
     /**
