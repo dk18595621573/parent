@@ -135,20 +135,34 @@ public class SystemConfig {
     @Data
     public static class TokenProperties implements Serializable {
 
-        // 令牌自定义标识
+        /**
+         * 令牌自定义标识
+         */
         private String header = "Authorization";
 
-        // 令牌秘钥
+        /**
+         * 令牌秘钥.
+         */
         private String secret = "abcdefghijklmnopqrstuvwxyz";
 
-        // 令牌有效期（默认30分钟）
+        /**
+         * 令牌有效期（默认30分钟）.
+         */
         private int expireTime = 30;
+
+        /**
+         * 是否缓存token数据.
+         */
+        private boolean cached = true;
 
     }
 
     @Data
     public static class SecurityProperties implements Serializable {
 
+        /**
+         * 允许匿名访问的接口地址.
+         */
         private String[] allows;
 
     }

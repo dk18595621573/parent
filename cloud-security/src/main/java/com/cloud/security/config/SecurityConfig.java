@@ -1,6 +1,8 @@
 package com.cloud.security.config;
 
 import com.cloud.common.config.SystemConfig;
+import com.cloud.framework.redis.RedisCache;
+import com.cloud.security.service.TokenStrategy;
 import com.cloud.security.web.filter.JwtAuthenticationTokenFilter;
 import com.cloud.security.web.handle.AuthenticationEntryPointImpl;
 import com.cloud.security.web.handle.LogoutSuccessHandlerImpl;
@@ -66,6 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     private SystemConfig systemConfig;
+
+    @Autowired
+    private RedisCache redisCache;
 
     /**
      * 解决 无法直接注入 AuthenticationManager
@@ -147,5 +152,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public TokenStrategy tokenStrategy() {
+        if (systemConfig.getToken().isCached()) {
+            return new TokenStrategy.RedisTokenStrategy(redisCache, systemConfig.getToken());
+        }
+        return new TokenStrategy.SimpleTokenStrategy(systemConfig.getToken());
     }
 }
