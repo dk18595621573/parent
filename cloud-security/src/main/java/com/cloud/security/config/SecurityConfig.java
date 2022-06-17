@@ -3,6 +3,8 @@ package com.cloud.security.config;
 import com.cloud.common.config.SystemConfig;
 import com.cloud.framework.redis.RedisCache;
 import com.cloud.security.service.TokenStrategy;
+import com.cloud.security.service.strategy.RedisTokenStrategy;
+import com.cloud.security.service.strategy.SimpleTokenStrategy;
 import com.cloud.security.web.filter.JwtAuthenticationTokenFilter;
 import com.cloud.security.web.handle.AuthenticationEntryPointImpl;
 import com.cloud.security.web.handle.LogoutSuccessHandlerImpl;
@@ -157,8 +159,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public TokenStrategy tokenStrategy() {
         if (systemConfig.getToken().isCached()) {
-            return new TokenStrategy.RedisTokenStrategy(redisCache, systemConfig.getToken());
+            return new RedisTokenStrategy(redisCache, systemConfig.getToken());
         }
-        return new TokenStrategy.SimpleTokenStrategy(systemConfig.getToken());
+        return new SimpleTokenStrategy(systemConfig.getToken());
     }
 }
