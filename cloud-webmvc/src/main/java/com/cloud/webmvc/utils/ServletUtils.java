@@ -1,4 +1,4 @@
-package com.cloud.framework.utils;
+package com.cloud.webmvc.utils;
 
 import com.cloud.common.core.text.Convert;
 import com.cloud.common.utils.StringUtils;

@@ -4,7 +4,7 @@ import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.ip.AddressUtils;
 import com.cloud.common.utils.ip.IpUtils;
-import com.cloud.framework.utils.ServletUtils;
+import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.domain.LoginUser;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;

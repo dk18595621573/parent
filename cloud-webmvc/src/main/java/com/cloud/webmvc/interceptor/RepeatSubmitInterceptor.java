@@ -3,7 +3,7 @@ package com.cloud.webmvc.interceptor;
 import com.cloud.common.annotation.RepeatSubmit;
 import com.cloud.common.core.domain.AjaxResult;
 import com.cloud.common.utils.json.JsonUtil;
-import com.cloud.framework.utils.ServletUtils;
+import com.cloud.webmvc.utils.ServletUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 

@@ -4,7 +4,7 @@ import com.cloud.common.annotation.Log;
 import com.cloud.common.enums.BusinessStatus;
 import com.cloud.common.enums.HttpMethod;
 import com.cloud.common.utils.json.JsonUtil;
-import com.cloud.framework.utils.ServletUtils;
+import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.ip.IpUtils;
 import com.cloud.framework.log.model.OperateLog;

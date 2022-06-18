@@ -9,7 +9,7 @@ import com.cloud.common.utils.spring.SpringUtils;
 import com.cloud.framework.log.LogService;
 import com.cloud.framework.log.model.LoginLog;
 import com.cloud.framework.log.model.OperateLog;
-import com.cloud.framework.utils.ServletUtils;
+import com.cloud.webmvc.utils.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.http.HttpHeaders;
 

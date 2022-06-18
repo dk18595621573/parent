@@ -1,4 +1,4 @@
-package com.cloud.framework.utils;
+package com.cloud.webmvc.utils;
 
 import com.cloud.common.config.SystemConfig;
 import com.cloud.common.exception.file.FileNameLengthLimitExceededException;

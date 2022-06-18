@@ -6,7 +6,7 @@ import com.cloud.common.core.domain.AjaxResult;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.framework.manager.AsyncManager;
-import com.cloud.framework.utils.ServletUtils;
+import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.domain.LoginUser;
 import com.cloud.webmvc.security.service.AsyncFactory;
 import com.cloud.webmvc.security.service.TokenService;

@@ -3,7 +3,7 @@ package com.cloud.webmvc.aspect;
 import com.cloud.common.annotation.RateLimiter;
 import com.cloud.common.enums.LimitType;
 import com.cloud.common.exception.ServiceException;
-import com.cloud.framework.utils.ServletUtils;
+import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.ip.IpUtils;
 import org.aspectj.lang.JoinPoint;
