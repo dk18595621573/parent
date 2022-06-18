@@ -1,18 +1,16 @@
 package com.cloud.framework.log.model;
 
-import com.cloud.common.core.domain.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author author
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class LoginLog extends BaseEntity {
+public class LoginLog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -61,4 +59,25 @@ public class LoginLog extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
+    /**
+     * 创建者
+     */
+    private Long createBy;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
+    /**
+     * 更新者
+     */
+    private Long updateBy;
+
+    /**
+     * 更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
 }

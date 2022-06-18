@@ -1,11 +1,12 @@
-package com.cloud.webmvc.aspect;
+package com.cloud.dal.aspect;
 
 import com.cloud.common.annotation.DataScope;
 import com.cloud.common.constant.Constants;
-import com.cloud.common.core.domain.BaseEntity;
+import com.cloud.common.core.domain.model.RequestUser;
+import com.cloud.common.core.domain.model.Role;
+import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.security.model.LoginUser;
-import com.cloud.security.utils.SecurityUtils;
+import com.cloud.dal.model.BaseEntity;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -57,7 +58,7 @@ public class DataScopeAspect {
 
     protected void handleDataScope(final JoinPoint joinPoint, DataScope controllerDataScope) {
         // 获取当前的用户
-        LoginUser loginUser = SecurityUtils.getLoginUser();
+        RequestUser loginUser = RequestThread.getUser();
         // 如果是超级管理员，则不过滤数据
         if (StringUtils.isNotNull(loginUser) && !Constants.isAdmin(loginUser.getUserId())) {
             dataScopeFilter(joinPoint, loginUser, controllerDataScope.deptAlias(),
@@ -72,10 +73,10 @@ public class DataScopeAspect {
      * @param user      用户
      * @param userAlias 别名
      */
-    public static void dataScopeFilter(JoinPoint joinPoint, LoginUser user, String deptAlias, String userAlias) {
+    public static void dataScopeFilter(JoinPoint joinPoint, RequestUser user, String deptAlias, String userAlias) {
         StringBuilder sqlString = new StringBuilder();
 
-        for (LoginUser.Role role : user.getRoles()) {
+        for (Role role : user.getRoles()) {
             String dataScope = role.getDataScope();
             if (DATA_SCOPE_ALL.equals(dataScope)) {
                 sqlString = new StringBuilder();

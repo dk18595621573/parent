@@ -1,4 +1,4 @@
-package com.cloud.common.core.domain;
+package com.cloud.dal.model;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -8,7 +8,6 @@ import com.cloud.common.utils.StringUtils;
 import com.cloud.security.model.LoginUser;
 import com.cloud.security.utils.SecurityUtils;
 import com.cloud.webmvc.domain.TableDataInfo;
-import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
-import java.util.List;
 
 /**
  * web层通用数据处理

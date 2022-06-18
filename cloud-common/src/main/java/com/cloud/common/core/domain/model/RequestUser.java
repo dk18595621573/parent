@@ -68,4 +68,14 @@ public class RequestUser implements Serializable {
      * 权限列表
      */
     private Set<String> permissions;
+
+    /**
+     * 角色列表
+     */
+    private Set<Role> roles;
+
+    /**
+     * 部门信息.
+     */
+    private Dept dept;
 }

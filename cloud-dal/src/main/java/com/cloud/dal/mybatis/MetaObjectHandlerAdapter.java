@@ -2,7 +2,7 @@ package com.cloud.dal.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.handlers.StrictFill;
-import com.cloud.common.core.domain.BaseEntity;
+import com.cloud.dal.model.BaseEntity;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.threads.RequestThread;
