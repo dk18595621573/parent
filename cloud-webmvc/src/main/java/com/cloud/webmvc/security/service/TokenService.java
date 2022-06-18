@@ -1,7 +1,7 @@
-package com.cloud.security.service;
+package com.cloud.webmvc.security.service;
 
 import com.cloud.common.utils.StringUtils;
-import com.cloud.security.model.LoginUser;
+import com.cloud.webmvc.domain.LoginUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

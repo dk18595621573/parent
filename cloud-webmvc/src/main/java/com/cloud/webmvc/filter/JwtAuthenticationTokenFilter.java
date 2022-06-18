@@ -1,10 +1,10 @@
-package com.cloud.security.web.filter;
+package com.cloud.webmvc.filter;
 
-import com.cloud.common.utils.StringUtils;
 import com.cloud.common.threads.RequestThread;
-import com.cloud.security.model.LoginUser;
-import com.cloud.security.service.TokenService;
-import com.cloud.security.utils.SecurityUtils;
+import com.cloud.common.utils.StringUtils;
+import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.security.service.TokenService;
+import com.cloud.webmvc.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

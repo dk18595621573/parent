@@ -1,8 +1,8 @@
-package com.cloud.security.utils;
+package com.cloud.webmvc.utils;
 
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.exception.ServiceException;
-import com.cloud.security.model.LoginUser;
+import com.cloud.webmvc.domain.LoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

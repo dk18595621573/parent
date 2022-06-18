@@ -1,13 +1,13 @@
-package com.cloud.security.config;
+package com.cloud.webmvc.config;
 
 import com.cloud.common.config.SystemConfig;
 import com.cloud.framework.redis.RedisCache;
-import com.cloud.security.service.TokenStrategy;
-import com.cloud.security.service.strategy.RedisTokenStrategy;
-import com.cloud.security.service.strategy.SimpleTokenStrategy;
-import com.cloud.security.web.filter.JwtAuthenticationTokenFilter;
-import com.cloud.security.web.handle.AuthenticationEntryPointImpl;
-import com.cloud.security.web.handle.LogoutSuccessHandlerImpl;
+import com.cloud.webmvc.security.service.TokenStrategy;
+import com.cloud.webmvc.security.service.strategy.RedisTokenStrategy;
+import com.cloud.webmvc.security.service.strategy.SimpleTokenStrategy;
+import com.cloud.webmvc.filter.JwtAuthenticationTokenFilter;
+import com.cloud.webmvc.security.handle.AuthenticationEntryPointImpl;
+import com.cloud.webmvc.security.handle.LogoutSuccessHandlerImpl;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

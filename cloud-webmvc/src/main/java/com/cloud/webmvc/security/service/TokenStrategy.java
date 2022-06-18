@@ -1,11 +1,11 @@
-package com.cloud.security.service;
+package com.cloud.webmvc.security.service;
 
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.ip.AddressUtils;
 import com.cloud.common.utils.ip.IpUtils;
 import com.cloud.framework.utils.ServletUtils;
-import com.cloud.security.model.LoginUser;
+import com.cloud.webmvc.domain.LoginUser;
 import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

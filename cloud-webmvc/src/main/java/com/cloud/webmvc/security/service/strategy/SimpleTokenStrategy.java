@@ -1,12 +1,12 @@
-package com.cloud.security.service.strategy;
+package com.cloud.webmvc.security.service.strategy;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import com.cloud.common.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.security.model.LoginUser;
-import com.cloud.security.service.TokenStrategy;
+import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.security.service.TokenStrategy;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

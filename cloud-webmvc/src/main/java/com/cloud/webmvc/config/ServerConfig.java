@@ -1,4 +1,4 @@
-package com.cloud.framework.config;
+package com.cloud.webmvc.config;
 
 import com.cloud.framework.utils.ServletUtils;
 import org.springframework.stereotype.Component;

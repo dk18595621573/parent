@@ -1,4 +1,4 @@
-package com.cloud.security.model;
+package com.cloud.webmvc.domain;
 
 import com.cloud.common.core.domain.model.Dept;
 import com.cloud.common.core.domain.model.RequestUser;

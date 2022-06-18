@@ -255,13 +255,6 @@
                 <version>${cloud-parent.version}</version>
             </dependency>
 
-            <!-- 权限模块 -->
-            <dependency>
-                <groupId>com.cloud</groupId>
-                <artifactId>cloud-security</artifactId>
-                <version>${cloud-parent.version}</version>
-            </dependency>
-
             <!-- webmvc -->
             <dependency>
                 <groupId>com.cloud</groupId>
@@ -291,7 +284,6 @@
     <modules>
         <module>cloud-common</module>
         <module>cloud-framework</module>
-        <module>cloud-security</module>
         <module>cloud-webmvc</module>
         <module>cloud-dal</module>
         <module>cloud-starter</module>

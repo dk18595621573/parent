@@ -1,9 +1,9 @@
-package com.cloud.security.service;
+package com.cloud.webmvc.security.service;
 
 import cn.hutool.core.collection.CollUtil;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.security.model.LoginUser;
-import com.cloud.security.utils.SecurityUtils;
+import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
