@@ -11,6 +11,7 @@ import com.cloud.framework.log.model.LoginLog;
 import com.cloud.framework.log.model.OperateLog;
 import com.cloud.framework.utils.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
+import org.springframework.http.HttpHeaders;
 
 import java.util.TimerTask;
 
@@ -32,7 +33,7 @@ public class AsyncFactory {
      */
     public static TimerTask recordLogininfor(final String username, final String status, final String message,
                                              final Object... args) {
-        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader(HttpHeaders.USER_AGENT));
         final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         return new TimerTask() {
             @Override
