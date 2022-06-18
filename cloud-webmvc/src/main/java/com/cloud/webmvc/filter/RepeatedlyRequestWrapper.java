@@ -1,6 +1,6 @@
 package com.cloud.webmvc.filter;
 
-import com.cloud.common.utils.http.HttpHelper;
+import com.cloud.webmvc.utils.http.HttpHelper;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;

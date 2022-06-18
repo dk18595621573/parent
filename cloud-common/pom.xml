@@ -64,34 +64,10 @@
             <artifactId>poi-ooxml</artifactId>
         </dependency>
 
-        <!-- yml解析器 -->
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-        </dependency>
-
-        <!-- Token生成与解析-->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-        </dependency>
-
-        <!-- Jaxb -->
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-        </dependency>
-
         <!-- pool 对象池 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
-        </dependency>
-
-        <!-- servlet包 -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
         <!-- hutool -->

@@ -1,4 +1,4 @@
-package com.cloud.common.utils.ip;
+package com.cloud.webmvc.utils.ip;
 
 import com.cloud.common.utils.StringUtils;
 

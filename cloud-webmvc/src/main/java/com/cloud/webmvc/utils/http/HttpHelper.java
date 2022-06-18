@@ -1,4 +1,4 @@
-package com.cloud.common.utils.http;
+package com.cloud.webmvc.utils.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

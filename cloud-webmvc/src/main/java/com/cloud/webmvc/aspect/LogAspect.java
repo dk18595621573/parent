@@ -6,7 +6,7 @@ import com.cloud.common.enums.HttpMethod;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.ip.IpUtils;
+import com.cloud.webmvc.utils.ip.IpUtils;
 import com.cloud.framework.log.model.OperateLog;
 import com.cloud.framework.manager.AsyncManager;
 import com.cloud.webmvc.security.service.AsyncFactory;
