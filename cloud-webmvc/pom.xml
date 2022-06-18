@@ -47,6 +47,12 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- Token生成与解析-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.cloud</groupId>
             <artifactId>cloud-common</artifactId>

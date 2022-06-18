@@ -1,13 +1,12 @@
-package com.cloud.common.utils.ip;
+package com.cloud.webmvc.utils.ip;
 
-import cn.hutool.json.JSONObject;
 import com.cloud.common.utils.json.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.cloud.common.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.http.HttpUtils;
+import com.cloud.webmvc.utils.http.HttpUtils;
 
 import java.util.Map;
 

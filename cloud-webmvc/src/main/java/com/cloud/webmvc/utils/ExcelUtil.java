@@ -1,7 +1,5 @@
-package com.cloud.framework.poi;
+package com.cloud.webmvc.utils;
 
-import com.cloud.framework.poi.Excel.ColumnType;
-import com.cloud.framework.poi.Excel.Type;
 import com.cloud.common.config.SystemConfig;
 import com.cloud.common.core.domain.AjaxResult;
 import com.cloud.common.core.text.Convert;
@@ -13,6 +11,11 @@ import com.cloud.common.utils.file.FileUtils;
 import com.cloud.common.utils.file.ImageUtils;
 import com.cloud.common.utils.reflect.ReflectUtils;
 import com.cloud.framework.dict.DictUtils;
+import com.cloud.framework.poi.Excel;
+import com.cloud.framework.poi.Excel.ColumnType;
+import com.cloud.framework.poi.Excel.Type;
+import com.cloud.framework.poi.ExcelHandlerAdapter;
+import com.cloud.framework.poi.Excels;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;

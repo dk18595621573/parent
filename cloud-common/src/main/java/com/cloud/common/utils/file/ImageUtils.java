@@ -1,18 +1,18 @@
 package com.cloud.common.utils.file;
 
+import com.cloud.common.config.SystemConfig;
+import com.cloud.common.constant.Constants;
+import com.cloud.common.utils.StringUtils;
+import org.apache.poi.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
-
-import org.apache.poi.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.cloud.common.config.SystemConfig;
-import com.cloud.common.constant.Constants;
-import com.cloud.common.utils.StringUtils;
 
 /**
  * 图片处理工具类
@@ -27,7 +27,7 @@ public class ImageUtils {
         try {
             return IOUtils.toByteArray(is);
         } catch (Exception e) {
-            log.error("图片加载异常 {}", e);
+            log.error("图片加载异常 ", e);
             return null;
         } finally {
             IOUtils.closeQuietly(is);
@@ -40,7 +40,7 @@ public class ImageUtils {
             result = Arrays.copyOf(result, result.length);
             return new ByteArrayInputStream(result);
         } catch (Exception e) {
-            log.error("获取图片异常 {}", e);
+            log.error("获取图片异常 ", e);
         }
         return null;
     }

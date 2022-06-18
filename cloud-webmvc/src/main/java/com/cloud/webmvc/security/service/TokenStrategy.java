@@ -2,8 +2,8 @@ package com.cloud.webmvc.security.service;
 
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.ip.AddressUtils;
-import com.cloud.common.utils.ip.IpUtils;
+import com.cloud.webmvc.utils.ip.AddressUtils;
+import com.cloud.webmvc.utils.ip.IpUtils;
 import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.domain.LoginUser;
 import eu.bitwalker.useragentutils.UserAgent;
