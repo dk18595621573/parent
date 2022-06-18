@@ -23,6 +23,16 @@ public enum OrderSubStatus {
      * 已提交串码
      */
     COMPLETE_CODE(41, "已完善发货信息"),
+
+    /**
+     * 已发货待提交串码
+     */
+    SEND_TO_BE_COMPLETE(50, "已发货待提交串码"),
+    /**
+     * 已发货已提交串码
+     */
+    SEND_COMPLETE_CODE(51, "已发货已完善发货信息"),
+
     /**
      * 退货退单
      */
