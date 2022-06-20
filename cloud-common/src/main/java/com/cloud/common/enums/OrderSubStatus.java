@@ -32,6 +32,10 @@ public enum OrderSubStatus {
      * 已发货已提交串码
      */
     SEND_COMPLETE_CODE(51, "已发货已完善发货信息"),
+    /** 部分发货 */
+    PART_SHIPMENTS(52, "部分发货"),
+    /** 部分收货 */
+    PART_RECEIVING(61, "部分收货"),
 
     /**
      * 退货退单
