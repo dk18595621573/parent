@@ -13,6 +13,7 @@ public enum OrderStatus {
     SHIPPED(5, "已发货"),
     COMPLETED(6, "已完成"),
     AFTER_SALE(7, "退货退单"),
+    ADDRESS_TO_BE_COMPLETED(8, "待补全地址"),
     ;
 
 

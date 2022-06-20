@@ -13,7 +13,6 @@ public enum OrderSubStatus {
     REVOKE(21, "撤销"),
     OVERTIME_DELIVERY(22, "超时发货"),
     OVERTIME_STREAMING(23, "超时流拍"),
-    ADDRESS_TO_BE_COMPLETED(24, "待补全地址"),
     PENDING_ORDER(30, "待抢单"),
     TO_BE_CONFIRMED(31, "待确认"),
     /**
