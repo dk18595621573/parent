@@ -264,7 +264,7 @@
                 <version>${cloud-parent.version}</version>
             </dependency>
 
-            <!-- webmvc -->
+            <!-- xlock -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>xlock-spring-boot-starter</artifactId>
