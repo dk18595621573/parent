@@ -1,8 +1,8 @@
 package com.cloud.framework.config;
 
 import com.cloud.framework.redis.JsonRedisTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -10,31 +10,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 
 /**
  * redis配置
  *
  * @author author
  */
+@Slf4j
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     @ConditionalOnMissingBean
-    @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
         return new JsonRedisTemplate(connectionFactory);
     }
-
-    @Bean
-    @ConditionalOnProperty(prefix = "cloud.redis.listener", name = "enabled", havingValue = "true")
-    public RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
-        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        return container;
-    }
-
 
     @Bean
     public DefaultRedisScript<Long> limitScript() {
