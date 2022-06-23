@@ -15,7 +15,7 @@ import java.util.EnumMap;
  */
 public class LockFactory implements ApplicationContextAware {
 
-    private static EnumMap<XLockType, Class<?>> serviceMap = new EnumMap<>(XLockType.class);
+    private static final EnumMap<XLockType, Class<? extends Lock>> serviceMap = new EnumMap<>(XLockType.class);
 
     static {
         serviceMap.put(XLockType.REENTRANT, ReentrantLock.class);
@@ -36,7 +36,7 @@ public class LockFactory implements ApplicationContextAware {
      * @throws LockServiceNotFoundException 无法找到锁服务异常
      */
     public Lock getService(final XLockType lockType) throws LockServiceNotFoundException {
-        Lock lock = (Lock) applicationContext.getBean(serviceMap.get(lockType));
+        Lock lock = applicationContext.getBean(serviceMap.get(lockType));
         if (lock == null) {
             throw new LockServiceNotFoundException();
         }

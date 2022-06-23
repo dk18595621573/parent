@@ -5,7 +5,6 @@ import com.cloud.xlock.model.KeyInfo;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.Objects;
 
@@ -26,7 +25,7 @@ public abstract class BaseLock implements Lock {
     }
 
     @Autowired
-    public void setRedissonClient(@Qualifier("xLockRedissonClient") final RedissonClient redissonClient) {
+    public void setRedissonClient(final RedissonClient redissonClient) {
         this.redissonClient = redissonClient;
     }
 

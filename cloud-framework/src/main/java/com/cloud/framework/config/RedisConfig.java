@@ -24,8 +24,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @ConditionalOnMissingBean
     @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public RedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
-        RedisTemplate template = new JsonRedisTemplate(connectionFactory);
-        return template;
+        return new JsonRedisTemplate(connectionFactory);
     }
 
     @Bean
