@@ -37,6 +37,10 @@ public enum OrderSubStatus {
     /** 部分收货 */
     PART_RECEIVING(51, "部分收货"),
 
+    /** 采购入库收货 */
+    SEND_PURCHASING(60, "采购入库收货"),
+    /** 一件代发收货 */
+    SEND_UNDERTAKES_TO(61, "一件代发收货"),
     /**
      * 退货退单
      */
