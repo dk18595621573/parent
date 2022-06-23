@@ -40,7 +40,9 @@ public enum OrderSubStatus {
     /** 采购入库收货 */
     SEND_PURCHASING(60, "采购入库收货"),
     /** 一件代发收货 */
-    SEND_UNDERTAKES_TO(61, "一件代发收货"),
+    COLLECT_UNDERTAKES_TO(61, "一件代发收货,待发货"),
+    /** 一件代发发货 */
+    SEND_UNDERTAKES_TO(62, "一件代发已发货"),
     /**
      * 退货退单
      */
