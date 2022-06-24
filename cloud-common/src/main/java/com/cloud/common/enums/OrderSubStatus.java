@@ -35,7 +35,7 @@ public enum OrderSubStatus {
      */
     SEND_COMPLETE_CODE(51, "已发货已完善发货信息"),
     /** 部分收货 */
-    PART_RECEIVING(51, "部分收货"),
+    PART_RECEIVING(52, "部分收货"),
 
     /** 采购入库收货 */
     SEND_PURCHASING(60, "采购入库收货"),
