@@ -1,10 +1,6 @@
 package com.cloud.webmvc.config;
 
 import com.cloud.common.config.SystemConfig;
-import com.cloud.framework.redis.RedisCache;
-import com.cloud.webmvc.security.service.TokenStrategy;
-import com.cloud.webmvc.security.service.strategy.RedisTokenStrategy;
-import com.cloud.webmvc.security.service.strategy.SimpleTokenStrategy;
 import com.cloud.webmvc.filter.JwtAuthenticationTokenFilter;
 import com.cloud.webmvc.security.handle.AuthenticationEntryPointImpl;
 import com.cloud.webmvc.security.handle.LogoutSuccessHandlerImpl;
@@ -19,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -72,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private SystemConfig systemConfig;
 
     @Autowired
-    private RedisCache redisCache;
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 解决 无法直接注入 AuthenticationManager
@@ -140,27 +135,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);
     }
 
-    /**
-     * 强散列哈希加密实现
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     /**
      * 身份认证接口
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
-    @Bean
-    public TokenStrategy tokenStrategy() {
-        if (systemConfig.getToken().isCached()) {
-            return new RedisTokenStrategy(redisCache, systemConfig.getToken());
-        }
-        return new SimpleTokenStrategy(systemConfig.getToken());
-    }
 }

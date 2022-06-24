@@ -21,7 +21,7 @@ public abstract class DelayedTask<T> implements InitializingBean {
     @Autowired
     private RedissonClient redissonClient;
 
-    private RDelayedQueue<T> delayedQueue;
+    protected RDelayedQueue<T> delayedQueue;
 
     /**
      * 任务分组名
