@@ -65,6 +65,6 @@ public abstract class DelayedTask<T> implements InitializingBean {
      * @param e 异常信息
      */
     public void handleException(T data, Exception e) {
-        log.error("延时队列【{}】消费【{}】出现异常", getTaskGroup(), data);
+        log.error("延时队列【{}】消费【{}】出现异常:", getTaskGroup(), data, e);
     }
 }
