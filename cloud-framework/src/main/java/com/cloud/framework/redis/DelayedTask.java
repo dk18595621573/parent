@@ -56,7 +56,7 @@ public abstract class DelayedTask<T> implements InitializingBean {
      */
     public void producer(T data, long delay) {
         log.debug("延时队列【{}】插入延时[{}秒]数据:{}", getTaskGroup(), delay, data);
-        delayedQueue.offer(data, delay, TimeUnit.SECONDS);
+        delayedQueue.offerAsync(data, delay, TimeUnit.SECONDS);
     }
 
     /**
