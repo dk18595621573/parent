@@ -237,6 +237,7 @@
                 <version>${kaptcha.version}</version>
             </dependency>
 
+            <!-- xxl-job -->
             <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
@@ -271,14 +272,14 @@
                 <version>${cloud-parent.version}</version>
             </dependency>
 
-            <!-- xlock -->
+            <!-- xlock-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>xlock-spring-boot-starter</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
 
-            <!-- xxl-job -->
+            <!-- xxl-job-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>xxljob-spring-boot-starter</artifactId>
