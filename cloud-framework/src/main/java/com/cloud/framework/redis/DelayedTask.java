@@ -42,6 +42,7 @@ public abstract class DelayedTask<T> implements InitializingBean {
             try {
                 log.info("延时队列【{}】开始消费:{}", getTaskGroup(), data);
                 consumer(data);
+                log.info("延时队列【{}】完成消费:{}", getTaskGroup(), data);
             } catch (Exception e) {
                 handleException(data, e);
             }
