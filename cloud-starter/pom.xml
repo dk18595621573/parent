@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>xlock-spring-boot-starter</module>
+        <module>xxljob-spring-boot-starter</module>
     </modules>
 
     <properties>

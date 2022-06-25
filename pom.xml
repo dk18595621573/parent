@@ -278,6 +278,13 @@
                 <version>${cloud-parent.version}</version>
             </dependency>
 
+            <!-- xxl-job -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>xxljob-spring-boot-starter</artifactId>
+                <version>${cloud-parent.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
