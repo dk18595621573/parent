@@ -199,31 +199,4 @@ public class Constants {
         return roleId != null && 1L == roleId;
     }
 
-    /**
-     * 系统参数key
-     */
-    public interface SystemParam {
-
-        /**
-         * 系统初始密码
-         */
-        String INIT_PASSWORD = "sys.user.initPassword";
-        /**
-         * 验证码开关
-         */
-        String CAPTCHA_ENABLE = "sys.account.captchaOnOff";
-        /**
-         * 注册开关
-         */
-        String REGISTER_ENABLE = "sys.account.registerUser";
-        /**
-         * 模拟支付配置key
-         */
-        String SIMULATE_CONFIG = "pay.channel.simulate";
-
-        /**
-         * 默认代发仓编码
-         */
-        String DEFAULT_WAREHOUSE = "sys.warehouse.code";
-    }
 }
