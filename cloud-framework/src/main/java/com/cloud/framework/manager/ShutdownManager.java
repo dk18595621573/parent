@@ -1,6 +1,5 @@
 package com.cloud.framework.manager;
 
-import com.cloud.common.constant.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ import javax.annotation.PreDestroy;
  */
 @Component
 public class ShutdownManager {
-    private static final Logger logger = LoggerFactory.getLogger(Constants.SYS_USER_LOG);
+    private static final Logger logger = LoggerFactory.getLogger(ShutdownManager.class);
 
     @PreDestroy
     public void destroy() {
