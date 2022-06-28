@@ -1,0 +1,19 @@
+package ${packageName}.manager;
+
+import java.util.List;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import ${packageName}.domain.${ClassName};
+import ${packageName}.mapper.${ClassName}Mapper;
+import org.springframework.stereotype.Service;
+
+/**
+ * ${functionName}Service接口
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+public class ${ClassName}Manager extends ServiceImpl<${ClassName}Mapper,${ClassName}>{
+
+}

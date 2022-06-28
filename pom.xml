@@ -265,6 +265,13 @@
                 <version>${cloud-parent.version}</version>
             </dependency>
 
+            <!-- 代码生成-->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>cloud-generator</artifactId>
+                <version>${cloud-parent.version}</version>
+            </dependency>
+
             <!-- webmvc -->
             <dependency>
                 <groupId>com.cloud</groupId>
@@ -302,6 +309,7 @@
         <module>cloud-common</module>
         <module>cloud-framework</module>
         <module>cloud-webmvc</module>
+        <module>cloud-generator</module>
         <module>cloud-dal</module>
         <module>cloud-starter</module>
     </modules>
