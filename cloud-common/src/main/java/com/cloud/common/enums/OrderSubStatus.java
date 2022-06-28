@@ -51,11 +51,9 @@ public enum OrderSubStatus {
      */
     DEMAND_AFFIRM(70, "需求方发起退单"),
     SUPPLIER_NOT_AFFIRM(71, "供应商未确认"),
-    SUPPLIER_THEN_AFFIRM(72, "供应商已确认"),
-    WAREHOUSE_NOT_AFFIRM(73, "无仓未确认"),
-    WAREHOUSE_THEN_AFFIRM(74, "无仓已确认"),
-    WAREHOUSE_THEN_SEND_BACK(75, "无仓已退回"),
-    SUPPLIER_THEN_TAKE(76, "供应商已收货"),
+    SUPPLIER_THEN_AFFIRM(72, "供应商已确认:普通快递到这结束、无仓收货需要再次流转"),
+    WAREHOUSE_NOT_AFFIRM(73, "无仓退换供应商"),
+    WAREHOUSE_THEN_AFFIRM(74, "供应商已收"),
     ;
 
     private final Integer code;
