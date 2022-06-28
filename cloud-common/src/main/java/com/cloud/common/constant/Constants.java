@@ -168,17 +168,6 @@ public class Constants {
      */
     public static final String LOOKUP_LDAPS = "ldaps:";
 
-    /**
-     * 定时任务白名单配置（仅允许访问的包名，如其他需要可以自行添加）
-     */
-    public static final String[] JOB_WHITELIST_STR = {"com.cloud"};
-
-    /**
-     * 定时任务违规的字符
-     */
-    public static final String[] JOB_ERROR_STR = {"java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
-            "org.springframework", "org.apache", "com.cloud.common.utils.file"};
-
 
     /**
      * 雪花算法使用，暂时写死
@@ -208,5 +197,28 @@ public class Constants {
      */
     public static boolean isAdminRole(Long roleId) {
         return roleId != null && 1L == roleId;
+    }
+
+    /**
+     * 系统参数key
+     */
+    public interface SystemParam {
+
+        /**
+         * 系统初始密码
+         */
+        String INIT_PASSWORD = "sys.user.initPassword";
+        /**
+         * 验证码开关
+         */
+        String CAPTCHA_ENABLE = "sys.account.captchaOnOff";
+        /**
+         * 注册开关
+         */
+        String REGISTER_ENABLE = "sys.account.registerUser";
+        /**
+         * 模拟支付配置key
+         */
+        String SIMULATE_CONFIG = "pay.channel.simulate";
     }
 }
