@@ -220,5 +220,10 @@ public class Constants {
          * 模拟支付配置key
          */
         String SIMULATE_CONFIG = "pay.channel.simulate";
+
+        /**
+         * 默认代发仓编码
+         */
+        String DEFAULT_WAREHOUSE = "sys.warehouse.code";
     }
 }
