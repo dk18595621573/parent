@@ -36,14 +36,16 @@ public enum OrderSubStatus {
      * 已发货已提交串码
      */
     SEND_COMPLETE_CODE(51, "已发货已完善发货信息"),
+    /** 一件代发无仓收货 */
+    COLLECT_UNDERTAKES_TO(52, "一件代发收货,待发货"),
+    /** 一件代发无仓发货 */
+    SEND_UNDERTAKES_TO(53, "一件代发已发货"),
+    /** 一件代发快递发货 */
+    SEND_EXPRESS_TO(54, "一件代发已发货"),
 
 
     /** 采购入库收货 */
     SEND_PURCHASING(60, "采购入库收货"),
-    /** 一件代发收货 */
-    COLLECT_UNDERTAKES_TO(61, "一件代发收货,待发货"),
-    /** 一件代发发货 */
-    SEND_UNDERTAKES_TO(62, "一件代发已发货"),
     /**
      * 退货退单
      */
