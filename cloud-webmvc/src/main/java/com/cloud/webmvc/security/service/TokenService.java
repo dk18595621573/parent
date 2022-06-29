@@ -1,9 +1,15 @@
 package com.cloud.webmvc.security.service;
 
+import com.cloud.common.core.domain.model.BaseRequestInfo;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.utils.ServletUtils;
+import com.cloud.webmvc.utils.ip.AddressUtils;
+import com.cloud.webmvc.utils.ip.IpUtils;
+import eu.bitwalker.useragentutils.UserAgent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +27,16 @@ public class TokenService {
     @Autowired
     private TokenStrategy tokenStrategy;
 
+    public BaseRequestInfo buildRequestInfo() {
+        BaseRequestInfo requestInfo = new BaseRequestInfo();
+        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader(HttpHeaders.USER_AGENT));
+        String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+        requestInfo.setIpaddr(ip);
+        requestInfo.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
+        requestInfo.setBrowser(userAgent.getBrowser().getName());
+        requestInfo.setOs(userAgent.getOperatingSystem().getName());
+        return requestInfo;
+    }
     /**
      * 获取用户身份信息
      *

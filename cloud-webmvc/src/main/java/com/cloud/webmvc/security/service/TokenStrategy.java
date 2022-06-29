@@ -2,11 +2,7 @@ package com.cloud.webmvc.security.service;
 
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.webmvc.utils.ip.AddressUtils;
-import com.cloud.webmvc.utils.ip.IpUtils;
-import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.domain.LoginUser;
-import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.security.access.AuthorizationServiceException;
@@ -68,20 +64,6 @@ public interface TokenStrategy {
             .setSigningKey(secret)
             .parseClaimsJws(token)
             .getBody();
-    }
-
-    /**
-     * 设置用户代理信息
-     *
-     * @param loginUser 登录信息
-     */
-    default void setUserAgent(LoginUser loginUser) {
-        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
-        loginUser.setIpaddr(ip);
-        loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
-        loginUser.setBrowser(userAgent.getBrowser().getName());
-        loginUser.setOs(userAgent.getOperatingSystem().getName());
     }
 
     /**
