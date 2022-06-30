@@ -13,6 +13,7 @@ public enum OrderSubStatus {
     REVOKE(21, "撤销"),
     OVERTIME_DELIVERY(22, "超时发货"),
     OVERTIME_STREAMING(23, "超时流拍"),
+    AFTER_CANCEL(24, "售后-取消订单"),
     PENDING_ORDER(30, "待抢单"),
     TO_BE_CONFIRMED(31, "待确认"),
     /**
@@ -27,6 +28,7 @@ public enum OrderSubStatus {
     PART_SHIPMENTS(42, "部分发货"),
     /** 部分收货 */
     PART_RECEIVING(43, "部分收货"),
+    AFTER_SHIPMENTS(44, "售后-重新发货"),
 
     /**
      * 已发货待提交串码
