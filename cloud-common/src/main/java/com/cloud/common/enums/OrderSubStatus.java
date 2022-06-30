@@ -29,6 +29,7 @@ public enum OrderSubStatus {
     /** 部分收货 */
     PART_RECEIVING(43, "部分收货"),
     AFTER_SHIPMENTS(44, "售后-重新发货"),
+    COLLECT_UNDERTAKES_TO(45, "一件代发收货,待发货"),
 
     /**
      * 已发货待提交串码
@@ -38,8 +39,6 @@ public enum OrderSubStatus {
      * 已发货已提交串码
      */
     SEND_COMPLETE_CODE(51, "已发货已完善发货信息"),
-    /** 一件代发无仓收货 */
-    COLLECT_UNDERTAKES_TO(52, "一件代发收货,待发货"),
     /** 一件代发无仓发货 */
     SEND_UNDERTAKES_TO(53, "一件代发已发货"),
     /** 一件代发快递发货 */
