@@ -26,11 +26,6 @@ public class LoginLog implements Serializable {
     private String userName;
 
     /**
-     * 登录状态 0成功 1失败
-     */
-    private String status;
-
-    /**
      * 登录IP地址
      */
     private String ipaddr;
@@ -49,6 +44,11 @@ public class LoginLog implements Serializable {
      * 操作系统
      */
     private String os;
+
+    /**
+     * 登录状态 0成功 1失败
+     */
+    private String status;
 
     /**
      * 提示消息

@@ -29,11 +29,6 @@ public class OperateLog implements Serializable {
     private Integer businessType;
 
     /**
-     * 业务类型数组
-     */
-    private Integer[] businessTypes;
-
-    /**
      * 请求方法
      */
     private String method;
