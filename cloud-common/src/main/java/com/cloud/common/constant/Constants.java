@@ -2,6 +2,8 @@ package com.cloud.common.constant;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 通用常量信息
@@ -51,7 +53,7 @@ public class Constants {
     /**
      * sys-user 日志
      */
-    public static final String SYS_USER_LOG = "sys-user";
+    public static final Logger SYS_LOG = LoggerFactory.getLogger("sys-user");
 
     /**
      * 登录成功
