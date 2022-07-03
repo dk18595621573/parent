@@ -1,5 +1,6 @@
 package com.cloud.webmvc.domain;
 
+import com.cloud.common.core.domain.model.BaseRequestInfo;
 import com.cloud.common.core.domain.model.Dept;
 import com.cloud.common.core.domain.model.RequestUser;
 import com.cloud.common.core.domain.model.Role;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -50,6 +52,15 @@ public class LoginUser extends RequestUser implements UserDetails {
         this.setDept(dept);
         this.setRoles(roles);
         this.password = password;
+    }
+
+    public void fromRequestInfo(BaseRequestInfo requestInfo) {
+        if (Objects.nonNull(requestInfo)) {
+            this.setIpaddr(requestInfo.getIpaddr());
+            this.setLoginLocation(requestInfo.getLoginLocation());
+            this.setBrowser(requestInfo.getBrowser());
+            this.setOs(requestInfo.getOs());
+        }
     }
 
     /**

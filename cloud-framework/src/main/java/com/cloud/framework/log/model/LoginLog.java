@@ -1,10 +1,12 @@
 package com.cloud.framework.log.model;
 
+import com.cloud.common.core.domain.model.BaseRequestInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author author
@@ -80,4 +82,13 @@ public class LoginLog implements Serializable {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+    public void fromRequestInfo(BaseRequestInfo requestInfo) {
+        if (Objects.nonNull(requestInfo)) {
+            this.setIpaddr(requestInfo.getIpaddr());
+            this.setLoginLocation(requestInfo.getLoginLocation());
+            this.setBrowser(requestInfo.getBrowser());
+            this.setOs(requestInfo.getOs());
+        }
+    }
 }

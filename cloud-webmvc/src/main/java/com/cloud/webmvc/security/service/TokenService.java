@@ -28,14 +28,19 @@ public class TokenService {
     private TokenStrategy tokenStrategy;
 
     public BaseRequestInfo buildRequestInfo() {
-        BaseRequestInfo requestInfo = new BaseRequestInfo();
-        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader(HttpHeaders.USER_AGENT));
-        String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
-        requestInfo.setIpaddr(ip);
-        requestInfo.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
-        requestInfo.setBrowser(userAgent.getBrowser().getName());
-        requestInfo.setOs(userAgent.getOperatingSystem().getName());
-        return requestInfo;
+        try {
+            BaseRequestInfo requestInfo = new BaseRequestInfo();
+            UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader(HttpHeaders.USER_AGENT));
+            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+            requestInfo.setIpaddr(ip);
+            requestInfo.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
+            requestInfo.setBrowser(userAgent.getBrowser().getName());
+            requestInfo.setOs(userAgent.getOperatingSystem().getName());
+            return requestInfo;
+        } catch (Exception e) {
+            log.warn("获取客户端信息失败:", e);
+            return null;
+        }
     }
     /**
      * 获取用户身份信息
