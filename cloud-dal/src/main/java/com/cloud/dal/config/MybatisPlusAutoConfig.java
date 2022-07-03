@@ -4,19 +4,14 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.cloud.dal.mybatis.MetaObjectHandlerAdapter;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * MybatisPlusAutoConfig.
  *
  * @author zenghao
  */
-@Configuration
-// 指定要扫描的Mapper类的包的路径
-@MapperScan("com.cloud.**.mapper")
 public class MybatisPlusAutoConfig {
 
     /**
