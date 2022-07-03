@@ -1,16 +1,16 @@
 package com.cloud.generator.domain;
 
-import javax.validation.constraints.NotBlank;
-
-import com.cloud.dal.model.BaseEntity;
 import com.cloud.common.utils.StringUtils;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
  * 代码生成业务字段表 gen_table_column
  *
  * @author author
  */
-public class GenTableColumn extends BaseEntity {
+public class GenTableColumn implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

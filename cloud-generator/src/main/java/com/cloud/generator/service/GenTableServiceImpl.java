@@ -2,6 +2,7 @@ package com.cloud.generator.service;
 
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
+import com.cloud.generator.config.GenConfig;
 import com.cloud.generator.domain.GenTable;
 import com.cloud.generator.domain.GenTableColumn;
 import com.cloud.generator.mapper.GenTableMapper;
@@ -9,6 +10,7 @@ import com.cloud.generator.util.GenUtils;
 import com.cloud.generator.util.VelocityInitializer;
 import com.cloud.generator.util.VelocityUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -38,18 +40,13 @@ public class GenTableServiceImpl implements IGenTableService {
     @Autowired
     private GenTableMapper genTableMapper;
 
-    /**
-     * 查询据库列表
-     *
-     * @param tableNames 表名称组
-     * @return 数据库表集合
-     */
     @Override
-    public List<GenTable> selectDbTableListByNames(String[] tableNames) {
+    public void genCode(final String[] tableNames, final GenConfig genConfig) throws FileNotFoundException {
         List<GenTable> tableList = genTableMapper.selectDbTableListByNames(tableNames);
+        GenConfig config = ObjectUtils.defaultIfNull(genConfig, GenConfig.defaultConfig());
         for (GenTable table : tableList) {
             String tableName = table.getTableName();
-            GenUtils.initTable(table, 1L);
+            GenUtils.initTable(table, config);
             // 保存列信息
             List<GenTableColumn> genTableColumns = genTableMapper.selectDbTableColumnsByName(tableName);
             for (GenTableColumn column : genTableColumns) {
@@ -57,19 +54,7 @@ public class GenTableServiceImpl implements IGenTableService {
             }
             table.setColumns(genTableColumns);
         }
-        return tableList;
-    }
-
-
-    /**
-     * 批量生成代码（下载方式）
-     *
-     * @param tableList 表数组
-     * @return 数据
-     */
-    @Override
-    public void downloadCode(List<GenTable> tableList, String path) throws FileNotFoundException {
-        OutputStream outputStream = new FileOutputStream(path);
+        OutputStream outputStream = new FileOutputStream(config.getPath());
         ZipOutputStream zip = new ZipOutputStream(outputStream);
         for (GenTable genTable : tableList) {
             generatorCode(genTable, zip);

@@ -1,60 +1,45 @@
 package com.cloud.generator.config;
 
+import lombok.Data;
+
 /**
  * 读取代码生成相关配置
  *
  * @author author
  */
+@Data
 public class GenConfig {
     /**
      * 作者
      */
-    public static String author;
+    private String author;
 
     /**
      * 生成包路径
      */
-    public static String packageName;
+    private String packageName;
 
     /**
      * 自动去除表前缀，默认是false
      */
-    public static boolean autoRemovePre;
+    private boolean autoRemovePre;
 
     /**
      * 表前缀(类名不会包含表前缀)
      */
-    public static String tablePrefix;
+    private String tablePrefix;
 
-    public static String getAuthor() {
-        return author;
+    /**
+     * 代码保存地址
+     */
+    private String path;
+
+    public static GenConfig defaultConfig() {
+        GenConfig config = new GenConfig();
+        config.setAuthor("generator");
+        config.setPackageName("con.cloud");
+        config.setPath(System.getProperty("user.home"));
+        return config;
     }
 
-    public static void setAuthor(String author) {
-        GenConfig.author = author;
-    }
-
-    public static String getPackageName() {
-        return packageName;
-    }
-
-    public static void setPackageName(String packageName) {
-        GenConfig.packageName = packageName;
-    }
-
-    public static boolean getAutoRemovePre() {
-        return autoRemovePre;
-    }
-
-    public static void setAutoRemovePre(boolean autoRemovePre) {
-        GenConfig.autoRemovePre = autoRemovePre;
-    }
-
-    public static String getTablePrefix() {
-        return tablePrefix;
-    }
-
-    public static void setTablePrefix(String tablePrefix) {
-        GenConfig.tablePrefix = tablePrefix;
-    }
 }

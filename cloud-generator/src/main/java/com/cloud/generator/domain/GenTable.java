@@ -2,9 +2,9 @@ package com.cloud.generator.domain;
 
 import com.cloud.common.constant.GenConstants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.dal.model.BaseEntity;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author author
  */
-public class GenTable extends BaseEntity {
+public class GenTable implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

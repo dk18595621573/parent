@@ -18,14 +18,13 @@ public class GenUtils {
     /**
      * 初始化表信息
      */
-    public static void initTable(GenTable genTable, Long operId) {
-        genTable.setClassName(convertClassName(genTable.getTableName()));
-        genTable.setPackageName(GenConfig.getPackageName());
-        genTable.setModuleName(getModuleName(GenConfig.getPackageName()));
+    public static void initTable(GenTable genTable, GenConfig genConfig) {
+        genTable.setClassName(convertClassName(genTable.getTableName(), genConfig));
+        genTable.setPackageName(genConfig.getPackageName());
+        genTable.setModuleName(getModuleName(genConfig.getPackageName()));
         genTable.setBusinessName(getBusinessName(genTable.getTableName()));
         genTable.setFunctionName(replaceText(genTable.getTableComment()));
-        genTable.setFunctionAuthor(GenConfig.getAuthor());
-        genTable.setCreateBy(operId);
+        genTable.setFunctionAuthor(genConfig.getAuthor());
     }
 
     /**
@@ -35,7 +34,6 @@ public class GenUtils {
         String dataType = getDbType(column.getColumnType());
         String columnName = column.getColumnName();
         column.setTableId(table.getTableId());
-        column.setCreateBy(table.getCreateBy());
         // 设置java字段名
         column.setJavaField(StringUtils.toCamelCase(columnName));
         // 设置默认类型
@@ -152,9 +150,9 @@ public class GenUtils {
      * @param tableName 表名称
      * @return 类名
      */
-    public static String convertClassName(String tableName) {
-        boolean autoRemovePre = GenConfig.getAutoRemovePre();
-        String tablePrefix = GenConfig.getTablePrefix();
+    public static String convertClassName(String tableName, GenConfig genConfig) {
+        boolean autoRemovePre = genConfig.isAutoRemovePre();
+        String tablePrefix = genConfig.getTablePrefix();
         if (autoRemovePre && StringUtils.isNotEmpty(tablePrefix)) {
             String[] searchList = StringUtils.split(tablePrefix, ",");
             tableName = replaceFirst(tableName, searchList);
