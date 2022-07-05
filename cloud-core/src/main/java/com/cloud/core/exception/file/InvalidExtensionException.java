@@ -1,4 +1,4 @@
-package com.cloud.common.exception.file;
+package com.cloud.core.exception.file;
 
 import java.util.Arrays;
 

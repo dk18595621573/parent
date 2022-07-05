@@ -3,7 +3,7 @@ package com.cloud.webmvc.security.service;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.core.domain.model.BaseRequestInfo;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.spring.SpringUtils;
+import com.cloud.core.utils.SpringUtils;
 import com.cloud.core.log.LogService;
 import com.cloud.core.log.model.LoginLog;
 import com.cloud.core.log.model.OperateLog;

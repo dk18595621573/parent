@@ -1,7 +1,7 @@
 package com.cloud.core.manager;
 
 import com.cloud.common.utils.Threads;
-import com.cloud.common.utils.spring.SpringUtils;
+import com.cloud.core.utils.SpringUtils;
 
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;

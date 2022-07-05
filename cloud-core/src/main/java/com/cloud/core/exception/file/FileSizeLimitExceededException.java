@@ -1,4 +1,4 @@
-package com.cloud.common.exception.file;
+package com.cloud.core.exception.file;
 
 /**
  * 文件名大小限制异常类

@@ -2,7 +2,6 @@ package com.cloud.generator.domain;
 
 import com.cloud.common.utils.StringUtils;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -46,7 +45,6 @@ public class GenTableColumn implements Serializable {
     /**
      * JAVA字段名
      */
-    @NotBlank(message = "Java属性不能为空")
     private String javaField;
 
     /**

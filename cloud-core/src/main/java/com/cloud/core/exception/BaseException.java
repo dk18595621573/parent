@@ -1,6 +1,6 @@
-package com.cloud.common.exception.base;
+package com.cloud.core.exception;
 
-import com.cloud.common.utils.MessageUtils;
+import com.cloud.core.utils.MessageUtils;
 import com.cloud.common.utils.StringUtils;
 
 /**
@@ -57,7 +57,7 @@ public class BaseException extends RuntimeException {
     @Override
     public String getMessage() {
         String message = null;
-        if (!StringUtils.isEmpty(code)) {
+        if (StringUtils.isNotEmpty(code)) {
             message = MessageUtils.message(code, args);
         }
         if (message == null) {

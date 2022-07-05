@@ -1,4 +1,4 @@
-package com.cloud.common.exception.user;
+package com.cloud.core.exception.user;
 
 /**
  * 用户密码不正确或不符合规范异常类

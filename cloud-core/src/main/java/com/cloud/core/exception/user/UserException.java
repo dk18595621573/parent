@@ -1,6 +1,6 @@
-package com.cloud.common.exception.user;
+package com.cloud.core.exception.user;
 
-import com.cloud.common.exception.base.BaseException;
+import com.cloud.core.exception.BaseException;
 
 /**
  * 用户信息异常类

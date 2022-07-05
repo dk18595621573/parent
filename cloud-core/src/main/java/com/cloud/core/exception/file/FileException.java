@@ -1,6 +1,6 @@
-package com.cloud.common.exception.file;
+package com.cloud.core.exception.file;
 
-import com.cloud.common.exception.base.BaseException;
+import com.cloud.core.exception.BaseException;
 
 /**
  * 文件信息异常类

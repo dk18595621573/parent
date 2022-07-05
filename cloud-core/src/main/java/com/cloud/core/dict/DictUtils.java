@@ -6,7 +6,7 @@ import java.util.List;
 import cn.hutool.core.collection.CollUtil;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.spring.SpringUtils;
+import com.cloud.core.utils.SpringUtils;
 import com.cloud.core.redis.RedisCache;
 
 /**

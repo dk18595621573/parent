@@ -1,4 +1,4 @@
-package com.cloud.common.exception.user;
+package com.cloud.core.exception.user;
 
 /**
  * 验证码错误异常类
