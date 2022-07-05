@@ -1,11 +1,10 @@
 package com.cloud.core.redis;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,11 +18,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @author author
  **/
-@SuppressWarnings(value = {"unchecked", "rawtypes"})
-@Component
+@AllArgsConstructor
 public class RedisCache {
-    @Autowired
-    public RedisTemplate redisTemplate;
+    public final RedisTemplate redisTemplate;
 
     /**
      * 缓存基本的对象，Integer、String、实体类等

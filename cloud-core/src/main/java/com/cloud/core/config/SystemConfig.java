@@ -2,7 +2,6 @@ package com.cloud.core.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -12,7 +11,6 @@ import java.io.Serializable;
  * @author author
  */
 @Data
-@Component
 @ConfigurationProperties(prefix = "cloud.system")
 public class SystemConfig {
     /**
