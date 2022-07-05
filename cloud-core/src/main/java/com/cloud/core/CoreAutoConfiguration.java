@@ -1,5 +1,6 @@
 package com.cloud.core;
 
+import com.cloud.common.utils.spring.SpringUtils;
 import com.cloud.core.config.RedisConfig;
 import com.cloud.core.config.SystemConfig;
 import com.cloud.core.config.ThreadPoolConfig;
@@ -30,6 +31,11 @@ public class CoreAutoConfiguration {
     @ConditionalOnMissingBean
     public LogService logService() {
         return new SimpleLogServiceImpl();
+    }
+
+    @Bean
+    public SpringUtils springUtils() {
+        return new SpringUtils();
     }
 
     @Bean
