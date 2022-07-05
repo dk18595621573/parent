@@ -1,7 +1,7 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.common.config.SystemConfig;
-import com.cloud.framework.redis.RedisCache;
+import com.cloud.core.config.SystemConfig;
+import com.cloud.core.redis.RedisCache;
 import com.cloud.webmvc.security.service.TokenStrategy;
 import com.cloud.webmvc.security.service.strategy.RedisTokenStrategy;
 import com.cloud.webmvc.security.service.strategy.SimpleTokenStrategy;

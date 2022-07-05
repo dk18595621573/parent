@@ -1,7 +1,7 @@
 package com.cloud.webmvc.utils.ip;
 
 import cn.hutool.http.HttpUtil;
-import com.cloud.common.config.SystemConfig;
+import com.cloud.core.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;

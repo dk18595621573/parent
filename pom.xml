@@ -261,7 +261,7 @@
             <!-- 组件扩展-->
             <dependency>
                 <groupId>com.cloud</groupId>
-                <artifactId>cloud-framework</artifactId>
+                <artifactId>cloud-core</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
 
@@ -307,7 +307,7 @@
 
     <modules>
         <module>cloud-common</module>
-        <module>cloud-framework</module>
+        <module>cloud-core</module>
         <module>cloud-webmvc</module>
         <module>cloud-generator</module>
         <module>cloud-dal</module>

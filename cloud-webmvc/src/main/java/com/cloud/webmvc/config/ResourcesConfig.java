@@ -1,6 +1,6 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.common.config.SystemConfig;
+import com.cloud.core.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.webmvc.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

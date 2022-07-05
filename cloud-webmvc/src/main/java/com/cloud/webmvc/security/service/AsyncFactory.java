@@ -4,9 +4,9 @@ import com.cloud.common.constant.Constants;
 import com.cloud.common.core.domain.model.BaseRequestInfo;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.spring.SpringUtils;
-import com.cloud.framework.log.LogService;
-import com.cloud.framework.log.model.LoginLog;
-import com.cloud.framework.log.model.OperateLog;
+import com.cloud.core.log.LogService;
+import com.cloud.core.log.model.LoginLog;
+import com.cloud.core.log.model.OperateLog;
 import com.cloud.webmvc.utils.ip.AddressUtils;
 
 import java.util.TimerTask;

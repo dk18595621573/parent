@@ -1,12 +1,12 @@
 package com.cloud.webmvc.utils;
 
-import com.cloud.common.config.SystemConfig;
+import com.cloud.core.config.SystemConfig;
 import com.cloud.common.exception.file.FileNameLengthLimitExceededException;
 import com.cloud.common.exception.file.FileSizeLimitExceededException;
 import com.cloud.common.exception.file.InvalidExtensionException;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.file.FileUtils;
+import com.cloud.core.utils.FileUtils;
 import com.cloud.common.utils.file.MimeTypeUtils;
 import com.cloud.common.utils.uuid.Seq;
 import org.apache.commons.io.FilenameUtils;

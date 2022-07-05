@@ -1,6 +1,6 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.common.config.SystemConfig;
+import com.cloud.core.config.SystemConfig;
 import com.cloud.webmvc.filter.JwtAuthenticationTokenFilter;
 import com.cloud.webmvc.security.handle.AuthenticationEntryPointImpl;
 import com.cloud.webmvc.security.handle.LogoutSuccessHandlerImpl;
