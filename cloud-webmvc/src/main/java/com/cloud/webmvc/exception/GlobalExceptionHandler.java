@@ -4,6 +4,7 @@ import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.exception.DemoModeException;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.common.utils.StringUtils;
+import com.cloud.core.exception.BaseException;
 import com.cloud.webmvc.domain.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,16 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage(), e);
         Integer code = e.getCode();
         return StringUtils.isNotNull(code) ? Result.error(code, e.getMessage()) : Result.error(e.getMessage());
+    }
+
+    /**
+     * 模块业务异常
+     */
+    @ExceptionHandler(BaseException.class)
+    public Result<?> handleBaseException(BaseException e) {
+        String message = e.getMessage();
+        log.error("[{}]模块出现异常【{}】【{}】:", e.getModule(), message, e.getArgs(), e);
+        return Result.error(message);
     }
 
     /**
