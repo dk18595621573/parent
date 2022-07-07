@@ -29,7 +29,12 @@ import static com.google.code.kaptcha.Constants.KAPTCHA_TEXTPRODUCER_IMPL;
  */
 @Configuration
 public class CaptchaConfig {
-    @Bean(name = "captchaProducer")
+
+    public static final String CAPTCHA_PRODUCER = "captchaProducer";
+
+    public static final String MATH_CAPTCHA_PRODUCER = "captchaProducerMath";
+
+    @Bean(name = CAPTCHA_PRODUCER)
     public DefaultKaptcha getKaptchaBean() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
@@ -56,7 +61,7 @@ public class CaptchaConfig {
         return defaultKaptcha;
     }
 
-    @Bean(name = "captchaProducerMath")
+    @Bean(name = MATH_CAPTCHA_PRODUCER)
     public DefaultKaptcha getKaptchaBeanMath() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
@@ -75,7 +80,7 @@ public class CaptchaConfig {
         // KAPTCHA_SESSION_KEY
         properties.setProperty(KAPTCHA_SESSION_CONFIG_KEY, "kaptchaCodeMath");
         // 验证码文本生成器
-        properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, "com.cloud.webmvc.config.KaptchaTextCreator");
+        properties.setProperty(KAPTCHA_TEXTPRODUCER_IMPL, KaptchaTextCreator.class.getName());
         // 验证码文本字符间距 默认为2
         properties.setProperty(KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "3");
         // 验证码文本字符长度 默认为5
