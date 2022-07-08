@@ -24,4 +24,13 @@ public enum PurchaseType {
     public String getMsg() {
         return msg;
     }
+
+    public static PurchaseType fromCode(Integer code) {
+        for (PurchaseType type : PurchaseType.values()) {
+            if (type.getCode().equals(code)) {
+                return type;
+            }
+        }
+        return PURCHASE_WAREHOUSING;
+    }
 }
