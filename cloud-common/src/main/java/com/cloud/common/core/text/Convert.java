@@ -1,14 +1,15 @@
 package com.cloud.common.core.text;
 
+import com.cloud.common.utils.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.Set;
-
-import com.cloud.common.utils.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
 
 /**
  * 类型转换器
@@ -646,7 +647,7 @@ public class Convert {
      * @return 字符串
      */
     public static String utf8Str(Object obj) {
-        return str(obj, CharsetKit.CHARSET_UTF_8);
+        return str(obj, StandardCharsets.UTF_8);
     }
 
     /**
