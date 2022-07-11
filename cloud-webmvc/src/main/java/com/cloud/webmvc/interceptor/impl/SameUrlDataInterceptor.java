@@ -1,6 +1,6 @@
 package com.cloud.webmvc.interceptor.impl;
 
-import com.cloud.common.annotation.RepeatSubmit;
+import com.cloud.webmvc.annotation.RepeatSubmit;
 import com.cloud.core.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.core.redis.RedisCache;

@@ -1,6 +1,6 @@
 package com.cloud.webmvc.aspect;
 
-import com.cloud.common.annotation.Log;
+import com.cloud.webmvc.annotation.Log;
 import com.cloud.common.enums.BusinessStatus;
 import com.cloud.common.enums.HttpMethod;
 import com.cloud.common.utils.json.JsonUtil;

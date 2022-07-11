@@ -1,6 +1,6 @@
 package com.cloud.webmvc.interceptor;
 
-import com.cloud.common.annotation.RepeatSubmit;
+import com.cloud.webmvc.annotation.RepeatSubmit;
 import com.cloud.common.core.domain.AjaxResult;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.webmvc.utils.ServletUtils;

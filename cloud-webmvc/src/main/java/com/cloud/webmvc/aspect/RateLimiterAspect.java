@@ -1,6 +1,6 @@
 package com.cloud.webmvc.aspect;
 
-import com.cloud.common.annotation.RateLimiter;
+import com.cloud.webmvc.annotation.RateLimiter;
 import com.cloud.common.enums.LimitType;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.webmvc.utils.ServletUtils;
