@@ -46,9 +46,8 @@ public class RedisTokenStrategy implements TokenStrategy {
 
         @Override
         public String createToken(final LoginUser loginUser) {
-            String token = IdUtils.fastUUID();
+            String token = IdUtils.simpleUUID() + "-" + loginUser.getUserId();
             loginUser.setToken(token);
-            // setUserAgent(loginUser);
             refreshToken(loginUser);
             Map<String, Object> claims = new HashMap<>();
             claims.put(Constants.LOGIN_USER_KEY, token);
