@@ -28,10 +28,7 @@ public class ExceptionUtil {
             return "";
         }
         String msg = root.getMessage();
-        if (msg == null) {
-            return "null";
-        }
-        return StringUtils.defaultString(msg);
+        return StringUtils.defaultString(msg, "null");
     }
 
     /**

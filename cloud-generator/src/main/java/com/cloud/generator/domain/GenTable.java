@@ -1,6 +1,6 @@
 package com.cloud.generator.domain;
 
-import com.cloud.common.constant.GenConstants;
+import com.cloud.generator.util.GenConstants;
 import com.cloud.common.utils.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 

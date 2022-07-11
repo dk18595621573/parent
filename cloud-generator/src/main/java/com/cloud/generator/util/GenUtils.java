@@ -1,6 +1,5 @@
 package com.cloud.generator.util;
 
-import com.cloud.common.constant.GenConstants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.generator.config.GenConfig;
 import com.cloud.generator.domain.GenTable;

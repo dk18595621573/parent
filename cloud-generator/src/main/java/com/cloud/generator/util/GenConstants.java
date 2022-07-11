@@ -1,4 +1,4 @@
-package com.cloud.common.constant;
+package com.cloud.generator.util;
 
 /**
  * 代码生成通用常量
