@@ -33,8 +33,8 @@ public enum OrderSubStatus {
      * 已提交串码
      */
     COMPLETE_CODE(41, "已完善发货信息"),
-    /** 部分发货 */
-    PART_SHIPMENTS(42, "部分发货"),
+    /** 已填写快递信息，还未填写串码 */
+    PART_SHIPMENTS(42, "已操作，未填写串码"),
     /** 部分收货 */
     PART_RECEIVING(43, "未发货,部分收货"),
     /** 售后-重新发货 */
