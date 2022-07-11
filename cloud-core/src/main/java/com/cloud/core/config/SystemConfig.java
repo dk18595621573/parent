@@ -1,5 +1,7 @@
 package com.cloud.core.config;
 
+import com.cloud.common.utils.RedisKeyUtil;
+import com.cloud.common.utils.StringUtils;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -158,6 +160,12 @@ public class SystemConfig {
          */
         private String cachePrefix = "login_tokens";
 
+        public void setCachePrefix(final String cachePrefix) {
+            this.cachePrefix = cachePrefix;
+            if (!StringUtils.endsWith(cachePrefix, RedisKeyUtil.DELIMITER)) {
+                this.cachePrefix = cachePrefix + RedisKeyUtil.DELIMITER;
+            }
+        }
     }
 
     @Data
