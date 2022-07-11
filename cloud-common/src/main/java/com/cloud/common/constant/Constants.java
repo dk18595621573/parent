@@ -81,11 +81,6 @@ public class Constants {
     public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
 
     /**
-     * 登录用户 redis key
-     */
-    public static final String LOGIN_TOKEN_KEY = "login_tokens:";
-
-    /**
      * 防重提交 redis key
      */
     public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";

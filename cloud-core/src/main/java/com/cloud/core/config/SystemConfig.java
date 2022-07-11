@@ -153,6 +153,11 @@ public class SystemConfig {
          */
         private boolean cached = true;
 
+        /**
+         * 缓存前缀
+         */
+        private String cachePrefix = "login_tokens";
+
     }
 
     @Data

@@ -1,5 +1,6 @@
 package com.cloud.webmvc.security.service.strategy;
 
+import com.cloud.common.utils.RedisKeyUtil;
 import com.cloud.core.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
@@ -38,7 +39,7 @@ public class RedisTokenStrategy implements TokenStrategy {
                     String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                     String userKey = getTokenKey(uuid);
                     return redisCache.getCacheObject(userKey);
-                } catch (Exception e) {
+                } catch (Exception ignored) {
                 }
             }
             return null;
@@ -76,7 +77,7 @@ public class RedisTokenStrategy implements TokenStrategy {
         }
 
         private String getTokenKey(String uuid) {
-            return Constants.LOGIN_TOKEN_KEY + uuid;
+            return RedisKeyUtil.generate(tokenProperties.getCachePrefix(), uuid);
         }
 
     }
