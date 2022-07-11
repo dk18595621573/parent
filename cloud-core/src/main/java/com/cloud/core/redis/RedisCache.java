@@ -208,9 +208,9 @@ public class RedisCache {
      * @param key
      * @param hKey
      */
-    public void delCacheMapValue(final String key, final String hKey) {
+    public void delCacheMapValue(final String key, final String... hKey) {
         HashOperations hashOperations = redisTemplate.opsForHash();
-        hashOperations.delete(key, hKey);
+        hashOperations.delete(key, (Object[]) hKey);
     }
 
     /**
