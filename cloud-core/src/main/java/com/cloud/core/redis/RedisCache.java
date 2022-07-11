@@ -203,6 +203,17 @@ public class RedisCache {
     }
 
     /**
+     * 获取Hash中的key
+     *
+     * @param key hash表的key
+     * @return Hash中的key列表
+     */
+    public <T> Set<T> getCacheMapKeys(final String key) {
+        HashOperations hashOperations = redisTemplate.opsForHash();
+        return hashOperations.keys(key);
+    }
+
+    /**
      * 删除Hash中的数据
      *
      * @param key
