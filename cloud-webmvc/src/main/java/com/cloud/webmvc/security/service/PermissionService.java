@@ -1,6 +1,7 @@
 package com.cloud.webmvc.security.service;
 
 import cn.hutool.core.collection.CollUtil;
+import com.cloud.common.core.domain.model.Role;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.domain.LoginUser;
 import com.cloud.webmvc.utils.SecurityUtils;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
@@ -55,7 +58,7 @@ public class PermissionService {
      * @return 用户是否不具备某权限
      */
     public boolean lacksPermi(String permission) {
-        return hasPermi(permission) != true;
+        return !hasPermi(permission);
     }
 
     /**
@@ -115,7 +118,8 @@ public class PermissionService {
         if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getRoles())) {
             return false;
         }
-        return CollUtil.containsAny(loginUser.getRoles(), Arrays.asList(roles.split(ROLE_DELIMETER)));
+        List<String> roleList = loginUser.getRoles().stream().map(Role::getRoleKey).collect(Collectors.toList());
+        return CollUtil.containsAny(roleList, Arrays.asList(roles.split(ROLE_DELIMETER)));
     }
 
     /**
