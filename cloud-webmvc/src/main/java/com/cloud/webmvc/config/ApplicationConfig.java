@@ -3,6 +3,7 @@ package com.cloud.webmvc.config;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.core.config.SystemConfig;
 import com.cloud.core.redis.RedisCache;
+import com.cloud.webmvc.filter.HeaderFilter;
 import com.cloud.webmvc.filter.RepeatableFilter;
 import com.cloud.webmvc.filter.XssFilter;
 import com.cloud.webmvc.security.service.TokenStrategy;
@@ -114,7 +115,17 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public FilterRegistrationBean<RepeatableFilter> someFilterRegistration() {
+    public FilterRegistrationBean<HeaderFilter> headerFilterRegistration() {
+        FilterRegistrationBean<HeaderFilter> registration = new FilterRegistrationBean<>();
+        registration.setFilter(new HeaderFilter());
+        registration.addUrlPatterns("/*");
+        registration.setName("headerFilter");
+        registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
+        return registration;
+    }
+
+    @Bean
+    public FilterRegistrationBean<RepeatableFilter> repeatableFilterRegistration() {
         FilterRegistrationBean<RepeatableFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new RepeatableFilter());
         registration.addUrlPatterns("/*");
