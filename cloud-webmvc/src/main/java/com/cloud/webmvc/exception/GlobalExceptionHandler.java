@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * 全局异常处理器
@@ -71,7 +72,7 @@ public class GlobalExceptionHandler {
      * 拦截未知的运行时异常
      */
     @ExceptionHandler(RuntimeException.class)
-    public Result handleRuntimeException(RuntimeException e, HttpServletRequest request) {
+    public Result<?> handleRuntimeException(RuntimeException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',发生未知异常.", requestURI, e);
         return Result.error("操作异常，请联系管理员");
@@ -105,6 +106,15 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage(), e);
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
         return Result.error(message);
+    }
+
+    /**
+     * IO异常
+     */
+    @ExceptionHandler(IOException.class)
+    public void handleIOException(IOException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.warn("请求地址'{}',发生IO异常.", requestURI, e);
     }
 
     /**
