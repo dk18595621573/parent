@@ -40,11 +40,11 @@ public abstract class DelayedTask<T> implements InitializingBean {
         RBlockingQueue<T> blockingQueue = redissonClient.getBlockingQueue(getTaskGroup());
         blockingQueue.subscribeOnElements(data -> {
             try {
-                log.info("延时队列【{}】开始消费:{}", getTaskGroup(), data);
+                log.info("延时队列开始消费【{}】:{}", getTaskGroup(), data);
                 consumer(data);
-                log.info("延时队列【{}】完成消费:{}", getTaskGroup(), data);
+                log.info("延时队列完成消费【{}】:{}", getTaskGroup(), data);
             } catch (Exception e) {
-                log.error("延时队列【{}】消费异常【{}】:", getTaskGroup(), data, e);
+                log.error("延时队列消费异常【{}】【{}】:", getTaskGroup(), data, e);
                 handleException(data, e);
             }
         });
