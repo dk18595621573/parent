@@ -114,7 +114,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IOException.class)
     public void handleIOException(IOException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        log.warn("请求地址'{}',发生IO异常.", requestURI, e);
+        log.warn("请求地址'{}',发生IO异常:{}", requestURI, e.getMessage());
     }
 
     /**
