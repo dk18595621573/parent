@@ -18,12 +18,12 @@ public class SseData implements Serializable {
      * 指定客户端
      */
     @JsonIgnore
-    public String client;
+    private String client;
 
     /**
      * 指定客户端后缀
      */
     @JsonIgnore
-    public String suffix;
+    private String suffix;
 
 }
