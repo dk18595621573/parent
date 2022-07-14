@@ -9,7 +9,8 @@ public enum ImeiVerifyStatus {
     STAY_AUDIT(1, "待审核"),
     STAY_AFFIRM(2, "待确认"),
     NORMAL(3, "正常"),
-    ABNORMAL(4, "异常");
+    ABNORMAL(4, "异常"),
+    ABORT(5, "3023串码异常");
 
     private final Integer code;
     private final String msg;
