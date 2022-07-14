@@ -15,7 +15,12 @@ import java.util.Date;
  * @date 2022/7/14
  */
 @Data
-public class SupplierOrder extends SseData {
+public class SupplierOrder implements Serializable {
+
+    /**
+     * 指定客户端后缀
+     */
+    private String suffix;
 
     public static final int STATUS_ADD = 1;
     public static final int STATUS_MODIFY = 2;

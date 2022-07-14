@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 支付结果推送.
  *
@@ -13,7 +15,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PayResult extends SseData {
+public class PayResult implements Serializable {
+    /**
+     * 指定客户端
+     */
+    private String client;
+
 
     private Boolean success;
 }

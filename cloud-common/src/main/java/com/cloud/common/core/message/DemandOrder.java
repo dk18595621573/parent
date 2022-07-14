@@ -15,7 +15,7 @@ import java.util.List;
  * @date 2022/7/14
  */
 @Data
-public class DemandOrder extends SseData {
+public class DemandOrder implements Serializable {
 
     /**
      * 原状态（0：已删除；1: 未报价；2: 待发布；3:报价中；4:待发货；5: 已发货；6:已完成）
