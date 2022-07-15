@@ -174,7 +174,7 @@ public class Constants {
     /**
      * 电话手机号正则校验表达式
      */
-    public static final String phoneRegex = "^(0\\d{2,3}-\\d{5,9}|1[3-9]\\d{9})$";
+    public static final String phoneRegex = "^(0\\d{2,3}-\\d{5,9}|1[3-9]\\d{9}|1[3-9]\\d{9}-\\d{4,6})$";
 
     /**
      * 是否为管理员
