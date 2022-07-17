@@ -2,6 +2,7 @@ package com.cloud.core.redis;
 
 import com.cloud.common.utils.uuid.IdUtils;
 import com.cloud.core.redis.model.Message;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.InitializingBean;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author zenghao
  * @date 2022/7/14
  */
+@Slf4j
 public abstract class MessageProducer<T> implements InitializingBean {
 
     @Autowired
@@ -28,6 +30,8 @@ public abstract class MessageProducer<T> implements InitializingBean {
     }
 
     public void publish(T data) {
-        blockingQueue.putAsync(new Message<>(IdUtils.simpleUUID(), data));
+        final String uuid = IdUtils.simpleUUID();
+        log.info("消息队列开始生产:[{} -> {}]【{}】", getGroup(), uuid, data);
+        blockingQueue.putAsync(new Message<>(uuid, data));
     }
 }
