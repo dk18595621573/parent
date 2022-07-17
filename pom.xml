@@ -39,6 +39,9 @@
         <redisson.version>3.16.1</redisson.version>
         <xxl-job.version>2.3.0</xxl-job.version>
 
+        <qcloud-cos.version>5.6.28</qcloud-cos.version>
+        <tencentcloud-sdk.version>3.1.507</tencentcloud-sdk.version>
+
         <springboot.version>2.5.13</springboot.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.version>1.18.24</lombok.version>
@@ -115,6 +118,20 @@
                 <groupId>net.java.dev.jna</groupId>
                 <artifactId>jna-platform</artifactId>
                 <version>${jna.version}</version>
+            </dependency>
+
+            <!-- 腾讯云cos -->
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${qcloud-cos.version}</version>
+            </dependency>
+
+            <!-- 腾讯云相关api 发短信-->
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>${tencentcloud-sdk.version}</version>
             </dependency>
 
             <!-- 接口文档 -->
@@ -290,6 +307,13 @@
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>xxljob-spring-boot-starter</artifactId>
+                <version>${cloud-parent.version}</version>
+            </dependency>
+
+            <!-- tencent-starter -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>tencent-spring-boot-starter</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
 
