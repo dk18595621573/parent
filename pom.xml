@@ -39,6 +39,7 @@
         <redisson.version>3.16.1</redisson.version>
         <xxl-job.version>2.3.0</xxl-job.version>
 
+        <easyexcel.version>3.0.5</easyexcel.version>
         <qcloud-cos.version>5.6.28</qcloud-cos.version>
         <tencentcloud-sdk.version>3.1.507</tencentcloud-sdk.version>
 
@@ -254,6 +255,12 @@
                 <version>${kaptcha.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+
             <!-- xxl-job -->
             <dependency>
                 <groupId>com.xuxueli</groupId>
@@ -323,7 +330,6 @@
                 <artifactId>tencent-spring-boot-starter</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
-
 
         </dependencies>
     </dependencyManagement>

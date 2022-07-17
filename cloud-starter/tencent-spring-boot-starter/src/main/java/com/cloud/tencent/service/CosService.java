@@ -6,6 +6,7 @@ import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.COSObject;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectResult;
+import com.qcloud.cos.utils.IOUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -79,19 +80,12 @@ public class CosService {
         try {
             Resource resource = new UrlResource(url);
             inputStream = resource.getInputStream();
-
             return this.upload(inputStream, oldName);
         } catch (IOException e) {
-            log.error("文件【{}】上传到OSS失败,失败原因为：{}", oldName, e);
+            log.error("文件【{}】上传到COS失败,失败原因为：{}", oldName, e);
             return null;
         } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    log.error("关闭inputStream流失败", e);
-                }
-            }
+            IOUtils.closeQuietly(inputStream, log);
         }
     }
 
@@ -132,9 +126,9 @@ public class CosService {
             OutputStream out = new FileOutputStream(tempFile);
             FileCopyUtils.copy(inputStream, out);
 
-            syncUpload(oldName, filePath, tempFile);
+            upload2Cos(oldName, filePath, tempFile);
         } catch (IOException e) {
-            log.error("文件【{}】上传到OSS失败,失败原因为：{}", oldName, e);
+            log.error("文件【{}】上传到COS失败,失败原因为：{}", oldName, e);
             return null;
         }
         return filePath;
@@ -147,21 +141,21 @@ public class CosService {
      * @param filePath 上传文件路径
      * @param tempFile 上传的文件
      */
-    private void syncUpload(final String filename, final String filePath, final File tempFile) {
+    private void upload2Cos(final String filename, final String filePath, final File tempFile) {
         try (InputStream inputStream = new FileInputStream(tempFile)) {
             // 创建上传Object的Metadata
             ObjectMetadata meta = new ObjectMetadata();
             //设置ContentLength
             meta.setContentLength(inputStream.available());
-            log.debug("开始上传：{} 文件至 COS", filename);
+            log.debug("开始上传文件至COS：【{}】", filename);
             PutObjectResult putObjectResult = cosClient.putObject(cosProperties.getBucketName(), filePath, inputStream, meta);
-            log.debug("文件【{}】上传至COS：【{}】 成功，返回数据: {}", filename, filePath, putObjectResult.getETag());
+            log.debug("文件上传至COS：【{}】【{}】 成功，返回数据: {}", filename, filePath, putObjectResult.getETag());
             //上传完成删除临时文件
             if (!tempFile.delete()) {
-                log.warn("删除文件【{}】失败", tempFile.getAbsolutePath());
+                log.warn("删除临时文件【{}】失败", tempFile.getAbsolutePath());
             }
         } catch (Exception e) {
-            log.error("文件【{}】上传到COS失败,失败原因为：{}", filename, e);
+            log.error("文件上传到COS：【{}】失败，失败原因为：", filename, e);
         }
     }
 
@@ -178,7 +172,7 @@ public class CosService {
             StreamUtils.copy(cosObject.getObjectContent(), outputStream);
             return true;
         } catch (Exception e) {
-            log.error("【{}】下载失败,失败原因为：{}", filePath, e);
+            log.error("COS文件【{}】下载失败,失败原因为：", filePath, e);
             return false;
         }
     }
@@ -196,7 +190,7 @@ public class CosService {
             }
             return true;
         } catch (Exception e) {
-            log.error("【{}】删除失败,失败原因为：{}", filePath, e);
+            log.error("COS文件【{}】删除失败,失败原因为：", filePath, e);
             return false;
         }
     }
