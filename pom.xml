@@ -261,6 +261,13 @@
                 <version>${xxl-job.version}</version>
             </dependency>
 
+            <!-- 银联SDK -->
+            <dependency>
+                <groupId>com.chinapay</groupId>
+                <artifactId>chinapaysecure</artifactId>
+                <version>20220618</version>
+            </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.cloud</groupId>
@@ -316,6 +323,7 @@
                 <artifactId>tencent-spring-boot-starter</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
+
 
         </dependencies>
     </dependencyManagement>
