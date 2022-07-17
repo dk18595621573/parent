@@ -35,16 +35,20 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- 腾讯云cos -->
         <dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>cos_api</artifactId>
+            <scope>provided</scope>
         </dependency>
 
-        <!-- 腾讯云相关api 发短信-->
+        <!-- 腾讯云短信-->
         <dependency>
             <groupId>com.tencentcloudapi</groupId>
             <artifactId>tencentcloud-sdk-java</artifactId>
+            <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
 </project>
