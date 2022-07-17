@@ -42,7 +42,7 @@ public class CosService {
     public void createBucket(final String bucketName) {
         boolean exist = cosClient.doesBucketExist(bucketName);
         if (exist) {
-            log.warn("The bucket exist.");
+            log.warn("The bucket [{}] is exist.", bucketName);
             return;
         }
         cosClient.createBucket(bucketName);
@@ -54,7 +54,7 @@ public class CosService {
      * @return cos域名
      */
     public String getCosDomain() {
-        return cosProperties.getCosDomain();
+        return cosProperties.getDomain();
     }
 
     /**

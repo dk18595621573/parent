@@ -22,5 +22,5 @@ public class CosProperties {
     /**
      * cos域名前缀.
      */
-    private String cosDomain;
+    private String domain;
 }
