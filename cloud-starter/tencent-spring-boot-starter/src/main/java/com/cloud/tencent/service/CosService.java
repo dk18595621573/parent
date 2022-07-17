@@ -1,6 +1,6 @@
 package com.cloud.tencent.service;
 
-import com.cloud.tencent.config.CosProperties;
+import com.cloud.tencent.properties.CosProperties;
 import com.cloud.tencent.strategy.RenameStrategy;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.model.COSObject;

@@ -1,4 +1,4 @@
-package com.cloud.tencent.config;
+package com.cloud.tencent.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

@@ -1,6 +1,6 @@
 package com.cloud.tencent.service;
 
-import com.cloud.tencent.config.SmsProperties;
+import com.cloud.tencent.properties.SmsProperties;
 import com.cloud.tencent.model.SmsType;
 import com.tencentcloudapi.sms.v20190711.SmsClient;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsRequest;
