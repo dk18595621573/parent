@@ -117,7 +117,7 @@ public class CosService {
         //设置新的文件名
         String ext = oldName.substring(oldName.lastIndexOf('.') + 1);
         String lastName = renameStrategy.getFileName().rename(oldName);
-        String filePath = String.format("%s/%s.%s", renameStrategy.getFilePath().rename(oldName), lastName, ext);
+        String filePath = String.format("/%s/%s.%s", renameStrategy.getFilePath().rename(oldName), lastName, ext);
 
         try {
             File tempFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ext);
@@ -149,7 +149,7 @@ public class CosService {
             meta.setContentLength(inputStream.available());
             log.debug("开始上传文件至COS：【{}】", filename);
             PutObjectResult putObjectResult = cosClient.putObject(cosProperties.getBucketName(), filePath, inputStream, meta);
-            log.debug("文件上传至COS：【{}】【{}】 成功，返回数据: {}", filename, filePath, putObjectResult.getETag());
+            log.debug("文件上传至COS：【{}】【{}】 成功，返回数据: {}", filename, filePath, putObjectResult.getRequestId());
             //上传完成删除临时文件
             if (!tempFile.delete()) {
                 log.warn("删除临时文件【{}】失败", tempFile.getAbsolutePath());
