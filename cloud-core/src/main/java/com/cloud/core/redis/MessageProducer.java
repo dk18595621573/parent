@@ -32,6 +32,9 @@ public abstract class MessageProducer<T> implements InitializingBean {
     public void publish(T data) {
         final String uuid = IdUtils.simpleUUID();
         log.info("消息队列开始生产:[{} -> {}]【{}】", getGroup(), uuid, data);
-        blockingQueue.putAsync(new Message<>(uuid, data));
+        Message<T> msg = new Message<>();
+        msg.setMsgId(uuid);
+        msg.setData(data);
+        blockingQueue.putAsync(msg);
     }
 }
