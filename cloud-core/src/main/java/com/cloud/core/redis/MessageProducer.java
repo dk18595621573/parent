@@ -37,4 +37,9 @@ public abstract class MessageProducer<T> implements InitializingBean {
         msg.setData(data);
         blockingQueue.putAsync(msg);
     }
+
+    public void publish(Message<T> msg) {
+        log.info("消息队列开始生产:[{} -> {}]【{}】", getGroup(), msg.getMsgId(), msg.getData());
+        blockingQueue.putAsync(msg);
+    }
 }
