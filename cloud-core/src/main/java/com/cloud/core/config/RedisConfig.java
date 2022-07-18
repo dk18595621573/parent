@@ -3,8 +3,6 @@ package com.cloud.core.config;
 import com.cloud.core.redis.JsonRedisTemplate;
 import com.cloud.core.redis.RedisCache;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.codec.JsonJacksonCodec;
-import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
@@ -27,10 +25,10 @@ public class RedisConfig extends CachingConfigurerSupport {
         return new JsonRedisTemplate(connectionFactory);
     }
 
-    @Bean
-    public RedissonAutoConfigurationCustomizer jsonCustomizer() {
-        return (c) -> c.setCodec(new JsonJacksonCodec());
-    }
+//    @Bean
+//    public RedissonAutoConfigurationCustomizer jsonCustomizer() {
+//        return (c) -> c.setCodec(new JsonJacksonCodec());
+//    }
 
     @Bean
     public RedisCache redisCache(RedisTemplate redisTemplate) {
