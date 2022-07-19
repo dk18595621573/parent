@@ -41,16 +41,6 @@ public class SystemConfig {
     private boolean swaggerEnabled;
 
     /**
-     * 快递发送key
-     */
-    private String expressKey;
-
-    /**
-     * 快递发送地址
-     */
-    private String expressUrl;
-
-    /**
      * 本项目域名
      */
     private String domain;

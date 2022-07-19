@@ -1,0 +1,15 @@
+package com.cloud.component;
+
+import com.cloud.component.config.ChinaPayConfig;
+import com.cloud.component.config.ExpressConfig;
+import org.springframework.context.annotation.Import;
+
+/**
+ * 组件库自动装载.
+ *
+ * @author zenghao
+ * @date 2022/7/19
+ */
+@Import(value = {ChinaPayConfig.class, ExpressConfig.class})
+public class ComponentAutoConfiguration {
+}
