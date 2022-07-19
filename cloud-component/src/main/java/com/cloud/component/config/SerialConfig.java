@@ -19,7 +19,7 @@ public class SerialConfig {
 
     @Bean
     @ConditionalOnProperty(prefix = SerialProperties.SERIAL_PREFIX, name = "enabled", havingValue = "true")
-    public SerialClient expressClient(SerialProperties properties) {
+    public SerialClient serialClient(SerialProperties properties) {
         return new SerialClient(properties);
     }
 }
