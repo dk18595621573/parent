@@ -14,11 +14,6 @@ public class OperateLog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 日志主键
-     */
-    private Long operId;
-
-    /**
      * 操作模块
      */
     private String title;
@@ -32,6 +27,11 @@ public class OperateLog implements Serializable {
      * 请求方法
      */
     private String method;
+
+    /**
+     * 操作用户id
+     */
+    private Long userId;
 
     /**
      * 部门id
