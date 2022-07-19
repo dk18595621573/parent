@@ -34,6 +34,11 @@ public class OperateLog implements Serializable {
     private String method;
 
     /**
+     * 部门id
+     */
+    private Long deptId;
+
+    /**
      * 请求方式
      */
     private String requestMethod;
