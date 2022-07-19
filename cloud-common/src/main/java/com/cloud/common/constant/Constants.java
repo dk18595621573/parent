@@ -76,11 +76,6 @@ public class Constants {
     public static final String LOGIN_FAIL = "Error";
 
     /**
-     * 验证码 redis key
-     */
-    public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
-
-    /**
      * 防重提交 redis key
      */
     public static final String REPEAT_SUBMIT_KEY = "repeat_submit:";
@@ -89,6 +84,11 @@ public class Constants {
      * 限流 redis key
      */
     public static final String RATE_LIMIT_KEY = "rate_limit:";
+
+    /**
+     * 验证码 redis key
+     */
+    public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
 
     /**
      * 验证码有效期（分钟）
@@ -110,30 +110,30 @@ public class Constants {
      */
     public static final String LOGIN_USER_KEY = "login_user_key";
 
-    /**
-     * 用户ID
-     */
-    public static final String JWT_USERID = "userid";
-
-    /**
-     * 用户名称
-     */
-    public static final String JWT_USERNAME = "sub";
-
-    /**
-     * 用户头像
-     */
-    public static final String JWT_AVATAR = "avatar";
-
-    /**
-     * 创建时间
-     */
-    public static final String JWT_CREATED = "created";
-
-    /**
-     * 用户权限
-     */
-    public static final String JWT_AUTHORITIES = "authorities";
+//    /**
+//     * 用户ID
+//     */
+//    public static final String JWT_USERID = "userid";
+//
+//    /**
+//     * 用户名称
+//     */
+//    public static final String JWT_USERNAME = "sub";
+//
+//    /**
+//     * 用户头像
+//     */
+//    public static final String JWT_AVATAR = "avatar";
+//
+//    /**
+//     * 创建时间
+//     */
+//    public static final String JWT_CREATED = "created";
+//
+//    /**
+//     * 用户权限
+//     */
+//    public static final String JWT_AUTHORITIES = "authorities";
 
     /**
      * 参数管理 cache key
@@ -149,22 +149,6 @@ public class Constants {
      * 资源映射路径 前缀
      */
     public static final String RESOURCE_PREFIX = "/profile";
-
-    /**
-     * RMI 远程方法调用
-     */
-    public static final String LOOKUP_RMI = "rmi:";
-
-    /**
-     * LDAP 远程方法调用
-     */
-    public static final String LOOKUP_LDAP = "ldap:";
-
-    /**
-     * LDAPS 远程方法调用
-     */
-    public static final String LOOKUP_LDAPS = "ldaps:";
-
 
     /**
      * 雪花算法使用，暂时写死

@@ -1,13 +1,13 @@
 package com.cloud.core.dict;
 
-import java.util.Collection;
-import java.util.List;
-
 import cn.hutool.core.collection.CollUtil;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.core.utils.SpringUtils;
 import com.cloud.core.redis.RedisCache;
+import com.cloud.core.utils.SpringUtils;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 字典工具类
@@ -146,7 +146,7 @@ public class DictUtils {
      * 清空字典缓存
      */
     public static void clearDictCache() {
-        Collection<String> keys = SpringUtils.getBean(RedisCache.class).keys(Constants.SYS_DICT_KEY + "*");
+        Collection<String> keys = SpringUtils.getBean(RedisCache.class).keys(getCacheKey("*"));
         SpringUtils.getBean(RedisCache.class).deleteObject(keys);
     }
 
