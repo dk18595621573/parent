@@ -17,6 +17,9 @@
     <!-- 系统日志输出 -->
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${log.name}.log</file>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
         <!-- 循环政策：基于时间和文件大小创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
@@ -26,25 +29,22 @@
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-        </encoder>
     </appender>
 
     <!-- 用户访问日志输出  -->
-    <appender name="sys-user" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="sys_user" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/${log.name}-user.log</file>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <!-- 按天回滚 daily -->
+            <!-- 日志文件名格式 -->
             <fileNamePattern>${log.path}/${log.name}-user-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 最大文件大小 -->
             <maxFileSize>50MB</maxFileSize>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
-        <encoder>
-            <pattern>${log.pattern}</pattern>
-        </encoder>
     </appender>
 
     <!-- 系统模块日志级别控制  -->
@@ -52,17 +52,15 @@
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="warn"/>
 
-    <root level="info">
-        <appender-ref ref="console"/>
-    </root>
+    <!--系统用户操作日志-->
+    <logger name="sys-user" level="info" additivity="false">
+        <appender-ref ref="sys_user"/>
+    </logger>
 
     <!--系统操作日志-->
     <root level="info">
+        <appender-ref ref="console"/>
         <appender-ref ref="file_info"/>
     </root>
 
-    <!--系统用户操作日志-->
-    <logger name="sys-user" level="info" addtivity="false">
-        <appender-ref ref="sys-user"/>
-    </logger>
 </configuration> 
