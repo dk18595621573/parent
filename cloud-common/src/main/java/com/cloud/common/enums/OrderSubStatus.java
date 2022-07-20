@@ -56,6 +56,8 @@ public enum OrderSubStatus {
     SEND_EXPRESS_TO(54, "一件代发已发货"),
     /** 已发货,部分收货 */
     SEND_COLLECT_PORTION(55,"已发货,部分收货"),
+    /** 已发货,已拣货 */
+    SEND_UNDERTAKES_NO(56,"已发货,已拣货,待发货"),
 
     /** 采购入库收货 */
     SEND_PURCHASING(60, "采购入库收货"),

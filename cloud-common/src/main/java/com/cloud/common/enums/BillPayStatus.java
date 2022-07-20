@@ -21,11 +21,11 @@ public enum BillPayStatus {
         this.msg = msg;
     }
 
-    private Integer getCode(){
+    public Integer getCode(){
         return code;
     }
 
-    private String getMsg(){
+    public String getMsg(){
         return msg;
     }
 }
