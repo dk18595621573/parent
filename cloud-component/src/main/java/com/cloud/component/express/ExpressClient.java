@@ -1,7 +1,9 @@
 package com.cloud.component.express;
 
+import cn.hutool.core.convert.ConvertException;
 import cn.hutool.core.lang.TypeReference;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.cloud.component.express.consts.ErrorCode;
@@ -43,21 +45,24 @@ public class ExpressClient {
         paramMap.put("receiverPhone", cellphone.substring(cellphone.length() - 4));
         paramMap.put("key", expressProperties.getKey());
         paramMap.put("dtype", "json");
-        String result = HttpUtil.get(expressProperties.getUrl(), paramMap, TIMEOUT);
-        log.info("调用API返回单号[{}]的快递信息数据：{}", expressNo, result);
-        if (StrUtil.isBlank(result)) {
-            throw new ExpressException(ErrorCode.API_ERROR);
-        }
         JuheResult<JuheExpress> juheResult = null;
         try {
+            String result = HttpUtil.get(expressProperties.getUrl(), paramMap, TIMEOUT);
+            log.info("调用快递API返回单号[{}]的快递信息数据：{}", expressNo, result);
+            if (StrUtil.isBlank(result)) {
+                throw new ExpressException(ErrorCode.API_ERROR);
+            }
             juheResult = JSONUtil.toBean(result, new TypeReference<>() {
                 @Override
                 public Type getType() {
                     return super.getType();
                 }
             }, false);
-        } catch (Exception e) {
-            log.warn("调用API返回单号[{}]响应的快递数据转换异常:{}", expressNo, e);
+        } catch (HttpException e) {
+            log.warn("调用快递API接口异常[{}]:{}", expressNo, e.getMessage());
+            throw new ExpressException(ErrorCode.API_ERROR);
+        } catch (ConvertException e) {
+            log.warn("调用快递API返回单号[{}]响应的快递数据转换异常:{}", expressNo, e);
             throw new ExpressException(ErrorCode.API_ERROR);
         }
         //查询失败状态处理
