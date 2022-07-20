@@ -62,7 +62,7 @@
     </root>
 
     <!--系统用户操作日志-->
-    <logger name="sys-user" level="info">
+    <logger name="sys-user" level="info" addtivity="false">
         <appender-ref ref="sys-user"/>
     </logger>
 </configuration> 
