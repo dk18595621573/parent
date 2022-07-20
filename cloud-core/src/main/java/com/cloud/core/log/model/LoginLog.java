@@ -16,11 +16,6 @@ public class LoginLog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * ID
-     */
-    private Long infoId;
-
-    /**
      * 用户账号
      */
     private String userName;
