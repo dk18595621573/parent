@@ -1,7 +1,6 @@
 package com.cloud.core.redis;
 
 import lombok.AllArgsConstructor;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -41,7 +40,7 @@ public class RedisCache {
      * @param timeUnit 过期时间单位
      * @return 是否设置成功
      */
-    public Boolean setIfAbsent(final String key, T value, long time , TimeUnit timeUnit) {
+    public <T> Boolean setIfAbsent(final String key, T value, long time , TimeUnit timeUnit) {
         return redisTemplate.opsForValue().setIfAbsent(key, value, time, timeUnit);
     }
 
