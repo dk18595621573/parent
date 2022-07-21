@@ -68,9 +68,10 @@ public class LogAspect {
             OperateLog operLog = new OperateLog();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             // 请求的地址
-            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+            HttpServletRequest request = ServletUtils.getRequest();
+            String ip = IpUtils.getIpAddr(request);
             operLog.setOperIp(ip);
-            operLog.setOperUrl(ServletUtils.getRequest().getRequestURI());
+            operLog.setOperUrl(request.getRequestURI());
             if (loginUser != null) {
                 operLog.setUserId(loginUser.getUserId());
                 operLog.setOperName(loginUser.getUsername());
@@ -86,7 +87,7 @@ public class LogAspect {
             String methodName = joinPoint.getSignature().getName();
             operLog.setMethod(className + "." + methodName + "()");
             // 设置请求方式
-            operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
+            operLog.setRequestMethod(request.getMethod());
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
             // 保存数据库
@@ -114,22 +115,13 @@ public class LogAspect {
         // 是否需要保存request，参数和值
         if (log.isSaveRequestData()) {
             // 获取参数的信息，传入到数据库中。
-            setRequestValue(joinPoint, operLog);
+            String params = argsArrayToString(joinPoint.getArgs());
+            operLog.setOperParam(StringUtils.substring(params, 0, 2000));
         }
         // 是否需要保存response，参数和值
         if (log.isSaveResponseData() && StringUtils.isNotNull(jsonResult)) {
             operLog.setJsonResult(StringUtils.substring(JsonUtil.toJson(jsonResult), 0, 2000));
         }
-    }
-
-    /**
-     * 获取请求的参数，放到log中
-     *
-     * @param operLog 操作日志
-     */
-    private void setRequestValue(JoinPoint joinPoint, OperateLog operLog) {
-        String params = argsArrayToString(joinPoint.getArgs());
-        operLog.setOperParam(StringUtils.substring(params, 0, 2000));
     }
 
     /**
