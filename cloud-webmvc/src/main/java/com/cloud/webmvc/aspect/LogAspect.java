@@ -1,17 +1,16 @@
 package com.cloud.webmvc.aspect;
 
-import com.cloud.webmvc.annotation.Log;
 import com.cloud.common.enums.BusinessStatus;
-import com.cloud.common.enums.HttpMethod;
-import com.cloud.common.utils.json.JsonUtil;
-import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.webmvc.utils.ip.IpUtils;
+import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.core.log.model.OperateLog;
 import com.cloud.core.manager.AsyncManager;
-import com.cloud.webmvc.security.service.AsyncFactory;
+import com.cloud.webmvc.annotation.Log;
 import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.security.service.AsyncFactory;
 import com.cloud.webmvc.utils.SecurityUtils;
+import com.cloud.webmvc.utils.ServletUtils;
+import com.cloud.webmvc.utils.ip.IpUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -20,12 +19,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 操作日志记录处理
@@ -67,9 +68,10 @@ public class LogAspect {
             OperateLog operLog = new OperateLog();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             // 请求的地址
-            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+            HttpServletRequest request = ServletUtils.getRequest();
+            String ip = IpUtils.getIpAddr(request);
             operLog.setOperIp(ip);
-            operLog.setOperUrl(ServletUtils.getRequest().getRequestURI());
+            operLog.setOperUrl(request.getRequestURI());
             if (loginUser != null) {
                 operLog.setUserId(loginUser.getUserId());
                 operLog.setOperName(loginUser.getUsername());
@@ -85,7 +87,7 @@ public class LogAspect {
             String methodName = joinPoint.getSignature().getName();
             operLog.setMethod(className + "." + methodName + "()");
             // 设置请求方式
-            operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
+            operLog.setRequestMethod(request.getMethod());
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
             // 保存数据库
@@ -113,7 +115,8 @@ public class LogAspect {
         // 是否需要保存request，参数和值
         if (log.isSaveRequestData()) {
             // 获取参数的信息，传入到数据库中。
-            setRequestValue(joinPoint, operLog);
+            String params = argsArrayToString(joinPoint.getArgs());
+            operLog.setOperParam(StringUtils.substring(params, 0, 2000));
         }
         // 是否需要保存response，参数和值
         if (log.isSaveResponseData() && StringUtils.isNotNull(jsonResult)) {
@@ -122,38 +125,16 @@ public class LogAspect {
     }
 
     /**
-     * 获取请求的参数，放到log中
-     *
-     * @param operLog 操作日志
-     * @throws Exception 异常
-     */
-    private void setRequestValue(JoinPoint joinPoint, OperateLog operLog) throws Exception {
-        String requestMethod = operLog.getRequestMethod();
-        if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
-            String params = argsArrayToString(joinPoint.getArgs());
-            operLog.setOperParam(StringUtils.substring(params, 0, 2000));
-        } else {
-            Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-            operLog.setOperParam(StringUtils.substring(paramsMap.toString(), 0, 2000));
-        }
-    }
-
-    /**
      * 参数拼装
      */
     private String argsArrayToString(Object[] paramsArray) {
-        StringBuilder params = new StringBuilder();
         if (paramsArray != null && paramsArray.length > 0) {
-            for (Object o : paramsArray) {
-                if (StringUtils.isNotNull(o) && !isFilterObject(o)) {
-                    try {
-                        params.append(JsonUtil.toJson(o)).append(" ");
-                    } catch (Exception e) {
-                    }
-                }
-            }
+            return Arrays.stream(paramsArray)
+                .filter(o -> !isFilterObject(o))
+                .map(o -> Objects.isNull(o) ? "null" : JsonUtil.toJson(o))
+                .collect(Collectors.joining(" "));
         }
-        return params.toString().trim();
+        return StringUtils.EMPTY;
     }
 
     /**
@@ -164,6 +145,9 @@ public class LogAspect {
      */
     @SuppressWarnings("rawtypes")
     public boolean isFilterObject(final Object o) {
+        if (Objects.isNull(o)) {
+            return true;
+        }
         Class<?> clazz = o.getClass();
         if (clazz.isArray()) {
             return clazz.getComponentType().isAssignableFrom(MultipartFile.class);

@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  **/
 @AllArgsConstructor
 public class RedisCache {
-    public final RedisTemplate redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     /**
      * 缓存基本的对象，Integer、String、实体类等
@@ -30,6 +30,18 @@ public class RedisCache {
      */
     public <T> void setCacheObject(final String key, final T value) {
         redisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * key不存在时设置值
+     * @param key 缓存的键值
+     * @param value 缓存的值
+     * @param time 键过期时间
+     * @param timeUnit 过期时间单位
+     * @return 是否设置成功
+     */
+    public <T> Boolean setIfAbsent(final String key, T value, long time , TimeUnit timeUnit) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value, time, timeUnit);
     }
 
     /**
