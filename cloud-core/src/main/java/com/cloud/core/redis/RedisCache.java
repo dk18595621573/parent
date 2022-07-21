@@ -1,6 +1,7 @@
 package com.cloud.core.redis;
 
 import lombok.AllArgsConstructor;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  **/
 @AllArgsConstructor
 public class RedisCache {
-    public final RedisTemplate redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     /**
      * 缓存基本的对象，Integer、String、实体类等
@@ -30,6 +31,18 @@ public class RedisCache {
      */
     public <T> void setCacheObject(final String key, final T value) {
         redisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * key不存在时设置值
+     * @param key 缓存的键值
+     * @param value 缓存的值
+     * @param time 键过期时间
+     * @param timeUnit 过期时间单位
+     * @return 是否设置成功
+     */
+    public Boolean setIfAbsent(final String key, T value, long time , TimeUnit timeUnit) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value, time, timeUnit);
     }
 
     /**
