@@ -3,6 +3,7 @@ package com.cloud.common.utils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.lang.management.ManagementFactory;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -179,5 +180,26 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         time.set(Calendar.SECOND, second);
         return time.getTime();
 
+    }
+
+    /**
+     * 根据时间 和时间格式 校验是否正确
+     * @param length 校验的长度
+     * @param sDate 校验的日期
+     * @param format 校验的格式
+     * @return
+     */
+    public static boolean isLegalDate(int length, String sDate,String format) {
+        int legalLen = length;
+        if ((sDate == null) || (sDate.length() != legalLen)) {
+            return false;
+        }
+        DateFormat formatter = new SimpleDateFormat(format);
+        try {
+            Date date = formatter.parse(sDate);
+            return sDate.equals(formatter.format(date));
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
