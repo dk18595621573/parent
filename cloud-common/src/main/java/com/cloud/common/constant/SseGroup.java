@@ -15,6 +15,11 @@ public interface SseGroup {
     String ORDER_STATUS = "order_status";
 
     /**
+     * admin消息推送api
+     */
+    String ADMIN_PUSH_API = "ADMIN_PUSH_API";
+
+    /**
      * 支付结果通知
      */
     String PAY_RESULT = "pay_result";
