@@ -1,5 +1,6 @@
 package com.cloud.webmvc.filter;
 
+import com.cloud.common.constant.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,12 +19,10 @@ import java.io.IOException;
 @Slf4j
 public class HeaderFilter extends OncePerRequestFilter {
 
-    public static final String TRACE_ID = "TRACE";
-
     @Override
     protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain) throws ServletException, IOException {
-        MDC.put(TRACE_ID, String.valueOf(System.currentTimeMillis()));
         try {
+            MDC.put(Constants.MDC_TRACE_ID, String.valueOf(System.currentTimeMillis()));
             chain.doFilter(request, response);
         } finally {
             MDC.clear();
