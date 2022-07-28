@@ -77,6 +77,16 @@ public enum OrderSubStatus {
     WAREHOUSE_NOT_AFFIRM(73, "无仓退换供应商"),
     /** 供应商已收 */
     WAREHOUSE_THEN_AFFIRM(74, "供应商已收"),
+    /** 售后 */
+    AFTER_LOGISTICS(101, "退物流费用"),
+    CONSENT_AFTER_LOGISTICS(102, "同意退物流费用"),
+    DECLINE_AFTER_LOGISTICS(103, "拒绝退物流费用"),
+    SETTLEMENT(104, "结算"),
+    CONSENT_SETTLEMENT(105, "同意结算"),
+    DECLINE_SETTLEMENT(106, "拒绝结算"),
+    REFUND(107, "退货"),
+    CONSENT_REFUND(108, "同意退货"),
+    DECLINE_REFUND(109, "拒绝退货"),
     ;
 
     private final Integer code;

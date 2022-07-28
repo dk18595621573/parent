@@ -15,6 +15,7 @@ public enum OrderStatus {
     AFTER_SALE(7, "退货退单"),
     ADDRESS_TO_BE_COMPLETED(8, "待补全地址"),
     IMEI_ABNORMAL(9, "串码异常"),
+    AFTERMARKET(10, "售后"),
     ;
 
 
