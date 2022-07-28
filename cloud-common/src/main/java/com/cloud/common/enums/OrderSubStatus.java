@@ -84,8 +84,9 @@ public enum OrderSubStatus {
     SETTLEMENT(104, "结算"),
     CONSENT_SETTLEMENT(105, "同意结算"),
     DECLINE_SETTLEMENT(106, "拒绝结算"),
-    CONSENT_REFUND(107, "同意退货"),
-    DECLINE_REFUND(108, "拒绝退货"),
+    REFUND(107, "退货"),
+    CONSENT_REFUND(108, "同意退货"),
+    DECLINE_REFUND(109, "拒绝退货"),
     ;
 
     private final Integer code;
