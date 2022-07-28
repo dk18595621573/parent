@@ -3,7 +3,7 @@ package com.cloud.core.utils;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.core.config.SystemConfig;
-import org.apache.poi.util.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
