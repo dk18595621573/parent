@@ -1,4 +1,4 @@
-package com.cloud.webmvc.excel;
+package com.cloud.webmvc.excel.model;
 
 import lombok.Data;
 
