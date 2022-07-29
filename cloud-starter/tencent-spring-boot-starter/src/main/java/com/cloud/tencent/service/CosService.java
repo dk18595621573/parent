@@ -148,6 +148,17 @@ public class CosService {
      * 文件上传到腾讯云COS.
      *
      * @param file 文件
+     * @param strategy 重命名策略
+     * @return 上传后文件路径
+     */
+    public String upload(final File file, RenameStrategy strategy) {
+        return this.upload(file, file.getName(), strategy);
+    }
+
+    /**
+     * 文件上传到腾讯云COS.
+     *
+     * @param file 文件
      * @param oldName     原始文件名
      * @return 上传后文件路径
      */
