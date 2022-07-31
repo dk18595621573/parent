@@ -38,7 +38,7 @@ public class RowMergeStrategy extends AbstractMergeStrategy {
     @Override
     protected void merge(final Sheet sheet, final Cell cell, final Head head, final Integer relativeRowIndex) {
         if (mergeFields.contains(head.getFieldName())) {
-            if (!mergeWithFirstField) {
+            if (mergeWithFirstField) {
                 Row row = sheet.getRow(cell.getRowIndex());
                 Cell basicCell = row.getCell(0);
                 mergeWithPrevRow(sheet, basicCell, cell.getRowIndex(), cell.getColumnIndex());
