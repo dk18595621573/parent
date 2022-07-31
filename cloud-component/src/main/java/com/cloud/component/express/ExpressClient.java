@@ -56,6 +56,8 @@ public class ExpressClient {
             put("num", expressNo);
             // 手机号码
             put("phone", cellphone);
+            //
+            put("order", "asc");
         }};
         String param = JsonUtil.toJson(paramMap);
         Map<String, Object> requestBody = new HashMap<>() {{
@@ -74,7 +76,7 @@ public class ExpressClient {
             }
             // 转换 对象
             ExpressError expressError = JsonUtil.parse(result, ExpressError.class);
-            if (StrUtil.isNotBlank(expressError.getReturnCode()) ) {
+            if (StrUtil.isNotBlank(expressError.getReturnCode())) {
                 if (Objects.equals(ExpressError.QUERY_ERROR_CODE, expressError.getReturnCode())) {
                     throw new ExpressException(ErrorCode.NOT_FOUND);
                 }
@@ -103,14 +105,14 @@ public class ExpressClient {
         return DigestUtils.md5Hex(msg).toUpperCase();
     }
 
-//    public static void main(String[] args) {
-//        ExpressProperties properties = new ExpressProperties();
-//        properties.setUrl("https://poll.kuaidi100.com/poll/query.do");
-//        properties.setKey("wBfjOuYf6894");
-//        properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
-//
-//        ExpressClient expressClient = new ExpressClient(properties);
-//        ExpressResult express2 = expressClient.findExpress2("shunfeng", "SF1120093426982", "19120872793");
-//        System.out.println(express2);
-//    }
+    public static void main(String[] args) {
+        ExpressProperties properties = new ExpressProperties();
+        properties.setUrl("https://poll.kuaidi100.com/poll/query.do");
+        properties.setKey("wBfjOuYf6894");
+        properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
+
+        ExpressClient expressClient = new ExpressClient(properties);
+        ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1370500969031", "15325014087");
+        System.out.println(express2);
+    }
 }
