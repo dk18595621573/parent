@@ -15,7 +15,11 @@ public class ExpressProperties {
 
     public static final String EXPRESS_PREFIX = "cloud.express";
 
-    private String key;
 
     private String url;
+
+
+    private String key;
+
+    private String customer;
 }
