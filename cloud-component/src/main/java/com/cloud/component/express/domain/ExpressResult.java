@@ -14,8 +14,6 @@ import java.util.List;
 @Data
 public class ExpressResult implements Serializable {
 
-    public static final String STATE_SIGN  = "3";
-
     /**
      * 单号
      */
