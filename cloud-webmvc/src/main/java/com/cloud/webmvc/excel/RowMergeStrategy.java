@@ -2,9 +2,9 @@ package com.cloud.webmvc.excel;
 
 import com.alibaba.excel.metadata.Head;
 import com.alibaba.excel.write.merge.AbstractMergeStrategy;
+import com.cloud.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -53,19 +53,18 @@ public class RowMergeStrategy extends AbstractMergeStrategy {
      * 合并行
      *
      * @param sheet       当前sheet
-     * @param cell        合并基准数据（可以指定根据某列数据合并，也可以根据当前单元格和上一个单元格数据自动合并）
+     * @param cell        合并基准单元格（可以指定根据某列数据合并，也可以根据当前单元格和上一个单元格数据自动合并）
      * @param curRowIndex 当前单元格行索引
      * @param curColIndex 当前单元格列索引
      */
     private void mergeWithPrevRow(Sheet sheet, Cell cell, int curRowIndex, int curColIndex) {
         //获取当前行的当前列的数据和上一行的当前列列数据，通过上一行数据是否相同进行合并
-        Object curData = cell.getCellType() == CellType.STRING ? cell.getStringCellValue() : cell.getNumericCellValue();
         int preRowIndex = curRowIndex - 1;
         Row preRow = cell.getSheet().getRow(preRowIndex);
         Cell preCell = preRow.getCell(cell.getColumnIndex());
-        Object preData = preCell.getCellType() == CellType.STRING ? preCell.getStringCellValue() : preCell.getNumericCellValue();
-        // 比较当前行的第一列的单元格与上一行是否相同，相同合并当前单元格与上一行
-        if (Objects.equals(curData, preData)) {
+
+        // 比较当前行的 合并基准单元格 与上一行是否相同，相同则合并当前单元格与上一行
+        if (Objects.equals(getCellData(cell), getCellData(preCell))) {
             List<CellRangeAddress> mergeRegions = sheet.getMergedRegions();
             Optional<CellRangeAddress> optional = mergeRegions.stream()
                 .filter(c -> c.isInRange(preRowIndex, curColIndex)).findFirst();
@@ -79,6 +78,21 @@ public class RowMergeStrategy extends AbstractMergeStrategy {
                 address = new CellRangeAddress(preRowIndex, curRowIndex, curColIndex, curColIndex);
             }
             sheet.addMergedRegion(address);
+        }
+    }
+
+    private Object getCellData(final Cell cell) {
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case BOOLEAN:
+                return cell.getBooleanCellValue();
+            case NUMERIC:
+                return cell.getNumericCellValue();
+            case BLANK:
+                return StringUtils.EMPTY;
+            default:
+                return null;
         }
     }
 }
