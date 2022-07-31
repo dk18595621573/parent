@@ -36,6 +36,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.fdd</groupId>
+            <artifactId>fdd-verify-process</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.cloud</groupId>
             <artifactId>cloud-common</artifactId>
         </dependency>

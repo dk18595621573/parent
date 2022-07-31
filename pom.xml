@@ -267,6 +267,12 @@
                 <version>20220618</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.fdd</groupId>
+                <artifactId>fdd-verify-process</artifactId>
+                <version>1.8.7</version>
+            </dependency>
+
             <!-- 通用工具-->
             <dependency>
                 <groupId>com.cloud</groupId>
