@@ -53,6 +53,7 @@ public class RowMergeStrategy implements CellWriteHandler {
                 log.warn("准备合并单元格时没有找到合并基准列[{}]，所有列根据数据自动合并", basicField);
                 mergeWithPrevRow(writeSheetHolder, cell, cell.getRowIndex(), cell.getColumnIndex());
             } else {
+                log.debug("准备合并单元格以合并基准列数据为基准合并[{}->{}] 当前单元格:[{},{}]", basicIndex, basicField, cell.getRowIndex(), cell.getColumnIndex());
                 Row row = writeSheetHolder.getSheet().getRow(cell.getRowIndex());
                 Cell basicCell = row.getCell(basicIndex);
                 mergeWithPrevRow(writeSheetHolder, basicCell, cell.getRowIndex(), cell.getColumnIndex());
