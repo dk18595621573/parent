@@ -44,11 +44,11 @@ public class ExpressClient {
      * 快递100 查询快递信息接口
      *
      * @param expressCode
-     * @param expressNo1
+     * @param expressNo
      * @param cellphone
      * @return
      */
-    public ExpressResult findExpress2(final String expressCode, final String expressNo, final String cellphone) {
+    public ExpressResult findExpress(final String expressCode, final String expressNo, final String cellphone) {
         HashMap paramMap = new HashMap<>() {{
             // 快递公司
             put("com", expressCode);
@@ -103,14 +103,14 @@ public class ExpressClient {
         return DigestUtils.md5Hex(msg).toUpperCase();
     }
 
-    public static void main(String[] args) {
-        ExpressProperties properties = new ExpressProperties();
-        properties.setUrl("https://poll.kuaidi100.com/poll/query.do");
-        properties.setKey("wBfjOuYf6894");
-        properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
-
-        ExpressClient expressClient = new ExpressClient(properties);
-        ExpressResult express2 = expressClient.findExpress2("shunfeng", "SF1120093426982", "19120872793");
-        System.out.println(express2);
-    }
+//    public static void main(String[] args) {
+//        ExpressProperties properties = new ExpressProperties();
+//        properties.setUrl("https://poll.kuaidi100.com/poll/query.do");
+//        properties.setKey("wBfjOuYf6894");
+//        properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
+//
+//        ExpressClient expressClient = new ExpressClient(properties);
+//        ExpressResult express2 = expressClient.findExpress2("shunfeng", "SF1120093426982", "19120872793");
+//        System.out.println(express2);
+//    }
 }
