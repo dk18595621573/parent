@@ -1,20 +1,18 @@
-/**
- * Copyright 2022 bejson.com
- */
 package com.cloud.component.express.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * 快递100
+ * 快递响应结果
  *
  * @author bejson.com (i@bejson.com)
- * @website http://www.bejson.com/java2pojo/
+ * @link https://api.kuaidi100.com/document/5f0ffb5ebc8da837cbd8aefc
  */
 @Data
-public class ExpressResult {
+public class ExpressResult implements Serializable {
 
     public static final String STATE_SIGN  = "3";
 
@@ -38,9 +36,17 @@ public class ExpressResult {
      */
     private List<ExpressItem> data;
 
+    /**
+     * 是否已签收
+     * @return true:已签收 false:未签收
+     */
+    public boolean signed() {
+        return "3".equals(getState());
+    }
+
 
     @Data
-    public static class ExpressItem {
+    public static class ExpressItem implements Serializable {
 
         /**
          * 格式化后时间.
