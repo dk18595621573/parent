@@ -15,7 +15,6 @@ import com.cloud.component.express.domain.ExpressResult;
 import com.cloud.component.express.exception.ExpressException;
 import com.cloud.component.properties.ExpressProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.HashMap;
 import java.util.Map;
