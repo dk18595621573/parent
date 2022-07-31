@@ -16,11 +16,7 @@ import java.util.List;
 @Data
 public class ExpressResult {
 
-    public static final String SUCCESS_CODE = "200";
-
-    public static final String QUERY_ERROR = "500";
-
-    public static final String KEY_ERROR = "601";
+    public static final String STATE_SIGN  = "3";
 
     /**
      * 单号
