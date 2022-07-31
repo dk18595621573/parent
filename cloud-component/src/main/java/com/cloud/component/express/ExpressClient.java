@@ -2,6 +2,7 @@ package com.cloud.component.express;
 
 import cn.hutool.core.convert.ConvertException;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpException;
@@ -102,7 +103,7 @@ public class ExpressClient {
      * @return
      */
     public static String sign(String msg) {
-        return DigestUtils.md5Hex(msg).toUpperCase();
+        return SecureUtil.md5(msg).toUpperCase();
     }
 
     public static void main(String[] args) {
