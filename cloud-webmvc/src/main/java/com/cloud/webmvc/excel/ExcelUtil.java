@@ -43,13 +43,13 @@ public class ExcelUtil {
      * @param dataList 数据列表.
      * @param clazz 写入数据类型.
      * @param fieldList 需要合并的字段列表.
-     * @param field 合并基准字段.
+     * @param mergeWithFirstField 是否以第一列数据为基准合并.
      * @param <T> 数据列表的数据类型
      */
-    public static <T> void writeMerge(final OutputStream outputStream, final List<T> dataList, final Class<T> clazz, final List<String> fieldList, final String field) {
+    public static <T> void writeMerge(final OutputStream outputStream, final List<T> dataList, final Class<T> clazz, final List<String> fieldList, final boolean mergeWithFirstField) {
         EasyExcel.write(outputStream, clazz)
             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-            .registerWriteHandler(new RowMergeStrategy(fieldList, field))
+            .registerWriteHandler(new RowMergeStrategy(fieldList, mergeWithFirstField))
             .sheet()
             .doWrite(dataList);
     }
