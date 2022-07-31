@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "自定义导出字段")
-public class CustomFiled implements Serializable {
+public class CustomField implements Serializable {
 
     private static final long serialVersionUID = -2235572164075251271L;
 
@@ -29,7 +29,7 @@ public class CustomFiled implements Serializable {
     @ApiModelProperty("是否合并字段")
     private Boolean merged;
 
-    public CustomFiled(final String englishName, final String chineseName, final Boolean checked, final Boolean merged) {
+    public CustomField(final String englishName, final String chineseName, final Boolean checked, final Boolean merged) {
         this.englishName = englishName;
         this.chineseName = chineseName;
         this.checked = checked;

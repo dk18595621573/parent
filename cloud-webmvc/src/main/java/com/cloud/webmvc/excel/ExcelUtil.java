@@ -1,6 +1,5 @@
 package com.cloud.webmvc.excel;
 
-import cn.hutool.core.collection.CollUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.cloud.common.exception.ServiceException;
@@ -8,17 +7,11 @@ import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.excel.listener.ProcessAllListener;
 import com.cloud.webmvc.excel.listener.ProcessBatchListener;
 import com.cloud.webmvc.excel.listener.ProcessRowListener;
-import com.cloud.webmvc.excel.model.RowRange;
-import com.google.common.collect.Maps;
 import lombok.experimental.UtilityClass;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -32,36 +25,33 @@ import java.util.function.Function;
 public class ExcelUtil {
 
     /**
-     * 获取合并策略.
+     * 合并行写文件.
      * @param dataList 数据列表.
      * @param fieldList 需要合并的字段列表.
-     * @param predicate 合并条件.
      * @param <T> 数据列表的数据类型
-     * @return 行合并策略
      */
-    public static <T> RowMergeStrategy rowMerge(final List<T> dataList, final List<String> fieldList, final BiPredicate<T, T> predicate) {
-        Map<String, List<RowRange>> strategyMap = Maps.newHashMap();
-        T prevData = null;
-        for (int row = 0, size = dataList.size(); row < size; row++) {
-            T currData = dataList.get(row);
-            //从第二行开始判断 符合条件则可合并
-            if (Objects.nonNull(prevData) && predicate.test(prevData, currData)) {
-                List<RowRange> rowRangeDtoList;
-                for (String mergeField : fieldList) {
-                    //获取该列所有合并策略
-                    rowRangeDtoList = strategyMap.getOrDefault(mergeField, new ArrayList<>());
-                    //因为是ArrayList，只需要考虑当前最后一条数据的结束行是否为当前行，如果是当前行说明是同一个订单
-                    if (CollUtil.isNotEmpty(rowRangeDtoList) && rowRangeDtoList.get(rowRangeDtoList.size() - 1).getEnd() == row) {
-                        rowRangeDtoList.get(rowRangeDtoList.size() - 1).setEnd(row + 1);
-                    } else {
-                        rowRangeDtoList.add(new RowRange(row, row + 1));
-                    }
-                    strategyMap.put(mergeField, rowRangeDtoList);
-                }
-            }
-            prevData = currData;
-        }
-        return new RowMergeStrategy(strategyMap);
+    public static <T> void writeMerge(final OutputStream outputStream, final List<T> dataList, final Class<T> clazz, final List<String> fieldList) {
+        EasyExcel.write(outputStream, clazz)
+            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+            .registerWriteHandler(new RowMergeStrategy(fieldList))
+            .sheet()
+            .doWrite(dataList);
+    }
+
+    /**
+     * 合并行写文件.
+     * @param dataList 数据列表.
+     * @param clazz 写入数据类型.
+     * @param fieldList 需要合并的字段列表.
+     * @param field 合并基准字段.
+     * @param <T> 数据列表的数据类型
+     */
+    public static <T> void writeMerge(final OutputStream outputStream, final List<T> dataList, final Class<T> clazz, final List<String> fieldList, final String field) {
+        EasyExcel.write(outputStream, clazz)
+            .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+            .registerWriteHandler(new RowMergeStrategy(fieldList, field))
+            .sheet()
+            .doWrite(dataList);
     }
 
     /**
