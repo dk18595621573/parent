@@ -61,10 +61,8 @@ public enum OrderSubStatus {
 
     /** 采购入库收货 */
     SEND_PURCHASING(60, "采购入库收货，签收状态"),
-    /** 快递发货 */
-    EXPRESS_DELIVERY(61, "快递发货"),
     /** 物流签收 */
-    EXPRESS_SIGNED(62, "物流签收"),
+    EXPRESS_SIGNED(61, "物流签收"),
 
     /**
      * 退货退单

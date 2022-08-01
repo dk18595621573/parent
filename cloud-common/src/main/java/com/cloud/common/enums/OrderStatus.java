@@ -3,7 +3,7 @@ package com.cloud.common.enums;
 import java.util.Objects;
 
 /**
- * 订单主状态 1: 未报价；2: 待发布；3:报价中；4:待发货；5: 已发货；6:已完成
+ * 订单主状态 1: 未报价；2: 待发布；3:报价中；4:待发货；5: 已发货；6:已签收
  */
 public enum OrderStatus {
     NOT_QUOTED(1, "未报价"),
@@ -11,7 +11,7 @@ public enum OrderStatus {
     IN_QUOTATION(3, "报价中"),
     TO_BE_DELIVERED(4, "待发货"),
     SHIPPED(5, "已发货"),
-    COMPLETED(6, "已完成"),
+    COMPLETED(6, "已签收"),
     AFTER_SALE(7, "退货退单"),
     ADDRESS_TO_BE_COMPLETED(8, "待补全地址"),
     IMEI_ABNORMAL(9, "串码异常"),
