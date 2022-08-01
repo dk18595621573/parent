@@ -52,4 +52,8 @@ public class RequestThread {
         RequestUser user = getUser();
         return (user == null) ? null : user.getDeptId();
     }
+
+    public static void clear() {
+        THREAD_LOCAL.remove();
+    }
 }
