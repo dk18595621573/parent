@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
  * @author zenghao
  * @date 2022/8/2
  */
+@ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
 @ConditionalOnProperty(prefix = OcrProperties.OCR_PREFIX, name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(value = {OcrProperties.class})
 public class OcrConfig {
@@ -29,7 +30,6 @@ public class OcrConfig {
      * @return SmsClient
      */
     @Bean
-    @ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
     @ConditionalOnMissingBean
     public OcrService ocrService(final Credential credential, final OcrProperties ocrProperties) {
         HttpProfile httpProfile = new HttpProfile();

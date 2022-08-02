@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
  * @author zenghao
  * @date 2022/7/17
  */
+@ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
 @ConditionalOnProperty(prefix = SmsProperties.SMS_PREFIX, name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(value = {SmsProperties.class})
 public class SmsConfig {
@@ -30,7 +31,6 @@ public class SmsConfig {
      * @return SmsClient
      */
     @Bean
-    @ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
     @ConditionalOnMissingBean
     public SmsService smsService(final Credential credential, final SmsProperties smsProperties) {
         HttpProfile httpProfile = new HttpProfile();

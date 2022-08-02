@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(value = SerialProperties.class)
+@ConditionalOnProperty(prefix = SerialProperties.SERIAL_PREFIX, name = "enabled", havingValue = "true")
 public class SerialConfig {
 
     @Bean
-    @ConditionalOnProperty(prefix = SerialProperties.SERIAL_PREFIX, name = "enabled", havingValue = "true")
     public SerialClient serialClient(SerialProperties properties) {
         return new SerialClient(properties);
     }

@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(value = ExpressProperties.class)
+@ConditionalOnProperty(prefix = ExpressProperties.EXPRESS_PREFIX, name = "enabled", havingValue = "true")
 public class ExpressConfig {
 
     @Bean
-    @ConditionalOnProperty(prefix = ExpressProperties.EXPRESS_PREFIX, name = "enabled", havingValue = "true")
     public ExpressClient expressClient(ExpressProperties properties) {
         return new ExpressClient(properties);
     }

@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
  * @author zenghao
  * @date 2022/7/17
  */
+@ConditionalOnClass(name = "com.qcloud.cos.COSClient")
 @ConditionalOnProperty(prefix = CosProperties.COS_PREFIX, name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(value = {CosProperties.class})
 public class CosConfig {
@@ -31,7 +32,6 @@ public class CosConfig {
      * @return cos服务
      */
     @Bean
-    @ConditionalOnClass(name = "com.qcloud.cos.COSClient")
     @ConditionalOnMissingBean
     public CosService cosService(final TencentProperties tencentProperties, final CosProperties cosProperties) {
         COSCredentials credentials = new BasicCOSCredentials(tencentProperties.getSecretId(), tencentProperties.getSecretKey());
