@@ -6,7 +6,6 @@ import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -31,7 +30,6 @@ public class OcrConfig {
      */
     @Bean
     @ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
-    @ConditionalOnBean(Credential.class)
     @ConditionalOnMissingBean
     public OcrService ocrService(final Credential credential, final OcrProperties ocrProperties) {
         HttpProfile httpProfile = new HttpProfile();
