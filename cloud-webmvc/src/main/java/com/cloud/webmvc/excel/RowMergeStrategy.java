@@ -1,7 +1,10 @@
 package com.cloud.webmvc.excel;
 
 import com.alibaba.excel.metadata.Head;
-import com.alibaba.excel.write.merge.AbstractMergeStrategy;
+import com.alibaba.excel.metadata.data.WriteCellData;
+import com.alibaba.excel.write.handler.CellWriteHandler;
+import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
+import com.alibaba.excel.write.metadata.holder.WriteTableHolder;
 import com.cloud.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
@@ -20,11 +23,13 @@ import java.util.Optional;
  * @date 2022/7/29
  */
 @Slf4j
-public class RowMergeStrategy extends AbstractMergeStrategy {
+public class RowMergeStrategy implements CellWriteHandler {
 
     private final List<String> mergeFields;
 
     private final boolean mergeWithFirstField;
+
+    private Integer firstFieldIndex;
 
     public RowMergeStrategy(final List<String> mergeFields, final boolean mergeWithFirstField) {
         this.mergeFields = mergeFields;
@@ -37,11 +42,18 @@ public class RowMergeStrategy extends AbstractMergeStrategy {
     }
 
     @Override
-    protected void merge(final Sheet sheet, final Cell cell, final Head head, final Integer relativeRowIndex) {
+    public void afterCellDispose(final WriteSheetHolder writeSheetHolder, final WriteTableHolder writeTableHolder, final List<WriteCellData<?>> cellDataList, final Cell cell, final Head head, final Integer relativeRowIndex, final Boolean isHead) {
+        if (isHead) {
+            if (Objects.isNull(firstFieldIndex) && head.getFieldName().equals(mergeFields.get(0))) {
+                firstFieldIndex = cell.getColumnIndex();
+            }
+            return;
+        }
         if (mergeFields.contains(head.getFieldName())) {
+            Sheet sheet = writeSheetHolder.getSheet();
             if (mergeWithFirstField) {
                 Row row = sheet.getRow(cell.getRowIndex());
-                Cell basicCell = row.getCell(0);
+                Cell basicCell = row.getCell(firstFieldIndex);
                 mergeWithPrevRow(sheet, basicCell, cell.getRowIndex(), cell.getColumnIndex());
             } else {
                 mergeWithPrevRow(sheet, cell, cell.getRowIndex(), cell.getColumnIndex());
