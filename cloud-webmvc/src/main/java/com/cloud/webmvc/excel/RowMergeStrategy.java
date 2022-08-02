@@ -25,10 +25,21 @@ import java.util.Optional;
 @Slf4j
 public class RowMergeStrategy implements CellWriteHandler {
 
+    /**
+     * 需要合并的列
+     */
     private final List<String> mergeFields;
 
+    /**
+     * 是否已首个字段为基准合并
+     *   true:所有单元格根据该行合并列中的首个字段合并(首个字段向上合并，则该行合并列都向上合并)
+     *   false:所有单元格自适应向上合并(如单元格数据和同列上一行数据一致则合并)
+     */
     private final boolean mergeWithFirstField;
 
+    /**
+     * 合并列中首个字段的索引位置
+     */
     private Integer firstFieldIndex;
 
     public RowMergeStrategy(final List<String> mergeFields, final boolean mergeWithFirstField) {
@@ -44,14 +55,15 @@ public class RowMergeStrategy implements CellWriteHandler {
     @Override
     public void afterCellDispose(final WriteSheetHolder writeSheetHolder, final WriteTableHolder writeTableHolder, final List<WriteCellData<?>> cellDataList, final Cell cell, final Head head, final Integer relativeRowIndex, final Boolean isHead) {
         if (isHead) {
-            if (Objects.isNull(firstFieldIndex) && head.getFieldName().equals(mergeFields.get(0))) {
+            if (mergeWithFirstField && Objects.isNull(firstFieldIndex) && head.getFieldName().equals(mergeFields.get(0))) {
                 firstFieldIndex = cell.getColumnIndex();
             }
             return;
         }
         if (mergeFields.contains(head.getFieldName())) {
             Sheet sheet = writeSheetHolder.getSheet();
-            if (mergeWithFirstField) {
+            //已首个字段为基准，并且已获取到该字段索引
+            if (mergeWithFirstField && Objects.nonNull(firstFieldIndex)) {
                 Row row = sheet.getRow(cell.getRowIndex());
                 Cell basicCell = row.getCell(firstFieldIndex);
                 mergeWithPrevRow(sheet, basicCell, cell.getRowIndex(), cell.getColumnIndex());
