@@ -28,4 +28,9 @@ public class FadadaProperties {
      */
     private String host;
 
+    /**
+     * 认证类型
+     */
+    private String type;
+
 }
