@@ -33,4 +33,9 @@ public class FadadaProperties {
      */
     private String type;
 
+    /**
+     * 请求版本
+     */
+    private String version;
+
 }
