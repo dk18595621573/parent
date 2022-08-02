@@ -19,4 +19,9 @@ public class SmsProperties {
      */
     private String appid;
 
+    /**
+     * 设置区域.
+     */
+    private String region;
+
 }

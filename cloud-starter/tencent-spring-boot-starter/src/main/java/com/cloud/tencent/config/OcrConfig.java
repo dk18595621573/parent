@@ -1,11 +1,11 @@
 package com.cloud.tencent.config;
 
-import com.cloud.tencent.properties.SmsProperties;
-import com.cloud.tencent.service.SmsService;
+import com.cloud.tencent.properties.OcrProperties;
+import com.cloud.tencent.service.OcrService;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
-import com.tencentcloudapi.sms.v20190711.SmsClient;
+import com.tencentcloudapi.ocr.v20181119.OcrClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,33 +14,32 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 
 /**
- * .
+ * OCR自动装配.
  *
  * @author zenghao
- * @date 2022/7/17
+ * @date 2022/8/2
  */
-@ConditionalOnProperty(prefix = SmsProperties.SMS_PREFIX, name = "enabled", havingValue = "true")
-@EnableConfigurationProperties(value = {SmsProperties.class})
-public class SmsConfig {
+@ConditionalOnProperty(prefix = OcrProperties.OCR_PREFIX, name = "enabled", havingValue = "true")
+@EnableConfigurationProperties(value = {OcrProperties.class})
+public class OcrConfig {
 
     /**
      * 创建全局 腾讯云短信配置.
      *
      * @param credential 腾讯云配置
-     * @param smsProperties 短信相关配置
      * @return SmsClient
      */
     @Bean
     @ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
     @ConditionalOnBean(Credential.class)
     @ConditionalOnMissingBean
-    public SmsService smsService(final Credential credential, final SmsProperties smsProperties) {
+    public OcrService ocrService(final Credential credential, final OcrProperties ocrProperties) {
         HttpProfile httpProfile = new HttpProfile();
         ClientProfile clientProfile = new ClientProfile();
         clientProfile.setSignMethod(ClientProfile.SIGN_SHA256);
         clientProfile.setHttpProfile(httpProfile);
-        SmsClient smsClient = new SmsClient(credential, smsProperties.getRegion(), clientProfile);
+        OcrClient ocrClient = new OcrClient(credential, ocrProperties.getRegion(), clientProfile);
 
-        return new SmsService(smsClient, smsProperties);
+        return new OcrService(ocrClient);
     }
 }

@@ -23,4 +23,10 @@ public class CosProperties {
      * cos域名前缀.
      */
     private String domain;
+
+    /**
+     * 设置 bucket 的区域.
+     * COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
+     */
+    private String region;
 }

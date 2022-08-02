@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * TODO auto.
+ * 腾讯云基本配置.
  *
  * @author zenghao
  * @date 2022/7/17
@@ -25,9 +25,4 @@ public class TencentProperties {
      */
     private String secretKey;
 
-    /**
-     * 设置 bucket 的区域.
-     * COS 地域的简称请参照 https://cloud.tencent.com/document/product/436/6224
-     */
-    private String region;
 }
