@@ -4,6 +4,7 @@ import com.cloud.component.fadada.FadadaClient;
 import com.cloud.component.properties.FadadaProperties;
 import com.fadada.sdk.base.client.FddBaseClient;
 import com.fadada.sdk.verify.client.FddVerifyClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -23,11 +24,13 @@ public class FadadaConfig {
      * 法大大请求参数
      */
     @Bean
+    @ConditionalOnClass(name = "com.fadada.sdk.client.FddClient")
     @ConditionalOnProperty(prefix = FadadaProperties.FADADA_PREFIX, name = "enabled", havingValue = "true")
     public FddVerifyClient fddVerifyClient(FadadaProperties fadadaProperties) {
         return new FddVerifyClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), V, fadadaProperties.getHost());
     }
     @Bean
+    @ConditionalOnClass(name = "com.fadada.sdk.client.FddClient")
     @ConditionalOnProperty(prefix = FadadaProperties.FADADA_PREFIX, name = "enabled", havingValue = "true")
     public FddBaseClient fddBaseClient(FadadaProperties fadadaProperties) {
         return new FddBaseClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), V, fadadaProperties.getHost());
