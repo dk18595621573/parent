@@ -9,10 +9,7 @@ import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.common.utils.sign.Base64;
 import com.cloud.component.chinapay.util.Encryptor;
 import com.cloud.component.fadada.request.*;
-import com.cloud.component.fadada.response.FadadaCompanyUrlResponse;
-import com.cloud.component.fadada.response.FadadaDataResponse;
-import com.cloud.component.fadada.response.FadadaGenerateResponse;
-import com.cloud.component.fadada.response.FadadaResultResponse;
+import com.cloud.component.fadada.response.*;
 import com.cloud.component.properties.FadadaProperties;
 import com.fadada.sdk.base.client.FddBaseClient;
 import com.fadada.sdk.base.model.req.*;
@@ -24,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -38,6 +36,7 @@ public class FadadaClient {
     private final FddVerifyClient fddVerifyClient;
     private final FddBaseClient fddBaseClient;
     private final FadadaProperties fadadaProperties;
+
     /**
      * 1. 注册账号
      *
@@ -54,91 +53,13 @@ public class FadadaClient {
         log.info("法大大返回参数，注册账号：{}", result);
         return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
     }
+
     /**
      * 2. 获取企业实名认证地址
      *
      * @return 法大大返回信息
      */
-    public FadadaCompanyUrlResponse getCompanyVerifyUrl(CompanyVerifyRequest companyVerifyRequest) {
-        CompanyVerifyUrlParams params = new CompanyVerifyUrlParams();
-        params.setCustomerId(companyVerifyRequest.getCustomerId());
-        // 是否允许用户页面修改 1允许 2不允许 默认为1
-        params.setPageModify(companyVerifyRequest.getPageModify());
-        // 以下是非必填参数
-        // 实名认证套餐类型： 0：标准方案（对公打款+纸质审核+法人身份+法 人授权）；1：对公打款；2：纸质审核；3：法人身份（授权）认证
-        params.setVerifiedWay(companyVerifyRequest.getVerifiedWay());
-        //管理员认证套餐类型： 0：三要素标准方案； 1：三要素补充方案； 2：四要素标准方案； 3：四要素补充方案； 4：纯三要素方案； 5：纯四要素方案；
-        params.setMVerifiedWay(companyVerifyRequest.getMVerifiedWay());
-        //指定管理员为"法人"身份下，允许的认证方式∶ 1.法人身份认证; 2.对公打款认证; 3.纸质材料认证;
-        params.setLegalAllowCompanyVerifyWay(companyVerifyRequest.getLegalAllowCompanyVerifyWay());
-        //指定管理员为"代理人"身份下，允许的认证方式∶ 1.法人授权认证; 2.对公打款认证; 3.纸质材料认证;
-        // 可同时传入多个值，如"1,2“，表示代理身份下，只允 许"法人授权认证"及"对公打款认证"方式，页面隐藏纸质材料认证"方式;传入空值时，表示允许所有认证方式;
-        params.setAgentAllowCompanyVerifyWay(companyVerifyRequest.getAgentAllowCompanyVerifyWay());
-        //0-只需要头像面 1-头像面与国徽面都需要 2-都不需要 默认为0
-        params.setIdPhotoOptional(companyVerifyRequest.getIdPhotoOptional());
-        // 公司信息
-        CompanyVerifyUrlParams.CompanyInfo companyInfo = new CompanyVerifyUrlParams.CompanyInfo();
-        if (Objects.nonNull(companyVerifyRequest.getCompanyInfo())) {
-            companyInfo.setCompanyName(companyVerifyRequest.getCompanyInfo().getCompanyName());
-            companyInfo.setCreditNo(companyVerifyRequest.getCompanyInfo().getCreditNo());
-            companyInfo.setCreditImagePath(companyVerifyRequest.getCompanyInfo().getCreditImagePath());
-        }
-        params.setCompanyInfo(companyInfo);
-        //1.法人，2.代理人
-        params.setCompanyPrincipalType(companyVerifyRequest.getCompanyPrincipalType());
-        // 法人信息
-        CompanyVerifyUrlParams.LegalInfo legalInfo = new CompanyVerifyUrlParams.LegalInfo();
-        if (Objects.nonNull(companyVerifyRequest.getLegalInfo())) {
-            legalInfo.setLegalId(companyVerifyRequest.getLegalInfo().getLegalId());
-            legalInfo.setLegalMobile(companyVerifyRequest.getLegalInfo().getLegalMobile());
-            legalInfo.setLegalIdFrontPath(companyVerifyRequest.getLegalInfo().getLegalIdFrontPath());
-            legalInfo.setBankCardNo(companyVerifyRequest.getLegalInfo().getBankCardNo());
-        }
-        legalInfo.setLegalName(companyVerifyRequest.getLegalName());
-        params.setLegalInfo(legalInfo);
-        params.setLegalIdFrontImg(companyVerifyRequest.getLegalIdFrontImg());
-        //代理人信息
-        CompanyVerifyUrlParams.AgentInfo agentInfo = new CompanyVerifyUrlParams.AgentInfo();
-        if (Objects.nonNull(companyVerifyRequest.getAgentInfo())) {
-            agentInfo.setAgentName(companyVerifyRequest.getAgentInfo().getAgentName());
-            agentInfo.setAgentId(companyVerifyRequest.getAgentInfo().getAgentId());
-            agentInfo.setAgentMobile(companyVerifyRequest.getAgentInfo().getAgentMobile());
-            agentInfo.setAgentIdFrontPath(companyVerifyRequest.getAgentInfo().getAgentIdFrontPath());
-            agentInfo.setBankCardNo(companyVerifyRequest.getAgentInfo().getBankCardNo());
-        }
-        params.setAgentInfo(agentInfo);
-        params.setAgentIdFrontImg(companyVerifyRequest.getAgentIdFrontImg());
-        params.setCreditImage(companyVerifyRequest.getCreditImage());
-        //银行卡信息
-        CompanyVerifyUrlParams.BankInfo bankInfo = new CompanyVerifyUrlParams.BankInfo();
-        if (Objects.nonNull(companyVerifyRequest.getBankInfo())) {
-            bankInfo.setBankName(companyVerifyRequest.getBankInfo().getBankName());
-            bankInfo.setBankId(companyVerifyRequest.getBankInfo().getBankId());
-            bankInfo.setSubbranchName(companyVerifyRequest.getBankInfo().getSubbranchName());
-        }
-        params.setBankInfo(bankInfo);
-        params.setBankProvinceName(companyVerifyRequest.getBankProvinceName());
-        params.setBankCityName(companyVerifyRequest.getBankCityName());
-        //是否认证成功后自动申请实名证书 参数值为“0”：不申请，参数值 为“1”：自动申请
-        params.setCertFlag(companyVerifyRequest.getCertFlag());
-        //add（新增）modify（修改）不传默认add
-        params.setOption(companyVerifyRequest.getOption());
-        //管理员认证流水号
-        params.setVerifiedSerialNo(companyVerifyRequest.getVerifiedSerialno());
-        //企业注册申请表
-        params.setAuthorizationFile(companyVerifyRequest.getAuthorizationFile());
-        //法人姓名（代理人认证想要传法人姓名可用此参数）
-        params.setLegalName(companyVerifyRequest.getLegalName());
-        //法人/代理人/个人手机号
-        params.setMobile(companyVerifyRequest.getMobile());
-        //法人授权手机号,当接口中传入了“法人授权手机号”字段 时，页面中选择法人授权认证时，会将传入的手机号展示出来
-        params.setLegalAuthorizedMobile(companyVerifyRequest.getLegalAuthorizedMobile());
-        //zh:中文，en:英文默认：中文
-        params.setLang(companyVerifyRequest.getLang());
-        //0：企业；1：政府/事业单位；2：其他组织；3：个体工商户
-        params.setOrganization_type(companyVerifyRequest.getOrganizationType());
-        params.setReturnUrl(companyVerifyRequest.getReturnUrl());
-        params.setNotifyUrl(companyVerifyRequest.getNotifyUrl());
+    public FadadaCompanyUrlResponse getCompanyVerifyUrl(CompanyVerifyUrlParams params) {
         String result = fddVerifyClient.invokeCompanyVerifyUrl(params);
         log.info("法大大返回参数，获取企业实名认证地址：{}", result);
         return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaCompanyUrlResponse.class);
@@ -147,52 +68,11 @@ public class FadadaClient {
     /**
      * 3. 获取个人实名认证地址
      */
-    public FadadaDataResponse getPersonVerifyUrl() {
-        PersonVerifyUrlParams params = new PersonVerifyUrlParams();
-        //客户编号
-        params.setCustomerId("填入注册个人账户时返回的客户编号");
-        //实名认证套餐类型
-        params.setVerifiedWay("0");
-        //是否允许用户页面修改 1允许 2不允许 //以下是非必填参数
-        params.setPageModify("1");
-        params.setNotifyUrl("");
-        //异步回调地址
-        params.setReturnUrl("");
-        //同步通知url
-        params.setCustomerName("");
-        //姓名
-        params.setCustomerIdentType("");
-        //证件类型
-        params.setCustomerIdentNo("");
-        //证件号码
-        params.setMobile("");
-        //手机号码
-        params.setIdentFrontPath("");
-        //证件正面照下载地址
-        params.setIdentBackPath("");
-        //证件反面照下载地址
-        params.setResultType("");
-        //刷脸是否显示结果页面
-        params.setCertFlag("");
-        //是否认证成功后自动申请实名证书
-        params.setCertType("");
-        //证件类型
-        params.setBankCardNo("");
-        //个人银行卡
-        params.setOption("");
-        //不传默认add
-        params.setIdPhotoOptional("");
-        //是否需要上传身份照片
-        params.setIsMinProgram("");
-        //是否跳转法大大公证处小程序认证
-        params.setLang("");
-        //zh：中文；en：英文
-        params.setIsAllowOverseasBankCardAuth("");
-        //海外用户是否支持银行卡认证
-        params.setIdentFrontImg(new File(""));
+    public FadadaDataResponse getPersonVerifyUrl(PersonVerifyUrlParams params) {
         //证件正面照图片文件
-        params.setIdentBackImg(new File(""));
+        params.setIdentFrontImg(new File(""));
         //证件反面照图片文件
+        params.setIdentBackImg(new File(""));
         String result = fddVerifyClient.invokePersonVerifyUrl(params);
         log.info("法大大返回参数，获取个人实名认证地址：{}", result);
         return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
@@ -201,12 +81,7 @@ public class FadadaClient {
     /**
      * 4. 实名证书申请
      */
-    public FadadaDataResponse applyCert() {
-        ApplyCertParams params = new ApplyCertParams();
-        //客户编号
-        params.setCustomerId("注册个人账号时返回");
-        //填写获取实名认证地址返回的交易号transactionNo
-        params.setVerifiedSerialNo("");
+    public FadadaDataResponse applyCert(ApplyCertParams params) {
         String result = fddVerifyClient.invokeApplyCert(params);
         log.info("法大大返回参数，实名证书申请：{}", result);
         return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
@@ -233,7 +108,7 @@ public class FadadaClient {
     /**
      * 6. 自定义印章
      */
-    public FadadaDataResponse customSignature(String customerId, String content) {
+    public FadadaAddSignatureResponse customSignature(String customerId, String content) {
         CustomSignatureParams params = new CustomSignatureParams();
         //印章展示的文字
         params.setContent(content);
@@ -241,7 +116,8 @@ public class FadadaClient {
         params.setCustomerId(customerId);
         String result = fddBaseClient.invokeCustomSignature(params);
         log.info("法大大返回参数，自定义印章：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
+        Map<String, Object> stringObjectMap = JsonUtil.toMap(result);
+        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaAddSignatureResponse.class);
     }
 
     /**
