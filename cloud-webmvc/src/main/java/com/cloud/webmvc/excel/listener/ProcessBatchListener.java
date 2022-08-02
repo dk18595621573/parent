@@ -11,6 +11,7 @@ import java.util.function.Consumer;
 
 /**
  * 批量读取.
+ *  默认一百条数据处理一次
  *
  * @author zenghao
  * @date 2022/7/28
