@@ -6,7 +6,6 @@ import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.sms.v20190711.SmsClient;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -32,7 +31,6 @@ public class SmsConfig {
      */
     @Bean
     @ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
-    @ConditionalOnBean(Credential.class)
     @ConditionalOnMissingBean
     public SmsService smsService(final Credential credential, final SmsProperties smsProperties) {
         HttpProfile httpProfile = new HttpProfile();
