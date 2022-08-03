@@ -37,13 +37,13 @@ public class VatInvoice {
     /** 货物或应税劳务、服务名称 */
     private String costName;
     /** 合计金额 */
-    private BigDecimal amountWithoutTax;
+    private String amountWithoutTax;
     /** 合计税额 */
-    private BigDecimal taxAmount;
+    private String taxAmount;
     /** 价税合计(大写) */
     private String amountUpper;
     /** 小写金额 */
-    private BigDecimal amount;
+    private String amount;
     /** 销售方地址、电话 */
     private String sellerAddressPhone;
     /** 销售方开户行及账号 */
@@ -70,5 +70,17 @@ public class VatInvoice {
         }catch (Exception e){
             this.invoiceDate = invoiceDate;
         }
+    }
+
+    public void setAmountWithoutTax(String amountWithoutTax) {
+        this.amountWithoutTax = StrUtil.replace(amountWithoutTax, "¥", "");
+    }
+
+    public void setTaxAmount(String taxAmount) {
+        this.taxAmount = StrUtil.replace(taxAmount, "¥", "");
+    }
+
+    public void setAmount(String amount) {
+        this.amount = StrUtil.replace(amount, "¥", "");
     }
 }

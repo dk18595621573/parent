@@ -15,8 +15,6 @@ public class VatInvoiceMap {
     /** 符合去除map */
     private static final Map<String, String> MONEY_SYMBOL = new HashMap<>();
     static {
-        MONEY_SYMBOL.put("合计金额", "¥");
-        MONEY_SYMBOL.put("小写金额", "¥");
         NAME_MAP.put("发票代码", "code");
         NAME_MAP.put("发票号码", "number");
         NAME_MAP.put("发票名称", "name");
@@ -51,18 +49,5 @@ public class VatInvoiceMap {
         return NAME_MAP.get(key);
     }
 
-    /**
-     * 去除需要清空的符号
-     * @param key 识别名称
-     * @param value 去除值
-     * @return 去除符号
-     */
-    public static String cleanSymbol(String key, String value){
-        if (StrUtil.isBlank(value)){
-            return value;
-        }
-        String symbol = MONEY_SYMBOL.get(key);
-        return StrUtil.replace(value, symbol, "");
-    }
     private VatInvoiceMap(){}
 }

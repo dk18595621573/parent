@@ -45,7 +45,7 @@ public class OcrService {
             JSONObject jsonObject = new JSONObject();
             for (TextVatInvoice info : invoiceInfos) {
                 String name = info.getName();
-                jsonObject.set(VatInvoiceMap.getNameField(name), VatInvoiceMap.cleanSymbol(name, info.getValue()));
+                jsonObject.set(VatInvoiceMap.getNameField(name), info.getValue());
             }
             invoiceDTO.setVatInvoice(JSONUtil.toBean(jsonObject, VatInvoice.class));
             //项目明细数据
