@@ -25,20 +25,21 @@ public class VatInvoiceMap {
         NAME_MAP.put("购买方识别号", "buyerHeadingCode");
         NAME_MAP.put("购买方名称", "buyerName");
         NAME_MAP.put("开票日期", "invoiceDate");
-        NAME_MAP.put("购买方地址、电话", "buyerAddress");
-        NAME_MAP.put("购买方开户行及账号", "buyerBank");
+        NAME_MAP.put("购买方地址、电话", "buyerAddressPhone");
+        NAME_MAP.put("购买方开户行及账号", "buyerBankAccount");
         NAME_MAP.put("货物或应税劳务、服务名称", "costName");
-        NAME_MAP.put("合计金额", "totalMoney");
-        NAME_MAP.put("合计税额", "totalTaxMoney");
+        NAME_MAP.put("合计金额", "amountWithoutTax");
+        NAME_MAP.put("合计税额", "taxAmount");
         NAME_MAP.put("价税合计(大写)", "amountUpper");
         NAME_MAP.put("小写金额", "amount");
-        NAME_MAP.put("销售方地址、电话", "sellerAddress");
-        NAME_MAP.put("销售方开户行及账号", "sellerBank");
+        NAME_MAP.put("销售方地址、电话", "sellerAddressPhone");
+        NAME_MAP.put("销售方开户行及账号", "sellerBankAccount");
         NAME_MAP.put("收款人", "payee");
         NAME_MAP.put("复核", "review");
         NAME_MAP.put("开票人", "drawer");
         NAME_MAP.put("省", "province");
         NAME_MAP.put("发票类型", "type");
+        NAME_MAP.put("备注", "remark");
     }
 
     /**

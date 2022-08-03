@@ -1,18 +1,15 @@
 package com.cloud.tencent.service;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.tencent.exception.TencentException;
+import com.cloud.tencent.model.*;
 import com.cloud.tencent.model.VatInvoice;
-import com.cloud.tencent.model.VatInvoiceDTO;
-import com.cloud.tencent.model.VatInvoiceMap;
 import com.google.gson.JsonObject;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
-import com.tencentcloudapi.ocr.v20181119.models.TextVatInvoice;
-import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceItem;
-import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRRequest;
-import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRResponse;
+import com.tencentcloudapi.ocr.v20181119.models.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -59,5 +56,25 @@ public class OcrService {
         return invoiceDTO;
     }
 
+    /**
+     * 增值税发票的准确性核验
+     * @param verifyParam 入参
+     */
+    public InvoiceVerifyDTO invoiceVerifyNew(VatInvoiceVerifyParam verifyParam){
+        //发送参数
+        VatInvoiceVerifyNewRequest req = new VatInvoiceVerifyNewRequest();
+        req.setAmount(verifyParam.getAmount());
+        req.setInvoiceNo(verifyParam.getInvoiceNo());
+        req.setInvoiceCode(verifyParam.getInvoiceCode());
+        req.setInvoiceDate(verifyParam.getInvoiceDate());
+        req.setInvoiceKind(verifyParam.getInvoiceKind());
+        req.setCheckCode(verifyParam.getCheckCode());
+        try {
+            ocrClient.VatInvoiceVerifyNew(req);
+            return InvoiceVerifyDTO.success();
+        } catch (TencentCloudSDKException e) {
+            return InvoiceVerifyDTO.error(e.getErrorCode(), e.getMessage());
+        }
+    }
 
 }

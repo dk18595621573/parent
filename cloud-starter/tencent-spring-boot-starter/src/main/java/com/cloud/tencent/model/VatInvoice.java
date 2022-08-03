@@ -28,23 +28,23 @@ public class VatInvoice {
     /** 开票日期 */
     private String invoiceDate;
     /** 购买方地址、电话 */
-    private String buyerAddress;
+    private String buyerAddressPhone;
     /** 购买方开户行及账号 */
-    private String buyerBank;
+    private String buyerBankAccount;
     /** 货物或应税劳务、服务名称 */
     private String costName;
     /** 合计金额 */
-    private BigDecimal totalMoney;
+    private BigDecimal amountWithoutTax;
     /** 合计税额 */
-    private BigDecimal totalTaxMoney;
+    private BigDecimal taxAmount;
     /** 价税合计(大写) */
     private String amountUpper;
     /** 小写金额 */
     private BigDecimal amount;
     /** 销售方地址、电话 */
-    private String sellerAddress;
+    private String sellerAddressPhone;
     /** 销售方开户行及账号 */
-    private String sellerBank;
+    private String sellerBankAccount;
     /** 收款人 */
     private String payee;
     /** 复核 */
