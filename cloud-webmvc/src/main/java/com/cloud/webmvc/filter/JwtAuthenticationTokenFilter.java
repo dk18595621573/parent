@@ -1,10 +1,12 @@
 package com.cloud.webmvc.filter;
 
+import com.cloud.common.constant.Constants;
 import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.domain.LoginUser;
 import com.cloud.webmvc.security.service.TokenService;
 import com.cloud.webmvc.utils.SecurityUtils;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,14 +33,22 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        LoginUser loginUser = tokenService.getLoginUser(request);
-        if (StringUtils.isNotNull(loginUser) && StringUtils.isNull(SecurityUtils.getAuthentication())) {
-            tokenService.verifyToken(loginUser);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            RequestThread.setUser(loginUser);
+        try {
+            LoginUser loginUser = tokenService.getLoginUser(request);
+            if (StringUtils.isNotNull(loginUser) && StringUtils.isNull(SecurityUtils.getAuthentication())) {
+                tokenService.verifyToken(loginUser);
+                MDC.put(Constants.MDC_USER_ID, String.valueOf(loginUser.getUserId()));
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                RequestThread.setUser(loginUser);
+            } else {
+                MDC.put(Constants.MDC_USER_ID, StringUtils.EMPTY);
+            }
+            chain.doFilter(request, response);
+        } finally {
+            RequestThread.clear();
+            MDC.remove(Constants.MDC_USER_ID);
         }
-        chain.doFilter(request, response);
     }
 }

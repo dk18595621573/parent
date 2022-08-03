@@ -1,12 +1,8 @@
 package com.cloud.core.utils;
 
-import com.cloud.common.constant.Constants;
-import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.file.FileTypeUtils;
 import com.cloud.common.utils.file.MimeTypeUtils;
-import com.cloud.common.utils.uuid.IdUtils;
-import com.cloud.core.config.SystemConfig;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -14,7 +10,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -54,41 +49,7 @@ public class FileUtils {
         }
     }
 
-    /**
-     * 写数据到文件中
-     *
-     * @param data 数据
-     * @return 目标文件
-     * @throws IOException IO异常
-     */
-    public static String writeImportBytes(byte[] data) throws IOException {
-        return writeBytes(data, SystemConfig.getImportPath());
-    }
-
-    /**
-     * 写数据到文件中
-     *
-     * @param data      数据
-     * @param uploadDir 目标文件
-     * @return 目标文件
-     * @throws IOException IO异常
-     */
-    public static String writeBytes(byte[] data, String uploadDir) throws IOException {
-        FileOutputStream fos = null;
-        String pathName = "";
-        try {
-            String extension = getFileExtendName(data);
-            pathName = DateUtils.datePath() + "/" + IdUtils.fastUUID() + "." + extension;
-            File file = getAbsoluteFile(uploadDir, pathName);
-            fos = new FileOutputStream(file);
-            fos.write(data);
-        } finally {
-            IOUtils.close(fos);
-        }
-        return getPathFileName(uploadDir, pathName);
-    }
-
-    public static final File getAbsoluteFile(String uploadDir, String fileName) throws IOException {
+    public static final File getAbsoluteFile(String uploadDir, String fileName) {
         File desc = new File(uploadDir + File.separator + fileName);
 
         if (!desc.exists()) {
@@ -97,12 +58,6 @@ public class FileUtils {
             }
         }
         return desc;
-    }
-
-    public static final String getPathFileName(String uploadDir, String fileName) throws IOException {
-        int dirLastIndex = SystemConfig.getProfile().length() + 1;
-        String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
-        return Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
     }
 
     /**

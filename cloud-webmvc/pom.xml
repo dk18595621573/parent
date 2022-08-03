@@ -54,6 +54,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.cloud</groupId>
             <artifactId>cloud-common</artifactId>
         </dependency>

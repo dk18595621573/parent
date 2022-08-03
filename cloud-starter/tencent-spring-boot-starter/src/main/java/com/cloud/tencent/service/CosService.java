@@ -69,7 +69,7 @@ public class CosService {
     }
 
     /**
-     * 文件上传到腾讯云COS.
+     * 文件流上传到腾讯云COS.
      *
      * @param url     文件url，请查阅文件协议。本地文件以file:// 、远程http以 http:// 开头.
      * @param oldName 原始文件名
@@ -90,7 +90,7 @@ public class CosService {
     }
 
     /**
-     * 文件上传到腾讯云COS.
+     * 文件流上传到腾讯云COS.
      *
      * @param inputStream 文件流
      * @param oldName     原始文件名
@@ -101,7 +101,7 @@ public class CosService {
     }
 
     /**
-     * 文件按比列压缩上传到腾讯云COS.
+     * 文件流上传到腾讯云COS.
      *
      * @param inputStream 文件流
      * @param oldName     原始文件名
@@ -135,28 +135,62 @@ public class CosService {
     }
 
     /**
-     * 同步上传.
+     * 文件上传到腾讯云COS.
      *
-     * @param filename 上传文件名
-     * @param filePath 上传文件路径
-     * @param tempFile 上传的文件
+     * @param file 文件
+     * @return 上传后文件路径
      */
-    private void upload2Cos(final String filename, final String filePath, final File tempFile) {
-        try (InputStream inputStream = new FileInputStream(tempFile)) {
-            // 创建上传Object的Metadata
-            ObjectMetadata meta = new ObjectMetadata();
-            //设置ContentLength
-            meta.setContentLength(inputStream.available());
-            log.debug("开始上传文件至COS：【{}】", filename);
-            PutObjectResult putObjectResult = cosClient.putObject(cosProperties.getBucketName(), filePath, inputStream, meta);
-            log.debug("文件上传至COS：【{}】【{}】 成功，返回数据: {}", filename, filePath, putObjectResult.getRequestId());
-            //上传完成删除临时文件
-            if (!tempFile.delete()) {
-                log.warn("删除临时文件【{}】失败", tempFile.getAbsolutePath());
-            }
-        } catch (Exception e) {
-            log.error("文件上传到COS：【{}】失败，失败原因为：", filename, e);
+    public String upload(final File file) {
+        return this.upload(file, file.getName(), null);
+    }
+
+    /**
+     * 文件上传到腾讯云COS.
+     *
+     * @param file 文件
+     * @param strategy 重命名策略
+     * @return 上传后文件路径
+     */
+    public String upload(final File file, RenameStrategy strategy) {
+        return this.upload(file, file.getName(), strategy);
+    }
+
+    /**
+     * 文件上传到腾讯云COS.
+     *
+     * @param file 文件
+     * @param oldName     原始文件名
+     * @return 上传后文件路径
+     */
+    public String upload(final File file, final String oldName) {
+        return this.upload(file, oldName, null);
+    }
+
+    /**
+     * 文件上传到腾讯云COS.
+     *
+     * @param file 文件
+     * @param oldName     原始文件名
+     * @param strategy    文件自定义策略
+     * @return 上传后文件路径
+     */
+    public String upload(final File file, final String oldName, final RenameStrategy strategy) {
+        if (file == null || !file.exists() || file.isDirectory() || !StringUtils.hasText(oldName)) {
+            return null;
         }
+        RenameStrategy renameStrategy = strategy != null ? strategy : RenameStrategy.defaultStrategy();
+
+        //设置新的文件名
+        String ext = oldName.substring(oldName.lastIndexOf('.') + 1);
+        String lastName = renameStrategy.getFileName().rename(oldName);
+        String filePath = String.format("/%s/%s.%s", renameStrategy.getFilePath().rename(oldName), lastName, ext);
+        try {
+            upload2Cos(oldName, filePath, file);
+        } catch (Exception e) {
+            log.error("文件【{}】上传到COS失败,失败原因为：{}", oldName, e);
+            return null;
+        }
+        return filePath;
     }
 
     /**
@@ -192,6 +226,31 @@ public class CosService {
         } catch (Exception e) {
             log.error("COS文件【{}】删除失败,失败原因为：", filePath, e);
             return false;
+        }
+    }
+
+    /**
+     * 同步上传.
+     *
+     * @param filename 上传文件名
+     * @param filePath 上传文件路径
+     * @param tempFile 上传的文件
+     */
+    private void upload2Cos(final String filename, final String filePath, final File tempFile) {
+        try (InputStream inputStream = new FileInputStream(tempFile)) {
+            // 创建上传Object的Metadata
+            ObjectMetadata meta = new ObjectMetadata();
+            //设置ContentLength
+            meta.setContentLength(inputStream.available());
+            log.debug("开始上传文件至COS：【{}】", filename);
+            PutObjectResult putObjectResult = cosClient.putObject(cosProperties.getBucketName(), filePath, inputStream, meta);
+            log.debug("文件上传至COS：【{}】【{}】 成功，返回数据: {}", filename, filePath, putObjectResult.getRequestId());
+            //上传完成删除临时文件
+            if (!tempFile.delete()) {
+                log.warn("删除临时文件【{}】失败", tempFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            log.error("文件上传到COS：【{}】失败，失败原因为：", filename, e);
         }
     }
 

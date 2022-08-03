@@ -15,12 +15,12 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/6/20
  */
 @Configuration
+@ConditionalOnClass(name = "com.chinapay.secss.SecssUtil")
+@ConditionalOnProperty(prefix = ChinaPayProperties.CHINAPAY_PREFIX, name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(value = ChinaPayProperties.class)
 public class ChinaPayConfig {
 
     @Bean
-    @ConditionalOnClass(name = "com.chinapay.secss.SecssUtil")
-    @ConditionalOnProperty(prefix = ChinaPayProperties.CHINAPAY_PREFIX, name = "enabled", havingValue = "true")
     public ChinaPayClient chinaPayClient(ChinaPayProperties chinaPayProperties) {
         return new ChinaPayClient(chinaPayProperties);
     }

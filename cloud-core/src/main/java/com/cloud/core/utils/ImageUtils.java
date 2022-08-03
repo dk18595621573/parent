@@ -1,14 +1,10 @@
 package com.cloud.core.utils;
 
-import com.cloud.common.constant.Constants;
-import com.cloud.common.utils.StringUtils;
-import com.cloud.core.config.SystemConfig;
-import org.apache.poi.util.IOUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -54,23 +50,16 @@ public class ImageUtils {
     public static byte[] readFile(String url) {
         InputStream in = null;
         try {
-            if (url.startsWith("http")) {
-                // 网络地址
-                URL urlObj = new URL(url);
-                URLConnection urlConnection = urlObj.openConnection();
-                urlConnection.setConnectTimeout(30 * 1000);
-                urlConnection.setReadTimeout(60 * 1000);
-                urlConnection.setDoInput(true);
-                in = urlConnection.getInputStream();
-            } else {
-                // 本机地址
-                String localPath = SystemConfig.getProfile();
-                String downloadPath = localPath + StringUtils.substringAfter(url, Constants.RESOURCE_PREFIX);
-                in = new FileInputStream(downloadPath);
-            }
+            // 仅支持网络地址
+            URL urlObj = new URL(url);
+            URLConnection urlConnection = urlObj.openConnection();
+            urlConnection.setConnectTimeout(30 * 1000);
+            urlConnection.setReadTimeout(60 * 1000);
+            urlConnection.setDoInput(true);
+            in = urlConnection.getInputStream();
             return IOUtils.toByteArray(in);
         } catch (Exception e) {
-            log.error("获取文件路径异常 {}", e);
+            log.error("获取文件路径异常 {}", url, e);
             return null;
         } finally {
             IOUtils.closeQuietly(in);

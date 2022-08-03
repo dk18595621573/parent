@@ -110,6 +110,10 @@ public class Constants {
      */
     public static final String LOGIN_USER_KEY = "login_user_key";
 
+    public static final String MDC_TRACE_ID = "TRACE";
+
+    public static final String MDC_USER_ID = "USER";
+
 //    /**
 //     * 用户ID
 //     */

@@ -4,7 +4,6 @@ import com.cloud.common.core.text.Convert;
 import com.cloud.common.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -157,9 +156,10 @@ public class ReflectUtils {
                         args[i] = Convert.toFloat(args[i]);
                     } else if (cs[i] == Date.class) {
                         if (args[i] instanceof String) {
-                            args[i] = DateUtils.parseDate(args[i]);
-                        } else {
-                            args[i] = DateUtil.getJavaDate((Double) args[i]);
+                                args[i] = DateUtils.parseDate(args[i]);
+//                                 } else {
+//                                args[i] = DateUtil.getJavaDate((Double) args[i]);
+//                            }
                         }
                     } else if (cs[i] == boolean.class || cs[i] == Boolean.class) {
                         args[i] = Convert.toBool(args[i]);
