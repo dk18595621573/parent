@@ -51,7 +51,7 @@ public class FadadaClient {
         params.setOpenId(openId);
         String result = fddBaseClient.invokeRegisterAccount(params);
         log.info("法大大返回参数，注册账号：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
+        return JsonUtil.parse(result, FadadaDataResponse.class);
     }
 
     /**
@@ -62,7 +62,7 @@ public class FadadaClient {
     public FadadaCompanyUrlResponse getCompanyVerifyUrl(CompanyVerifyUrlParams params) {
         String result = fddVerifyClient.invokeCompanyVerifyUrl(params);
         log.info("法大大返回参数，获取企业实名认证地址：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaCompanyUrlResponse.class);
+        return JsonUtil.parse(result, FadadaCompanyUrlResponse.class);
     }
 
     /**
@@ -75,7 +75,7 @@ public class FadadaClient {
         params.setIdentBackImg(new File(""));
         String result = fddVerifyClient.invokePersonVerifyUrl(params);
         log.info("法大大返回参数，获取个人实名认证地址：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
+        return JsonUtil.parse(result, FadadaDataResponse.class);
     }
 
     /**
@@ -84,25 +84,25 @@ public class FadadaClient {
     public FadadaDataResponse applyCert(ApplyCertParams params) {
         String result = fddVerifyClient.invokeApplyCert(params);
         log.info("法大大返回参数，实名证书申请：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
+        return JsonUtil.parse(result, FadadaDataResponse.class);
     }
 
     /**
      * 5. 印章上传
      */
-    public FadadaDataResponse addSignature(SignatureRequest signatureRequest) {
+    public FadadaAddSignatureResponse addSignature(SignatureRequest signatureRequest) {
         AddSignatureParams params = new AddSignatureParams();
         //客户编号 //下面章图片base64、签章图片、图片公网地址三选一
         params.setCustomerId(signatureRequest.getCustomerId());
         //签章图片base64
         params.setSignatureImgBase64(signatureRequest.getSignatureImgBase64());
         //签章图片
-        params.setFile(new File("D:\\sign.png"));
+        params.setFile(new File(signatureRequest.getFile()));
         //签章图片公网地址
-        params.setImgUrl("");
+        params.setImgUrl(signatureRequest.getImgUrl());
         String result = fddBaseClient.invokeAddSignature(params);
         log.info("法大大返回参数，印章上传：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaDataResponse.class);
+        return JsonUtil.parse(result, FadadaAddSignatureResponse.class);
     }
 
     /**
@@ -117,7 +117,7 @@ public class FadadaClient {
         String result = fddBaseClient.invokeCustomSignature(params);
         log.info("法大大返回参数，自定义印章：{}", result);
         Map<String, Object> stringObjectMap = JsonUtil.toMap(result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaAddSignatureResponse.class);
+        return JsonUtil.parse(result, FadadaAddSignatureResponse.class);
     }
 
     /**
@@ -142,7 +142,7 @@ public class FadadaClient {
         params.setDocType(uploaddocsRequest.getDocType());
         String result = fddBaseClient.invokeUploadDocs(params);
         log.info("法大大合同上传返回参数，合同上传：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaResultResponse.class);
+        return JsonUtil.parse(result, FadadaResultResponse.class);
     }
 
     /**
@@ -166,7 +166,7 @@ public class FadadaClient {
         // 文档地址
         String result = fddBaseClient.invokeUploadTemplate(params);
         log.info("法大大返回参数，模板上传：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaResultResponse.class);
+        return JsonUtil.parse(result, FadadaResultResponse.class);
     }
 
     /**
@@ -194,7 +194,7 @@ public class FadadaClient {
 //        fddBaseClient.setVersion("2.1");
         String result = fddBaseClient.invokeGenerateContract(params);
         log.info("法大大返回参数，模板填充：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaGenerateResponse.class);
+        return JsonUtil.parse(result, FadadaGenerateResponse.class);
     }
 
     /**
@@ -261,7 +261,7 @@ public class FadadaClient {
         params.setKeywordStrategy("0");
         String result = fddBaseClient.invokeExtSignAuto(params);
         log.info("法大大返回参数，自动签署：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaResultResponse.class);
+        return JsonUtil.parse(result, FadadaResultResponse.class);
     }
 
     /**
@@ -320,7 +320,7 @@ public class FadadaClient {
         params.setPath(path);
         String result = fddBaseClient.invokeDownloadPdf(params);
         log.info("法大大返回参数，合同下载：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaResultResponse.class);
+        return JsonUtil.parse(result, FadadaResultResponse.class);
     }
 
     /**
@@ -339,7 +339,7 @@ public class FadadaClient {
         params.setContractId(contractId);
         String result = fddBaseClient.invokeContractFilling(params);
         log.info("法大大返回参数，合同归档：{}", result);
-        return JsonUtil.toPojo(JsonUtil.toMap(result), FadadaResultResponse.class);
+        return JsonUtil.parse(result, FadadaResultResponse.class);
     }
 
     /**
