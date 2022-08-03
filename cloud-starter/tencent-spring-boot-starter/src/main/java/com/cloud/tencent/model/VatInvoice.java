@@ -1,6 +1,9 @@
 package com.cloud.tencent.model;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -56,4 +59,16 @@ public class VatInvoice {
     /** 发票类型 */
     private String type;
 
+    /**
+     * 转换日期格式为：yyyy-MM-dd格式
+     * @param invoiceDate 需要转换入参
+     */
+    public void setInvoiceDate(String invoiceDate) {
+        try {
+            DateTime dateTime = DateUtil.parse(invoiceDate, "yyyy年MM月dd日");
+            this.invoiceDate = DateUtil.format(dateTime, "yyyy-MM-dd");
+        }catch (Exception e){
+            this.invoiceDate = invoiceDate;
+        }
+    }
 }
