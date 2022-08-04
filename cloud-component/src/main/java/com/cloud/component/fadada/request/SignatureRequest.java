@@ -26,12 +26,12 @@ public class SignatureRequest {
      * 签章图片地址
      * <p> 必填
      */
-    private String jpg;
+    private String file;
 
     /**
      * 签章图片公网地址
      * <p> 非必填
      */
-    private String jpgUrl;
+    private String imgUrl;
 
 }
