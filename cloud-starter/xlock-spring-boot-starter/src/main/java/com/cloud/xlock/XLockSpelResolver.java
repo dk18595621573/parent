@@ -54,8 +54,9 @@ public class XLockSpelResolver {
     public KeyInfo getKeyInfo(final JoinPoint joinPoint, final XLock xLock) {
         final String key = joinPoint.toString();
         if (!KEY_INFO_CACHE.get().containsKey(key)) {
-            log.info("[分布式锁] - 创建keyInfo");
-            KEY_INFO_CACHE.get().put(key, genKeyInfo(joinPoint, xLock));
+            KeyInfo keyInfo = genKeyInfo(joinPoint, xLock);
+            log.info("[分布式锁] - 创建keyInfo:{}", keyInfo);
+            KEY_INFO_CACHE.get().put(key, keyInfo);
         }
         return KEY_INFO_CACHE.get().get(key);
     }
