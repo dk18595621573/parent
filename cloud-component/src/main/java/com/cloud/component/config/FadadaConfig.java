@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
  * @author mft
  */
 @Configuration
+@ConditionalOnClass(name = "com.fadada.sdk.client.FddClient")
 @EnableConfigurationProperties(value = FadadaProperties.class)
 @ConditionalOnProperty(prefix = FadadaProperties.FADADA_PREFIX, name = "enabled", havingValue = "true")
 public class FadadaConfig {
@@ -26,13 +27,11 @@ public class FadadaConfig {
      * 法大大请求参数
      */
     @Bean
-    @ConditionalOnClass(name = "com.fadada.sdk.client.FddClient")
     public FddVerifyClient fddVerifyClient(FadadaProperties fadadaProperties) {
         return new FddVerifyClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
 
     @Bean
-    @ConditionalOnClass(name = "com.fadada.sdk.client.FddClient")
     public FddBaseClient fddBaseClient(FadadaProperties fadadaProperties) {
         return new FddBaseClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
