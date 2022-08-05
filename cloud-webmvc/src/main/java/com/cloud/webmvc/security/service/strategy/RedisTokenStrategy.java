@@ -3,9 +3,9 @@ package com.cloud.webmvc.security.service.strategy;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.uuid.IdUtils;
-import com.cloud.core.config.SystemConfig;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.properties.TokenProperties;
 import com.cloud.webmvc.security.service.TokenStrategy;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,9 +20,9 @@ public class RedisTokenStrategy implements TokenStrategy {
 
         private final RedisCache redisCache;
 
-        private final SystemConfig.TokenProperties tokenProperties;
+        private final TokenProperties tokenProperties;
 
-        public RedisTokenStrategy(final RedisCache redisCache, final SystemConfig.TokenProperties tokenProperties) {
+        public RedisTokenStrategy(final RedisCache redisCache, final TokenProperties tokenProperties) {
             this.redisCache = redisCache;
             this.tokenProperties = tokenProperties;
         }

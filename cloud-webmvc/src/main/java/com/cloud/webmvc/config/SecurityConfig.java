@@ -1,7 +1,7 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.core.config.SystemConfig;
 import com.cloud.webmvc.filter.JwtAuthenticationTokenFilter;
+import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.webmvc.security.handle.AuthenticationEntryPointImpl;
 import com.cloud.webmvc.security.handle.LogoutSuccessHandlerImpl;
 import org.apache.commons.lang3.ArrayUtils;
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * 系统配置.
      */
     @Autowired
-    private SystemConfig systemConfig;
+    private SystemProperties systemProperties;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -99,8 +99,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         String[] allowPathArr = ALLOW_VISIT_PATHS;
-        if (ArrayUtils.isNotEmpty(systemConfig.getSecurity().getAllows())) {
-            String[] arr = systemConfig.getSecurity().getAllows();
+        if (ArrayUtils.isNotEmpty(systemProperties.getSecurity().getAllows())) {
+            String[] arr = systemProperties.getSecurity().getAllows();
             allowPathArr = new String[arr.length + ALLOW_VISIT_PATHS.length];
 
             System.arraycopy(ALLOW_VISIT_PATHS, 0, allowPathArr, 0, ALLOW_VISIT_PATHS.length);
