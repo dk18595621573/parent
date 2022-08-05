@@ -2,6 +2,8 @@ package com.cloud.component.fadada.request;
 
 import lombok.Data;
 
+import java.io.File;
+
 /**
  * 签章图片信息
  *
@@ -26,7 +28,7 @@ public class SignatureRequest {
      * 签章图片地址
      * <p> 必填
      */
-    private String file;
+    private File file;
 
     /**
      * 签章图片公网地址
