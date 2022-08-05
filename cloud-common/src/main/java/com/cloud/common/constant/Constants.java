@@ -2,6 +2,7 @@ package com.cloud.common.constant;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.cloud.common.utils.uuid.ShortSnowflake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -158,6 +159,11 @@ public class Constants {
      * 雪花算法使用，暂时写死
      */
     public static final Snowflake snowflake = IdUtil.getSnowflake(1, 1);
+
+    /**
+     * 短id生成，以秒为单位，每秒生成16位
+     */
+    public static final ShortSnowflake SHORT_SNOWFLAKE = new ShortSnowflake(1);
 
     /**
      * 电话手机号正则校验表达式

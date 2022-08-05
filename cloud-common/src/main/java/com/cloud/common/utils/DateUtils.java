@@ -183,6 +183,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
+     * 清除日期的毫秒数（毫秒数大于500后存入sql会进位，因此需要清除）
+     * @param date 时间
+     * @return 清除毫秒数后的结果
+     */
+    public static Date clearMillisecond(Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+
+    }
+
+    /**
      * 根据时间 和时间格式 校验是否正确
      * @param length 校验的长度
      * @param sDate 校验的日期
