@@ -22,16 +22,6 @@ public class SystemProperties {
     private String version;
 
     /**
-     * 版权年份
-     */
-    private String copyrightYear;
-
-    /**
-     * 实例演示开关
-     */
-    private boolean demoEnabled;
-
-    /**
      * swagger文档开关
      */
     private boolean swaggerEnabled;
