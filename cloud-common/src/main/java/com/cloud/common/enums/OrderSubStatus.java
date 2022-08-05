@@ -15,6 +15,8 @@ public enum OrderSubStatus {
     REVOKE(21, "撤销"),
     /** 超时发货 */
     OVERTIME_DELIVERY(22, "超时发货"),
+    /** 超时发货未成交 */
+    OVERTIME_DELIVERY_TRADE(25, "超时发货未成交"),
     /** 超时流拍 */
     OVERTIME_STREAMING(23, "超时流拍"),
     /** 售后-取消订单 */
