@@ -1,21 +1,23 @@
 package com.cloud.tencent.service;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.tencent.exception.TencentException;
-import com.cloud.tencent.model.*;
+import com.cloud.tencent.model.InvoiceVerifyDTO;
 import com.cloud.tencent.model.VatInvoice;
-import com.google.gson.JsonObject;
+import com.cloud.tencent.model.VatInvoiceDTO;
+import com.cloud.tencent.model.VatInvoiceMap;
+import com.cloud.tencent.model.VatInvoiceVerifyParam;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
-import com.tencentcloudapi.ocr.v20181119.models.*;
+import com.tencentcloudapi.ocr.v20181119.models.TextVatInvoice;
+import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRRequest;
+import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRResponse;
+import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceVerifyNewRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * OCR服务.

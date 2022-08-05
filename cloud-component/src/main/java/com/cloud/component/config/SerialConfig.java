@@ -4,6 +4,7 @@ import com.cloud.component.properties.SerialProperties;
 import com.cloud.component.serial.SerialClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 public class SerialConfig {
 
     @Bean
+    @RefreshScope
     public SerialClient serialClient(SerialProperties properties) {
         return new SerialClient(properties);
     }

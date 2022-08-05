@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -31,6 +32,7 @@ public class SmsConfig {
      * @return SmsClient
      */
     @Bean
+    @RefreshScope
     @ConditionalOnMissingBean
     public SmsService smsService(final Credential credential, final SmsProperties smsProperties) {
         HttpProfile httpProfile = new HttpProfile();
