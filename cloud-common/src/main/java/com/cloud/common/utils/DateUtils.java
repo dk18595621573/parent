@@ -183,12 +183,11 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
-     * 设置时间毫秒级
-     *
-     * @param
-     * @return
+     * 清除日期的毫秒数（毫秒数大于500后存入sql会进位，因此需要清除）
+     * @param date 时间
+     * @return 清除毫秒数后的结果
      */
-    public static Date covertData(Date date) {
+    public static Date clearMillisecond(Date date) {
         Calendar time = Calendar.getInstance();
         time.setTime(date);
         time.set(Calendar.MILLISECOND, 0);
