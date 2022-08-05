@@ -183,6 +183,20 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
+     * 设置时间毫秒级
+     *
+     * @param
+     * @return
+     */
+    public static Date covertData(Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+
+    }
+
+    /**
      * 根据时间 和时间格式 校验是否正确
      * @param length 校验的长度
      * @param sDate 校验的日期
