@@ -10,6 +10,7 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
 import com.cloud.component.express.domain.ExpressResult;
 import com.cloud.component.express.exception.ExpressException;
@@ -56,7 +57,7 @@ public class ExpressClient {
         paramMap.put("num", expressNo);
         // 手机号码
         paramMap.put("phone", cellphone);
-        String param = JSONUtil.toJsonStr(paramMap);
+        String param = JsonUtil.toJson(paramMap);
         Map<String, Object> requestBody = MapUtil.newHashMap(3);
         // 授权码，请申请企业版获取
         requestBody.put("customer", expressProperties.getCustomer());

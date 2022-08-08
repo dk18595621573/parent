@@ -97,7 +97,7 @@ public class FadadaClient {
         //签章图片base64
         params.setSignatureImgBase64(signatureRequest.getSignatureImgBase64());
         //签章图片
-        params.setFile(new File(signatureRequest.getFile()));
+        params.setFile(signatureRequest.getFile());
         //签章图片公网地址
         params.setImgUrl(signatureRequest.getImgUrl());
         String result = fddBaseClient.invokeAddSignature(params);
@@ -160,7 +160,7 @@ public class FadadaClient {
         // 平台自定义唯一模板编号
         // 下列PDF模板和文档地址二选一
         params.setTemplateId(uploadtemplateRequest.getTemplateId());
-        params.setFile(new File(uploadtemplateRequest.getFile()));
+        params.setFile(uploadtemplateRequest.getFile());
         // PDF模板
         params.setDocUrl(uploadtemplateRequest.getDocUrl());
         // 文档地址
@@ -293,7 +293,7 @@ public class FadadaClient {
      */
     public String viewContract(String contractId) {
         ViewPdfURLParams params = new ViewPdfURLParams();
-        //此处传入调用上传或填充合同接口成功 时定义的合同编号
+        //此处传入调用上传或填充合同接口成功时定义的合同编号
         params.setContractId(contractId);
         String result = fddBaseClient.invokeViewPdfURL(params);
         log.info("法大大返回参数，合同查看：{}", result);

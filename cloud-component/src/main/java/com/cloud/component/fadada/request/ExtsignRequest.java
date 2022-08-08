@@ -3,7 +3,7 @@ package com.cloud.component.fadada.request;
 import lombok.Data;
 
 /**
- * 获取企业实名认证地址
+ * 手动签署
  *
  * @author mft
  */
