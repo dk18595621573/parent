@@ -49,7 +49,7 @@ public class ExpressClient {
      * @return
      */
     public ExpressResult findExpress(final String expressCode, final String expressNo, final String cellphone) {
-        String expressNoN = expressNo.replace(" ", "");
+        String expressNoN = expressNo.replaceAll(" ", "").replaceAll("[\\p{Cf}]", "");;
         Map<String, String> paramMap = MapUtil.newHashMap(4);
         // 结果排序
         paramMap.put("order", "asc");
