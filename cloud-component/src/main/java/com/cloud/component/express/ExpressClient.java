@@ -10,6 +10,7 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
 import com.cloud.component.express.domain.ExpressResult;
@@ -48,13 +49,14 @@ public class ExpressClient {
      * @return
      */
     public ExpressResult findExpress(final String expressCode, final String expressNo, final String cellphone) {
+        String expressNoN = expressNo.replaceAll(" ", "").replaceAll("[\\p{Cf}]", "");;
         Map<String, String> paramMap = MapUtil.newHashMap(4);
         // 结果排序
         paramMap.put("order", "asc");
         // 快递公司
         paramMap.put("com", expressCode);
         // 快递单号
-        paramMap.put("num", expressNo);
+        paramMap.put("num", expressNoN);
         // 手机号码
         paramMap.put("phone", cellphone);
         String param = JsonUtil.toJson(paramMap);

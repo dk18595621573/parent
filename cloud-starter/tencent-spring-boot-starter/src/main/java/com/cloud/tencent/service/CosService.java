@@ -65,6 +65,12 @@ public class CosService {
      * @return 文件完整路径
      */
     public String getFileUrl(final String path) {
+        if (!StringUtils.hasText(path)) {
+            return path;
+        }
+        if (StringUtils.startsWithIgnoreCase(path, "/")) {
+            return this.getCosDomain().concat(path);
+        }
         return String.format("%s/%s", this.getCosDomain(), path);
     }
 
