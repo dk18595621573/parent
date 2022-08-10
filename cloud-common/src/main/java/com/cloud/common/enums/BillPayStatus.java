@@ -8,9 +8,9 @@ public enum BillPayStatus {
     /** 未支付 */
     NO_PAY(1, "未支付"),
     /** 已支付 */
-    UNCONFIRMED_STATUS(2, "已支付"),
+    UNCONFIRMED(2, "已支付"),
     /** 已确认 */
-    CONFIRMED_STATUS(3, "已确认");
+    CONFIRMED(3, "已确认");
 
     private final Integer code;
     private final String msg;
