@@ -51,11 +51,8 @@ public class MetaObjectHandlerAdapter implements MetaObjectHandler {
         if (metaObject.getOriginalObject() instanceof BaseEntity) {
             Long operatorId = ObjectUtils.defaultIfNull(RequestThread.getUserId(), 0L);
 
-            List<StrictFill<?, ?>> list = new ArrayList<>(2);
-            list.add(StrictFill.of("updateBy", Long.class, operatorId));
-            list.add(StrictFill.of("updateTime", Date.class, DateUtils.getNowDate()));
-
-            this.strictUpdateFill(findTableInfo(metaObject), metaObject, list);
+            this.setFieldValByName("updateBy", operatorId, metaObject);
+            this.setFieldValByName("updateTime", DateUtils.getNowDate(), metaObject);
         }
     }
 

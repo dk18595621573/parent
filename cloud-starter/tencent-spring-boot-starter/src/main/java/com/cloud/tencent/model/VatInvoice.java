@@ -72,6 +72,14 @@ public class VatInvoice {
         }
     }
 
+    /**
+     * 去除前缀No
+     * @param number 发票号
+     */
+    public void setNumber(String number) {
+        this.number = StrUtil.replace(number, "No", "");
+    }
+
     public void setAmountWithoutTax(String amountWithoutTax) {
         this.amountWithoutTax = StrUtil.replace(amountWithoutTax, "¥", "");
     }
