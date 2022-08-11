@@ -45,6 +45,7 @@
         <springboot.version>2.5.13</springboot.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <dubbo.version>2.7.15</dubbo.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.version>1.18.24</lombok.version>
     </properties>
@@ -78,6 +79,24 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-actuator</artifactId>
+                <version>${dubbo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-registry-nacos</artifactId>
+                <version>${dubbo.version}</version>
             </dependency>
 
             <!-- 阿里数据库连接池 -->
@@ -360,6 +379,13 @@
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>tencent-spring-boot-starter</artifactId>
+                <version>${cloud-parent.version}</version>
+            </dependency>
+
+            <!-- dubbo-starter -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
 
