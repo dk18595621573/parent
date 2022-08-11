@@ -3,10 +3,7 @@ package com.cloud.tencent.model;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-import java.math.BigDecimal;
 
 /**
  * @author dk185
