@@ -3,6 +3,7 @@ package com.cloud.component.cmb.util;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.component.cmb.exception.CMBException;
@@ -18,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -45,10 +47,9 @@ public class CMBUtils {
      * @return
      */
     public static String getTimestamp() {
-        Random random = new Random();
-        int num = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;
-        String rand = DateUtil.format(DateUtil.date(), DatePattern.PURE_DATETIME_MS_PATTERN) + num;
-        return rand;
+        //5位随机数
+        String num = RandomUtil.randomNumbers(5);
+        return DateUtil.format(DateUtil.date(), DatePattern.PURE_DATETIME_MS_PATTERN) + num;
     }
 
     /**
@@ -57,7 +58,7 @@ public class CMBUtils {
      * @param param
      * @return
      */
-    public static String doPostForm(String httpUrl, Map param) {
+    public static String doPostForm(String httpUrl, Map<String, String> param) {
         HttpURLConnection connection = null;
         InputStream is = null;
         OutputStream os = null;
@@ -65,15 +66,9 @@ public class CMBUtils {
         String result = null;
         try {
             URL url = new URL(httpUrl);
-            SSLContext sslcontext;
-            sslcontext = SSLContext.getInstance("SSL", "SunJSSE");
+            SSLContext sslcontext = SSLContext.getInstance("SSL", "SunJSSE");
             sslcontext.init(null, new TrustManager[] { new MyX509TrustManager() }, new java.security.SecureRandom());
-            HostnameVerifier ignoreHostnameVerifier = new HostnameVerifier() {
-                public boolean verify(String s, SSLSession sslsession) {
-                    log.warn("主机名与证书不匹配");
-                    return true;
-                }
-            };
+            HostnameVerifier ignoreHostnameVerifier = (s, sslsession) -> true;
             HttpsURLConnection.setDefaultHostnameVerifier(ignoreHostnameVerifier);
             HttpsURLConnection.setDefaultSSLSocketFactory(sslcontext.getSocketFactory());
             connection = (HttpURLConnection) url.openConnection();
@@ -88,7 +83,7 @@ public class CMBUtils {
             os.write(createLinkString(param).getBytes());
             if (connection.getResponseCode() != 200) {
                 is = connection.getErrorStream();
-                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 StringBuffer sbf = new StringBuffer();
                 String temp = null;
                 while ((temp = br.readLine()) != null) {
@@ -98,7 +93,7 @@ public class CMBUtils {
                 result = sbf.toString();
             } else {
                 is = connection.getInputStream();
-                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
                 StringBuffer sbf = new StringBuffer();
                 String temp = null;
                 while ((temp = br.readLine()) != null) {

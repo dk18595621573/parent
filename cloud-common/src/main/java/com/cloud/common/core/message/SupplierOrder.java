@@ -66,9 +66,10 @@ public class SupplierOrder implements Serializable {
         return vo;
     }
 
-    public static SupplierOrder ofRefresh(Long hangOrderId) {
+    public static SupplierOrder ofRefresh(Long hangOrderId, OrderDetail data) {
         SupplierOrder vo = new SupplierOrder();
         vo.setHangOrderId(hangOrderId);
+        vo.setData(data);
         vo.setStatus(STATUS_REFRESH);
         return vo;
     }
