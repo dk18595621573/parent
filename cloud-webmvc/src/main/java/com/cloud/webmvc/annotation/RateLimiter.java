@@ -36,7 +36,7 @@ public @interface RateLimiter {
     /**
      * 限流错误描述
      */
-    String errMsg() default "访问过于频繁，请稍候再试";
+    String message() default "访问过于频繁，请稍候再试";
 
     /**
      * 限流类型

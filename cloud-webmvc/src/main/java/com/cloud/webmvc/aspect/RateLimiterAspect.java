@@ -63,7 +63,7 @@ public class RateLimiterAspect {
         try {
             Long number = redisTemplate.execute(limitScript, keys, count, time);
             if (StringUtils.isNull(number) || number.intValue() > count) {
-                throw new ServiceException(rateLimiter.errMsg());
+                throw new ServiceException(rateLimiter.message());
             }
             log.info("限制请求'{}',当前请求'{}',缓存key'{}'", count, number.intValue(), key);
         } catch (ServiceException e) {
