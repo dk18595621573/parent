@@ -1,10 +1,10 @@
 package com.cloud.webmvc.aspect;
 
-import com.cloud.webmvc.annotation.RateLimiter;
 import com.cloud.common.enums.LimitType;
 import com.cloud.common.exception.ServiceException;
-import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.common.utils.StringUtils;
+import com.cloud.webmvc.annotation.RateLimiter;
+import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.utils.ip.IpUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,22 +31,29 @@ import java.util.List;
 public class RateLimiterAspect {
     private static final Logger log = LoggerFactory.getLogger(RateLimiterAspect.class);
 
+    @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
 
-    private RedisScript<Long> limitScript;
+    private static final RedisScript<Long> limitScript;
 
-    @Autowired
-    public void setRedisTemplate1(RedisTemplate<Object, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+    static {
+        limitScript = RedisScript.of("local key = KEYS[1]\n" +
+            "local count = tonumber(ARGV[1])\n" +
+            "local time = tonumber(ARGV[2])\n" +
+            "local current = redis.call('get', key);\n" +
+            "if current and tonumber(current) > count then\n" +
+            "    return tonumber(current);\n" +
+            "end\n" +
+            "current = redis.call('incr', key)\n" +
+            "if tonumber(current) == 1 then\n" +
+            "    redis.call('expire', key, time)\n" +
+            "end\n" +
+            "return tonumber(current);", Long.class);
 
-    @Autowired
-    public void setLimitScript(RedisScript<Long> limitScript) {
-        this.limitScript = limitScript;
     }
 
     @Before("@annotation(rateLimiter)")
-    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable {
+    public void doBefore(JoinPoint point, RateLimiter rateLimiter) {
         String key = rateLimiter.key();
         int time = rateLimiter.time();
         int count = rateLimiter.count();
@@ -56,7 +63,7 @@ public class RateLimiterAspect {
         try {
             Long number = redisTemplate.execute(limitScript, keys, count, time);
             if (StringUtils.isNull(number) || number.intValue() > count) {
-                throw new ServiceException("访问过于频繁，请稍候再试");
+                throw new ServiceException(rateLimiter.errMsg());
             }
             log.info("限制请求'{}',当前请求'{}',缓存key'{}'", count, number.intValue(), key);
         } catch (ServiceException e) {
@@ -67,7 +74,7 @@ public class RateLimiterAspect {
     }
 
     public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) {
-        StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
+        StringBuilder stringBuffer = new StringBuilder(rateLimiter.key());
         if (rateLimiter.limitType() == LimitType.IP) {
             stringBuffer.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
         }
