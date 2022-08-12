@@ -1,6 +1,7 @@
 package com.cloud.component.fadada;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import com.cloud.common.utils.DateUtils;
@@ -102,7 +103,7 @@ public class FadadaClient {
         params.setImgUrl(signatureRequest.getImgUrl());
         String result = fddBaseClient.invokeAddSignature(params);
         log.info("法大大返回参数，印章上传：{}", result);
-        return JsonUtil.parse(result, FadadaAddSignatureResponse.class);
+        return JsonUtil.parse(StringUtils.toCamelCase(result), FadadaAddSignatureResponse.class);
     }
 
     /**
@@ -187,14 +188,14 @@ public class FadadaClient {
         //字体类型
         params.setFontType(generateContractRequest.getFontType());
         //填充内容,json字符串
-        params.setParameterMap(parameter());
+        params.setParameterMap(generateContractRequest.getParameterMap());
         //动态表格
         // 在版本号设置为 2.1 时，实现了对填充内容和动态表单进行3DES加密
 //        params.setDynamicTables(aerodynamicTables());
 //        fddBaseClient.setVersion("2.1");
         String result = fddBaseClient.invokeGenerateContract(params);
         log.info("法大大返回参数，模板填充：{}", result);
-        return JsonUtil.parse(result, FadadaGenerateResponse.class);
+        return JsonUtil.parse(StringUtils.toCamelCase(result), FadadaGenerateResponse.class);
     }
 
     /**
@@ -202,7 +203,8 @@ public class FadadaClient {
      */
     private String parameter() {
         JSONObject parameter = new JSONObject();
-        parameter.putOpt("Text1", "上海醒市");
+        parameter.putOpt("companyName", "上海醒市");
+        parameter.putOpt("userName", "爪哇");
         return parameter.toString();
     }
 

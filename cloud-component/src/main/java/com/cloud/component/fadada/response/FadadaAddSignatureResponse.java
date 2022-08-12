@@ -14,11 +14,11 @@ public class FadadaAddSignatureResponse extends FadadaSignatureDataResponse {
      * 印章id
      * 必填
      */
-    private String signature_id;
+    private String signatureId;
 
     /**
      * 印章图片base64
      * 必填
      */
-    private String signature_img_base64;
+    private String signatureImgBase64;
 }
