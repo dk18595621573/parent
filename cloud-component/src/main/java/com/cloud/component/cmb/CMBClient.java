@@ -4,8 +4,10 @@ import com.cloud.component.cmb.consts.CMBConst;
 import com.cloud.component.cmb.exception.CMBException;
 import com.cloud.component.cmb.request.BaseRequest;
 import com.cloud.component.cmb.request.account.*;
+import com.cloud.component.cmb.request.pay.*;
 import com.cloud.component.cmb.response.BaseResponse;
 import com.cloud.component.cmb.response.account.*;
+import com.cloud.component.cmb.response.pay.*;
 import com.cloud.component.cmb.util.CMBUtils;
 import com.cloud.component.properties.CMBProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -147,5 +149,64 @@ public class CMBClient {
         return (ReceiptUrlRes) doProcess(baseRequest, ReceiptUrlRes.class);
     }
 
+    /**
+     * 企银支付单笔经办
+     * @param singlePayReq
+     * @return
+     */
+    public SinglePayRes singlePay(SinglePayReq singlePayReq){
+        BaseRequest<SinglePayReq> baseRequest = new BaseRequest<>();
+        baseRequest.setFuncode(CMBConst.BB1PAYOP);
+        baseRequest.setBody(singlePayReq);
+        return (SinglePayRes) doProcess(baseRequest, SinglePayRes.class);
+    }
+
+    /**
+     * 企银支付业务查询
+     * @param singlePayQueryReq
+     * @return
+     */
+    public PaymentInfoRes getSinglePay(SinglePayQueryReq singlePayQueryReq){
+        BaseRequest<SinglePayQueryReq> baseRequest = new BaseRequest<>();
+        baseRequest.setFuncode(CMBConst.BB1PAYQR);
+        baseRequest.setBody(singlePayQueryReq);
+        return (PaymentInfoRes) doProcess(baseRequest, PaymentInfoRes.class);
+    }
+
+    /**
+     * 企银支付批量经办
+     * @param batchPayReq
+     * @return
+     */
+    public BatchPayRes batchPay(BatchPayReq batchPayReq){
+        BaseRequest<BatchPayReq> baseRequest = new BaseRequest<>();
+        baseRequest.setFuncode(CMBConst.BB1PAYBH);
+        baseRequest.setBody(batchPayReq);
+        return (BatchPayRes) doProcess(baseRequest, BatchPayRes.class);
+    }
+
+    /**
+     * 企银批量支付批次查询
+     * @param batchPayQueryReq
+     * @return
+     */
+    public BatchPayQueryRes getBatchPay(BatchPayQueryReq batchPayQueryReq){
+        BaseRequest<BatchPayQueryReq> baseRequest = new BaseRequest<>();
+        baseRequest.setFuncode(CMBConst.BB1QRYBT);
+        baseRequest.setBody(batchPayQueryReq);
+        return (BatchPayQueryRes) doProcess(baseRequest, BatchPayQueryRes.class);
+    }
+
+    /**
+     * 企银批量支付明细查询
+     * @param batchPayInfoQueryReq
+     * @return
+     */
+    public BatchPayInfoQueryRes getBatchPayInfo(BatchPayInfoQueryReq batchPayInfoQueryReq){
+        BaseRequest<BatchPayInfoQueryReq> baseRequest = new BaseRequest<>();
+        baseRequest.setFuncode(CMBConst.BB1QRYBD);
+        baseRequest.setBody(batchPayInfoQueryReq);
+        return (BatchPayInfoQueryRes) doProcess(baseRequest, BatchPayInfoQueryRes.class);
+    }
 
 }
