@@ -44,33 +44,26 @@ public class SupplierOrder implements Serializable {
     private OrderDetail data;
 
     public static SupplierOrder ofAdd(Long hangOrderId, OrderDetail data) {
-        SupplierOrder vo = new SupplierOrder();
-        vo.setHangOrderId(hangOrderId);
-        vo.setData(data);
-        vo.setStatus(STATUS_ADD);
-        return vo;
+        return of(STATUS_ADD, hangOrderId, data);
     }
 
     public static SupplierOrder ofModify(Long hangOrderId, OrderDetail data) {
-        SupplierOrder vo = new SupplierOrder();
-        vo.setHangOrderId(hangOrderId);
-        vo.setData(data);
-        vo.setStatus(STATUS_MODIFY);
-        return vo;
+        return of(STATUS_MODIFY, hangOrderId, data);
     }
 
     public static SupplierOrder ofDelete(Long hangOrderId) {
-        SupplierOrder vo = new SupplierOrder();
-        vo.setHangOrderId(hangOrderId);
-        vo.setStatus(STATUS_DELETE);
-        return vo;
+        return of(STATUS_DELETE, hangOrderId, null);
     }
 
-    public static SupplierOrder ofRefresh(Long hangOrderId, OrderDetail data) {
+    public static SupplierOrder ofRefresh(Long hangOrderId) {
+        return of(STATUS_REFRESH, hangOrderId, null);
+    }
+
+    public static SupplierOrder of(Integer status, Long hangOrderId, OrderDetail data) {
         SupplierOrder vo = new SupplierOrder();
         vo.setHangOrderId(hangOrderId);
         vo.setData(data);
-        vo.setStatus(STATUS_REFRESH);
+        vo.setStatus(status);
         return vo;
     }
     
