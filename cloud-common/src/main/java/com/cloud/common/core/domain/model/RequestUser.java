@@ -57,4 +57,19 @@ public class RequestUser extends BaseRequestInfo {
      * 部门信息.
      */
     private Dept dept;
+
+    public RequestUser toRequestUser() {
+        RequestUser user = new RequestUser();
+        user.setUserId(this.getUserId());
+        user.setUsername(this.getUsername());
+        user.setDeptId(this.getDeptId());
+        user.setToken(this.getToken());
+        user.setLoginTime(this.getLoginTime());
+        user.setExpireTime(this.getExpireTime());
+
+        user.setPermissions(this.getPermissions());
+        user.setRoles(this.getRoles());
+        user.setDept(this.getDept());
+        return user;
+    }
 }
