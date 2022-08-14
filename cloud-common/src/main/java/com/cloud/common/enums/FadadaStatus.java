@@ -21,7 +21,12 @@ public enum FadadaStatus {
     /**
      * 合同归档code
      */
-    CONTRACT_FILING_CODE(1000, "1000");
+    CONTRACT_FILING_CODE(1000, "1000"),
+
+    /**
+     * 模板文本域
+     */
+    TEMPLATE_FIELD_COMPANY(1, "company");
 
 
     private final Integer code;
