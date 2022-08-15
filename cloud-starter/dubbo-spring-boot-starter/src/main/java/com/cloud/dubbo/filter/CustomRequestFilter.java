@@ -3,7 +3,6 @@ package com.cloud.dubbo.filter;
 import com.cloud.common.threads.RequestThread;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
-import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
@@ -22,7 +21,7 @@ import java.util.Objects;
  * @date 2021/1/24
  */
 @Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER})
-public class CustomRequestFilter implements Filter {
+public class CustomRequestFilter extends AbstractFilter {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -31,12 +30,12 @@ public class CustomRequestFilter implements Filter {
     @Override
     public Result invoke(final Invoker<?> invoker, final Invocation invocation) throws RpcException {
         try {
-            if (RpcContext.getContext().isConsumerSide()) {
+            if (isConsumerSide()) {
                 Map<String, Object> data = RequestThread.getData();
                 logger.debug("CustomRequestFilter Consumer：[{}]", data);
-                RpcContext.getContext().setAttachment(REQUEST_DATA, data);
-            } else if (RpcContext.getContext().isProviderSide()) {
-                Object data = RpcContext.getContext().getObjectAttachment(REQUEST_DATA);
+                RpcContext.getClientAttachment().setAttachment(REQUEST_DATA, data);
+            } else if (isProviderSide()) {
+                Object data = RpcContext.getServerContext().getObjectAttachment(REQUEST_DATA);
                 logger.debug("CustomRequestFilter Provider：[{}]", data);
                 if (Objects.nonNull(data)) {
                     RequestThread.setData((Map<String, Object>) data);
@@ -44,11 +43,11 @@ public class CustomRequestFilter implements Filter {
             }
             return invoker.invoke(invocation);
         } catch (Exception e) {
-            logger.error("Exception in TenantFilter ({} -> {})", invoker, invocation, e);
+            logger.error("Exception in CustomRequestFilter ({} -> {})", invoker, invocation, e);
             return invoker.invoke(invocation);
         } finally {
             //服务器提供者清理线程中的请求信息
-            if (RpcContext.getContext().isProviderSide()) {
+            if (isProviderSide()) {
                 RequestThread.clear();
             }
         }

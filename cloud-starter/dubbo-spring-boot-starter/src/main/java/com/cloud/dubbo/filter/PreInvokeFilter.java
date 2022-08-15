@@ -4,11 +4,9 @@ import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.ConcurrentHashSet;
 import org.apache.dubbo.common.utils.NamedThreadFactory;
-import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
-import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
 import org.apache.dubbo.rpc.support.AccessLogData;
 import org.slf4j.Logger;
@@ -27,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @author breggor
  */
 @Activate(group = CommonConstants.CONSUMER)
-public class PreInvokeFilter implements Filter {
+public class PreInvokeFilter extends AbstractFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(PreInvokeFilter.class);
 
     private static final int LOG_MAX_BUFFER = 5000;
@@ -45,10 +43,8 @@ public class PreInvokeFilter implements Filter {
     @Override
     public Result invoke(final Invoker<?> invoker, final Invocation invocation) throws RpcException {
         try {
-            if (RpcContext.getContext().isConsumerSide()) {
-                AccessLogData logData = buildAccessLogData(invoker, invocation);
-                log(logData);
-            }
+            AccessLogData logData = buildAccessLogData(invoker, invocation);
+            log(logData);
         } catch (Exception e) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("Exception in PreInvokeFilter (" + invoker + " -> " + invocation + ")", e);
