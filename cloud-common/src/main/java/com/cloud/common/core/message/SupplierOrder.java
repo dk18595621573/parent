@@ -261,6 +261,17 @@ public class SupplierOrder implements Serializable {
         private BigDecimal tradePrice;
 
         /**
+         * 当前企业最后一次出价
+         */
+        private BigDecimal selfPrice;
+
+        /**
+         * 最后一次出价时间
+         */
+        @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+        private Date tradeTime;
+
+        /**
          * 企业信誉度 1:已合作，无固定额度 2:已合作，固定额度内 3:已合作，额度已用完 4:平台担保 5:未合作 6:黑名单
          */
         private Integer companyCredit;
@@ -324,6 +335,12 @@ public class SupplierOrder implements Serializable {
          * 串码异常
          */
         private Long imeiAbnormalCount;
+
+        /**
+         * 发布时间
+         */
+        private String releaseTime;
+
     }
 
 }
