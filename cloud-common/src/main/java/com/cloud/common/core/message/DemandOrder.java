@@ -229,6 +229,7 @@ public class DemandOrder implements Serializable {
         /**
          * 最后一次抢单时间
          */
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private Date lastCompeteTime;
 
         /**
