@@ -69,7 +69,7 @@ public class OcrService {
             VatInvoiceVerifyNewResponse verifyNew = ocrClient.VatInvoiceVerifyNew(req);
             return InvoiceVerifyDTO.success(verifyNew.getRequestId());
         } catch (TencentCloudSDKException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
             return InvoiceVerifyDTO.error(e.getErrorCode(), VatInvoiceMap.getErrorMessage(e.getErrorCode()), e.getRequestId());
         }
     }
