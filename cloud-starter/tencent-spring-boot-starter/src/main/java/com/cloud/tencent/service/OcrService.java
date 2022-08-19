@@ -1,21 +1,20 @@
 package com.cloud.tencent.service;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.tencent.exception.TencentException;
 import com.cloud.tencent.model.*;
-import com.cloud.tencent.model.VatInvoice;
-import com.google.gson.JsonObject;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
-import com.tencentcloudapi.ocr.v20181119.models.*;
+import com.tencentcloudapi.ocr.v20181119.models.TextVatInvoice;
+import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRRequest;
+import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRResponse;
+import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceVerifyNewRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * OCR服务.
@@ -73,7 +72,8 @@ public class OcrService {
             ocrClient.VatInvoiceVerifyNew(req);
             return InvoiceVerifyDTO.success();
         } catch (TencentCloudSDKException e) {
-            return InvoiceVerifyDTO.error(e.getErrorCode(), e.getMessage());
+            String errorMessage = VatInvoiceMap.getErrorMessage(e.getErrorCode());
+            return InvoiceVerifyDTO.error(e.getErrorCode(), Objects.nonNull(errorMessage) ? errorMessage : e.getMessage());
         }
     }
 
