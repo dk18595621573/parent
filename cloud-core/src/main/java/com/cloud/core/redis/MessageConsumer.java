@@ -19,11 +19,13 @@ public abstract class MessageConsumer<T> implements InitializingBean {
     @Autowired
     private RedissonClient redissonClient;
 
+    private RBlockingQueue<Message<T>> blockingQueue;
+
     public abstract String getGroup();
 
     @Override
     public void afterPropertiesSet() {
-        RBlockingQueue<Message<T>> blockingQueue = redissonClient.getBlockingQueue(String.format("MESSAGE:%s",getGroup()));
+        blockingQueue = redissonClient.getBlockingQueue(String.format("MESSAGE:%s",getGroup()));
         blockingQueue.subscribeOnElements(m -> {
             try {
                 log.info("消息队列开始消费:[{} -> {}]【{}】", getGroup(), m.getMsgId(), m.getData());
@@ -36,7 +38,7 @@ public abstract class MessageConsumer<T> implements InitializingBean {
         });
     }
 
-    private void handleException(final T data, final Exception e) {
+    protected void handleException(final T data, final Exception e) {
     }
 
     public abstract void consumer(T data);
