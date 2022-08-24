@@ -53,9 +53,18 @@ public abstract class DelayedTask<T> implements InitializingBean {
         });
     }
 
+    public void consumerFirst() {
+        try {
+            T data = blockingQueue.poll(3, TimeUnit.SECONDS);
+            consumer(data);
+        } catch (InterruptedException e) {
+            log.error("延时队列手动消费异常【{}】:{}", getTaskGroup(), e);
+        }
+    }
+
     /**
      * 生产消息
-     * @param data 消息数据
+     * @parm data 消息数据
      * @param delay 延迟时间 单位：秒
      */
     public void producer(T data, long delay) {
