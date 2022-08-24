@@ -7,6 +7,8 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * 消息消费者.
  *
@@ -42,4 +44,13 @@ public abstract class MessageConsumer<T> implements InitializingBean {
     }
 
     public abstract void consumer(T data);
+
+    public void consumerFirst() {
+        try {
+            Message<T> msg = blockingQueue.poll(3, TimeUnit.SECONDS);
+            consumer(msg.getData());
+        } catch (Exception e) {
+            log.error("消息队列手动消费异常【{}】:{}", getGroup(), e);
+        }
+    }
 }

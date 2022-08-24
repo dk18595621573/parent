@@ -57,7 +57,7 @@ public abstract class DelayedTask<T> implements InitializingBean {
         try {
             T data = blockingQueue.poll(3, TimeUnit.SECONDS);
             consumer(data);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             log.error("延时队列手动消费异常【{}】:{}", getTaskGroup(), e);
         }
     }
