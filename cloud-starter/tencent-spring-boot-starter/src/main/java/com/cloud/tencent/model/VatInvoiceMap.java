@@ -36,6 +36,7 @@ public class VatInvoiceMap {
         NAME_MAP.put("省", "province");
         NAME_MAP.put("发票类型", "type");
         NAME_MAP.put("备注", "remark");
+        NAME_MAP.put("校验码", "checkCode");
 
         BUSINESS_ERROR_MAP.put("FailedOperation.ArrearsError", "帐号已欠费,请联系充值");
         BUSINESS_ERROR_MAP.put("FailedOperation.CountLimitError", "超过该张发票当日查验次数,请明天再试");
