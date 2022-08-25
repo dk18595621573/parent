@@ -25,6 +25,8 @@ public abstract class DelayedTask<T> implements InitializingBean {
 
     private RBlockingQueue<T> blockingQueue;
 
+    private int listenerId;
+
     /**
      * 任务分组名
      * @return 任务分组名
@@ -41,7 +43,11 @@ public abstract class DelayedTask<T> implements InitializingBean {
     public void afterPropertiesSet() {
         blockingQueue = redissonClient.getBlockingQueue(getTaskGroup());
         delayedQueue = redissonClient.getDelayedQueue(blockingQueue);
-        blockingQueue.subscribeOnElements(data -> {
+        listenerId = subscribe();
+    }
+
+    private int subscribe() {
+        return blockingQueue.subscribeOnElements(data -> {
             try {
                 log.info("延时队列开始消费【{}】:{}", getTaskGroup(), data);
                 consumer(data);
@@ -53,13 +59,12 @@ public abstract class DelayedTask<T> implements InitializingBean {
         });
     }
 
-    public void consumerFirst() {
-        try {
-            T data = blockingQueue.poll(3, TimeUnit.SECONDS);
-            consumer(data);
-        } catch (Exception e) {
-            log.error("延时队列手动消费异常【{}】:{}", getTaskGroup(), e);
-        }
+    public int reSubscribe() {
+        int oldId = this.listenerId;
+        blockingQueue.unsubscribe(oldId);
+        this.listenerId = subscribe();
+        log.info("延时队列重新订阅消费[{}]: 【{} -> {}】", getTaskGroup(), oldId, listenerId);
+        return this.listenerId;
     }
 
     /**

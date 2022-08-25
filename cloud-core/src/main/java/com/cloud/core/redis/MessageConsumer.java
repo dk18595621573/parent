@@ -7,8 +7,6 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * 消息消费者.
  *
@@ -23,12 +21,23 @@ public abstract class MessageConsumer<T> implements InitializingBean {
 
     private RBlockingQueue<Message<T>> blockingQueue;
 
+    private int listenerId;
+
     public abstract String getGroup();
 
     @Override
     public void afterPropertiesSet() {
         blockingQueue = redissonClient.getBlockingQueue(String.format("MESSAGE:%s",getGroup()));
-        blockingQueue.subscribeOnElements(m -> {
+        listenerId = subscribe();
+    }
+
+    protected void handleException(final T data, final Exception e) {
+    }
+
+    public abstract void consumer(T data);
+
+    private int subscribe() {
+        return blockingQueue.subscribeOnElements(m -> {
             try {
                 log.info("消息队列开始消费:[{} -> {}]【{}】", getGroup(), m.getMsgId(), m.getData());
                 consumer(m.getData());
@@ -40,17 +49,11 @@ public abstract class MessageConsumer<T> implements InitializingBean {
         });
     }
 
-    protected void handleException(final T data, final Exception e) {
-    }
-
-    public abstract void consumer(T data);
-
-    public void consumerFirst() {
-        try {
-            Message<T> msg = blockingQueue.poll(3, TimeUnit.SECONDS);
-            consumer(msg.getData());
-        } catch (Exception e) {
-            log.error("消息队列手动消费异常【{}】:{}", getGroup(), e);
-        }
+    public int reSubscribe() {
+        int oldId = this.listenerId;
+        blockingQueue.unsubscribe(oldId);
+        this.listenerId = subscribe();
+        log.info("消息队列重新订阅[{}]: 【{} -> {}】", getGroup(), oldId, listenerId);
+        return this.listenerId;
     }
 }
