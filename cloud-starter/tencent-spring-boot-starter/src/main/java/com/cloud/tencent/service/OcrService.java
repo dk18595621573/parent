@@ -3,17 +3,11 @@ package com.cloud.tencent.service;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.tencent.exception.TencentException;
-import com.cloud.tencent.model.InvoiceVerifyDTO;
+import com.cloud.tencent.model.*;
 import com.cloud.tencent.model.VatInvoice;
-import com.cloud.tencent.model.VatInvoiceDTO;
-import com.cloud.tencent.model.VatInvoiceMap;
-import com.cloud.tencent.model.VatInvoiceVerifyParam;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ocr.v20181119.OcrClient;
-import com.tencentcloudapi.ocr.v20181119.models.TextVatInvoice;
-import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRRequest;
-import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceOCRResponse;
-import com.tencentcloudapi.ocr.v20181119.models.VatInvoiceVerifyNewRequest;
+import com.tencentcloudapi.ocr.v20181119.models.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -72,10 +66,11 @@ public class OcrService {
         req.setInvoiceKind(verifyParam.getInvoiceKind());
         req.setCheckCode(verifyParam.getCheckCode());
         try {
-            ocrClient.VatInvoiceVerifyNew(req);
-            return InvoiceVerifyDTO.success();
+            VatInvoiceVerifyNewResponse verifyNew = ocrClient.VatInvoiceVerifyNew(req);
+            return InvoiceVerifyDTO.success(verifyNew.getRequestId());
         } catch (TencentCloudSDKException e) {
-            return InvoiceVerifyDTO.error(e.getErrorCode(), e.getMessage());
+            log.error(e.getMessage());
+            return InvoiceVerifyDTO.error(e.getErrorCode(), VatInvoiceMap.getErrorMessage(e.getErrorCode()), e.getRequestId());
         }
     }
 

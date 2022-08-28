@@ -229,6 +229,7 @@ public class DemandOrder implements Serializable {
         /**
          * 最后一次抢单时间
          */
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private Date lastCompeteTime;
 
         /**
@@ -312,5 +313,10 @@ public class DemandOrder implements Serializable {
          * 指定供应商名称（为空未指定）
          */
         private String merchantCompanyName;
+
+        /**
+         * 是否需要补全地址 true: 需要 ； false ： 不需要
+         */
+        private Boolean addressCompleted;
     }
 }

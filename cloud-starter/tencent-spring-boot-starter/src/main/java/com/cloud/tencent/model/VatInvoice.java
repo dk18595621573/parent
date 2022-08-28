@@ -55,6 +55,10 @@ public class VatInvoice {
     private String province;
     /** 发票类型 */
     private String type;
+    /**
+     * 校验码
+     */
+    private String checkCode;
 
     /**
      * 转换日期格式为：yyyy-MM-dd格式

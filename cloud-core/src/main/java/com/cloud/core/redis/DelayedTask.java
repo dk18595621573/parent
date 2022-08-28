@@ -23,6 +23,10 @@ public abstract class DelayedTask<T> implements InitializingBean {
 
     private RDelayedQueue<T> delayedQueue;
 
+    private RBlockingQueue<T> blockingQueue;
+
+    private int listenerId;
+
     /**
      * 任务分组名
      * @return 任务分组名
@@ -37,8 +41,13 @@ public abstract class DelayedTask<T> implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        RBlockingQueue<T> blockingQueue = redissonClient.getBlockingQueue(getTaskGroup());
-        blockingQueue.subscribeOnElements(data -> {
+        blockingQueue = redissonClient.getBlockingQueue(getTaskGroup());
+        delayedQueue = redissonClient.getDelayedQueue(blockingQueue);
+        listenerId = subscribe();
+    }
+
+    private int subscribe() {
+        return blockingQueue.subscribeOnElements(data -> {
             try {
                 log.info("延时队列开始消费【{}】:{}", getTaskGroup(), data);
                 consumer(data);
@@ -48,12 +57,19 @@ public abstract class DelayedTask<T> implements InitializingBean {
                 handleException(data, e);
             }
         });
-        delayedQueue = redissonClient.getDelayedQueue(blockingQueue);
+    }
+
+    public int reSubscribe() {
+        int oldId = this.listenerId;
+        blockingQueue.unsubscribe(oldId);
+        this.listenerId = subscribe();
+        log.info("延时队列重新订阅消费[{}]: 【{} -> {}】", getTaskGroup(), oldId, listenerId);
+        return this.listenerId;
     }
 
     /**
      * 生产消息
-     * @param data 消息数据
+     * @parm data 消息数据
      * @param delay 延迟时间 单位：秒
      */
     public void producer(T data, long delay) {
@@ -66,7 +82,7 @@ public abstract class DelayedTask<T> implements InitializingBean {
      * @param data 消费数据
      * @param e 异常信息
      */
-    public void handleException(T data, Exception e) {
+    protected void handleException(T data, Exception e) {
         //do something for handle exception
     }
 }

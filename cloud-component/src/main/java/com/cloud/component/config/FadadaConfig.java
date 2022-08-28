@@ -3,6 +3,7 @@ package com.cloud.component.config;
 import com.cloud.component.fadada.FadadaClient;
 import com.cloud.component.properties.FadadaProperties;
 import com.fadada.sdk.base.client.FddBaseClient;
+import com.fadada.sdk.extra.client.FddExtraClient;
 import com.fadada.sdk.verify.client.FddVerifyClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -40,10 +41,15 @@ public class FadadaConfig {
     }
 
     @Bean
+    public FddExtraClient fddExtraClient(FadadaProperties fadadaProperties) {
+        return new FddExtraClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
+    }
+
+    @Bean
     @RefreshScope
     @ConditionalOnMissingBean
-    public FadadaClient fadadaClient(FddVerifyClient fddVerifyClient, FddBaseClient fddBaseClient, FadadaProperties fadadaProperties) {
-        return new FadadaClient(fddVerifyClient, fddBaseClient, fadadaProperties);
+    public FadadaClient fadadaClient(FddVerifyClient fddVerifyClient, FddBaseClient fddBaseClient, FadadaProperties fadadaProperties, FddExtraClient fddExtraClient) {
+        return new FadadaClient(fddVerifyClient, fddBaseClient, fadadaProperties, fddExtraClient);
     }
 
 }

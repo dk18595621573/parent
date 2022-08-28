@@ -1,9 +1,9 @@
 package com.cloud.component.fadada;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
@@ -14,6 +14,10 @@ import com.cloud.component.fadada.response.*;
 import com.cloud.component.properties.FadadaProperties;
 import com.fadada.sdk.base.client.FddBaseClient;
 import com.fadada.sdk.base.model.req.*;
+import com.fadada.sdk.extra.client.FddExtraClient;
+import com.fadada.sdk.extra.model.req.GetDocStreamParams;
+import com.fadada.sdk.extra.model.req.GetTemplatePageParams;
+import com.fadada.sdk.extra.model.req.UploadTemplateDocsParams;
 import com.fadada.sdk.verify.client.FddVerifyClient;
 import com.fadada.sdk.verify.model.req.ApplyCertParams;
 import com.fadada.sdk.verify.model.req.CompanyVerifyUrlParams;
@@ -22,7 +26,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -37,6 +40,8 @@ public class FadadaClient {
     private final FddVerifyClient fddVerifyClient;
     private final FddBaseClient fddBaseClient;
     private final FadadaProperties fadadaProperties;
+
+    private final FddExtraClient fddExtraClient;
 
     /**
      * 1. 注册账号
@@ -117,7 +122,6 @@ public class FadadaClient {
         params.setCustomerId(customerId);
         String result = fddBaseClient.invokeCustomSignature(params);
         log.info("法大大返回参数，自定义印章：{}", result);
-        Map<String, Object> stringObjectMap = JsonUtil.toMap(result);
         return JsonUtil.parse(result, FadadaAddSignatureResponse.class);
     }
 
@@ -260,7 +264,7 @@ public class FadadaClient {
         params.setPositionType("0");
         params.setSignKeyword("出租人签字");
         //0：所有关键字签章 1：第一个关键字签章； 2：最后一个关键字签章
-        params.setKeywordStrategy("0");
+        params.setKeywordStrategy("2");
         String result = fddBaseClient.invokeExtSignAuto(params);
         log.info("法大大返回参数，自动签署：{}", result);
         return JsonUtil.parse(result, FadadaResultResponse.class);
@@ -342,6 +346,34 @@ public class FadadaClient {
         String result = fddBaseClient.invokeContractFilling(params);
         log.info("法大大返回参数，合同归档：{}", result);
         return JsonUtil.parse(result, FadadaResultResponse.class);
+    }
+
+    /**
+     * 上传合同模板
+     */
+    public String uploadtemplate(UploadTemplateDocsParams params) {
+        String result = fddExtraClient.invokeUploadTemplateDocs(params);
+        log.info("法大大返回参数，上传合同模板：{}", result);
+        return result;
+    }
+
+    /**
+     * 编辑页面
+     */
+    public String getDocStream(GetDocStreamParams params) {
+        String result = fddExtraClient.invokeGetDocStream(params);
+        log.info("法大大返回参数，编辑页面：{}", result);
+        return result;
+    }
+
+    /**
+     * 多方填充地址
+     */
+    public String getTemplatePage(GetTemplatePageParams params) {
+        //多方填充的模板
+        String result = fddExtraClient.invokeGetTemplatePage(params);
+        log.info("法大大返回参数，多方填充地址：{}", result);
+        return result;
     }
 
     /**
