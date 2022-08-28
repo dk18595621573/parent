@@ -41,6 +41,7 @@ public class FadadaConfig {
     }
 
     @Bean
+    @RefreshScope
     public FddExtraClient fddExtraClient(FadadaProperties fadadaProperties) {
         return new FddExtraClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
