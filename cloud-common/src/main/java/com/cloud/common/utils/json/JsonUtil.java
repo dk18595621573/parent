@@ -5,9 +5,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -55,6 +59,42 @@ public class JsonUtil {
         } catch (JsonProcessingException e) {
             throw ExceptionUtil.unchecked(e);
         }
+    }
+
+    /**
+     * 将json反序列化成ArrayList集合.
+     *
+     * @param content   content
+     * @param <T>       T 泛型标记
+     * @return Bean
+     */
+    public static <T> List<T> parseList(final String content, final Class<T> clazz) {
+        try {
+            CollectionType collectionType = getInstance().getTypeFactory().constructCollectionType(ArrayList.class, clazz);
+            return getInstance().readValue(content, collectionType);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * 将json反序列化带泛型参数对象.
+     *
+     * @param content   content
+     * @param <T>       T 泛型标记
+     * @param <C>       T 类的泛型标记
+     * @return Bean
+     */
+    public static <T, C> T parseGeneric(final String content, final Class<T> superClass, final Class<C> clazz) {
+        try {
+            JavaType javaType = getInstance().constructType(clazz);
+            JavaType generalizedType = getInstance().getTypeFactory().constructParametricType(superClass, javaType);
+            return getInstance().readValue(content, generalizedType);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
     }
 
     /**
