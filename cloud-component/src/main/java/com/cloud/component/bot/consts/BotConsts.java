@@ -11,4 +11,9 @@ public interface BotConsts {
     int WXWORK_API = 1;
 
     int BOT_API = 2;
+
+    /**
+     * 请求太频繁
+     */
+    int HTTP_STATUS_FREQUENT = 429;
 }

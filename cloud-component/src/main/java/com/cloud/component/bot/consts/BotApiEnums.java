@@ -16,6 +16,7 @@ public enum BotApiEnums {
 
     BOT_LIST(BotConsts.BOT_API,  Method.GET, "/bot/list"),
     CONCAT_LIST(BotConsts.BOT_API, Method.GET, "/contact/list"),
+    MESSAGE_SEND(BotConsts.BOT_API, Method.POST, "/message/send"),
     ;
 
     /**
