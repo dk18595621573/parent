@@ -1,7 +1,6 @@
 package com.cloud.component.bot;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -11,8 +10,10 @@ import com.cloud.component.bot.consts.BotApiEnums;
 import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
 import com.cloud.component.bot.exception.WxworkBotException;
+import com.cloud.component.bot.message.TextMessage;
 import com.cloud.component.bot.request.BotEvent;
 import com.cloud.component.bot.request.ConsumerInfo;
+import com.cloud.component.bot.request.ConsumerMessage;
 import com.cloud.component.bot.request.ContactRequest;
 import com.cloud.component.bot.request.SyncConsumerInfo;
 import com.cloud.component.bot.response.BaseResponse;
@@ -67,7 +68,7 @@ public class WxworkBotClient {
         Map<String, Object> param = new HashMap<>();
         param.put("messageType", MessageType.TEXT.getCode());
         param.put("chatId", chatId);
-        param.put("payload", MapUtil.builder("text", text).build());
+        param.put("payload", new TextMessage(text));
         exceute(BotApiEnums.MESSAGE_SEND, param);
     }
 
@@ -79,6 +80,11 @@ public class WxworkBotClient {
         return "{\"errCode\":0}";
     }
 
+    public ConsumerMessage parseConsumerMessage(final String data) {
+        log.info("[BOT]收到好友发来信息:{}", data);
+        return JsonUtil.parse(data, ConsumerMessage.class);
+    }
+
     /**
      * 新增客户回调数据解析
      * @param sign 签名数据
@@ -86,9 +92,9 @@ public class WxworkBotClient {
      * @return 解析的客户数据
      */
     public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
-        log.info("[BOT]收到新好友信息:【{}】【{}】", sign, data);
+        log.info("[BOT]收到添加好友信息:【{}】【{}】", sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
-        log.info("[BOT]解析后的好友信息为:{}", botEvent);
+        log.info("[BOT]解析添加好友信息:{}", botEvent);
         return botEvent.getData();
     }
 
