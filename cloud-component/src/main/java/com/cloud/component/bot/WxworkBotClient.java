@@ -14,6 +14,7 @@ import com.cloud.component.bot.exception.WxworkBotException;
 import com.cloud.component.bot.request.BotEvent;
 import com.cloud.component.bot.request.ConsumerInfo;
 import com.cloud.component.bot.request.ContactRequest;
+import com.cloud.component.bot.request.SyncConsumerInfo;
 import com.cloud.component.bot.response.BaseResponse;
 import com.cloud.component.bot.response.BotUser;
 import com.cloud.component.bot.response.Contact;
@@ -56,9 +57,16 @@ public class WxworkBotClient {
         exceute(BotApiEnums.MESSAGE_SEND, param);
     }
 
-    public ConsumerInfo parseConsumerInfo(final String data) {
+    public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
+        log.info("[BOT]收到新好友信息:【{}】【{}】", sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
+        log.info("[BOT]解析后的好友信息为:{}", botEvent);
         return botEvent.getData();
+    }
+
+    public SyncConsumerInfo parseSyncInfo(final String sign, final String data) {
+        log.info("[BOT]收到数据同步:【{}】【{}】", sign, data);
+        return JsonUtil.parse(data, SyncConsumerInfo.class);
     }
 
     public BaseResponse exceute(final BotApiEnums botApi, final Map<String, Object> param) {
