@@ -39,16 +39,30 @@ public class WxworkBotClient {
 
     private final WxworkBotProperties properties;
 
+    /**
+     * 获取当前托管的机器人列表
+     * @return 托管的机器人列表
+     */
     public List<BotUser> bots() {
         BaseResponse response = exceute(BotApiEnums.BOT_LIST, CollUtil.newHashMap());
         return JsonUtil.parseList(JsonUtil.toJson(response.getData()), BotUser.class);
     }
 
+    /**
+     * 获取托管机器人的联系人列表
+     * @param request 请求参数
+     * @return 联系人信息
+     */
     public List<Contact> contactList(final ContactRequest request) {
         BaseResponse response = exceute(BotApiEnums.CONCAT_LIST, request.toMap());
         return JsonUtil.parseList(JsonUtil.toJson(response.getData()), Contact.class);
     }
 
+    /**
+     * 发送文本消息
+     * @param chatId 会话id
+     * @param text 文本消息内容
+     */
     public void sendText(final String chatId, final String text) {
         Map<String, Object> param = new HashMap<>();
         param.put("messageType", MessageType.TEXT.getCode());
@@ -57,6 +71,20 @@ public class WxworkBotClient {
         exceute(BotApiEnums.MESSAGE_SEND, param);
     }
 
+    /**
+     * 通知回调响应成功
+     * @return 通知回调响应成功
+     */
+    public String notifySuccess() {
+        return "{\"errCode\":0}";
+    }
+
+    /**
+     * 新增客户回调数据解析
+     * @param sign 签名数据
+     * @param data 回调数据
+     * @return 解析的客户数据
+     */
     public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
         log.info("[BOT]收到新好友信息:【{}】【{}】", sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
@@ -64,6 +92,12 @@ public class WxworkBotClient {
         return botEvent.getData();
     }
 
+    /**
+     * 数据同步回调解析
+     * @param sign 签名数据
+     * @param data 回调数据
+     * @return 解析后的数据
+     */
     public SyncConsumerInfo parseSyncInfo(final String sign, final String data) {
         log.info("[BOT]收到数据同步:【{}】【{}】", sign, data);
         return JsonUtil.parse(data, SyncConsumerInfo.class);
