@@ -23,7 +23,7 @@ public class BotEvent<T> implements Serializable {
     @JsonProperty("data")
     private T data;
     @JsonProperty("timestamp")
-    private Integer timestamp;
+    private Long timestamp;
 
     @NoArgsConstructor
     @Data
