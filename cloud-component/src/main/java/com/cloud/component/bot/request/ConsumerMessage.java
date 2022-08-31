@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * TODO auto.
+ * 用户发来的消息.
  *
  * @author zenghao
  * @date 2022/8/30

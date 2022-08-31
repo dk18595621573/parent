@@ -1,6 +1,7 @@
 package com.cloud.component.bot;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -15,10 +16,14 @@ import com.cloud.component.bot.request.BotEvent;
 import com.cloud.component.bot.request.ConsumerInfo;
 import com.cloud.component.bot.request.ConsumerMessage;
 import com.cloud.component.bot.request.ContactRequest;
+import com.cloud.component.bot.request.ContactWayAddRequest;
 import com.cloud.component.bot.request.SyncConsumerInfo;
-import com.cloud.component.bot.response.BaseResponse;
+import com.cloud.component.bot.response.ApiResponse;
+import com.cloud.component.bot.response.BotResponse;
 import com.cloud.component.bot.response.BotUser;
 import com.cloud.component.bot.response.Contact;
+import com.cloud.component.bot.response.ContactWayAddResponse;
+import com.cloud.component.bot.response.ContactWayResponse;
 import com.cloud.component.properties.WxworkBotProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 企业微信机器人客户端.
@@ -41,11 +47,38 @@ public class WxworkBotClient {
     private final WxworkBotProperties properties;
 
     /**
+     * 添加渠道二维码
+     * @param user 渠道二维码绑定的用户id
+     * @param state 渠道二维码参数
+     * @return 渠道二维码响应数据
+     */
+    public ContactWayAddResponse addContactWay(final String user, final String state) {
+        ContactWayAddRequest request = new ContactWayAddRequest();
+        request.setType(ContactWayAddRequest.TYPE_SINGLE);
+        request.setScene(ContactWayAddRequest.SCENE_QRCODE);
+        request.setState(state);
+        request.setUser(ListUtil.toList(user));
+        return exceute(BotApiEnums.CONTACTWAY_ADD, request.toMap());
+    }
+
+    /**
+     * 查询渠道二维码信息
+     * @param configId 渠道二维码configId
+     * @return 渠道二维码信息
+     */
+    public ContactWayResponse.ContactWay queryContactWay(final String configId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("config_id", configId);
+        ContactWayResponse response = exceute(BotApiEnums.CONTACTWAY_GET, map);
+        return response.getContactWay();
+    }
+
+    /**
      * 获取当前托管的机器人列表
      * @return 托管的机器人列表
      */
     public List<BotUser> bots() {
-        BaseResponse response = exceute(BotApiEnums.BOT_LIST, CollUtil.newHashMap());
+        BotResponse response = exceute(BotApiEnums.BOT_LIST, CollUtil.newHashMap());
         return JsonUtil.parseList(JsonUtil.toJson(response.getData()), BotUser.class);
     }
 
@@ -55,7 +88,7 @@ public class WxworkBotClient {
      * @return 联系人信息
      */
     public List<Contact> contactList(final ContactRequest request) {
-        BaseResponse response = exceute(BotApiEnums.CONCAT_LIST, request.toMap());
+        BotResponse response = exceute(BotApiEnums.CONCAT_LIST, request.toMap());
         return JsonUtil.parseList(JsonUtil.toJson(response.getData()), Contact.class);
     }
 
@@ -80,9 +113,10 @@ public class WxworkBotClient {
         return "{\"errCode\":0}";
     }
 
-    public ConsumerMessage parseConsumerMessage(final String data) {
+    public ConsumerMessage.MessageInfo parseConsumerMessage(final String data) {
         log.info("[BOT]收到好友发来信息:{}", data);
-        return JsonUtil.parse(data, ConsumerMessage.class);
+        ConsumerMessage consumerMessage = JsonUtil.parse(data, ConsumerMessage.class);
+        return Optional.ofNullable(consumerMessage).map(ConsumerMessage::getData).orElse(null);
     }
 
     /**
@@ -109,21 +143,42 @@ public class WxworkBotClient {
         return JsonUtil.parse(data, SyncConsumerInfo.class);
     }
 
-    public BaseResponse exceute(final BotApiEnums botApi, final Map<String, Object> param) {
-        int type = botApi.getType();
+    public <T> T exceute(final BotApiEnums botApi, final Map<String, Object> param) {
         String url;
         Map<String, Object> requestMap = Objects.isNull(param) ? new HashMap<>() : param;
-        if (type == BotConsts.BOT_API) {
+        boolean isBotRequest = botApi.isBotRequest();
+        if (isBotRequest) {
             url = properties.getBotDomain() + botApi.getUrl();
             requestMap.put("token", properties.getBotToken());
         } else {
-            url = properties.getApiDomain() + botApi.getUrl();
-            requestMap.put("token", properties.getApiToken());
+            url = properties.getApiDomain() + botApi.getUrl() + "?token=" + properties.getApiToken();
         }
-        return exceute(url, botApi.getMethod(), requestMap);
+        String result = exceute(url, botApi.getMethod(), requestMap);
+        if (isBotRequest) {
+            BotResponse response = JsonUtil.parse(result, BotResponse.class);
+            if (Objects.isNull(response)) {
+                log.warn("机器人接口响应数据转换失败[{}]:{}", botApi.name(), result);
+                return null;
+            }
+            if (response.getCode() != BotResponse.SUCCESS_CODE) {
+                throw new WxworkBotException(response.getMessage());
+            }
+            return (T) response;
+        } else {
+            Object object = JsonUtil.parse(result, botApi.getResponseClass());
+            if (Objects.isNull(object) || !(object instanceof ApiResponse)) {
+                log.warn("句子API响应数据转换失败[{}]:{}", botApi.name(), result);
+                return null;
+            }
+            ApiResponse response = (ApiResponse) object;
+            if (response.getErrcode() != ApiResponse.SUCCESS_CODE) {
+                throw new WxworkBotException(response.getErrmsg());
+            }
+            return (T) object;
+        }
     }
 
-    public BaseResponse exceute(final String url, final Method method, final Map<String, Object> param) {
+    public String exceute(final String url, final Method method, final Map<String, Object> param) {
         HttpRequest request = HttpUtil.createRequest(method, url);
         switch (method) {
             case POST:
@@ -144,15 +199,7 @@ public class WxworkBotClient {
         }
         String body = execute.body();
         log.debug("[BOT]响应结果【{}】:{}", url, body);
-        BaseResponse response = JsonUtil.parse(body, BaseResponse.class);
-        if (Objects.isNull(response)) {
-            log.warn("企微机器人响应数据转换失败:{}", body);
-            return null;
-        }
-        if (response.getCode() != BaseResponse.SUCCESS_CODE) {
-            throw new WxworkBotException(response.getMessage());
-        }
-        return response;
+        return body;
     }
 
 }

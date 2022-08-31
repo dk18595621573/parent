@@ -5,13 +5,13 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 基础响应数据.
+ * 机器人接口响应数据.
  *
  * @author zenghao
  * @date 2022/8/30
  */
 @Data
-public class BaseResponse implements Serializable {
+public class BotResponse implements Serializable {
 
     public static final int SUCCESS_CODE = 0;
 
