@@ -128,7 +128,6 @@ public class WxworkBotClient {
     public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
         log.info("[BOT]收到添加好友信息:【{}】【{}】", sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
-        log.info("[BOT]解析添加好友信息:{}", botEvent);
         return botEvent.getData();
     }
 
@@ -191,14 +190,14 @@ public class WxworkBotClient {
                 request.form(param);
                 break;
         }
-        log.debug("[BOT]发起请求【{}】:{}", url, param);
+        log.info("[BOT]发起请求【{}】:{}", url, param);
         HttpResponse execute = request.setConnectionTimeout(5000).execute();
         if (execute.getStatus() == BotConsts.HTTP_STATUS_FREQUENT) {
             log.error("[BOT]响应[请求太频繁，稍后再试]:{}", url);
             return null;
         }
         String body = execute.body();
-        log.debug("[BOT]响应结果【{}】:{}", url, body);
+        log.info("[BOT]响应结果【{}】:{}", url, body);
         return body;
     }
 
