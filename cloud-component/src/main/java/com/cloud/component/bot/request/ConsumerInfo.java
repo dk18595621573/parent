@@ -44,6 +44,8 @@ public class ConsumerInfo {
         private String avatar;
         @JsonProperty("createTimestamp")
         private Long createTimestamp;
+        @JsonProperty("state")
+        private String state;
         @JsonProperty("tags")
         private List<Tags> tags;
         @JsonProperty("remarkMobiles")
