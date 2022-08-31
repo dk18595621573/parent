@@ -136,14 +136,14 @@ public class WxworkBotClient {
                 request.form(param);
                 break;
         }
-        log.debug("请求企微机器人【{}】:{}", url, param);
+        log.debug("[BOT]发起请求【{}】:{}", url, param);
         HttpResponse execute = request.setConnectionTimeout(5000).execute();
         if (execute.getStatus() == BotConsts.HTTP_STATUS_FREQUENT) {
-            log.error("企微机器人响应[请求太频繁，稍后再试]:{}", url);
+            log.error("[BOT]响应[请求太频繁，稍后再试]:{}", url);
             return null;
         }
         String body = execute.body();
-        log.debug("收到企微机器人响应【{}】:{}", url, body);
+        log.debug("[BOT]响应结果【{}】:{}", url, body);
         BaseResponse response = JsonUtil.parse(body, BaseResponse.class);
         if (Objects.isNull(response)) {
             log.warn("企微机器人响应数据转换失败:{}", body);
@@ -154,8 +154,5 @@ public class WxworkBotClient {
         }
         return response;
     }
-
-
-
 
 }
