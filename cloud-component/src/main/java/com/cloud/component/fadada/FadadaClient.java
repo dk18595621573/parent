@@ -3,7 +3,6 @@ package com.cloud.component.fadada;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
-import com.alibaba.fastjson.JSON;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
@@ -17,6 +16,7 @@ import com.fadada.sdk.base.model.req.*;
 import com.fadada.sdk.extra.client.FddExtraClient;
 import com.fadada.sdk.extra.model.req.GetDocStreamParams;
 import com.fadada.sdk.extra.model.req.GetTemplatePageParams;
+import com.fadada.sdk.extra.model.req.SmsTextParams;
 import com.fadada.sdk.extra.model.req.UploadTemplateDocsParams;
 import com.fadada.sdk.verify.client.FddVerifyClient;
 import com.fadada.sdk.verify.model.req.ApplyCertParams;
@@ -374,6 +374,23 @@ public class FadadaClient {
         String result = fddExtraClient.invokeGetTemplatePage(params);
         log.info("法大大返回参数，多方填充地址：{}", result);
         return result;
+    }
+
+    /**
+     * 自定义短信
+     */
+    public FadadaDataResponse smsText(SmsTextParams params) {
+        // 手机号
+        params.setMobile(params.getMobile());
+        // 短信类型 1：填充模板 2：自定义内容
+        params.setMessageType(params.getMessageType());
+        // 短信内容
+        params.setMessageContent(params.getMessageContent());
+        // 验证码
+        params.setCode(params.getCode());
+        String result = fddExtraClient.invokeSmsText(params);
+        log.info("法大大返回参数，自定义短信：{}", result);
+        return JsonUtil.parse(result, FadadaDataResponse.class);
     }
 
     /**
