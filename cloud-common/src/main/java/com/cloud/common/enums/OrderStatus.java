@@ -11,7 +11,7 @@ public enum OrderStatus {
     IN_QUOTATION(3, "报价中"),
     TO_BE_DELIVERED(4, "待发货"),
     SHIPPED(5, "已发货"),
-    COMPLETED(6, "已签收"),
+    COMPLETED(6, "已收货"),
     AFTER_SALE(7, "退货退单"),
     ADDRESS_TO_BE_COMPLETED(8, "待补全地址"),
     IMEI_ABNORMAL(9, "串码异常"),
