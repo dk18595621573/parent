@@ -36,6 +36,10 @@ public enum SystemParams {
      * 是否可以注册为需求方 默认：不支持注册需求方
      */
     DEMAND_REGISTER("user.company.demand", "false"),
+    /**
+     * 华盛代发仓编码 默认：hswc
+     */
+    HUASHENG_WAREHOUSE("huasheng.warehouse.code", "hswc"),
     ;
     
     private final String code;
