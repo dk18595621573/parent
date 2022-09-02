@@ -3,8 +3,11 @@ package com.cloud.component.huasheng.util;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.http.Header;
+import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.cloud.component.huasheng.consts.HSConst;
 import com.cloud.component.huasheng.exception.HSException;
 import com.cloud.component.properties.HSProperties;
@@ -45,10 +48,9 @@ public class HSUtil {
             log.info("华盛接口调用参数：{}", map);
 
             // 发送请求
-            String response = HttpUtil.post(getUrl(map), map, HSConst.TIMEOUT);
-//            HttpRequest request = HttpRequest.post(hsProperties.getUrl()).body(JSONObject.toJSONString(map));
-//            request.removeHeader(Header.USER_AGENT);
-//            String response = request.execute().body();
+            HttpRequest request = HttpRequest.post(getUrl(map)).body(JSONObject.toJSONString(map));
+            request.removeHeader(Header.USER_AGENT);
+            String response = request.execute().body();
             log.info("华盛返回结果：{}", response);
 
             // 封装返回参数
