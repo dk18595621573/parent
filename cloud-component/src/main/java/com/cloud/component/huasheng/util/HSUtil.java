@@ -40,13 +40,12 @@ public class HSUtil {
         try {
             // 获取公共参数
             Map<String, Object> map = getRequestMap(method, DateUtil.format(DateUtil.date(), DatePattern.PURE_DATETIME_FORMAT));
-            String url = getUrl(map);
             // 参数赋值
             map.putAll(requestMap);
             log.info("华盛接口调用参数：{}", map);
 
             // 发送请求
-            String response = HttpUtil.post(url, map, HSConst.TIMEOUT);
+            String response = HttpUtil.post(getUrl(map), map, HSConst.TIMEOUT);
 //            HttpRequest request = HttpRequest.post(hsProperties.getUrl()).body(JSONObject.toJSONString(map));
 //            request.removeHeader(Header.USER_AGENT);
 //            String response = request.execute().body();
