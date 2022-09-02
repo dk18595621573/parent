@@ -40,12 +40,13 @@ public class HSUtil {
         try {
             // 获取公共参数
             Map<String, Object> map = getRequestMap(method, DateUtil.format(DateUtil.date(), DatePattern.PURE_DATETIME_FORMAT));
+            String url = getUrl(map);
             // 参数赋值
             map.putAll(requestMap);
             log.info("华盛接口调用参数：{}", map);
 
             // 发送请求
-            String response = HttpUtil.post(hsProperties.getUrl(), map, HSConst.TIMEOUT);
+            String response = HttpUtil.post(url, map, HSConst.TIMEOUT);
 //            HttpRequest request = HttpRequest.post(hsProperties.getUrl()).body(JSONObject.toJSONString(map));
 //            request.removeHeader(Header.USER_AGENT);
 //            String response = request.execute().body();
@@ -57,6 +58,22 @@ public class HSUtil {
         } catch (Exception e) {
             throw new HSException( "华盛接口失败："+ e.getMessage());
         }
+    }
+
+    /**
+     * 将公共参数拼接到URL
+     * @param param
+     * @return
+     */
+    public static String getUrl(Map<String, Object> param){
+        return new StringBuilder(hsProperties.getUrl()).append("?").append("method=").append(param.get("method")).append("&")
+                .append("timestamp=").append(param.get("timestamp")).append("&")
+                .append("app_key=").append(param.get("app_key")).append("&")
+                .append("v=").append(param.get("v")).append("&")
+                .append("format=").append(param.get("format")).append("&")
+                .append("sign_method=").append(param.get("sign_method")).append("&")
+                .append("sign=").append(param.get("sign")).toString();
+
     }
 
     /**
