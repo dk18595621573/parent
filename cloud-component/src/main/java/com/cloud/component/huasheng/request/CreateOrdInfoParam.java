@@ -14,10 +14,10 @@ import java.util.List;
 @Data
 public class CreateOrdInfoParam implements Serializable {
 
-    OrdInfo ordInfo;
+    private OrdInfo ordInfo;
 
     @Data
-    public class OrdInfo{
+    public static class OrdInfo{
         /**
          * 省分编码（com.cloud.api.service.huasheng.ProvinceCodeEnum）	16
          */
@@ -123,11 +123,6 @@ public class CreateOrdInfoParam implements Serializable {
         String recvCountry;
 
         /**
-         * 多次支付信息集合
-         */
-        List<PayTran> payTrans;
-
-        /**
          * 子订单信息
          */
         List<OrdSubInfo> ordSubInfos;
@@ -143,38 +138,10 @@ public class CreateOrdInfoParam implements Serializable {
         String mainOrderAmount;
 
         /**
-         * 支付信息
-         */
-        @Data
-        public class PayTran {
-            /**
-             * 支付方式编码	16
-             */
-            String payWay;
-
-            /**
-             * payTrans 支付方式名称	32
-             */
-            String payWayName;
-
-            /**
-             * payTrans 支付流水号	32
-             */
-            String payTransNo;
-
-            /**
-             * Integer	实付金额(单位:分)	16
-             */
-            Integer payMoney;
-
-        }
-
-
-        /**
          * 子订单信息
          */
         @Data
-        public class OrdSubInfo {
+        public static class OrdSubInfo {
             /**
              * 商品ID	16
              */
