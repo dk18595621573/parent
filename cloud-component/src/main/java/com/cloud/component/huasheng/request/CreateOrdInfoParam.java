@@ -13,139 +13,133 @@ import java.util.List;
  */
 @Data
 public class CreateOrdInfoParam implements Serializable {
+    /**
+     * 省分编码（com.cloud.api.service.huasheng.ProvinceCodeEnum）	16
+     */
+    String provinceCode;
 
-    private OrdInfo ordInfo;
+    /**
+     * 订单人电话	32
+     */
+    String mobile;
 
+    /**
+     * 外平台主订单号	32
+     */
+    String outOrderId;
+
+    /**
+     * 订单实付金额(单位:分)	16
+     */
+    Long realMoney;
+
+    /**
+     * 运费(单位:分)	10
+     */
+    Long realExpressFee;
+
+    /**
+     * 订购总数量	10
+     */
+    Long orderAmount;
+
+    /**
+     * 下单时间 yyyymmdd24hhmiss	14
+     */
+    String orderTime;
+
+    /**
+     * 订单来源类型（06广东存量平台， 08广东沃厅，88阿里天猫）	4
+     */
+    String sourceType;
+
+    /**
+     * 支付类型(0-在线支付, 1-线下支付)	1
+     */
+    String payType;
+
+    /**
+     * 支付方式 （payType=1payWay=9999,
+     * 9008	微信（WAP支付）
+     * 9999	凭证支付（WAP支付）
+     * 8001	联通收款
+     * 8002	华盛收款）	4
+     */
+    String payWay;
+
+    /**
+     * 支付状态(0-未支付, 1-已支付)	1
+     */
+    String payFlag;
+
+    /**
+     * 支付时间     yyyymmdd24hhmiss	14
+     */
+    String payTime;
+
+    /**
+     * 收货人姓名	128
+     */
+    String contactName;
+
+    /**
+     * 收货人电话	32
+     */
+    String contactPhone;
+
+    /**
+     * 收货地址	256
+     */
+    String chnlAddress;
+
+    /**
+     * 收货人省分名称	16
+     */
+    String recvProvince;
+
+    /**
+     * 收货人地市名称	16
+     */
+    String recvCity;
+
+    /**
+     * 收货人区县名称	16
+     */
+    String recvCountry;
+
+    /**
+     * 子订单信息
+     */
+    List<OrdSubInfo> ordSubInfos;
+
+    /**
+     * 子订单信息
+     */
     @Data
-    public static class OrdInfo{
+    public class OrdSubInfo {
         /**
-         * 省分编码（com.cloud.api.service.huasheng.ProvinceCodeEnum）	16
+         * 商品ID	16
          */
-        String provinceCode;
-
+        Long gdsId;
         /**
-         * 订单人电话	32
+         * 商品名称	256
          */
-        String mobile;
-
+        String gdsName;
         /**
-         * 外平台主订单号	32
+         * 单品ID	16
          */
-        String outOrderId;
-
+        Long skuId;
         /**
-         * 订单实付金额(单位:分)	16
+         * 商品实付金额(单位:分)	16
          */
         Long realMoney;
-
         /**
-         * 运费(单位:分)	10
+         * 商品单价(单位:分)	16
          */
-        Long realExpressFee;
-
+        Long baseMoney;
         /**
-         * 订购总数量	10
+         * 商品订购数量	10
          */
         Long orderAmount;
-
-        /**
-         * 下单时间 yyyymmdd24hhmiss	14
-         */
-        String orderTime;
-
-        /**
-         * 订单来源类型（06广东存量平台， 08广东沃厅，88阿里天猫）	4
-         */
-        String sourceType;
-
-        /**
-         * 支付类型(0-在线支付, 1-线下支付)	1
-         */
-        String payType;
-
-        /**
-         * 支付方式 （payType=1payWay=9999,
-         * 9008	微信（WAP支付）
-         * 9999	凭证支付（WAP支付）
-         * 8001	联通收款
-         * 8002	华盛收款）	4
-         */
-        String payWay;
-
-        /**
-         * 支付状态(0-未支付, 1-已支付)	1
-         */
-        String payFlag;
-
-        /**
-         * 支付时间     yyyymmdd24hhmiss	14
-         */
-        String payTime;
-
-        /**
-         * 收货人姓名	128
-         */
-        String contactName;
-
-        /**
-         * 收货人电话	32
-         */
-        String contactPhone;
-
-        /**
-         * 收货地址	256
-         */
-        String chnlAddress;
-
-        /**
-         * 收货人省分名称	16
-         */
-        String recvProvince;
-
-        /**
-         * 收货人地市名称	16
-         */
-        String recvCity;
-
-        /**
-         * 收货人区县名称	16
-         */
-        String recvCountry;
-
-        /**
-         * 子订单信息
-         */
-        List<OrdSubInfo> ordSubInfos;
-
-        /**
-         * 子订单信息
-         */
-        @Data
-        public static class OrdSubInfo {
-            /**
-             * 商品ID	16
-             */
-            Long gdsId;
-            /**
-             * 商品名称	256
-             */
-            String gdsName;
-            /**
-             * 单品ID	16
-             */
-            Long skuId;
-            /**
-             * 商品实付金额(单位:分)	16
-             */
-            Long realMoney;
-            /**
-             * 商品单价(单位:分)	16
-             */
-            Long baseMoney;
-            /**
-             * 商品订购数量	10
-             */
-            Long orderAmount;
-        }
     }
 }
