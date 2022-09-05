@@ -73,11 +73,6 @@ public class CreateOrdInfoParam implements Serializable {
         String payWay;
 
         /**
-         * 支付流水号（payType=0时必传）	32
-         */
-        String payTransNo;
-
-        /**
          * 支付状态(0-未支付, 1-已支付)	1
          */
         String payFlag;
@@ -103,11 +98,6 @@ public class CreateOrdInfoParam implements Serializable {
         String chnlAddress;
 
         /**
-         * 收货地址邮政编码	6
-         */
-        String postCode;
-
-        /**
          * 收货人省分名称	16
          */
         String recvProvince;
@@ -126,16 +116,6 @@ public class CreateOrdInfoParam implements Serializable {
          * 子订单信息
          */
         List<OrdSubInfo> ordSubInfos;
-
-        /**
-         * String	关联主订单号	32
-         */
-        String mainOrderId;
-
-        /**
-         * Integer	主订单总数量	16
-         */
-        String mainOrderAmount;
 
         /**
          * 子订单信息
