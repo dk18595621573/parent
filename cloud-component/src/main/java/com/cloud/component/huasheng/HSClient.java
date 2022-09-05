@@ -85,7 +85,7 @@ public class HSClient {
         Map<String, Object> param = new HashMap<>();
         param.put("body", paramMap);
 
-        OrderInfoResult response = HSUtil.doProcess(HSConst.METHOD_CREATE_ORDER_ASY, paramMap, OrderInfoResult.class);
+        OrderInfoResult response = HSUtil.doProcess(HSConst.METHOD_CREATE_ORDER_ASY, param, OrderInfoResult.class);
         OrderInfoResult.Resp resp = response.getResp();
         log.info("调用 {} 接口, 结果 {}", HSConst.METHOD_CREATE_ORDER_ASY, JSONUtil.toJsonStr(resp));
         if (resp != null && "0".equals(resp.getCode())){
