@@ -69,9 +69,11 @@ public enum OrderSubStatus {
 
     /** 异常订单 */
     IMEI_ABNORMAL(90, "串码异常"),
-    LOGISTICS_DESTINATION_ABNORMAL(91, "物流目的地异常"),
-    LOGISTICS_SHIPPING_ABNORMAL(92, "物流发货城市异常"),
-    LOGISTICS_NO_FLOW(93, "物流无流转信息"),
+
+    /** 物流异常 */
+    LOGISTICS_DESTINATION_ABNORMAL(121, "物流目的地异常"),
+    LOGISTICS_SHIPPING_ABNORMAL(122, "物流发货城市异常"),
+    LOGISTICS_NO_FLOW(123, "物流无流转信息"),
 
     /** 售后 */
     AFTER_LOGISTICS(101, "退物流费用"),
