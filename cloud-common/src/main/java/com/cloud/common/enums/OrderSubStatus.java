@@ -68,7 +68,6 @@ public enum OrderSubStatus {
     WAREHOUSE_THEN_AFFIRM(74, "供应商已收"),
 
     /** 异常订单 */
-    IMEI_ABNORMAL(90, "串码异常"),
 
     /** 物流异常 */
     LOGISTICS_DESTINATION_ABNORMAL(121, "物流目的地异常"),
