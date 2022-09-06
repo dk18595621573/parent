@@ -34,6 +34,9 @@ public class ExpressResult implements Serializable {
      */
     private List<ExpressItem> data;
 
+    /** 行政区域解析 */
+    private RouteInfo routeInfo;
+
     /**
      * 是否已签收
      * @return true:已签收 false:未签收
@@ -56,5 +59,26 @@ public class ExpressResult implements Serializable {
          */
         private String context;
 
+    }
+
+    @Data
+    public static class RouteInfo implements Serializable{
+
+        /** 出发地城市信息 */
+        private Info from;
+
+        /** 当前城市信息 */
+        private Info cur;
+
+        /** 目的地城市信息 */
+        private Info to;
+    }
+
+    @Data
+    public static class Info{
+        /** 行政区域编码 */
+        private String number;
+        /** 省市区名称 */
+        private String name;
     }
 }

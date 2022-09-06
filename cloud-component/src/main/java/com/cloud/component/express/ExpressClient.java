@@ -10,7 +10,6 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
 import com.cloud.component.express.domain.ExpressResult;
@@ -59,6 +58,8 @@ public class ExpressClient {
         paramMap.put("num", expressNoN);
         // 手机号码
         paramMap.put("phone", cellphone);
+        // 开通行政区域解析功能
+        paramMap.put("resultv2", "4");
         String param = JsonUtil.toJson(paramMap);
         Map<String, Object> requestBody = MapUtil.newHashMap(3);
         // 授权码，请申请企业版获取
@@ -110,7 +111,7 @@ public class ExpressClient {
         properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
 
         ExpressClient expressClient = new ExpressClient(properties);
-        ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1370500969031", "15325014087");
+        ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1143519416984", "15325014087");
         System.out.println(express2);
     }
 }
