@@ -40,6 +40,10 @@ public enum SystemParams {
      * 华盛代发仓编码 默认：hswc
      */
     HUASHENG_WAREHOUSE("huasheng.warehouse.code", "hswc"),
+    /**
+     * 华盛供应商名称 默认：华盛
+     */
+    HUASHENG_SUPPLIER_NAME("huasheng.supplier.name", "华盛"),
     ;
     
     private final String code;
