@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 @Configuration
-@ConditionalOnProperty(prefix = HSProperties.HS_PREFIX, name = "enabled", havingValue = "true")
 @EnableConfigurationProperties(value = HSProperties.class)
 public class HSConfig {
 
