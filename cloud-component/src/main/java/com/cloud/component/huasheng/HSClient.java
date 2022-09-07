@@ -1,6 +1,5 @@
 package com.cloud.component.huasheng;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -11,7 +10,6 @@ import com.cloud.component.huasheng.consts.HSConst;
 import com.cloud.component.huasheng.request.CreateOrdInfoParam;
 import com.cloud.component.huasheng.request.LogisticsMessageParam;
 import com.cloud.component.huasheng.response.OrderInfoResult;
-import com.cloud.component.huasheng.request.SkuInfoParam;
 import com.cloud.component.huasheng.response.StatusUpdateResult;
 import com.cloud.component.huasheng.util.HSUtil;
 import com.cloud.component.properties.HSProperties;
@@ -22,7 +20,6 @@ import java.util.Map;
 
 /**
  * 华盛微零售客户端
- *
  */
 @Slf4j
 public class HSClient {
@@ -36,17 +33,17 @@ public class HSClient {
 
     /**
      * 订单状态修改（包含退款、退货审核、确认收货）
-     *
+     * <p>
      * ordId		是	String	主订单号
      * ordSubId		否	String	子订单号
      * applyType	是	String	0-退款 1-退货 2-确认收货
      * backStatus	否	String	审核拒绝T5，审核通过T1（退货申请-审核通过-买家发货-退款成功），退款成功T4 applyType=2,backStatus为空
      * msg		    否	String	审核拒绝原因
      */
-    public boolean orderStatusUpdate (String orderId, String ordSubId, String applyType, String backStatus, String msg){
+    public boolean orderStatusUpdate(String orderId, String ordSubId, String applyType, String backStatus, String msg) {
         log.info("调用 {} 接口, 参数 {} {} {} {} {}", HSConst.METHOD_CHANGE_ORDER_STATUS, orderId, ordSubId, applyType, backStatus, msg);
         // 必传参数添加校验
-        if (StrUtil.isBlank(orderId) || StrUtil.isBlank(applyType)){
+        if (StrUtil.isBlank(orderId) || StrUtil.isBlank(applyType)) {
             log.error("请求接口 {} 参数缺失", HSConst.METHOD_CHANGE_ORDER_STATUS);
             return false;
         }
@@ -60,7 +57,7 @@ public class HSClient {
         StatusUpdateResult response = HSUtil.doProcess(HSConst.METHOD_CHANGE_ORDER_STATUS, paramMap, StatusUpdateResult.class);
         StatusUpdateResult.Resp resp = response.getResp();
         log.info("调用 {} 接口, 结果 {}", HSConst.METHOD_CHANGE_ORDER_STATUS, JSONUtil.toJsonStr(resp));
-        if (resp != null && "0".equals(resp.getCode())){
+        if (resp != null && "0".equals(resp.getCode())) {
             return true;
         }
         return false;
@@ -72,10 +69,10 @@ public class HSClient {
      *
      * @param ordInfoParam
      */
-    public OrderInfoResult.OrdInfo createOrderAsy (CreateOrdInfoParam ordInfoParam){
+    public OrderInfoResult.OrdInfo createOrderAsy(CreateOrdInfoParam ordInfoParam) {
         log.info("调用 {} 接口, 参数 {} ", HSConst.METHOD_CREATE_ORDER_ASY, JsonUtil.toJson(ordInfoParam));
         // 必传参数添加校验
-        if (ordInfoParam == null){
+        if (ordInfoParam == null) {
             throw new ServiceException("参数缺失");
         }
 
@@ -88,7 +85,7 @@ public class HSClient {
         OrderInfoResult response = HSUtil.doProcess(HSConst.METHOD_CREATE_ORDER_ASY, param, OrderInfoResult.class);
         OrderInfoResult.Resp resp = response.getResp();
         log.info("调用 {} 接口, 结果 {}", HSConst.METHOD_CREATE_ORDER_ASY, JSONUtil.toJsonStr(resp));
-        if (resp != null && "0".equals(resp.getCode())){
+        if (resp != null && "0".equals(resp.getCode())) {
             OrderInfoResult.OrdInfo result = resp.getResult();
             return result;
         }
@@ -99,15 +96,15 @@ public class HSClient {
     /**
      * 订单退款申请
      *
-     * @param mobile 用户注册手机号 32
-     * @param ordId 主订单号    32
-     * @param backType  退货原因: 01-现在不想购买 02-商品价格较贵 03-价格波动 04-其他 2
-     * @param backDesc  问题描述    512
+     * @param mobile   用户注册手机号 32
+     * @param ordId    主订单号    32
+     * @param backType 退货原因: 01-现在不想购买 02-商品价格较贵 03-价格波动 04-其他 2
+     * @param backDesc 问题描述    512
      */
-    public StatusUpdateResult orderBackMoney (String mobile, String ordId, String backType, String backDesc){
+    public StatusUpdateResult orderBackMoney(String mobile, String ordId, String backType, String backDesc) {
         log.info("调用 {} 接口, 参数 {} {} {} {} ", HSConst.METHOD_ORDER_BACK_MONEY, mobile, ordId, backType, backDesc);
         // 必传参数添加校验
-        if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId) || StrUtil.isBlank(backType) || StrUtil.isBlank(backDesc)){
+        if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId) || StrUtil.isBlank(backType) || StrUtil.isBlank(backDesc)) {
             throw new ServiceException("参数缺失");
         }
         Map<String, Object> paramMap = new HashMap<>();
@@ -119,7 +116,7 @@ public class HSClient {
         StatusUpdateResult response = HSUtil.doProcess(HSConst.METHOD_ORDER_BACK_MONEY, paramMap, StatusUpdateResult.class);
         StatusUpdateResult.Resp resp = response.getResp();
         log.info("调用 {} 接口, 结果 {}", HSConst.METHOD_ORDER_BACK_MONEY, JSONUtil.toJsonStr(resp));
-        if (resp != null && "0".equals(resp.getCode())){
+        if (resp != null && "0".equals(resp.getCode())) {
             return response;
         }
         return null;
@@ -129,17 +126,17 @@ public class HSClient {
     /**
      * 订单退货申请
      *
-     * @param mobile    用户注册手机号 32
-     * @param ordId     主订单号    32
-     * @param ordSubId  子订单号    32
-     * @param backType  退货原因: 01-收到商品破损 02-商品错发/漏发 03-收到商品与描述不符 04-商品质量问题 05-其他 2
-     * @param backDesc  问题描述    512
-     * @param pics      问题图片,多图片用竖线’|’分隔    512
+     * @param mobile   用户注册手机号 32
+     * @param ordId    主订单号    32
+     * @param ordSubId 子订单号    32
+     * @param backType 退货原因: 01-收到商品破损 02-商品错发/漏发 03-收到商品与描述不符 04-商品质量问题 05-其他 2
+     * @param backDesc 问题描述    512
+     * @param pics     问题图片,多图片用竖线’|’分隔    512
      */
-    public boolean orderBackGds (String mobile, String ordId, String ordSubId, String backType, String backDesc, String pics){
+    public boolean orderBackGds(String mobile, String ordId, String ordSubId, String backType, String backDesc, String pics) {
         log.info("调用 {} 接口, 参数 {} {} {} {} {} {}", HSConst.METHOD_ORDER_BACK_GDS, mobile, ordId, ordSubId, backType, backDesc, pics);
         // 必传参数添加校验
-        if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId) ||  StrUtil.isBlank(ordSubId) || StrUtil.isBlank(backType) || StrUtil.isBlank(backDesc)){
+        if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId) || StrUtil.isBlank(ordSubId) || StrUtil.isBlank(backType) || StrUtil.isBlank(backDesc)) {
             throw new ServiceException("参数缺失");
         }
         Map<String, Object> paramMap = new HashMap<>();
@@ -153,29 +150,7 @@ public class HSClient {
         StatusUpdateResult response = HSUtil.doProcess(HSConst.METHOD_ORDER_BACK_GDS, paramMap, StatusUpdateResult.class);
         StatusUpdateResult.Resp resp = response.getResp();
         log.info("调用 {} 接口, 结果 {}", HSConst.METHOD_ORDER_BACK_GDS, JSONUtil.toJsonStr(resp));
-        if (resp != null && "0".equals(resp.getCode())){
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
-     * 商品信息变更通知
-     *
-     * @param skuInfoParam
-     */
-    public boolean updateSkuNotice (SkuInfoParam skuInfoParam){
-        if (skuInfoParam == null){
-            throw new ServiceException("参数缺失");
-        }
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.putAll(BeanUtil.beanToMap(skuInfoParam));
-
-        StatusUpdateResult response = HSUtil.doProcess(HSConst.METHOD_UPDATE_SKU_NOTICE, paramMap, StatusUpdateResult.class);
-        StatusUpdateResult.Resp resp = response.getResp();
-        log.info("调用 {} 接口, 结果 {}", HSConst.METHOD_UPDATE_SKU_NOTICE, JSONUtil.toJsonStr(resp));
-        if (resp != null && "0".equals(resp.getCode())){
+        if (resp != null && "0".equals(resp.getCode())) {
             return true;
         }
         return false;
@@ -185,12 +160,12 @@ public class HSClient {
     /**
      * 查询物流信息
      *
-     * @param mobile    用户注册手机号 32
-     * @param ordId     主订单号    32
+     * @param mobile 用户注册手机号 32
+     * @param ordId  主订单号    32
      */
-    public LogisticsMessageParam getExpress (String mobile, String ordId){
+    public LogisticsMessageParam getExpress(String mobile, String ordId) {
         try {
-            if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId)){
+            if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId)) {
                 throw new ServiceException("参数缺失");
             }
             Map<String, Object> paramMap = new HashMap<>();
@@ -199,7 +174,7 @@ public class HSClient {
 
             StatusUpdateResult response = HSUtil.doProcess(HSConst.METHOD_GET_EXPRESS, paramMap, StatusUpdateResult.class);
             LogisticsMessageParam logisticsMessageVO = JSON.parseObject(JSONUtil.toJsonStr(response.getResp().getMsg()), LogisticsMessageParam.class);
-            if (ObjectUtil.isEmpty(logisticsMessageVO)){
+            if (ObjectUtil.isEmpty(logisticsMessageVO)) {
                 return null;
             }
             return logisticsMessageVO;
