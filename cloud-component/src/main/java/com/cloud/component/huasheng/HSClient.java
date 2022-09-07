@@ -72,7 +72,7 @@ public class HSClient {
      *
      * @param ordInfoParam
      */
-    public boolean createOrderAsy (CreateOrdInfoParam ordInfoParam){
+    public OrderInfoResult.OrdInfo createOrderAsy (CreateOrdInfoParam ordInfoParam){
         log.info("调用 {} 接口, 参数 {} ", HSConst.METHOD_CREATE_ORDER_ASY, JsonUtil.toJson(ordInfoParam));
         // 必传参数添加校验
         if (ordInfoParam == null){
@@ -89,9 +89,10 @@ public class HSClient {
         OrderInfoResult.Resp resp = response.getResp();
         log.info("调用 {} 接口, 结果 {}", HSConst.METHOD_CREATE_ORDER_ASY, JSONUtil.toJsonStr(resp));
         if (resp != null && "0".equals(resp.getCode())){
-            return true;
+            OrderInfoResult.OrdInfo result = resp.getResult();
+            return result;
         }
-        return false;
+        return null;
     }
 
 
