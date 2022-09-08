@@ -57,6 +57,7 @@ public class HSUtil {
             Assert.notBlank(response, "返回结果为空");
             return (T) JSONUtil.toBean(response, respClass);
         } catch (Exception e) {
+            log.info("华盛接口返回失败");
             throw new HSException( "华盛接口失败："+ e.getMessage());
         }
     }
