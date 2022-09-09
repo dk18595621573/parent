@@ -7,6 +7,7 @@ import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.cloud.common.exception.ServiceException;
 import com.cloud.component.huasheng.consts.HSConst;
 import com.cloud.component.huasheng.exception.HSException;
 import com.cloud.component.properties.HSProperties;
@@ -61,7 +62,7 @@ public class HSUtil {
             if (Objects.equals(code, "0")){
                 return (T) JSONUtil.toBean(response, respClass);
             }else {
-                throw new HSException( "华盛接口失败："+ resp.getStr("msg"));
+                throw new ServiceException( "华盛接口失败："+ resp.getStr("msg"));
             }
         } catch (Exception e) {
             log.info("华盛接口返回失败:{}", e.getMessage());
