@@ -62,7 +62,7 @@ public class HSUtil {
             if (Objects.equals(code, "0")){
                 return (T) JSONUtil.toBean(response, respClass);
             }else {
-                throw new ServiceException( "华盛接口失败："+ resp.getStr("msg"));
+                throw new ServiceException(resp.getStr("msg"));
             }
         } catch (Exception e) {
             log.info("华盛接口返回失败:{}", e.getMessage());
