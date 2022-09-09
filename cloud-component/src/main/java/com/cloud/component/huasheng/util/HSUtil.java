@@ -66,7 +66,7 @@ public class HSUtil {
             }
         } catch (Exception e) {
             log.info("华盛接口返回失败:{}", e.getMessage());
-            throw new HSException( "华盛接口失败："+ e.getMessage());
+            throw new ServiceException( "华盛接口失败："+ e.getMessage());
         }
     }
 
