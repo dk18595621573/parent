@@ -84,6 +84,7 @@ public enum OrderSubStatus {
     REFUND(107, "退货"),
     CONSENT_REFUND(108, "同意退货"),
     DECLINE_REFUND(109, "拒绝退货"),
+    AFTER_SALE(110, "转售后"),
     ;
 
     private final Integer code;
