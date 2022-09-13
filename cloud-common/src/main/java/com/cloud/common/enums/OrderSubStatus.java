@@ -10,6 +10,8 @@ public enum OrderSubStatus {
 
     /** 新建 */
     NEW(20, "新建"),
+    /** 撤销 */
+    REVOKE(21, "撤销"),
     /** 超时发货 */
     OVERTIME_DELIVERY(22, "超时发货"),
     /** 超时发货未成交 */
