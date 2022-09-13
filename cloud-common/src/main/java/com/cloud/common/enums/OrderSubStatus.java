@@ -18,8 +18,10 @@ public enum OrderSubStatus {
     OVERTIME_STREAMING(23, "超时流拍"),
     /** 售后-取消订单 */
     AFTER_CANCEL(24, "售后-取消订单"),
-    /** 异常订单撤销 */
-    ABNORMAL_REVOKE(25, "异常订单撤销"),
+    /** 串码异常撤销 */
+    REVOKE_IMPL(25, "串码异常撤销"),
+    /** 物流异常撤销 */
+    REVOKE_LOGISTICS(26, "物流异常撤销"),
 
     /** 待抢单 */
     PENDING_ORDER(30, "待抢单"),
@@ -92,9 +94,7 @@ public enum OrderSubStatus {
     REVOKE_ADDRESS(133, "待补全地址撤销"),
     REVOKE_QUOTATION(134, "报价中撤销"),
     REVOKE_DELIVERED(135, "待发货撤销"),
-    REVOKE_IMPL(136, "串码异常撤销"),
-    REVOKE_LOGISTICS(137, "物流异常撤销"),
-    REVOKE_DESTROY(138, "毁单"),
+    REVOKE_DESTROY(136, "毁单"),
     ;
 
     private final Integer code;
