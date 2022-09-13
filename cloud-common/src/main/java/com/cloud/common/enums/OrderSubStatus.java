@@ -18,6 +18,8 @@ public enum OrderSubStatus {
     OVERTIME_STREAMING(23, "超时流拍"),
     /** 售后-取消订单 */
     AFTER_CANCEL(24, "售后-取消订单"),
+    /** 异常订单撤销 */
+    ABNORMAL_REVOKE(25, "异常订单撤销"),
 
     /** 待抢单 */
     PENDING_ORDER(30, "待抢单"),
