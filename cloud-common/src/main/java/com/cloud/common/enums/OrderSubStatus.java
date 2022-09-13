@@ -10,8 +10,6 @@ public enum OrderSubStatus {
 
     /** 新建 */
     NEW(20, "新建"),
-    /** 撤销 */
-    REVOKE(21, "撤销"),
     /** 超时发货 */
     OVERTIME_DELIVERY(22, "超时发货"),
     /** 超时发货未成交 */
@@ -85,6 +83,16 @@ public enum OrderSubStatus {
     CONSENT_REFUND(108, "同意退货"),
     DECLINE_REFUND(109, "拒绝退货"),
     AFTER_SALE(110, "转售后"),
+
+    /** 撤销 */
+    REVOKE_NEW(131, "新建采购撤销"),
+    REVOKE_PUBLISHED(132, "待发布撤销"),
+    REVOKE_ADDRESS(133, "待补全地址撤销"),
+    REVOKE_QUOTATION(134, "报价中撤销"),
+    REVOKE_DELIVERED(135, "待发货撤销"),
+    REVOKE_IMPL(136, "串码异常撤销"),
+    REVOKE_LOGISTICS(137, "物流异常撤销"),
+    REVOKE_DESTROY(138, "毁单"),
     ;
 
     private final Integer code;

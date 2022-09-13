@@ -16,7 +16,8 @@ public enum OrderStatus {
     ADDRESS_TO_BE_COMPLETED(8, "待补全地址"),
     IMEI_ABNORMAL(9, "串码异常"),
     AFTERMARKET(10, "售后"),
-    LOGISTICS_ABNORMAL(12, "物流异常")
+    LOGISTICS_ABNORMAL(12, "物流异常"),
+    REVOKE(13, "撤销"),
     ;
 
 
