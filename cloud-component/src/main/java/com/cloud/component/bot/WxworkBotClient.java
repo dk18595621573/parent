@@ -11,6 +11,7 @@ import com.cloud.component.bot.consts.BotApiEnums;
 import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
 import com.cloud.component.bot.exception.WxworkBotException;
+import com.cloud.component.bot.message.LinkMessage;
 import com.cloud.component.bot.message.TextMessage;
 import com.cloud.component.bot.request.BotEvent;
 import com.cloud.component.bot.request.ConsumerInfo;
@@ -102,6 +103,22 @@ public class WxworkBotClient {
         param.put("messageType", MessageType.TEXT.getCode());
         param.put("chatId", chatId);
         param.put("payload", new TextMessage(text));
+        exceute(BotApiEnums.MESSAGE_SEND, param);
+    }
+
+    /**
+     * 发送文本消息
+     * @param chatId 会话id
+     * @param title 链接标题
+     * @param image 图片地址
+     * @param summary 链接描述
+     * @param link 链接地址
+     */
+    public void sendLink(final String chatId, final String title, final String image, final String summary, final String link) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("messageType", MessageType.URL_LINK.getCode());
+        param.put("chatId", chatId);
+        param.put("payload", new LinkMessage(link, title, summary, image));
         exceute(BotApiEnums.MESSAGE_SEND, param);
     }
 
