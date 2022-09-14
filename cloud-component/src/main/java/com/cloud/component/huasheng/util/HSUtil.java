@@ -5,9 +5,9 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.http.Header;
 import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSONObject;
+import com.cloud.common.exception.ServiceException;
 import com.cloud.component.huasheng.consts.HSConst;
 import com.cloud.component.huasheng.exception.HSException;
 import com.cloud.component.properties.HSProperties;
@@ -18,6 +18,7 @@ import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.TreeMap;
 
 /**
@@ -48,17 +49,24 @@ public class HSUtil {
             log.info("华盛接口调用参数：{}", map);
 
             // 发送请求
-            HttpRequest request = HttpRequest.post(getUrl(map)).body(JSONObject.toJSONString(map)).timeout(5000);
+            HttpRequest request = HttpRequest.post(getUrl(map)).body(JSONUtil.toJsonStr(map)).timeout(5000);
             request.removeHeader(Header.USER_AGENT);
             String response = request.execute().body();
             log.info("华盛返回结果：{}", response);
 
             // 封装返回参数
             Assert.notBlank(response, "返回结果为空");
-            return (T) JSONUtil.toBean(response, respClass);
+            JSONObject jsonObject = JSONUtil.parseObj(response);
+            JSONObject resp = jsonObject.getJSONObject("resp");
+            String code = resp.getStr("code");
+            if (Objects.equals(code, "0")){
+                return (T) JSONUtil.toBean(response, respClass);
+            }else {
+                throw new ServiceException(resp.getStr("msg"));
+            }
         } catch (Exception e) {
             log.info("华盛接口返回失败:{}", e.getMessage());
-            throw new HSException( "华盛接口失败："+ e.getMessage());
+            throw new ServiceException( "华盛接口失败："+ e.getMessage());
         }
     }
 
