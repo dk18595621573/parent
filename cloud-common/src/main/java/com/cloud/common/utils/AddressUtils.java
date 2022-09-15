@@ -280,7 +280,7 @@ public class AddressUtils {
      * @return
      */
     public static Map<String, String> addressResolution(String address) {
-        String regex = "(?<province>[^特别行政区]+特别行政区|[^自治区]+自治区|[^省]+省|[^市]+市)(?<city>省直辖行政单位|省属虚拟市|市辖县|市辖区|县|自治州|[^地区]+地区|[^州]+州|[^盟]+盟|[^市]+市|[^区]+区|)?(?<county>[^旗]+旗|[^市]+市|[^区]+区|[^县]+县)?(?<town>[^县]+县|[^区]+区|[^乡]+乡|[^村]+村|[^镇]+镇|[^街道]+街道)?(?<village>.*)";
+        String regex = "(?<province>[^特别行政区]+特别行政区|[^自治区]+自治区|[^省]+省|[^市]+市)(?<city>省直辖行政单位|[^市]+市|省属虚拟市|市辖县|市辖区|县|自治州|[^地区]+地区|[^州]+州|[^盟]+盟)?(?<county>[^区]+区|[^市]+市|[^旗]+旗|[^县]+县)?(?<town>[^县]+县|[^区]+区|[^乡]+乡|[^村]+村|[^镇]+镇|[^街道]+街道)?(?<village>.*)";
         Matcher matcher = Pattern.compile(regex).matcher(address);
         Map<String, String> rmap = null;
         while (matcher.find()) {
