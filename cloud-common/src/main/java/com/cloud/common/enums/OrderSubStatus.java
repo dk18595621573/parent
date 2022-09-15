@@ -73,6 +73,9 @@ public enum OrderSubStatus {
     /** 供应商已收 */
     WAREHOUSE_THEN_AFFIRM(74, "供应商已收"),
 
+    /** 补全地址 */
+    ADDRESS_COMPLETED_ERROR(81, "补全地址（未补全）"),
+
     /** 异常订单 */
 
     /** 物流异常 */
