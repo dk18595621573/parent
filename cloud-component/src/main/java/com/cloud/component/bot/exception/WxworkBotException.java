@@ -8,11 +8,22 @@ package com.cloud.component.bot.exception;
  */
 public class WxworkBotException extends RuntimeException {
 
+    private Integer code;
+
     public WxworkBotException(final String message) {
         super(message);
     }
 
+    public WxworkBotException(final Integer code, final String message) {
+        super(message);
+        this.code = code;
+    }
+
     public WxworkBotException(final String message, final Throwable cause) {
         super(message, cause);
+    }
+
+    public Integer getCode() {
+        return code;
     }
 }

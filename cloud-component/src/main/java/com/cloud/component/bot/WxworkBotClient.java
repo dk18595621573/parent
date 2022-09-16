@@ -98,12 +98,12 @@ public class WxworkBotClient {
      * @param chatId 会话id
      * @param text 文本消息内容
      */
-    public void sendText(final String chatId, final String text) {
+    public BotResponse sendText(final String chatId, final String text) {
         Map<String, Object> param = new HashMap<>();
         param.put("messageType", MessageType.TEXT.getCode());
         param.put("chatId", chatId);
         param.put("payload", new TextMessage(text));
-        exceute(BotApiEnums.MESSAGE_SEND, param);
+        return exceute(BotApiEnums.MESSAGE_SEND, param);
     }
 
     /**
@@ -114,12 +114,12 @@ public class WxworkBotClient {
      * @param summary 链接描述
      * @param link 链接地址
      */
-    public void sendLink(final String chatId, final String title, final String image, final String summary, final String link) {
+    public BotResponse sendLink(final String chatId, final String title, final String image, final String summary, final String link) {
         Map<String, Object> param = new HashMap<>();
         param.put("messageType", MessageType.URL_LINK.getCode());
         param.put("chatId", chatId);
         param.put("payload", new LinkMessage(link, title, summary, image));
-        exceute(BotApiEnums.MESSAGE_SEND, param);
+        return exceute(BotApiEnums.MESSAGE_SEND, param);
     }
 
     /**
@@ -211,7 +211,7 @@ public class WxworkBotClient {
         HttpResponse execute = request.setConnectionTimeout(5000).execute();
         if (execute.getStatus() == BotConsts.HTTP_STATUS_FREQUENT) {
             log.error("[BOT]响应[请求太频繁，稍后再试]:{}", url);
-            return null;
+            throw new WxworkBotException(BotConsts.ERROR_CODE_FREQUENT, "请求太频繁，稍后再试");
         }
         String body = execute.body();
         log.info("[BOT]响应结果【{}】:{}", url, body);

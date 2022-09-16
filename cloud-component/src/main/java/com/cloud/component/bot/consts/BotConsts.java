@@ -16,4 +16,9 @@ public interface BotConsts {
      * 请求太频繁
      */
     int HTTP_STATUS_FREQUENT = 429;
+
+    /**
+     * 错误码：请求太频繁
+     */
+    int ERROR_CODE_FREQUENT = -100;
 }
