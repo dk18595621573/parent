@@ -1,5 +1,6 @@
 package com.cloud.component.express.domain;
 
+import cn.hutool.core.util.ArrayUtil;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,6 +14,23 @@ import java.util.List;
  */
 @Data
 public class ExpressResult implements Serializable {
+
+    /** 签收状态 */
+    interface State{
+        /** 快件已签收 */
+        String SIGN = "3";
+        /** 本人签收 */
+        String SELF_SIGN = "301";
+        /** 派件异常后签收 */
+        String ERROR_SIGN = "302";
+        /** 代签 */
+        String HOLOGRAPH_SIGN = "303";
+        /** 投柜或站签收 */
+        String CAST_ARK_SIGN = "304";
+    }
+
+    /** 签收状态集合 */
+    public final static String[] SIGN_SIGN_ARRAY = {State.SIGN, State.SELF_SIGN, State.ERROR_SIGN, State.HOLOGRAPH_SIGN, State.CAST_ARK_SIGN};
 
     /**
      * 单号
@@ -42,7 +60,7 @@ public class ExpressResult implements Serializable {
      * @return true:已签收 false:未签收
      */
     public boolean signed() {
-        return "3".equals(getState());
+        return ArrayUtil.contains(SIGN_SIGN_ARRAY, getState());
     }
 
 
