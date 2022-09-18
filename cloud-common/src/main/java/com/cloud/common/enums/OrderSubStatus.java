@@ -24,6 +24,8 @@ public enum OrderSubStatus {
     REVOKE_IMPL(25, "串码异常撤销"),
     /** 物流异常撤销 */
     REVOKE_LOGISTICS(26, "物流异常撤销"),
+    /** 毁单 */
+    REVOKE_DESTROY(27, "毁单"),
 
     /** 待抢单 */
     PENDING_ORDER(30, "待抢单"),
@@ -101,9 +103,6 @@ public enum OrderSubStatus {
     REVOKE_NEW(131, "新建采购撤销"),
     REVOKE_PUBLISHED(132, "待发布撤销"),
     REVOKE_ADDRESS(133, "待补全地址撤销"),
-    REVOKE_QUOTATION(134, "报价中撤销"),
-    REVOKE_DELIVERED(135, "待发货撤销"),
-    REVOKE_DESTROY(136, "毁单"),
     ;
 
     private final Integer code;
