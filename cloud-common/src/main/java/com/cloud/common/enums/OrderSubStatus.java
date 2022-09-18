@@ -72,6 +72,8 @@ public enum OrderSubStatus {
     WAREHOUSE_NOT_AFFIRM(73, "无仓退换供应商"),
     /** 供应商已收 */
     WAREHOUSE_THEN_AFFIRM(74, "供应商已收"),
+    /** 待发布、报价中追单 */
+    USER_CHARGEBACK(75, "用户退单"),
 
     /** 补全地址 */
     ADDRESS_COMPLETED_ERROR(81, "补全地址（未补全）"),
