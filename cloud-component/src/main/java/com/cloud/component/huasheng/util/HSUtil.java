@@ -9,7 +9,6 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.component.huasheng.consts.HSConst;
-import com.cloud.component.huasheng.exception.HSException;
 import com.cloud.component.properties.HSProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
@@ -65,7 +64,7 @@ public class HSUtil {
                 throw new ServiceException(resp.getStr("msg"));
             }
         } catch (Exception e) {
-            log.info("华盛接口返回失败:{}", e.getMessage());
+            log.error("华盛接口返回失败:", e);
             throw new ServiceException( "华盛接口失败："+ e.getMessage());
         }
     }
