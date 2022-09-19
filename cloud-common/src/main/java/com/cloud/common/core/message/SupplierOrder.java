@@ -55,8 +55,9 @@ public class SupplierOrder implements Serializable {
         return of(STATUS_MODIFY, hangOrderId, data);
     }
 
-    public static SupplierOrder ofDelete(Long hangOrderId, String province, String brand, Long quantity) {
+    public static SupplierOrder ofDelete(Long hangOrderId, Long companyId, String province, String brand, Long quantity) {
         OrderDetail detail = new OrderDetail();
+        detail.setBuyerCompanyId(companyId);
         detail.setProvince(province);
         detail.setBrand(brand);
         detail.setQuantity(quantity);
