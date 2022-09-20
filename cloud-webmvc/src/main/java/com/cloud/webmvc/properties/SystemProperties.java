@@ -32,6 +32,11 @@ public class SystemProperties {
     private String domain;
 
     /**
+     * 移动端域名
+     */
+    private String mobileDomain;
+
+    /**
      * token配置
      */
     private TokenProperties token = new TokenProperties();
