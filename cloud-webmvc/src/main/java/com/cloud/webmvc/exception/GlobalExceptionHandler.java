@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ServiceException.class)
     public Result<?> handleServiceException(ServiceException e) {
-        log.error(e.getMessage(), e);
+        log.error("业务异常[{}]:{}", e.getCode(), e.getMessage());
         Integer code = e.getCode();
         return StringUtils.isNotNull(code) ? Result.error(code, e.getMessage()) : Result.error(e.getMessage());
     }
