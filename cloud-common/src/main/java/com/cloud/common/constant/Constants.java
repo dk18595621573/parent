@@ -115,6 +115,8 @@ public class Constants {
 
     public static final String MDC_USER_ID = "USER";
 
+    public static final String MDC_COMPANY_ID = "COMPANY";
+
 //    /**
 //     * 用户ID
 //     */

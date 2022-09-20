@@ -18,20 +18,19 @@ public class Md5Utils {
         try {
             algorithm = MessageDigest.getInstance("MD5");
             algorithm.reset();
-            algorithm.update(s.getBytes("UTF-8"));
-            byte[] messageDigest = algorithm.digest();
-            return messageDigest;
+            algorithm.update(s.getBytes(StandardCharsets.UTF_8));
+            return algorithm.digest();
         } catch (Exception e) {
             log.error("MD5 Error...", e);
         }
         return null;
     }
 
-    private static final String toHex(byte hash[]) {
+    private static String toHex(byte[] hash) {
         if (hash == null) {
             return null;
         }
-        StringBuffer buf = new StringBuffer(hash.length * 2);
+        StringBuilder buf = new StringBuilder(hash.length * 2);
         int i;
 
         for (i = 0; i < hash.length; i++) {
@@ -47,7 +46,7 @@ public class Md5Utils {
         try {
             return new String(toHex(md5(s)).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            log.error("not supported charset...{}", e);
+            log.error("not supported charset...", e);
             return s;
         }
     }

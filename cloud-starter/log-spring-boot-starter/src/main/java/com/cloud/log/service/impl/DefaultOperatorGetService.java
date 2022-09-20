@@ -4,7 +4,7 @@ import com.cloud.log.service.IOperatorGetService;
 import com.cloud.log.model.Operateor;
 
 /**
- * TODO  .
+ * 默认实现  .
  *
  * @author xht.
  * @createTime 2021年12月17日 15:20:00

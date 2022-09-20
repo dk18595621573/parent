@@ -318,5 +318,20 @@ public class DemandOrder implements Serializable {
          * 是否需要补全地址 true: 需要 ； false ： 不需要
          */
         private Boolean addressCompleted;
+
+        /**
+         * 物流审核按钮（0：不显示； 1：显示）
+         */
+        private Integer expressApplyButton = 0;
+
+        /**
+         * 处理申请按钮（0：不显示； 1：显示处理申请； 2：显示查看申请）
+         */
+        private Integer applyButton = 0;
+
+        /**
+         * 申诉按钮（0：不显示； 1：显示处理申诉； 2：显示查看申诉）
+         */
+        private Integer explainedButton = 0;
     }
 }
