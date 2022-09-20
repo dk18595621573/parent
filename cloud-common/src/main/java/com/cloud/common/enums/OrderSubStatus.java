@@ -21,7 +21,7 @@ public enum OrderSubStatus {
     /** 售后-取消订单 */
     AFTER_CANCEL(24, "售后-取消订单"),
     /** 串码异常撤销 */
-    REVOKE_IMPL(25, "串码异常撤销"),
+    REVOKE_IMPL(28, "串码异常撤销"),
     /** 物流异常撤销 */
     REVOKE_LOGISTICS(26, "物流异常撤销"),
     /** 毁单 */
