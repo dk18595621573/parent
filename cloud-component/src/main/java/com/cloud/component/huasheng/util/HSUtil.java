@@ -56,12 +56,14 @@ public class HSUtil {
             // 封装返回参数
             Assert.notBlank(response, "返回结果为空");
             JSONObject jsonObject = JSONUtil.parseObj(response);
-            JSONObject resp = jsonObject.getJSONObject("resp");
-            String code = resp.getStr("code");
+            if (jsonObject.containsKey("resp")){
+                jsonObject = jsonObject.getJSONObject("resp");
+            }
+            String code = jsonObject.getStr("code");
             if (Objects.equals(code, "0")){
                 return (T) JSONUtil.toBean(response, respClass);
             }else {
-                throw new ServiceException(resp.getStr("msg"));
+                throw new ServiceException(jsonObject.getStr("msg"));
             }
         } catch (Exception e) {
             log.error("华盛接口返回失败:", e);

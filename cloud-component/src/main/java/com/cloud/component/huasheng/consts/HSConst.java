@@ -2,7 +2,7 @@ package com.cloud.component.huasheng.consts;
 
 
 /**
- * 招商银行方法名
+ * 华盛静态类
  */
 public interface HSConst {
 
@@ -43,6 +43,7 @@ public interface HSConst {
     String METHOD_UPDATE_SKU_NOTICE = "aip.vsens.notice.updateSku";
     String METHOD_GET_EXPRESS = "aip.vsens.express.newGetExpress";
     String METHOD_ORDER_STATUS_NOTICE =  "aip.vsens.notice.orderStatusNotice";
+    String METHOD_QUERY_SKU_STOCK = "aip.vsens.gds.skuStock";
 
 
 }
