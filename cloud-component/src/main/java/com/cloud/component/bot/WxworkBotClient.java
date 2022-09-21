@@ -12,6 +12,7 @@ import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
 import com.cloud.component.bot.exception.WxworkBotException;
 import com.cloud.component.bot.message.LinkMessage;
+import com.cloud.component.bot.message.Message;
 import com.cloud.component.bot.message.TextMessage;
 import com.cloud.component.bot.request.BaseCallback;
 import com.cloud.component.bot.request.BotEvent;
@@ -27,6 +28,7 @@ import com.cloud.component.bot.response.BotUser;
 import com.cloud.component.bot.response.Contact;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
+import com.cloud.component.bot.response.MessageResponse;
 import com.cloud.component.properties.WxworkBotProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,12 +102,8 @@ public class WxworkBotClient {
      * @param chatId 会话id
      * @param text 文本消息内容
      */
-    public BotResponse sendText(final String chatId, final String text) {
-        Map<String, Object> param = new HashMap<>();
-        param.put("messageType", MessageType.TEXT.getCode());
-        param.put("chatId", chatId);
-        param.put("payload", new TextMessage(text));
-        return exceute(BotApiEnums.MESSAGE_SEND, param);
+    public MessageResponse sendText(final String chatId, final String text) {
+        return sendMessage(chatId, MessageType.TEXT, new TextMessage(text));
     }
 
     /**
@@ -116,12 +114,17 @@ public class WxworkBotClient {
      * @param summary 链接描述
      * @param link 链接地址
      */
-    public BotResponse sendLink(final String chatId, final String title, final String image, final String summary, final String link) {
+    public MessageResponse sendLink(final String chatId, final String title, final String image, final String summary, final String link) {
+        return sendMessage(chatId, MessageType.URL_LINK, new LinkMessage(link, title, summary, image));
+    }
+
+    private MessageResponse sendMessage(final String chatId, final MessageType messageType, Message message) {
         Map<String, Object> param = new HashMap<>();
-        param.put("messageType", MessageType.URL_LINK.getCode());
+        param.put("messageType", messageType.getCode());
         param.put("chatId", chatId);
-        param.put("payload", new LinkMessage(link, title, summary, image));
-        return exceute(BotApiEnums.MESSAGE_SEND, param);
+        param.put("payload", message);
+        BotResponse response = exceute(BotApiEnums.MESSAGE_SEND, param);
+        return JsonUtil.parse(JsonUtil.toJson(response.getData()), MessageResponse.class);
     }
 
     /**
