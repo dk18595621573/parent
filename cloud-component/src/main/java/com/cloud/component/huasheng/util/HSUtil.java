@@ -60,7 +60,7 @@ public class HSUtil {
                 jsonObject = jsonObject.getJSONObject("resp");
             }
             String code = jsonObject.getStr("code");
-            if (Objects.equals(code, "0")){
+            if (Objects.equals(code, "0") || Objects.equals(code, "100000")){
                 return (T) JSONUtil.toBean(response, respClass);
             }else {
                 throw new ServiceException(jsonObject.getStr("msg"));
