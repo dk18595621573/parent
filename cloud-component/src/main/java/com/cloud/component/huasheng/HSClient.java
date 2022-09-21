@@ -2,6 +2,7 @@ package com.cloud.component.huasheng;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.cloud.common.exception.ServiceException;
@@ -178,6 +179,30 @@ public class HSClient {
                 return null;
             }
             return logisticsMessageVO;
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 查询商品库存
+     *
+     * @param skuId 商品ID
+     */
+    public int getSkuStock(String skuId) {
+        try {
+            if (StrUtil.isBlank(skuId)) {
+                throw new ServiceException("华盛查询商品库存接口：参数缺失");
+            }
+            // 拼接参数
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("skuId", skuId);
+            // post请求
+            StatusUpdateResult.Resp response = HSUtil.doProcess(HSConst.METHOD_QUERY_SKU_STOCK, paramMap, StatusUpdateResult.Resp.class);
+            // 返回结果
+            String result = response.getMsg();
+            JSONObject jsonObject = JSONUtil.parseObj(result);
+            return jsonObject.getInt("skuStock");
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
