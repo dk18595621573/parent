@@ -13,11 +13,13 @@ import com.cloud.component.bot.consts.MessageType;
 import com.cloud.component.bot.exception.WxworkBotException;
 import com.cloud.component.bot.message.LinkMessage;
 import com.cloud.component.bot.message.TextMessage;
+import com.cloud.component.bot.request.BaseCallback;
 import com.cloud.component.bot.request.BotEvent;
 import com.cloud.component.bot.request.ConsumerInfo;
 import com.cloud.component.bot.request.ConsumerMessage;
 import com.cloud.component.bot.request.ContactRequest;
 import com.cloud.component.bot.request.ContactWayAddRequest;
+import com.cloud.component.bot.request.SentResult;
 import com.cloud.component.bot.request.SyncConsumerInfo;
 import com.cloud.component.bot.response.ApiResponse;
 import com.cloud.component.bot.response.BotResponse;
@@ -130,10 +132,26 @@ public class WxworkBotClient {
         return "{\"errCode\":0}";
     }
 
-    public ConsumerMessage.MessageInfo parseConsumerMessage(final String data) {
+    /**
+     * 用户发送消息到机器人的结果解析
+     * @param data 消息体
+     * @return MessageInfo
+     */
+    public ConsumerMessage parseConsumerMessage(final String data) {
         log.info("[BOT]收到好友发来信息:{}", data);
-        ConsumerMessage consumerMessage = JsonUtil.parse(data, ConsumerMessage.class);
-        return Optional.ofNullable(consumerMessage).map(ConsumerMessage::getData).orElse(null);
+        BaseCallback<ConsumerMessage> callback = JsonUtil.parseGeneric(data, BaseCallback.class, ConsumerMessage.class);
+        return Optional.ofNullable(callback).map(BaseCallback::getData).orElse(null);
+    }
+
+    /**
+     * 给好友发送消息回调结果解析
+     * @param data 回调结果
+     * @return MessageInfo
+     */
+    public SentResult parseSentResult(final String data) {
+        log.info("[BOT]给好友发信息回调:{}", data);
+        BaseCallback<SentResult> callback = JsonUtil.parseGeneric(data, BaseCallback.class, SentResult.class);
+        return Optional.ofNullable(callback).map(BaseCallback::getData).orElse(null);
     }
 
     /**
@@ -145,7 +163,7 @@ public class WxworkBotClient {
     public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
         log.info("[BOT]收到添加好友信息:【{}】【{}】", sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
-        return botEvent.getData();
+        return Optional.ofNullable(botEvent).map(BotEvent::getData).orElse(null);
     }
 
     /**
