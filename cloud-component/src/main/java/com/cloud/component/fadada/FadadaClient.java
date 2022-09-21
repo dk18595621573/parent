@@ -14,10 +14,7 @@ import com.cloud.component.properties.FadadaProperties;
 import com.fadada.sdk.base.client.FddBaseClient;
 import com.fadada.sdk.base.model.req.*;
 import com.fadada.sdk.extra.client.FddExtraClient;
-import com.fadada.sdk.extra.model.req.GetDocStreamParams;
-import com.fadada.sdk.extra.model.req.GetTemplatePageParams;
-import com.fadada.sdk.extra.model.req.SmsTextParams;
-import com.fadada.sdk.extra.model.req.UploadTemplateDocsParams;
+import com.fadada.sdk.extra.model.req.*;
 import com.fadada.sdk.verify.client.FddVerifyClient;
 import com.fadada.sdk.verify.model.req.ApplyCertParams;
 import com.fadada.sdk.verify.model.req.CompanyVerifyUrlParams;
@@ -390,6 +387,19 @@ public class FadadaClient {
         params.setCode(params.getCode());
         String result = fddExtraClient.invokeSmsText(params);
         log.info("法大大返回参数，自定义短信：{}", result);
+        return JsonUtil.parse(result, FadadaDataResponse.class);
+    }
+
+    /**
+     * 转为短连接
+     */
+    public FadadaDataResponse shortUrl(ShortUrlParams params) {
+        // 过期时间（默认七天后过期，单位：分钟）
+        // params.setExpireTime("120");
+        // 最长500个字符
+        // params.setSourceUrl("https://www.fadada.com/");
+        String result = fddExtraClient.invokeShortUrl(params);
+        log.info("法大大返回参数，短连接：{}", result);
         return JsonUtil.parse(result, FadadaDataResponse.class);
     }
 
