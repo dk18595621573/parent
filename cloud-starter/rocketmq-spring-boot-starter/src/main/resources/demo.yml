@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        # channel名称
+        Topic-send:
+          # 指定topic, 对应创建的topic全称，格式为：集群id|namespace名称%topic名称
+          destination: rocketmq-xxx|stream%topic1
+          content-type: application/json
+          # 要使用group全称称，格式为：集群id|namespace名称%group名称
+          group: rocketmq-xxx|stream%group1
+      rocketmq:
+        bindings:
+          # channel名称, 与spring.cloud.stream.bindings下的channel名称对应
+          Topic-send:
+            consumer:
+              # 订阅的tag类型，根据消费者实际情况进行配置（默认是订阅所有消息）
+              tags: TAG1
+          # channel名称
+          Topic-test2:
+            consumer:
+              tags: TAG2
+        binder:
+          # 服务地址全称
+          name-server: rocketmq-xxx.rocketmq.ap-bj.public.tencenttdmq.com:9876
+          # 角色名称
+          secret-key: admin
+          # 角色密钥
+          access-key: eyJrZXlJZ...

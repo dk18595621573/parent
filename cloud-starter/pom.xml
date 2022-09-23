@@ -16,6 +16,7 @@
         <module>xlock-spring-boot-starter</module>
         <module>xxljob-spring-boot-starter</module>
         <module>tencent-spring-boot-starter</module>
+        <module>rocketmq-spring-boot-starter</module>
     </modules>
 
     <properties>
