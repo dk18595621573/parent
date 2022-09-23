@@ -20,6 +20,10 @@ public class SseMessage<T> extends BaseEvent {
      * 指定非客户端后缀
      */
     private String[] notSuffix;
+    /**
+     * 指定客户端
+     */
+    private String client;
 
     /**
      * 推送数据
