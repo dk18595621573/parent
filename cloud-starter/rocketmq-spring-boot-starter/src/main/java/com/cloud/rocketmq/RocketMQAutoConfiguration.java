@@ -20,7 +20,8 @@ import java.util.function.Supplier;
 public class RocketMQAutoConfiguration {
 
     /**
-     * 创建默认生产者，解决springfox【InMemorySwaggerResourcesProvider】兼容问题  .
+     * 创建默认生产者，解决springfox【InMemorySwaggerResourcesProvider】兼容问题.
+     *    Bean的名称和 配置文件中保持一致
      *
      * @return Credential
      */
