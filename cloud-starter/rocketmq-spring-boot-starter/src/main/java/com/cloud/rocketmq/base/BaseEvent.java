@@ -19,7 +19,7 @@ public abstract class BaseEvent implements Serializable {
     /**
      * tags标签：不在消息体内.
      */
-    protected String tags = "*";
+    protected String tags;
 
     /**
      * 返回keys.
