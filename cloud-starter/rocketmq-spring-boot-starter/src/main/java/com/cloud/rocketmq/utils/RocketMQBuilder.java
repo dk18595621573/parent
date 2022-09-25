@@ -2,9 +2,9 @@ package com.cloud.rocketmq.utils;
 
 import com.cloud.common.utils.StringUtils;
 import com.cloud.core.redis.RedisCache;
-import com.cloud.core.utils.SpringUtils;
 import com.cloud.rocketmq.base.BaseEvent;
-import lombok.experimental.UtilityClass;
+import com.cloud.rocketmq.properties.RocketMQProperties;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
@@ -19,8 +19,8 @@ import java.util.function.Consumer;
  * @author breggor
  */
 @Slf4j
-@UtilityClass
-public class RocketMQUtils {
+@AllArgsConstructor
+public class RocketMQBuilder {
 
     private static final String PREFIX = "rocketmq_";
     private static final String KEYS = "KEYS";
@@ -29,19 +29,11 @@ public class RocketMQUtils {
     private static final String ROCKETMQ_KEYS = PREFIX + KEYS;
     private static final String ROCKETMQ_TAGS = PREFIX + TAGS;
 
-    /**
-     * 构建topic 腾讯云需要带上namespace.
-     *
-     * @param namespace 命名空间
-     * @param topic 事件对象
-     * @return 队列topic
-     */
-    public String buildTopic(final String namespace, final String topic) {
-        if (StringUtils.isBlank(namespace)) {
-            return topic;
-        }
-        return namespace + "%" + topic;
-    }
+    private final RocketMQProperties properties;
+
+    private final StreamBridge streamBridge;
+
+    private final RedisCache redisCache;
 
     /**
      * 构建消息.
@@ -66,9 +58,12 @@ public class RocketMQUtils {
      * @param <T> 消息数据泛型
      */
     public <T extends BaseEvent> void send(final String topic, final T event) {
-        StreamBridge streamBridge = SpringUtils.getBean(StreamBridge.class);
         Message<T> message = buildMessage(event);
-        streamBridge.send(topic, message);
+        if (StringUtils.isBlank(properties.getNamespace())) {
+            streamBridge.send(topic, message);
+        } else {
+            streamBridge.send(properties.getNamespace() + "%" +topic, message);
+        }
         log.info("[MQ消息-生产消息]--{}:", message);
     }
 
@@ -120,7 +115,6 @@ public class RocketMQUtils {
      * @param <T>      实体类
      */
     public <T extends BaseEvent> void process(final String key, final T event, final Consumer<T> function) {
-        RedisCache redisCache = SpringUtils.getBean(RedisCache.class);
         if (redisCache.setIfAbsent(key, "", 60, TimeUnit.MINUTES)) {
             try {
                 log.info("[MQ消息-开始处理]--[{}]:{}", key, event);
