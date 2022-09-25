@@ -30,6 +30,20 @@ public class RocketMQUtils {
     private static final String ROCKETMQ_TAGS = PREFIX + TAGS;
 
     /**
+     * 构建topic 腾讯云需要带上namespace.
+     *
+     * @param namespace 命名空间
+     * @param topic 事件对象
+     * @return 队列topic
+     */
+    public String buildTopic(final String namespace, final String topic) {
+        if (StringUtils.isBlank(namespace)) {
+            return topic;
+        }
+        return namespace + "%" + topic;
+    }
+
+    /**
      * 构建消息.
      *
      * @param event 事件对象
