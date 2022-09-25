@@ -6,6 +6,7 @@ import com.cloud.core.utils.SpringUtils;
 import com.cloud.rocketmq.base.BaseEvent;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 
@@ -42,6 +43,19 @@ public class RocketMQUtils {
         String tags = StringUtils.defaultString(event.tags(), event.getClass().getSimpleName());
         log.info("[MQ消息-构建消息]--[{}]:{}", tags, event);
         return MessageBuilder.withPayload(event).setHeader(TAGS, tags).setHeader(KEYS, event.keys()).build();
+    }
+
+    /**
+     * 生产消息，推送到mq
+     * @param topic topic
+     * @param event 消息数据
+     * @param <T> 消息数据泛型
+     */
+    public <T extends BaseEvent> void send(final String topic, final T event) {
+        StreamBridge streamBridge = SpringUtils.getBean(StreamBridge.class);
+        Message<T> message = buildMessage(event);
+        streamBridge.send(topic, message);
+        log.info("[MQ消息-生产消息]--{}:", message);
     }
 
     /**
