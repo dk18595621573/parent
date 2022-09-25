@@ -17,15 +17,6 @@ import java.util.Date;
 @Data
 public class SupplierOrder implements Serializable {
 
-    /**
-     * 指定客户端后缀
-     */
-    private String[] suffix;
-    /**
-     * 指定非客户端后缀
-     */
-    private String[] notSuffix;
-
     public static final int STATUS_ADD = 1;
     public static final int STATUS_MODIFY = 2;
     public static final int STATUS_DELETE = 3;

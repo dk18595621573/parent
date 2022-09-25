@@ -26,7 +26,7 @@ public abstract class BaseEvent implements Serializable {
      *
      * @return String
      */
-    public final String keys() {
+    public String keys() {
         return keys;
     }
 
@@ -46,7 +46,7 @@ public abstract class BaseEvent implements Serializable {
      *
      * @return String
      */
-    public final String tags() {
+    public String tags() {
         return tags;
     }
 

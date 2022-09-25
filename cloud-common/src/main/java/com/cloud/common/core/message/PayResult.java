@@ -16,11 +16,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PayResult implements Serializable {
-    /**
-     * 指定客户端
-     */
-    private String client;
-
 
     private Boolean success;
 }
