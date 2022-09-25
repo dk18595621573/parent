@@ -1,29 +1,34 @@
+# Spring配置
 spring:
   cloud:
     stream:
-      bindings:
-        # channel名称
-        Topic-send:
-          # 指定topic, 对应创建的topic全称，格式为：集群id|namespace名称%topic名称
-          destination: rocketmq-xxx|stream%topic1
-          content-type: application/json
-          # 要使用group全称称，格式为：集群id|namespace名称%group名称
-          group: rocketmq-xxx|stream%group1
+      #默认使用rocketmq实现
+      default-binder: rocketmq
+      # rocketmq绑定相关配置
       rocketmq:
-        bindings:
-          # channel名称, 与spring.cloud.stream.bindings下的channel名称对应
-          Topic-send:
-            consumer:
-              # 订阅的tag类型，根据消费者实际情况进行配置（默认是订阅所有消息）
-              tags: TAG1
-          # channel名称
-          Topic-test2:
-            consumer:
-              tags: TAG2
         binder:
           # 服务地址全称
-          name-server: rocketmq-xxx.rocketmq.ap-bj.public.tencenttdmq.com:9876
+          name-server: MQ_INST_rocketmqq42357zgz8e7_test.tdmq-rocketmq.ap-sh.qcloud.tencenttdmq.com:2000
           # 角色名称
-          secret-key: admin
+          secret-key: test
           # 角色密钥
-          access-key: eyJrZXlJZ...
+          access-key: eyJrZXlJZCI6InJvY2tldG1xLXE0MjM1N3pnejhlNyIsImFsZyI6IkhTMjU2In0.eyJzdWIiOiJyb2NrZXRtcS1xNDIzNTd6Z3o4ZTdfdGVzdCJ9.mT8eGlffoAkDD7lwUgHe8-N1LLz4_venFER1N9LFuwA
+        # 默认配置
+        default:
+          producer:
+            vipChannelEnabled: false
+
+      # stream 队列消费相关配置
+      function:
+        definition: mqDemo;payResult;
+      bindings:
+        mqDemo-in-0:
+          # 指定topic, 对应创建的topic名称
+          destination: MQ_INST_rocketmqq42357zgz8e7_test%TOPIC-DEMO
+          # 要使用group名称
+          group: MQ_INST_rocketmqq42357zgz8e7_test%CID-DEMO
+        payResult-in-0:
+          # 指定topic, 对应创建的topic名称
+          destination: TOPIC-PAY-RESULT
+          # 要使用group名称
+          group: CID-PAY-RESULT
