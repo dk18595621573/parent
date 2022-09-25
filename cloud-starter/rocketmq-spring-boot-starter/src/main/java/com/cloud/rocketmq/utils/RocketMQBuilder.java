@@ -53,6 +53,7 @@ public class RocketMQBuilder {
 
     /**
      * 生产消息，推送到mq
+     *   兼容腾讯rocketmq的topic写法，自动带上namespace
      * @param topic topic
      * @param event 消息数据
      * @param <T> 消息数据泛型
