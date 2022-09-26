@@ -305,6 +305,17 @@ public class DemandOrder implements Serializable {
         private Date deliveryDeadline;
 
         /**
+         * 发货时间
+         */
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        private Date shipmentsTime;
+
+        /**
+         *  发货地点
+         */
+        private List<String> shipmentAddress;
+
+        /**
          * 订单编码
          */
         private String orderCode;
