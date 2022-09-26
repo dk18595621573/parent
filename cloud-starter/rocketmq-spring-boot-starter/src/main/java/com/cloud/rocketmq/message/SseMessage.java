@@ -3,6 +3,7 @@ package com.cloud.rocketmq.message;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.rocketmq.base.BaseEvent;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class SseMessage<T> extends BaseEvent {
     /**
      * 推送数据
      */
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
     private T data;
 
     public static <T> SseMessage<T> ofData(final T data) {
@@ -74,10 +76,7 @@ public class SseMessage<T> extends BaseEvent {
     public String tags() {
         String tags = super.tags();
         if (StringUtils.isBlank(tags)) {
-            if (Objects.isNull(getData())) {
-                return "*";
-            }
-            return getData().getClass().getSimpleName();
+            return Objects.isNull(getData()) ? "*" : getData().getClass().getSimpleName();
         }
         return tags;
     }
