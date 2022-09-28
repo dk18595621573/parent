@@ -6,7 +6,6 @@ import com.cloud.core.utils.SpringUtils;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 /**
  * 异步任务管理器
@@ -39,13 +38,12 @@ public class AsyncManager {
     /**
      * 执行任务
      *
-     * @param supplier 任务
      */
-    public void execute(Supplier<?> supplier) {
+    public void execute(Execute exec) {
         executor.schedule(new TimerTask() {
             @Override
             public void run() {
-                supplier.get();
+                exec.run();
             }
         }, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
@@ -64,5 +62,11 @@ public class AsyncManager {
      */
     public void shutdown() {
         Threads.shutdownAndAwaitTermination(executor);
+    }
+
+    @FunctionalInterface
+    public interface Execute {
+
+        void run();
     }
 }
