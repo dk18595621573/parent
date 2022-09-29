@@ -47,7 +47,6 @@ public class RocketMQBuilder {
             throw new RuntimeException("keys是必填项");
         }
         String tags = StringUtils.defaultString(event.tags(), event.getClass().getSimpleName());
-        log.info("[MQ消息-构建消息]--[{}]:{}", tags, event);
         return MessageBuilder.withPayload(event).setHeader(TAGS, tags).setHeader(KEYS, event.keys()).build();
     }
 
