@@ -38,6 +38,19 @@ public class AsyncManager {
     /**
      * 执行任务
      *
+     */
+    public void execute(Execute exec) {
+        executor.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                exec.run();
+            }
+        }, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 执行任务
+     *
      * @param task 任务
      */
     public void execute(TimerTask task) {
@@ -49,5 +62,11 @@ public class AsyncManager {
      */
     public void shutdown() {
         Threads.shutdownAndAwaitTermination(executor);
+    }
+
+    @FunctionalInterface
+    public interface Execute {
+
+        void run();
     }
 }

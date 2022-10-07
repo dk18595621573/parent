@@ -112,7 +112,7 @@ public class DemandOrder implements Serializable {
         /**
          * 创建时间
          */
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date createTime;
 
         /**
@@ -123,7 +123,7 @@ public class DemandOrder implements Serializable {
         /**
          * 发布时间
          */
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date releaseTime;
 
         /**
@@ -229,7 +229,7 @@ public class DemandOrder implements Serializable {
         /**
          * 最后一次抢单时间
          */
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date lastCompeteTime;
 
         /**
@@ -240,7 +240,7 @@ public class DemandOrder implements Serializable {
         /**
          * 发布时间
          */
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date releaseTimes;
 
         /**
@@ -301,8 +301,19 @@ public class DemandOrder implements Serializable {
         /**
          * 发货截止时间
          */
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date deliveryDeadline;
+
+        /**
+         * 发货时间
+         */
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+        private Date shipmentsTime;
+
+        /**
+         *  发货地点
+         */
+        private List<String> shipmentAddress;
 
         /**
          * 订单编码

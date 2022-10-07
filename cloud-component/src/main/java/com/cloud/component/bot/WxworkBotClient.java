@@ -12,12 +12,15 @@ import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
 import com.cloud.component.bot.exception.WxworkBotException;
 import com.cloud.component.bot.message.LinkMessage;
+import com.cloud.component.bot.message.Message;
 import com.cloud.component.bot.message.TextMessage;
+import com.cloud.component.bot.request.BaseCallback;
 import com.cloud.component.bot.request.BotEvent;
 import com.cloud.component.bot.request.ConsumerInfo;
 import com.cloud.component.bot.request.ConsumerMessage;
 import com.cloud.component.bot.request.ContactRequest;
 import com.cloud.component.bot.request.ContactWayAddRequest;
+import com.cloud.component.bot.request.SentResult;
 import com.cloud.component.bot.request.SyncConsumerInfo;
 import com.cloud.component.bot.response.ApiResponse;
 import com.cloud.component.bot.response.BotResponse;
@@ -25,6 +28,7 @@ import com.cloud.component.bot.response.BotUser;
 import com.cloud.component.bot.response.Contact;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
+import com.cloud.component.bot.response.MessageResponse;
 import com.cloud.component.properties.WxworkBotProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,12 +102,8 @@ public class WxworkBotClient {
      * @param chatId 会话id
      * @param text 文本消息内容
      */
-    public BotResponse sendText(final String chatId, final String text) {
-        Map<String, Object> param = new HashMap<>();
-        param.put("messageType", MessageType.TEXT.getCode());
-        param.put("chatId", chatId);
-        param.put("payload", new TextMessage(text));
-        return exceute(BotApiEnums.MESSAGE_SEND, param);
+    public MessageResponse sendText(final String chatId, final String text) {
+        return sendMessage(chatId, MessageType.TEXT, new TextMessage(text));
     }
 
     /**
@@ -114,12 +114,17 @@ public class WxworkBotClient {
      * @param summary 链接描述
      * @param link 链接地址
      */
-    public BotResponse sendLink(final String chatId, final String title, final String image, final String summary, final String link) {
+    public MessageResponse sendLink(final String chatId, final String title, final String image, final String summary, final String link) {
+        return sendMessage(chatId, MessageType.URL_LINK, new LinkMessage(link, title, summary, image));
+    }
+
+    private MessageResponse sendMessage(final String chatId, final MessageType messageType, Message message) {
         Map<String, Object> param = new HashMap<>();
-        param.put("messageType", MessageType.URL_LINK.getCode());
+        param.put("messageType", messageType.getCode());
         param.put("chatId", chatId);
-        param.put("payload", new LinkMessage(link, title, summary, image));
-        return exceute(BotApiEnums.MESSAGE_SEND, param);
+        param.put("payload", message);
+        BotResponse response = exceute(BotApiEnums.MESSAGE_SEND, param);
+        return JsonUtil.parse(JsonUtil.toJson(response.getData()), MessageResponse.class);
     }
 
     /**
@@ -130,10 +135,26 @@ public class WxworkBotClient {
         return "{\"errCode\":0}";
     }
 
-    public ConsumerMessage.MessageInfo parseConsumerMessage(final String data) {
+    /**
+     * 用户发送消息到机器人的结果解析
+     * @param data 消息体
+     * @return MessageInfo
+     */
+    public ConsumerMessage parseConsumerMessage(final String data) {
         log.info("[BOT]收到好友发来信息:{}", data);
-        ConsumerMessage consumerMessage = JsonUtil.parse(data, ConsumerMessage.class);
-        return Optional.ofNullable(consumerMessage).map(ConsumerMessage::getData).orElse(null);
+        BaseCallback<ConsumerMessage> callback = JsonUtil.parseGeneric(data, BaseCallback.class, ConsumerMessage.class);
+        return Optional.ofNullable(callback).map(BaseCallback::getData).orElse(null);
+    }
+
+    /**
+     * 给好友发送消息回调结果解析
+     * @param data 回调结果
+     * @return MessageInfo
+     */
+    public SentResult parseSentResult(final String data) {
+        log.info("[BOT]给好友发信息回调:{}", data);
+        BaseCallback<SentResult> callback = JsonUtil.parseGeneric(data, BaseCallback.class, SentResult.class);
+        return Optional.ofNullable(callback).map(BaseCallback::getData).orElse(null);
     }
 
     /**
@@ -145,7 +166,7 @@ public class WxworkBotClient {
     public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
         log.info("[BOT]收到添加好友信息:【{}】【{}】", sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
-        return botEvent.getData();
+        return Optional.ofNullable(botEvent).map(BotEvent::getData).orElse(null);
     }
 
     /**

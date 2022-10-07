@@ -1,0 +1,34 @@
+# Spring配置
+spring:
+  cloud:
+    stream:
+      #默认使用rocketmq实现
+      default-binder: rocketmq
+      # rocketmq绑定相关配置
+      rocketmq:
+        binder:
+          # 服务地址全称
+          name-server: MQ_INST_rocketmqq42357zgz8e7_test.tdmq-rocketmq.ap-sh.qcloud.tencenttdmq.com:2000
+          # 角色名称
+          secret-key: test
+          # 角色密钥
+          access-key: eyJrZXlJZCI6InJvY2tldG1xLXE0MjM1N3pnejhlNyIsImFsZyI6IkhTMjU2In0.eyJzdWIiOiJyb2NrZXRtcS1xNDIzNTd6Z3o4ZTdfdGVzdCJ9.mT8eGlffoAkDD7lwUgHe8-N1LLz4_venFER1N9LFuwA
+        # 默认配置
+        default:
+          producer:
+            vipChannelEnabled: false
+
+      # stream 队列消费相关配置
+      function:
+        definition: mqDemo;payResult;
+      bindings:
+        mqDemo-in-0:
+          # 指定topic, 对应创建的topic名称
+          destination: MQ_INST_rocketmqq42357zgz8e7_test%TOPIC-DEMO
+          # 要使用group名称
+          group: MQ_INST_rocketmqq42357zgz8e7_test%CID-DEMO
+        payResult-in-0:
+          # 指定topic, 对应创建的topic名称
+          destination: TOPIC-PAY-RESULT
+          # 要使用group名称
+          group: CID-PAY-RESULT

@@ -1,6 +1,5 @@
 package com.cloud.common.core.message;
 
-import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -16,15 +15,6 @@ import java.util.Date;
  */
 @Data
 public class SupplierOrder implements Serializable {
-
-    /**
-     * 指定客户端后缀
-     */
-    private String[] suffix;
-    /**
-     * 指定非客户端后缀
-     */
-    private String[] notSuffix;
 
     public static final int STATUS_ADD = 1;
     public static final int STATUS_MODIFY = 2;
@@ -197,7 +187,7 @@ public class SupplierOrder implements Serializable {
         /**
          * 发货时间
          */
-        @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date shipmentsTime;
 
         /**
@@ -273,7 +263,7 @@ public class SupplierOrder implements Serializable {
         /**
          * 最后一次出价时间
          */
-        @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date tradeTime;
 
         /**

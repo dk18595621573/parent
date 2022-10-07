@@ -18,6 +18,7 @@ public enum OrderStatus {
     AFTERMARKET(10, "售后"),
     LOGISTICS_ABNORMAL(12, "物流异常"),
     REVOKE(13, "撤销"),
+    NOT_RECOVERED(14, "未追回订单"),
     ;
 
 

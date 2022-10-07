@@ -18,11 +18,6 @@ import java.io.Serializable;
 public class LoginInfo implements Serializable {
 
     /**
-     * 指定客户端
-     */
-    private String client;
-
-    /**
      * 用户token
      */
     private String token;
