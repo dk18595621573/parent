@@ -1,5 +1,6 @@
 package com.cloud.rocketmq.utils;
 
+import com.cloud.common.utils.RedisKeyUtil;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.rocketmq.base.BaseEvent;
@@ -103,7 +104,7 @@ public class RocketMQBuilder {
      * @param <T>      实体类
      */
     public <T extends BaseEvent> void process(final Message<T> event, final Consumer<T> function) {
-        process(getKeys(event), event.getPayload(), function);
+        process(RedisKeyUtil.generate(getTags(event), getKeys(event)), event.getPayload(), function);
     }
 
     /**
