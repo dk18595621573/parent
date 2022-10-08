@@ -65,7 +65,7 @@ public class RocketMQBuilder {
         } else {
             streamBridge.send(properties.getNamespace() + "%" +topic, message);
         }
-        log.info("[MQ消息-生产消息]--{}:", message);
+        log.info("[MQ消息-生产消息]--{}", message);
     }
 
     /**
@@ -122,7 +122,7 @@ public class RocketMQBuilder {
                 function.accept(event);
                 log.info("[MQ消息-处理完成]--{}", key);
             } catch (Exception e) {
-                log.error("[MQ处理异常]--[{}]:", key, e);
+                log.error("[MQ处理异常]--[{}]", key, e);
                 redisCache.deleteObject(key);
                 throw e;
             }
