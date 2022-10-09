@@ -33,8 +33,6 @@ public enum OrderSubStatus {
     TO_BE_CONFIRMED(31, "抢单待确认"),
     /** 稍后发布 */
     LATER_RELEASE(32, "稍后发布"),
-    /** 稍后发布已抢单 */
-    LATER_RELEASE_TRADE(33, "稍后发布已抢单"),
 
     /** 目前需要提交串码 */
     TO_BE_COMPLETE(40, "待完善发货信息"),
