@@ -64,6 +64,10 @@ public enum OrderSubStatus {
     EXPRESS_SIGNED(61, "物流签收"),
     /** 确认收货 */
     CONFIRM_RECEIPT(62, "确认收货"),
+    /** 已支付 */
+    PAY_MONEY(63, "已支付"),
+    /** 已确认 */
+    AFFIRM_PAY(64, "已确认"),
 
     /** 退货退单 */
     DEMAND_AFFIRM(70, "需求方发起退单"),
