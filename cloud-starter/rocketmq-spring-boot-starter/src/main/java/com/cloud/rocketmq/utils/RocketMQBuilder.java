@@ -1,5 +1,6 @@
 package com.cloud.rocketmq.utils;
 
+import com.cloud.common.utils.RedisKeyUtil;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.rocketmq.base.BaseEvent;
@@ -25,6 +26,8 @@ public class RocketMQBuilder {
     private static final String PREFIX = "rocketmq_";
     private static final String KEYS = "KEYS";
     private static final String TAGS = "TAGS";
+
+    private static final String REDIS_REPEAT_PREFIX_KEY = "ROCKETMQ_PROCESS";
 
     private static final String ROCKETMQ_KEYS = PREFIX + KEYS;
     private static final String ROCKETMQ_TAGS = PREFIX + TAGS;
@@ -64,7 +67,7 @@ public class RocketMQBuilder {
         } else {
             streamBridge.send(properties.getNamespace() + "%" +topic, message);
         }
-        log.info("[MQ消息-生产消息]--{}:", message);
+        log.info("[MQ消息-生产消息]--{}", message);
     }
 
     /**
@@ -103,7 +106,7 @@ public class RocketMQBuilder {
      * @param <T>      实体类
      */
     public <T extends BaseEvent> void process(final Message<T> event, final Consumer<T> function) {
-        process(getKeys(event), event.getPayload(), function);
+        process(RedisKeyUtil.generate(getTags(event), getKeys(event)), event.getPayload(), function);
     }
 
     /**
@@ -115,13 +118,13 @@ public class RocketMQBuilder {
      * @param <T>      实体类
      */
     public <T extends BaseEvent> void process(final String key, final T event, final Consumer<T> function) {
-        if (redisCache.setIfAbsent(key, "", 60, TimeUnit.MINUTES)) {
+        if (redisCache.setIfAbsent(RedisKeyUtil.generate(REDIS_REPEAT_PREFIX_KEY, key), "", 60, TimeUnit.MINUTES)) {
             try {
                 log.info("[MQ消息-开始处理]--[{}]:{}", key, event);
                 function.accept(event);
                 log.info("[MQ消息-处理完成]--{}", key);
             } catch (Exception e) {
-                log.error("[MQ处理异常]--[{}]:", key, e);
+                log.error("[MQ处理异常]--[{}]", key, e);
                 redisCache.deleteObject(key);
                 throw e;
             }

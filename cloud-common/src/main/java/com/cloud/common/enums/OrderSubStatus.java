@@ -31,8 +31,6 @@ public enum OrderSubStatus {
     PENDING_ORDER(30, "待抢单"),
     /** 待确认 */
     TO_BE_CONFIRMED(31, "抢单待确认"),
-    /** 稍后发布 */
-    LATER_RELEASE(32, "稍后发布"),
 
     /** 目前需要提交串码 */
     TO_BE_COMPLETE(40, "待完善发货信息"),
@@ -66,6 +64,10 @@ public enum OrderSubStatus {
     EXPRESS_SIGNED(61, "物流签收"),
     /** 确认收货 */
     CONFIRM_RECEIPT(62, "确认收货"),
+    /** 已支付 */
+    PAY_MONEY(63, "已支付"),
+    /** 已确认 */
+    AFFIRM_PAY(64, "已确认"),
 
     /** 退货退单 */
     DEMAND_AFFIRM(70, "需求方发起退单"),
