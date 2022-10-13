@@ -293,6 +293,10 @@ public class DemandOrder implements Serializable {
          */
         private String gjOrderId;
 
+        /** 管家订单创建时间 */
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+        private Date gjCreateTime;
+
         /**
          * 发货时效（0：当天；1：明天：2：后天；n：n天后）
          */
