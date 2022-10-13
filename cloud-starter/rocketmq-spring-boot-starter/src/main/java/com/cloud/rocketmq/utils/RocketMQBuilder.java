@@ -7,6 +7,7 @@ import com.cloud.rocketmq.base.BaseEvent;
 import com.cloud.rocketmq.properties.RocketMQProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -23,19 +24,12 @@ import java.util.function.Consumer;
 @AllArgsConstructor
 public class RocketMQBuilder {
 
-    private static final String PREFIX = "rocketmq_";
-    private static final String KEYS = "KEYS";
-    private static final String TAGS = "TAGS";
-
     private static final String REDIS_REPEAT_PREFIX_KEY = "ROCKETMQ_PROCESS";
-
-    private static final String ROCKETMQ_KEYS = PREFIX + KEYS;
-    private static final String ROCKETMQ_TAGS = PREFIX + TAGS;
+    private static final String ROCKETMQ_KEYS = RocketMQHeaders.PREFIX + RocketMQHeaders.KEYS;
+    private static final String ROCKETMQ_TAGS = RocketMQHeaders.PREFIX + RocketMQHeaders.TAGS;
 
     private final RocketMQProperties properties;
-
     private final StreamBridge streamBridge;
-
     private final RedisCache redisCache;
 
     /**
@@ -50,7 +44,7 @@ public class RocketMQBuilder {
             throw new RuntimeException("keys是必填项");
         }
         String tags = StringUtils.defaultString(event.tags(), event.getClass().getSimpleName());
-        return MessageBuilder.withPayload(event).setHeader(TAGS, tags).setHeader(KEYS, event.keys()).build();
+        return MessageBuilder.withPayload(event).setHeader(RocketMQHeaders.TAGS, tags).setHeader(RocketMQHeaders.KEYS, event.keys()).build();
     }
 
     /**
