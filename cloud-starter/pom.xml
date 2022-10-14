@@ -18,6 +18,7 @@
         <module>tencent-spring-boot-starter</module>
         <module>dubbo-spring-boot-starter</module>
         <module>rocketmq-spring-boot-starter</module>
+        <module>seata-spring-boot-starter</module>
     </modules>
 
     <properties>

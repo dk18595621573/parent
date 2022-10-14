@@ -43,6 +43,7 @@
         <tencentcloud-sdk.version>3.1.507</tencentcloud-sdk.version>
         <rocketmq.version>4.7.1</rocketmq.version>
 
+        <spring-boot-seata.version>1.4.2</spring-boot-seata.version>
         <springboot.version>2.5.13</springboot.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
@@ -89,6 +90,13 @@
                 <version>${dubbo.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- seata分布式事务 -->
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${spring-boot-seata.version}</version>
             </dependency>
 
             <!-- 阿里数据库连接池 -->
