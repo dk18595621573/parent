@@ -44,6 +44,19 @@ public enum SystemParams {
      * 华盛供应商名称 默认：联通华盛通信有限公司北京电子商务分公司
      */
     HUASHENG_SUPPLIER_NAME("huasheng.supplier.name", "联通华盛通信有限公司北京电子商务分公司"),
+    /**
+     *  智能报价成本价范围 默认：已开通智能报价企业自身的成交价
+     */
+    INTELLIGENCE_QUOTE_TRADEPRICE_RANGE("intelligence.quote.tradeprice.range", "false"),
+    /**
+     * 补全地址自动报价的开始时间
+     */
+    ADDRESS_COMPLETED_STARTHOUR("address.completed.starthour", "9"),
+    /**
+     * 补全地址自动报价的结束时间
+     */
+    ADDRESS_COMPLETED_ENDHOUR("address.completed.endhour", "18"),
+
     ;
     
     private final String code;
