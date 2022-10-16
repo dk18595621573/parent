@@ -9,6 +9,7 @@ import com.cloud.core.log.model.LoginLog;
 import com.cloud.core.log.model.OperateLog;
 import com.cloud.webmvc.utils.ip.AddressUtils;
 
+import java.util.Date;
 import java.util.TimerTask;
 
 /**
@@ -43,6 +44,7 @@ public class AsyncFactory {
                 } else if (Constants.LOGIN_FAIL.equals(status)) {
                     logininfor.setStatus(Constants.FAIL);
                 }
+                logininfor.setLoginTime(new Date());
                 // 插入数据
                 SpringUtils.getBean(LogService.class).saveLoginLog(logininfor);
             }
@@ -61,6 +63,7 @@ public class AsyncFactory {
             public void run() {
                 // 远程查询操作地点
                 operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));
+
                 SpringUtils.getBean(LogService.class).saveOperateLog(operLog);
             }
         };
