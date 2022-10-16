@@ -1,5 +1,6 @@
 package com.cloud.dubbo.model;
 
+import cn.hutool.core.date.DateUtil;
 import com.cloud.common.utils.json.JsonUtil;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.common.utils.StringUtils;
@@ -7,8 +8,6 @@ import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.RpcContext;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,9 +21,6 @@ import java.util.Map;
  * Note: since its date formatter is a singleton, make sure to run it in single thread only.
  */
 public final class AccessLogData {
-
-    private static final String MESSAGE_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    private static final DateFormat MESSAGE_DATE_FORMATTER = new SimpleDateFormat(MESSAGE_DATE_FORMAT);
 
     private static final String VERSION = "version";
     private static final String GROUP = "group";
@@ -41,7 +37,7 @@ public final class AccessLogData {
     /**
      * This is used to store log data in key val format.
      */
-    private Map<String, Object> data;
+    private final Map<String, Object> data;
 
     /**
      * Default constructor.
@@ -176,22 +172,22 @@ public final class AccessLogData {
         StringBuilder sn = new StringBuilder();
 
         sn.append('[')
-                .append(MESSAGE_DATE_FORMATTER.format(getInvocationTime()))
-                .append("] ")
-                .append(get(REMOTE_HOST))
-                .append(':')
-                .append(get(REMOTE_PORT))
-                .append(" -> ")
-                .append(get(LOCAL_HOST))
-                .append(':')
-                .append(get(LOCAL_PORT))
-                .append(" - ");
+            .append(DateUtil.formatDateTime(getInvocationTime()))
+            .append("] ")
+            .append(get(LOCAL_HOST))
+            .append(':')
+            .append(get(LOCAL_PORT))
+            .append(" -> ")
+            .append(get(REMOTE_HOST))
+            .append(':')
+            .append(get(REMOTE_PORT))
+
+            .append(" - ");
 
         String group = get(GROUP) != null ? get(GROUP).toString() : "";
         if (StringUtils.isNotEmpty(group)) {
             sn.append(group).append('/');
         }
-
         sn.append(get(SERVICE));
 
         String version = get(VERSION) != null ? get(VERSION).toString() : "";
@@ -215,12 +211,10 @@ public final class AccessLogData {
         }
         sn.append(") ");
 
-
         Object[] args = get(ARGUMENTS) != null ? (Object[]) get(ARGUMENTS) : null;
         if (args != null && args.length > 0) {
             sn.append(JsonUtil.toJson(args));
         }
-
         return sn.toString();
     }
 
