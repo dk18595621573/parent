@@ -1,5 +1,6 @@
 package com.cloud.dubbo.filter;
 
+import com.cloud.dubbo.model.AccessLogData;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.ConcurrentHashSet;
@@ -8,11 +9,9 @@ import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcException;
-import org.apache.dubbo.rpc.support.AccessLogData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Executors;
@@ -92,13 +91,7 @@ public class PreInvokeFilter extends AbstractFilter {
      */
     private AccessLogData buildAccessLogData(final Invoker<?> invoker, final Invocation inv) {
         AccessLogData logData = AccessLogData.newLogData();
-        logData.setServiceName(invoker.getInterface().getName());
-        logData.setMethodName(inv.getMethodName());
-        logData.setVersion(invoker.getUrl().getParameter(CommonConstants.VERSION_KEY));
-        logData.setGroup(invoker.getUrl().getParameter(CommonConstants.GROUP_KEY));
-        logData.setInvocationTime(new Date());
-        logData.setTypes(inv.getParameterTypes());
-        logData.setArguments(inv.getArguments());
+        logData.buildAccessLogData(invoker, inv);
         return logData;
     }
 }
