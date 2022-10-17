@@ -4,6 +4,7 @@ import com.cloud.common.constant.Constants;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.StringUtils;
+import org.apache.dubbo.metadata.MetadataService;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
@@ -27,6 +28,10 @@ public class MDCFilter extends AbstractFilter {
     @Override
     public Result invoke(final Invoker<?> invoker, final Invocation invocation) throws RpcException {
         try {
+            // 如果是内置元数据服务则跳过filter，否则走下面的会报错，导致元数据拉取失败，最终导致No provider错误
+            if (MetadataService.isMetadataServiceURL(invoker.getUrl())) {
+                return invoker.invoke(invocation);
+            }
             if (isConsumerSide() && StringUtils.isNotEmpty(MDC.get(Constants.MDC_TRACE_ID))) {
                 RpcContext.getClientAttachment().setAttachment(Constants.MDC_TRACE_ID, MDC.get(Constants.MDC_TRACE_ID));
             } else if (isProviderSide() &&

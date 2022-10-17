@@ -3,6 +3,7 @@ package com.cloud.dubbo.filter;
 import com.cloud.common.threads.RequestThread;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
+import org.apache.dubbo.metadata.MetadataService;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
@@ -30,6 +31,10 @@ public class CustomRequestFilter extends AbstractFilter {
     @Override
     public Result invoke(final Invoker<?> invoker, final Invocation invocation) throws RpcException {
         try {
+            // 如果是内置元数据服务则跳过filter，否则走下面的会报错，导致元数据拉取失败，最终导致No provider错误
+            if (MetadataService.isMetadataServiceURL(invoker.getUrl())) {
+                return invoker.invoke(invocation);
+            }
             if (isConsumerSide()) {
                 Map<String, Object> data = RequestThread.getData();
                 logger.debug("CustomRequestFilter Consumer：[{}]", data);
