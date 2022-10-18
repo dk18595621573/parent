@@ -5,7 +5,8 @@ package com.cloud.common.enums;
  */
 public enum PurchaseType {
     PURCHASE_WAREHOUSING(1, "批量采购"),
-    DROP_SHIPPING(2, "一件代发");
+    DROP_SHIPPING(2, "一件代发"),
+    MARKETING_FAN_TAN(3, "接龙抢单");
 
 
     private final Integer code;
