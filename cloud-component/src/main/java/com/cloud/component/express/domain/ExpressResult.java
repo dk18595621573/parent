@@ -27,10 +27,22 @@ public class ExpressResult implements Serializable {
         String HOLOGRAPH_SIGN = "303";
         /** 投柜或站签收 */
         String CAST_ARK_SIGN = "304";
+
+        /** 退签 */
+        String BACK_TO_SIGN = "4";
+
+        /** 已销单 */
+        String ALREADY_PIN_SINGLE = "401";
+
+        /** 拒签 */
+        String VISA_REJECTED = "14";
+
     }
 
     /** 签收状态集合 */
     public final static String[] SIGN_SIGN_ARRAY = {State.SIGN, State.SELF_SIGN, State.ERROR_SIGN, State.HOLOGRAPH_SIGN, State.CAST_ARK_SIGN};
+    /** 拒签状态集合 */
+    public final static String[] VISA_SIGN_ARRAY = {State.ALREADY_PIN_SINGLE, State.BACK_TO_SIGN, State.VISA_REJECTED};
 
     /**
      * 单号
@@ -61,6 +73,14 @@ public class ExpressResult implements Serializable {
      */
     public boolean signed() {
         return ArrayUtil.contains(SIGN_SIGN_ARRAY, getState());
+    }
+
+    /**
+     * 是否拒签
+     * @return true:拒签 false:不是拒签
+     */
+    public boolean rejected(){
+        return ArrayUtil.contains(VISA_SIGN_ARRAY, getState());
     }
 
 

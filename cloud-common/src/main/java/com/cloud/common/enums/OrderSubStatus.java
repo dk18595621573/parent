@@ -90,6 +90,7 @@ public enum OrderSubStatus {
     LOGISTICS_DESTINATION_ABNORMAL(121, "物流目的地异常"),
     LOGISTICS_SHIPPING_ABNORMAL(122, "物流发货城市异常"),
     LOGISTICS_NO_FLOW(123, "物流无流转信息"),
+    LOGISTICS_NO_SIGN(124, "签收异常"),
 
     /** 售后 */
     AFTER_LOGISTICS(101, "退物流费用"),
