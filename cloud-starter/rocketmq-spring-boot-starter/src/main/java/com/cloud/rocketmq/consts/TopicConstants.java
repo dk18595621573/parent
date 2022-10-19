@@ -45,6 +45,6 @@ public interface TopicConstants {
     /**
      * 接龙订单：所有接龙订单类型可抢订单
      */
-    String ORDER_MARKETING = "TOPIC-ORDER_MARKETING";
+    String ORDER_MARKETING = "TOPIC-ORDER-MARKETING";
 
 }
