@@ -34,4 +34,13 @@ public enum PurchaseType {
         }
         return PURCHASE_WAREHOUSING;
     }
+
+    public static String convertMag(Integer code){
+        for (PurchaseType type : PurchaseType.values()) {
+            if (type.getCode().equals(code)) {
+                return type.getMsg();
+            }
+        }
+        return PURCHASE_WAREHOUSING.getMsg();
+    }
 }
