@@ -19,139 +19,157 @@ public class AgentJointOrder implements Serializable {
     private Long marketingId;
 
     /**
-     * 订单编号.
+     * 记录状态 1.新增 2.修改 3.删除 4.刷新
      */
-    private String orderCode;
+    private Integer status;
 
     /**
-     * 采购方企业id
+     * 新增、修改、删除的记录
      */
-    private Long buyerCompanyId;
+    private OrderMarketing data;
 
-    /**
-     * 采购方企业名称
-     */
-    private String buyerCompanyName;
+    @Data
+    public static class OrderMarketing implements Serializable{
+        /**
+         * 接龙订单id
+         */
+        private Long marketingId;
 
-    /**
-     * 产品类别
-     */
-    private String category;
+        /**
+         * 订单编号.
+         */
+        private String orderCode;
 
-    /**
-     * 品牌
-     */
-    private String brand;
+        /**
+         * 采购方企业id
+         */
+        private Long buyerCompanyId;
 
-    /**
-     * 产品型号
-     */
-    private String productModel;
+        /**
+         * 采购方企业名称
+         */
+        private String buyerCompanyName;
 
-    /**
-     * 通用名
-     */
-    private String commonName;
+        /**
+         * 产品类别
+         */
+        private String category;
 
-    /**
-     * 通用sku
-     */
-    private String commonSku;
+        /**
+         * 品牌
+         */
+        private String brand;
 
-    /**
-     * 通用编码
-     */
-    private String commonCode;
+        /**
+         * 产品型号
+         */
+        private String productModel;
 
-    /**
-     * 收货地址
-     */
-    private String receivingAddress;
+        /**
+         * 通用名
+         */
+        private String commonName;
 
-    /**
-     * 数量
-     */
-    private Long quantity;
+        /**
+         * 通用sku
+         */
+        private String commonSku;
 
-    /**
-     * 订单状态
-     */
-    private Integer orderStatus;
+        /**
+         * 通用编码
+         */
+        private String commonCode;
 
-    /**
-     * 订单子状态
-     */
-    private Integer orderSubStatus;
+        /**
+         * 收货地址
+         */
+        private String receivingAddress;
 
-    /**
-     * 账期类型（1:字典；2:自定义）
-     */
-    private Long accountingPeriodType;
+        /**
+         * 数量
+         */
+        private Long quantity;
 
-    /**
-     * 账期值
-     */
-    private String accountingPeriodValue;
+        /**
+         * 订单状态
+         */
+        private Integer orderStatus;
 
-    /**
-     * 挂单价（最高）
-     */
-    private BigDecimal priceHighest;
+        /**
+         * 订单子状态
+         */
+        private Integer orderSubStatus;
 
-    /**
-     * 最高成交数量
-     */
-    private Integer priceHighestCount;
+        /**
+         * 账期类型（1:字典；2:自定义）
+         */
+        private Long accountingPeriodType;
 
-    /**
-     * 挂单价（高）
-     */
-    private BigDecimal priceHign;
+        /**
+         * 账期值
+         */
+        private String accountingPeriodValue;
 
-    /**
-     * 高成交数量
-     */
-    private Integer priceHignCount;
+        /**
+         * 挂单价（最高）
+         */
+        private BigDecimal priceHighest;
 
-    /**
-     * 挂单价（低）
-     */
-    private BigDecimal priceLow;
+        /**
+         * 最高成交数量
+         */
+        private Integer priceHighestCount;
 
-    /**
-     * 低成交数量
-     */
-    private BigDecimal priceLowCount;
+        /**
+         * 挂单价（高）
+         */
+        private BigDecimal priceHign;
 
-    /**
-     * 税票要求
-     */
-    private Long taxRequire;
+        /**
+         * 高成交数量
+         */
+        private Integer priceHignCount;
 
-    /**
-     * 串码要求
-     */
-    private String codeRequire;
+        /**
+         * 挂单价（低）
+         */
+        private BigDecimal priceLow;
 
-    /**
-     * 串码选项
-     */
-    private Long codeOptions;
+        /**
+         * 低成交数量
+         */
+        private BigDecimal priceLowCount;
 
-    /**
-     * 包装要求
-     */
-    private String packingRequire;
+        /**
+         * 税票要求
+         */
+        private Long taxRequire;
 
-    /**
-     * 其他要求
-     */
-    private String otherRequire;
+        /**
+         * 串码要求
+         */
+        private String codeRequire;
 
-    /**
-     * 发货时效（0：当天；1：明天：2：后天；n：n天后）
-     */
-    private Long deliveryTime;
+        /**
+         * 串码选项
+         */
+        private Long codeOptions;
+
+        /**
+         * 包装要求
+         */
+        private String packingRequire;
+
+        /**
+         * 其他要求
+         */
+        private String otherRequire;
+
+        /**
+         * 发货时效（0：当天；1：明天：2：后天；n：n天后）
+         */
+        private Long deliveryTime;
+    }
 
 
 }

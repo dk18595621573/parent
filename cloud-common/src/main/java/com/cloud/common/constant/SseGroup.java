@@ -16,7 +16,7 @@ public interface SseGroup {
     /**
      *  接龙订单
      * */
-    String ORDER_MARKETING = "ORDER_MARKETING";
+    String ORDER_MARKETING = "order_marketing";
     /**
      * admin消息推送api
      */
