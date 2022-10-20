@@ -47,7 +47,7 @@
         <springboot.version>2.5.13</springboot.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <dubbo.version>3.0.5</dubbo.version>
+        <dubbo.version>2.7.15</dubbo.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.version>1.18.24</lombok.version>
     </properties>

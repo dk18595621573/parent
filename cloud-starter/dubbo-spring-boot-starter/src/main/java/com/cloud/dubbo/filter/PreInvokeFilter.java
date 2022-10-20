@@ -1,6 +1,5 @@
 package com.cloud.dubbo.filter;
 
-import com.cloud.dubbo.model.AccessLogData;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.ConcurrentHashSet;
@@ -9,6 +8,7 @@ import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcException;
+import org.apache.dubbo.rpc.support.AccessLogData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

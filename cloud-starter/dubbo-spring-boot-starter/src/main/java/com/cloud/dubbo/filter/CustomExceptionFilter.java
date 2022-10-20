@@ -97,7 +97,8 @@ public class CustomExceptionFilter implements Filter, Filter.Listener {
     @Override
     public void onError(final Throwable e, final Invoker<?> invoker, final Invocation invocation) {
         LOGGER.error("Got unchecked and undeclared exception which called by "
-            + RpcContext.getServiceContext().getRemoteHost() + ". service: " + invoker.getInterface().getName()
+//            + RpcContext.getServiceContext().getRemoteHost() + ". service: " + invoker.getInterface().getName()
+            + RpcContext.getContext().getRemoteHost() + ". service: " + invoker.getInterface().getName()
             + ", method: " + invocation.getMethodName() + ", exception: " + e.getClass().getName() + ": " + e.getMessage(), e);
     }
 }
