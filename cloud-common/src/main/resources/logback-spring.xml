@@ -28,6 +28,11 @@
             <maxFileSize>50MB</maxFileSize>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
+            <!-- appender启动时，进行一次日志文件清理（作用：有些存活很短时间的应用，没机会进行文件清理） -->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
 
@@ -44,6 +49,11 @@
             <maxFileSize>50MB</maxFileSize>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
+            <!-- appender启动时，进行一次日志文件清理（作用：有些存活很短时间的应用，没机会进行文件清理） -->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
 
