@@ -132,6 +132,11 @@ public class DemandOrder implements Serializable {
         private String price;
 
         /**
+         * 订单状态
+         */
+        private Integer status;
+
+        /**
          * 前置状态(20:新建；21:撤销；22:超时发货；23:超时流拍，30:待抢单 ，31:待确认)
          */
         private Integer subStatus;
@@ -150,6 +155,11 @@ public class DemandOrder implements Serializable {
          * 挂单价（最高）
          */
         private BigDecimal priceHighest;
+
+        /**
+         * 最高价（已成交数量）
+         */
+        private Long priceHighestCount;
 
         /**
          * 挂单价（高）
@@ -348,5 +358,11 @@ public class DemandOrder implements Serializable {
          * 申诉按钮（0：不显示； 1：显示处理申诉； 2：显示查看申诉）
          */
         private Integer explainedButton = 0;
+
+        /**
+         * 无仓收货地址集合
+         */
+        private List<EntrepotAddress> warehouseReceivingAddressList;
+
     }
 }
