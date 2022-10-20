@@ -16,14 +16,14 @@
 
     <!-- 系统日志输出 -->
     <appender name="file_info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/${log.name}.log</file>
+        <file>${log.path}/${hostname}.log</file>
         <encoder>
             <pattern>${log.pattern}</pattern>
         </encoder>
         <!-- 循环政策：基于时间和文件大小创建日志文件 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/${log.name}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${log.path}/${hostname}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 最大文件大小 -->
             <maxFileSize>50MB</maxFileSize>
             <!-- 日志最大的历史 60天 -->
@@ -33,13 +33,13 @@
 
     <!-- 用户访问日志输出  -->
     <appender name="sys_user" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/${log.name}-user.log</file>
+        <file>${log.path}/${hostname}-user.log</file>
         <encoder>
             <pattern>${log.pattern}</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 日志文件名格式 -->
-            <fileNamePattern>${log.path}/${log.name}-user-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${log.path}/${hostname}-user-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 最大文件大小 -->
             <maxFileSize>50MB</maxFileSize>
             <!-- 日志最大的历史 60天 -->
