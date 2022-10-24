@@ -13,7 +13,10 @@ public interface SseGroup {
      * 订单状态变更
      */
     String ORDER_STATUS = "order_status";
-
+    /**
+     *  接龙订单
+     * */
+    String ORDER_MARKETING = "order_marketing";
     /**
      * admin消息推送api
      */

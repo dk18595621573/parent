@@ -1,7 +1,7 @@
 package com.cloud.webmvc.interceptor.impl;
 
 import com.cloud.webmvc.annotation.RepeatSubmit;
-import com.cloud.core.config.SystemConfig;
+import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.common.constant.Constants;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.common.utils.json.JsonUtil;
@@ -31,7 +31,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
 
     // 令牌自定义标识
     @Autowired
-    private SystemConfig systemConfig;
+    private SystemProperties systemProperties;
 
     @Autowired
     private RedisCache redisCache;
@@ -57,7 +57,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
         String url = request.getRequestURI();
 
         // 唯一值（没有消息头则使用请求地址）
-        String submitKey = StringUtils.trimToEmpty(request.getHeader(systemConfig.getToken().getHeader()));
+        String submitKey = StringUtils.trimToEmpty(request.getHeader(systemProperties.getToken().getHeader()));
 
         // 唯一标识（指定key + url + 消息头）
         String cacheRepeatKey = Constants.REPEAT_SUBMIT_KEY + url + submitKey;

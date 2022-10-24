@@ -1,14 +1,14 @@
 package com.cloud.webmvc.utils.ip;
 
 import cn.hutool.http.HttpUtil;
-import com.cloud.core.config.SystemConfig;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.common.utils.json.JsonUtil;
+import com.cloud.core.utils.SpringUtils;
+import com.cloud.webmvc.properties.SystemProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 /**
  * 获取地址类
@@ -29,7 +29,8 @@ public class AddressUtils {
         if (IpUtils.internalIp(ip)) {
             return "内网IP";
         }
-        if (SystemConfig.isAddressEnabled()) {
+        boolean enabled = SpringUtils.getBean(SystemProperties.class).isAddressEnabled();
+        if (enabled) {
             try {
                 String rspStr = HttpUtil.createGet(IP_URL).setConnectionTimeout(1000).charset(Constants.GBK)
                     .form("ip", ip, "json", "true").execute().body();
@@ -37,8 +38,8 @@ public class AddressUtils {
                     log.error("获取地理位置异常 {}", ip);
                     return UNKNOWN;
                 }
-                Map obj = JsonUtil.parse(rspStr, Map.class);
-                return String.format("%s %s", obj.get("pro"), obj.get("city"));
+                JSONObject jsonObject = JSONUtil.parseObj(rspStr);
+                return String.format("%s %s", jsonObject.getStr("pro"), jsonObject.getStr("city"));
             } catch (Exception e) {
                 log.error("获取地理位置异常 {}", ip);
             }

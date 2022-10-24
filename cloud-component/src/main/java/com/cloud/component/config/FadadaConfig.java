@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,21 +29,25 @@ public class FadadaConfig {
      * 法大大请求参数
      */
     @Bean
+    @RefreshScope
     public FddVerifyClient fddVerifyClient(FadadaProperties fadadaProperties) {
         return new FddVerifyClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
 
     @Bean
+    @RefreshScope
     public FddBaseClient fddBaseClient(FadadaProperties fadadaProperties) {
         return new FddBaseClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
 
     @Bean
+    @RefreshScope
     public FddExtraClient fddExtraClient(FadadaProperties fadadaProperties) {
         return new FddExtraClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
 
     @Bean
+    @RefreshScope
     @ConditionalOnMissingBean
     public FadadaClient fadadaClient(FddVerifyClient fddVerifyClient, FddBaseClient fddBaseClient, FadadaProperties fadadaProperties, FddExtraClient fddExtraClient) {
         return new FadadaClient(fddVerifyClient, fddBaseClient, fadadaProperties, fddExtraClient);

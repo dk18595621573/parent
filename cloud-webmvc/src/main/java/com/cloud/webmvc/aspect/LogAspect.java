@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -90,6 +91,7 @@ public class LogAspect {
             operLog.setRequestMethod(request.getMethod());
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
+            operLog.setOperTime(new Date());
             // 保存数据库
             AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
         } catch (Exception exp) {

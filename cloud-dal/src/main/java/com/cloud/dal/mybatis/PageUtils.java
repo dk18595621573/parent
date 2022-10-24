@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * 分页辅助.
@@ -42,6 +43,18 @@ public class PageUtils {
     public static <T> Page<T> fromList(List<T> page) {
         PageInfo<T> pageInfo = new PageInfo<>(page);
         Page<T> result = new Page<>(page, pageInfo.getTotal());
+        clearPage();
+        return result;
+    }
+
+    /**
+     * PageHelper分页数据对象转换
+     * @param page PageHelper分页数据对象
+     * @return Page
+     */
+    public static <T, R> Page<R> fromList(List<T> page, Function<List<T>, List<R>> function) {
+        PageInfo<T> pageInfo = new PageInfo<>(page);
+        Page<R> result = new Page<>(function.apply(page), pageInfo.getTotal());
         clearPage();
         return result;
     }

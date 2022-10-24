@@ -6,7 +6,7 @@
 
     <groupId>com.cloud</groupId>
     <artifactId>cloud-parent</artifactId>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
 
     <description>醒市无仓平台</description>
 
@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <cloud-parent.version>1.0.6-SNAPSHOT</cloud-parent.version>
+        <cloud-parent.version>1.1.0-SNAPSHOT</cloud-parent.version>
 
         <druid.version>1.2.8</druid.version>
         <bitwalker.version>1.21</bitwalker.version>
@@ -43,9 +43,11 @@
         <tencentcloud-sdk.version>3.1.507</tencentcloud-sdk.version>
         <rocketmq.version>4.7.1</rocketmq.version>
 
+        <spring-boot-seata.version>1.4.2</spring-boot-seata.version>
         <springboot.version>2.5.13</springboot.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <dubbo.version>2.7.15</dubbo.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.version>1.18.24</lombok.version>
     </properties>
@@ -79,6 +81,22 @@
                 <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- dubbo的依赖配置 -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- seata分布式事务 -->
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${spring-boot-seata.version}</version>
             </dependency>
 
             <!-- 阿里数据库连接池 -->
@@ -372,6 +390,13 @@
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>tencent-spring-boot-starter</artifactId>
+                <version>${cloud-parent.version}</version>
+            </dependency>
+
+            <!-- dubbo-starter -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${cloud-parent.version}</version>
             </dependency>
 

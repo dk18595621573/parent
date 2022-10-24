@@ -2,10 +2,10 @@ package com.cloud.webmvc.security.service.strategy;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
-import com.cloud.core.config.SystemConfig;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.properties.TokenProperties;
 import com.cloud.webmvc.security.service.TokenStrategy;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,9 +17,9 @@ import java.util.Map;
 
 public class SimpleTokenStrategy implements TokenStrategy {
 
-        private final SystemConfig.TokenProperties tokenProperties;
+        private final TokenProperties tokenProperties;
 
-        public SimpleTokenStrategy(final SystemConfig.TokenProperties tokenProperties) {
+        public SimpleTokenStrategy(final TokenProperties tokenProperties) {
             this.tokenProperties = tokenProperties;
         }
 

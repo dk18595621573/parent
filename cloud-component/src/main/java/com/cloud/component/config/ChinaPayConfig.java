@@ -5,6 +5,7 @@ import com.cloud.component.properties.ChinaPayProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 public class ChinaPayConfig {
 
     @Bean
+    @RefreshScope
     public ChinaPayClient chinaPayClient(ChinaPayProperties chinaPayProperties) {
         return new ChinaPayClient(chinaPayProperties);
     }
