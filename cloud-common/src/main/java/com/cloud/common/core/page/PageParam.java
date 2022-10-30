@@ -36,7 +36,7 @@ public class PageParam implements Serializable {
     }
 
     public PageParam(final Integer page, final Integer size, final String orderBy) {
-        this(page, size, orderBy, true);
+        this(page, size, orderBy, false);
     }
 
     public PageParam(final Integer page, final Integer size, final String orderBy, final Boolean reasonable) {

@@ -17,6 +17,14 @@ public class RequestThread {
 
     private static final ThreadLocal<Map<String, Object>> THREAD_LOCAL = new InheritableThreadLocal<>();
 
+    public static void setData(Map<String, Object> dataMap) {
+        THREAD_LOCAL.set(dataMap);
+    }
+
+    public static Map<String, Object> getData() {
+        return THREAD_LOCAL.get();
+    }
+
     public static void addParam(String key, Object value) {
         Map<String, Object> map = THREAD_LOCAL.get();
         if (map == null) {

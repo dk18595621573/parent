@@ -75,6 +75,9 @@ public class GlobalExceptionHandler {
     public Result<?> handleRuntimeException(RuntimeException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',发生未知异常.", requestURI, e);
+        if ("org.apache.dubbo.rpc.RpcException".equals(e.getClass().getName())) {
+            return Result.error("服务异常，请稍后再试");
+        }
         return Result.error("操作异常，请联系管理员");
     }
 

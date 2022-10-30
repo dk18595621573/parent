@@ -42,7 +42,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                RequestThread.setUser(loginUser);
+                RequestThread.setUser(loginUser.toRequestUser());
             } else {
                 MDC.put(Constants.MDC_USER_ID, StringUtils.EMPTY);
                 MDC.put(Constants.MDC_COMPANY_ID, StringUtils.EMPTY);

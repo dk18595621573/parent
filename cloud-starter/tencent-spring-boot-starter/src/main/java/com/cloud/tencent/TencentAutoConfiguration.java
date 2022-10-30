@@ -7,6 +7,7 @@ import com.cloud.tencent.properties.TencentProperties;
 import com.tencentcloudapi.common.Credential;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -26,6 +27,7 @@ public class TencentAutoConfiguration {
      * @return Credential
      */
     @Bean
+    @RefreshScope
     @ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
     public Credential credential(final TencentProperties tencentProperties) {
         return new Credential(tencentProperties.getSecretId(), tencentProperties.getSecretKey());

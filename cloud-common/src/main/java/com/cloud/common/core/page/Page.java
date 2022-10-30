@@ -18,6 +18,9 @@ public class Page<T> implements Serializable {
 
     private Long total;
 
+    public Page() {
+    }
+
     public Page(final List<T> data, final Long total) {
         this.data = data;
         this.total = total;

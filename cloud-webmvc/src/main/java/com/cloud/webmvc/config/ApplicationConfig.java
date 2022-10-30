@@ -1,15 +1,13 @@
 package com.cloud.webmvc.config;
 
 import com.cloud.common.utils.StringUtils;
-import com.cloud.core.config.SystemConfig;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.webmvc.filter.HeaderFilter;
 import com.cloud.webmvc.filter.RepeatableFilter;
 import com.cloud.webmvc.filter.XssFilter;
+import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.webmvc.security.service.TokenStrategy;
 import com.cloud.webmvc.security.service.strategy.RedisTokenStrategy;
-import com.cloud.webmvc.security.service.strategy.SimpleTokenStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -43,15 +41,6 @@ public class ApplicationConfig {
     private String urlPatterns;
 
     /**
-     * 系统配置.
-     */
-    @Autowired
-    private SystemConfig systemConfig;
-
-    @Autowired
-    private RedisCache redisCache;
-
-    /**
      * 时区配置
      */
     @Bean
@@ -81,13 +70,10 @@ public class ApplicationConfig {
         return new CorsFilter(source);
     }
 
-
     @Bean
-    public TokenStrategy tokenStrategy() {
-        if (systemConfig.getToken().isCached()) {
-            return new RedisTokenStrategy(redisCache, systemConfig.getToken());
-        }
-        return new SimpleTokenStrategy(systemConfig.getToken());
+    @ConditionalOnMissingBean
+    public TokenStrategy tokenStrategy(SystemProperties systemProperties, RedisCache redisCache) {
+        return new RedisTokenStrategy(redisCache, systemProperties.getToken());
     }
 
     /**

@@ -42,5 +42,9 @@ public interface TopicConstants {
      * 再次抢单：当日被抢并且待确认的订单
      */
     String ROBBED_CONFIRM_ORDER = "TOPIC-ROBBED-CONFIRM-ORDER";
+    /**
+     * 接龙订单：所有接龙订单类型可抢订单
+     */
+    String ORDER_MARKETING = "TOPIC-ORDER-MARKETING";
 
 }
