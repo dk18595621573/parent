@@ -107,7 +107,25 @@ public class ExpressClient {
         properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
 
         ExpressClient expressClient = new ExpressClient(properties);
-        ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1143519416984", "15325014087");
-        System.out.println(express2);
+        new Thread(() -> {
+            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
+            System.out.println(express2);
+        }).start();
+
+        new Thread(() -> {
+            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
+            System.out.println(express2);
+        }).start();
+
+        new Thread(() -> {
+            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
+            System.out.println(express2);
+        }).start();
+
+        new Thread(() -> {
+            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
+            System.out.println(express2);
+        }).start();
+
     }
 }

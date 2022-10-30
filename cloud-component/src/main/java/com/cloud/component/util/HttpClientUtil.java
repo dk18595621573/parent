@@ -55,8 +55,8 @@ public class HttpClientUtil {
         SocketConfig socketConfig = SocketConfig.custom()
                 .setTcpNoDelay(true)
                 .setSoReuseAddress(true)
-                .setSoLinger(60)
-                .setSoTimeout(500)
+//                .setSoLinger(60)
+                .setSoTimeout(5000)
                 .setSoKeepAlive(true)
                 .build();
         connectionManager.setDefaultSocketConfig(socketConfig);
