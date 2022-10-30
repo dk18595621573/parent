@@ -1,6 +1,5 @@
 package com.cloud.component.util;
 
-import cn.hutool.http.Header;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -204,7 +203,7 @@ public class HttpClientUtil {
         CloseableHttpResponse response = null;
         try {
             httpPost = new HttpPost(uri);
-            httpPost.addHeader(Header.CONTENT_TYPE.name(), header);
+            httpPost.addHeader("Content-Type", header);
             if (StringUtils.isNotBlank(reqParams)) {
                 StringEntity postingString = new StringEntity(reqParams, "utf-8");
                 httpPost.setEntity(postingString);
