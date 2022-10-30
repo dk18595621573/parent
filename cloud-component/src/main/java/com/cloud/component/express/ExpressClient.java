@@ -4,10 +4,7 @@ import cn.hutool.core.convert.ConvertException;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
-import cn.hutool.http.ContentType;
-import cn.hutool.http.Header;
 import cn.hutool.http.HttpException;
-import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.common.utils.json.JsonUtil;
@@ -15,6 +12,7 @@ import com.cloud.component.express.consts.ErrorCode;
 import com.cloud.component.express.domain.ExpressResult;
 import com.cloud.component.express.exception.ExpressException;
 import com.cloud.component.properties.ExpressProperties;
+import com.cloud.component.util.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -61,7 +59,7 @@ public class ExpressClient {
         // 开通行政区域解析功能
         paramMap.put("resultv2", "4");
         String param = JsonUtil.toJson(paramMap);
-        Map<String, Object> requestBody = MapUtil.newHashMap(3);
+        Map<String, String> requestBody = MapUtil.newHashMap(3);
         // 授权码，请申请企业版获取
         requestBody.put("customer", expressProperties.getCustomer());
         requestBody.put("sign", sign(param + expressProperties.getKey() + expressProperties.getCustomer()));
@@ -69,9 +67,7 @@ public class ExpressClient {
 
         ExpressResult expressResult = null;
         try {
-            String result = HttpRequest.post(expressProperties.getUrl())
-                .header(Header.CONTENT_TYPE, ContentType.FORM_URLENCODED.getValue())
-                .timeout(TIMEOUT).form(requestBody).execute().body();
+            String result = HttpClientUtil.doHttpPost(expressProperties.getUrl(), requestBody);
             log.info("调用快递API返回单号[{}]的快递信息数据：{}", expressNo, result);
             if (StrUtil.isBlank(result)) {
                 throw new ExpressException(ErrorCode.API_ERROR);
