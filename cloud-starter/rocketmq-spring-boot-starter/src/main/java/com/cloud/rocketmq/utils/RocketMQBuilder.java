@@ -61,7 +61,7 @@ public class RocketMQBuilder {
         } else {
             streamBridge.send(properties.getNamespace() + "%" +topic, message);
         }
-        log.info("[MQ消息-生产消息]--{}", message);
+        log.info("[MQ消息-生产消息][{}]--{}", topic, message);
     }
 
     /**
