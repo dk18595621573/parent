@@ -56,6 +56,16 @@ public enum SystemParams {
      * 补全地址自动报价的结束时间
      */
     ADDRESS_COMPLETED_ENDHOUR("address.completed.endhour", "18"),
+    /**
+     * 发货时效自动报价的时间单位-前
+     * 0:当天  1:明天  2:后天
+     */
+    DELIVERY_TIME_FRONT("delivery.time.front", "1"),
+    /**
+     * 发货时效自动报价的时间单位-后
+     * 0:当天  1:明天  2:后天
+     */
+    DELIVERY_TIME_AFTER("delivery.time.after", "2"),
 
     ;
     
