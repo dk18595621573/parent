@@ -27,7 +27,7 @@ public enum OrderSubStatus {
     /** 毁单 */
     REVOKE_DESTROY(27, "毁单"),
     /** 供应商疫情原因毁单 */
-    REVOKE_EPIDEMIC(28, "供应商疫情原因撤销"),
+    REVOKE_EPIDEMIC(29, "供应商疫情原因撤销"),
 
     /** 待抢单 */
     PENDING_ORDER(30, "待抢单"),
