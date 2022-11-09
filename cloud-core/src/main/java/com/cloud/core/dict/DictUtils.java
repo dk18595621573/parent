@@ -75,6 +75,9 @@ public class DictUtils {
      * @return 字典标签
      */
     public static String getDictLabel(String dictType, String dictValue, String separator) {
+        if (StringUtils.isBlank(dictValue)) {
+            return dictValue;
+        }
         StringBuilder propertyString = new StringBuilder();
         List<DictData> datas = getDictCache(dictType);
         if (CollUtil.isEmpty(datas)) {
@@ -109,6 +112,9 @@ public class DictUtils {
      * @return 字典值
      */
     public static String getDictValue(String dictType, String dictLabel, String separator) {
+        if (StringUtils.isBlank(dictLabel)) {
+            return dictLabel;
+        }
         StringBuilder propertyString = new StringBuilder();
         List<DictData> datas = getDictCache(dictType);
         if (CollUtil.isEmpty(datas)) {
