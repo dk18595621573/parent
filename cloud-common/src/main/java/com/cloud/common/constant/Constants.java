@@ -143,6 +143,11 @@ public class Constants {
 //    public static final String JWT_AUTHORITIES = "authorities";
 
     /**
+     * 登录用户ID
+     */
+    public static final String LOGIN_USERID = "userId:";
+
+    /**
      * 参数管理 cache key
      */
     public static final String SYS_CONFIG_KEY = "sys_config:";
