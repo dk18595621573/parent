@@ -69,6 +69,12 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!--基于Jackson序列化实现数据脱敏-->
+        <dependency>
+            <groupId>io.github.ealenxie</groupId>
+            <artifactId>jackson-desensitize</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
