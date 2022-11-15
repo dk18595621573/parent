@@ -18,6 +18,7 @@ public class ExpressProperties {
 
     private String url;
 
+    private String callbackUrl;
 
     private String key;
 

@@ -5,14 +5,29 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HttpException;
+import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
+import com.cloud.component.express.domain.CallbackExpressResult;
 import com.cloud.component.express.domain.ExpressResult;
+import com.cloud.component.express.domain.SubscribeExpressResult;
 import com.cloud.component.express.exception.ExpressException;
 import com.cloud.component.properties.ExpressProperties;
 import com.cloud.component.util.HttpClientUtil;
+import com.google.gson.Gson;
+import com.kuaidi100.sdk.api.Subscribe;
+import com.kuaidi100.sdk.contant.ApiInfoConstant;
+import com.kuaidi100.sdk.contant.CompanyConstant;
+import com.kuaidi100.sdk.core.IBaseClient;
+import com.kuaidi100.sdk.pojo.HttpResult;
+import com.kuaidi100.sdk.request.SubscribeParam;
+import com.kuaidi100.sdk.request.SubscribeParameters;
+import com.kuaidi100.sdk.request.SubscribeReq;
+import com.kuaidi100.sdk.response.SubscribeResp;
+import com.kuaidi100.sdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -127,5 +142,46 @@ public class ExpressClient {
             System.out.println(express2);
         }).start();
 
+    }
+
+    public void subscribeExpress(final String orderCode,final String expressCode, final String expressNo, final String cellphone) {
+        SubscribeParameters subscribeParameters = new SubscribeParameters();
+//        subscribeParameters.setCallbackurl(expressProperties.getCallbackUrl());
+        subscribeParameters.setCallbackurl("https://test-api.xingshiapp.cn/api/oms/express/callbackExpress");
+        subscribeParameters.setPhone(cellphone);
+        subscribeParameters.setSalt(SignUtils.sign(expressProperties.getKey() + expressProperties.getCustomer()));
+        SubscribeParam subscribeParam = new SubscribeParam();
+        subscribeParam.setParameters(subscribeParameters);
+        subscribeParam.setCompany(expressCode);
+        subscribeParam.setNumber(expressNo);
+        subscribeParam.setKey(expressProperties.getKey());
+
+        SubscribeReq subscribeReq = new SubscribeReq();
+        subscribeReq.setSchema(ApiInfoConstant.SUBSCRIBE_SCHEMA);
+        subscribeReq.setParam(new Gson().toJson(subscribeParam));
+
+        try {
+            IBaseClient subscribe = new Subscribe();
+            HttpResult execute = subscribe.execute(subscribeReq);
+            if (HttpStatus.HTTP_OK == execute.getStatus()) {
+                String bodyData = execute.getBody();
+                if (StrUtil.isBlank(bodyData)) {
+                    throw new ExpressException(ErrorCode.API_ERROR);
+                }
+                SubscribeExpressResult subscribeExpressResult = JSON.parseObject(bodyData, SubscribeExpressResult.class);
+                if (subscribeExpressResult.getResult() != null ) {
+                    //订阅成功 修改订单订阅状态
+                }
+            } else {
+                log.warn("调用订阅快递API接口响应失败:{}", expressNo,execute.getError());
+                //请求失败 -> 订阅失败
+                System.out.println("请求失败：status=" + execute.getStatus()+"error=" + execute.getError());
+            }
+        } catch (Exception e) {
+            throw new ExpressException(ErrorCode.API_ERROR);
+        }
+    }
+    public void callbackExpress(String jsonStr) {
+        log.info("快递回调传参：{}",jsonStr);
     }
 }

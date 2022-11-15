@@ -54,6 +54,7 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok.version>1.18.24</lombok.version>
         <jackson.version>1.0</jackson.version>
+        <kuaidi100.version>1.0.11</kuaidi100.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -440,6 +441,13 @@
                 <groupId>io.github.ealenxie</groupId>
                 <artifactId>jackson-desensitize</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+
+            <!--快递100SDK-->
+            <dependency>
+                <groupId>com.github.kuaidi100-api</groupId>
+                <artifactId>sdk</artifactId>
+                <version>${kuaidi100.version}</version>
             </dependency>
 
         </dependencies>
