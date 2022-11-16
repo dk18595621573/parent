@@ -150,6 +150,7 @@ public class ExpressClient {
         subscribeParameters.setCallbackurl("https://test-api.xingshiapp.cn/api/oms/express/callbackExpress");
         subscribeParameters.setPhone(cellphone);
         subscribeParameters.setSalt(SignUtils.sign(expressProperties.getKey() + expressProperties.getCustomer()));
+        subscribeParameters.setResultv2("4");
         SubscribeParam subscribeParam = new SubscribeParam();
         subscribeParam.setParameters(subscribeParameters);
         subscribeParam.setCompany(expressCode);
@@ -181,7 +182,5 @@ public class ExpressClient {
             throw new ExpressException(ErrorCode.API_ERROR);
         }
     }
-    public void callbackExpress(String jsonStr) {
-        log.info("快递回调传参：{}",jsonStr);
-    }
+
 }
