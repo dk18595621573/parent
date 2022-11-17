@@ -11,6 +11,8 @@ import cn.hutool.json.JSONUtil;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
+import com.cloud.component.express.domain.ExpressResult;
+import com.cloud.component.express.domain.SubscribeExpressResult;
 import com.cloud.component.express.consts.ExpressCallbackStatusCode;
 import com.cloud.component.express.consts.SubscribeExpressCode;
 import com.cloud.component.express.domain.*;
@@ -25,7 +27,6 @@ import com.kuaidi100.sdk.pojo.HttpResult;
 import com.kuaidi100.sdk.request.SubscribeParam;
 import com.kuaidi100.sdk.request.SubscribeParameters;
 import com.kuaidi100.sdk.request.SubscribeReq;
-import com.kuaidi100.sdk.response.SubscribeResp;
 import com.kuaidi100.sdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -124,26 +125,8 @@ public class ExpressClient {
         properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
 
         ExpressClient expressClient = new ExpressClient(properties);
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
+        ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
+        System.out.println(express2);
     }
 
     /**
@@ -206,6 +189,7 @@ public class ExpressClient {
                 }
             } else {
                 log.warn("调用订阅快递API接口响应失败:{}|{}", JsonUtil.toJson(subscribeExpressFrom),httpResult.getError());
+                log.warn("调用订阅快递API接口响应失败:{}，{}", expressNo,execute.getError());
                 //请求失败 -> 订阅失败
                 return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
             }
