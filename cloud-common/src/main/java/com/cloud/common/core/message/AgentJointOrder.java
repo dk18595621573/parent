@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 接龙订单.
@@ -148,7 +149,7 @@ public class AgentJointOrder implements Serializable {
         /**
          * 串码要求
          */
-        private String codeRequire;
+        private List<String> codeRequire;
 
         /**
          * 串码选项
@@ -158,7 +159,7 @@ public class AgentJointOrder implements Serializable {
         /**
          * 包装要求
          */
-        private String packingRequire;
+        private List<String> packingRequire;
 
         /**
          * 其他要求
