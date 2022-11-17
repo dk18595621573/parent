@@ -11,7 +11,6 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
-import com.cloud.component.express.domain.CallbackExpressResult;
 import com.cloud.component.express.domain.ExpressResult;
 import com.cloud.component.express.domain.SubscribeExpressResult;
 import com.cloud.component.express.exception.ExpressException;
@@ -20,13 +19,11 @@ import com.cloud.component.util.HttpClientUtil;
 import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.Subscribe;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
-import com.kuaidi100.sdk.contant.CompanyConstant;
 import com.kuaidi100.sdk.core.IBaseClient;
 import com.kuaidi100.sdk.pojo.HttpResult;
 import com.kuaidi100.sdk.request.SubscribeParam;
 import com.kuaidi100.sdk.request.SubscribeParameters;
 import com.kuaidi100.sdk.request.SubscribeReq;
-import com.kuaidi100.sdk.response.SubscribeResp;
 import com.kuaidi100.sdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -122,26 +119,8 @@ public class ExpressClient {
         properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
 
         ExpressClient expressClient = new ExpressClient(properties);
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
-        new Thread(() -> {
-            ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-            System.out.println(express2);
-        }).start();
-
+        ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
+        System.out.println(express2);
     }
 
     public void subscribeExpress(final String orderCode,final String expressCode, final String expressNo, final String cellphone) {
@@ -174,7 +153,7 @@ public class ExpressClient {
                     //订阅成功 修改订单订阅状态
                 }
             } else {
-                log.warn("调用订阅快递API接口响应失败:{}", expressNo,execute.getError());
+                log.warn("调用订阅快递API接口响应失败:{}，{}", expressNo,execute.getError());
                 //请求失败 -> 订阅失败
                 System.out.println("请求失败：status=" + execute.getStatus()+"error=" + execute.getError());
             }
