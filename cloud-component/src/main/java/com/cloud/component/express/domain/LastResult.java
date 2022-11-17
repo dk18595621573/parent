@@ -11,6 +11,11 @@ import java.util.List;
 public class LastResult {
 
     /**
+     *  快递已签收
+     */
+    public static final String CHECK_SIGN = "1";
+
+    /**
      * 消息体 （忽略）
      */
     private String message;

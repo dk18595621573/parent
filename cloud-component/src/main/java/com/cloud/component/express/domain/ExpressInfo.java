@@ -52,4 +52,19 @@ public class ExpressInfo {
      *本行政区域拼音，提交resultv2=4标记后才会出现   tianjin
      */
     private String areaPinYin;
+
+    /**
+     *快递单号
+     */
+    private String expressNo;
+
+    /**
+     *快递公司编码
+     */
+    private String companyCode;
+
+    /**
+     *订单编号
+     */
+    private String orderCode;
 }

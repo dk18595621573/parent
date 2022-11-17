@@ -8,19 +8,18 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
+import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
-import com.cloud.component.express.domain.CallbackExpressResult;
-import com.cloud.component.express.domain.ExpressResult;
-import com.cloud.component.express.domain.SubscribeExpressResult;
+import com.cloud.component.express.consts.ExpressCallbackStatusCode;
+import com.cloud.component.express.consts.SubscribeExpressCode;
+import com.cloud.component.express.domain.*;
 import com.cloud.component.express.exception.ExpressException;
 import com.cloud.component.properties.ExpressProperties;
 import com.cloud.component.util.HttpClientUtil;
 import com.google.gson.Gson;
 import com.kuaidi100.sdk.api.Subscribe;
 import com.kuaidi100.sdk.contant.ApiInfoConstant;
-import com.kuaidi100.sdk.contant.CompanyConstant;
 import com.kuaidi100.sdk.core.IBaseClient;
 import com.kuaidi100.sdk.pojo.HttpResult;
 import com.kuaidi100.sdk.request.SubscribeParam;
@@ -30,6 +29,9 @@ import com.kuaidi100.sdk.response.SubscribeResp;
 import com.kuaidi100.sdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -144,43 +146,124 @@ public class ExpressClient {
 
     }
 
-    public void subscribeExpress(final String orderCode,final String expressCode, final String expressNo, final String cellphone) {
-        SubscribeParameters subscribeParameters = new SubscribeParameters();
-//        subscribeParameters.setCallbackurl(expressProperties.getCallbackUrl());
-        subscribeParameters.setCallbackurl("https://test-api.xingshiapp.cn/api/oms/express/callbackExpress");
-        subscribeParameters.setPhone(cellphone);
-        subscribeParameters.setSalt(SignUtils.sign(expressProperties.getKey() + expressProperties.getCustomer()));
-        subscribeParameters.setResultv2("4");
-        SubscribeParam subscribeParam = new SubscribeParam();
-        subscribeParam.setParameters(subscribeParameters);
-        subscribeParam.setCompany(expressCode);
-        subscribeParam.setNumber(expressNo);
-        subscribeParam.setKey(expressProperties.getKey());
+    /**
+     * 校验订阅快递信息请求参数
+     * @param subscribeExpressFrom 参数列表
+     * @return Boolean
+     */
+    public Boolean checkSubscribeExpressFrom(SubscribeExpressFrom subscribeExpressFrom) {
+        if (subscribeExpressFrom == null) {
+            return false;
+        }
+        if (null == subscribeExpressFrom.getOrderId()) {
+            return false;
+        }
+        if (StringUtils.isBlank(subscribeExpressFrom.getExpressCode())) {
+            return false;
+        }
+        if (StringUtils.isBlank(subscribeExpressFrom.getExpressNo())) {
+            return false;
+        }
+        if (StringUtils.isBlank(subscribeExpressFrom.getCellphone())) {
+            return false;
+        }
+        return true;
+    }
 
-        SubscribeReq subscribeReq = new SubscribeReq();
-        subscribeReq.setSchema(ApiInfoConstant.SUBSCRIBE_SCHEMA);
-        subscribeReq.setParam(new Gson().toJson(subscribeParam));
+    /**
+     * 订阅快递
+     * @param subscribeExpressFrom 参数列表
+     * @return String 订阅状态
+     */
+    public String subscribeExpress(SubscribeExpressFrom subscribeExpressFrom) {
 
+        if (!checkSubscribeExpressFrom(subscribeExpressFrom)) {
+            //订阅失败
+            return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
+        }
+        //附加参数信息(回调地址，签名，是否开启行政区域解析等)
+        SubscribeParameters parameter = getSubscribeParameters(subscribeExpressFrom);
+        // 设置参数(设置key)
+        SubscribeParam param = getSubscribeParam(parameter,subscribeExpressFrom);
+        // 设置请求参数
+        SubscribeReq request = getSubscribeReq();
+        // 设置请求接口
+        IBaseClient subscribe = new Subscribe();
         try {
-            IBaseClient subscribe = new Subscribe();
-            HttpResult execute = subscribe.execute(subscribeReq);
-            if (HttpStatus.HTTP_OK == execute.getStatus()) {
-                String bodyData = execute.getBody();
-                if (StrUtil.isBlank(bodyData)) {
-                    throw new ExpressException(ErrorCode.API_ERROR);
+            request.setParam(ChangeToJson(param));
+            HttpResult httpResult = subscribe.execute(request);
+            if (HttpStatus.HTTP_OK == httpResult.getStatus()) {
+                String bodyData = httpResult.getBody();
+                SubscribeResp response = new Gson().fromJson(httpResult.getBody(), SubscribeResp.class);
+                String returnCode = response.getReturnCode();
+
+                if(SubscribeExpressCode.REPEAT_SUBSCRIPTION.getCode().equals(returnCode)){
+                    // 重复订阅的请求
+                    return SubscribeExpressCode.REPEAT_SUBSCRIPTION.getCode();
                 }
-                SubscribeExpressResult subscribeExpressResult = JSON.parseObject(bodyData, SubscribeExpressResult.class);
-                if (subscribeExpressResult.getResult() != null ) {
-                    //订阅成功 修改订单订阅状态
+                if (StrUtil.isBlank(bodyData)) {
+                    return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
                 }
             } else {
-                log.warn("调用订阅快递API接口响应失败:{}", expressNo,execute.getError());
+                log.warn("调用订阅快递API接口响应失败:{}|{}", JsonUtil.toJson(subscribeExpressFrom),httpResult.getError());
                 //请求失败 -> 订阅失败
-                System.out.println("请求失败：status=" + execute.getStatus()+"error=" + execute.getError());
+                return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
             }
         } catch (Exception e) {
-            throw new ExpressException(ErrorCode.API_ERROR);
+            return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
         }
+        return SubscribeExpressCode.SUBSCRIPTION_SUCCESS.getCode();
+    }
+
+    public SubscribeParameters getSubscribeParameters(SubscribeExpressFrom subscribeExpressFrom){
+        SubscribeParameters parameter = new SubscribeParameters();
+        // 设置回调地址，在properties中配置
+        String data = JsonUtil.toJson(subscribeExpressFrom);
+        parameter.setCallbackurl(expressProperties.getCallbackUrl() + "?orderId=" + subscribeExpressFrom.getOrderId()
+                + "&expressCode=" + subscribeExpressFrom.getExpressCode()
+                + "&expressNo=" + subscribeExpressFrom.getExpressNo()
+                + "&cellphone=" + subscribeExpressFrom.getCellphone());
+        parameter.setSalt(sign(JsonUtil.toJson(subscribeExpressFrom) + expressProperties.getKey() + expressProperties.getCustomer()));
+        parameter.setPhone(subscribeExpressFrom.getCellphone());
+        //开通行政区域解析功能以及物流轨迹增加物流状态值
+        parameter.setResultv2("4");
+        return parameter;
+    }
+
+    public SubscribeParam getSubscribeParam(SubscribeParameters parameter, SubscribeExpressFrom subscribeExpressFrom){
+        SubscribeParam param = new SubscribeParam();
+        param.setKey(expressProperties.getKey());
+        param.setParameters(parameter);
+        param.setCompany(subscribeExpressFrom.getExpressCode());
+        param.setNumber(subscribeExpressFrom.getExpressNo());
+
+        return param;
+    }
+
+    public SubscribeReq getSubscribeReq(){
+        SubscribeReq request = new SubscribeReq();
+        request.setSchema(ApiInfoConstant.SUBSCRIBE_SCHEMA);
+        return request;
+    }
+
+    public SubscribeResp getSubscribeResp(){
+        SubscribeResp response = new SubscribeResp();
+        response.setResult(Boolean.TRUE);
+        response.setReturnCode("200");
+        response.setMessage("成功");
+        return response;
+    }
+
+    public String ChangeToJson(Object src) {
+        return new Gson().toJson(src);
+    }
+
+    public boolean checkSign(SubscribeExpressFrom subscribeExpressFrom,String sign) {
+        String ourSign = sign(JsonUtil.toJson(subscribeExpressFrom) + expressProperties.getKey() + expressProperties.getCustomer());
+        if (ourSign.equals(sign)){
+            return true;
+        }
+        return false;
     }
 
 }
