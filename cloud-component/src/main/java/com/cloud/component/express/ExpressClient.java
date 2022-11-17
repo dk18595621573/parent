@@ -27,6 +27,7 @@ import com.kuaidi100.sdk.pojo.HttpResult;
 import com.kuaidi100.sdk.request.SubscribeParam;
 import com.kuaidi100.sdk.request.SubscribeParameters;
 import com.kuaidi100.sdk.request.SubscribeReq;
+import com.kuaidi100.sdk.response.SubscribeResp;
 import com.kuaidi100.sdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -189,7 +190,6 @@ public class ExpressClient {
                 }
             } else {
                 log.warn("调用订阅快递API接口响应失败:{}|{}", JsonUtil.toJson(subscribeExpressFrom),httpResult.getError());
-                log.warn("调用订阅快递API接口响应失败:{}，{}", expressNo,execute.getError());
                 //请求失败 -> 订阅失败
                 return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
             }
