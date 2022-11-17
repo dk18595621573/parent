@@ -207,7 +207,7 @@ public class ExpressClient {
                 + "&expressCode=" + subscribeExpressFrom.getExpressCode()
                 + "&expressNo=" + subscribeExpressFrom.getExpressNo()
                 + "&cellphone=" + subscribeExpressFrom.getCellphone());
-        parameter.setSalt(sign(JsonUtil.toJson(subscribeExpressFrom) + expressProperties.getKey() + expressProperties.getCustomer()));
+        parameter.setSalt(sign(expressProperties.getKey() + expressProperties.getCustomer()));
         parameter.setPhone(subscribeExpressFrom.getCellphone());
         //开通行政区域解析功能以及物流轨迹增加物流状态值
         parameter.setResultv2("4");
@@ -242,8 +242,8 @@ public class ExpressClient {
         return new Gson().toJson(src);
     }
 
-    public boolean checkSign(SubscribeExpressFrom subscribeExpressFrom,String sign) {
-        String ourSign = sign(JsonUtil.toJson(subscribeExpressFrom) + expressProperties.getKey() + expressProperties.getCustomer());
+    public boolean checkSign(String sign) {
+        String ourSign = sign(expressProperties.getKey() + expressProperties.getCustomer());
         if (ourSign.equals(sign)){
             return true;
         }
