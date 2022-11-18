@@ -169,7 +169,12 @@ public class AgentJointOrder implements Serializable {
         /**
          * 发货时效（0：当天；1：明天：2：后天；n：n天后）
          */
-        private Long deliveryTime;
+        private Long deliveryDeadline;
+
+        /**
+         * 快递要求
+         */
+        private String logisticRequire;
     }
 
 
