@@ -207,7 +207,9 @@ public class ExpressClient {
                 + "&expressCode=" + subscribeExpressFrom.getExpressCode()
                 + "&expressNo=" + subscribeExpressFrom.getExpressNo()
                 + "&cellphone=" + subscribeExpressFrom.getCellphone());
-        parameter.setSalt(sign(expressProperties.getKey() + expressProperties.getCustomer()));
+        String sign = sign(expressProperties.getKey() + expressProperties.getCustomer());
+        log.info("快递100订阅sign= {}",sign);
+        parameter.setSalt(sign);
         parameter.setPhone(subscribeExpressFrom.getCellphone());
         //开通行政区域解析功能以及物流轨迹增加物流状态值
         parameter.setResultv2("4");
@@ -243,6 +245,7 @@ public class ExpressClient {
     }
 
     public boolean checkSign(String sign) {
+        log.info("快递100返回sign= {}",sign);
         String ourSign = sign(expressProperties.getKey() + expressProperties.getCustomer());
         if (ourSign.equals(sign)){
             return true;
