@@ -6,7 +6,7 @@ import lombok.Data;
  * @author nlsm
  */
 @Data
-public class ExpressCallbackDataResult {
+public class ExpressCallbackFrom {
 
     /**
      * 快递详情json串

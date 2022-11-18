@@ -14,6 +14,10 @@ public class LastResult {
      *  快递已签收
      */
     public static final String CHECK_SIGN = "1";
+    /**
+     *  快递未签收
+     */
+    public static final String NO_SIGN = "0";
 
     /**
      * 消息体 （忽略）
