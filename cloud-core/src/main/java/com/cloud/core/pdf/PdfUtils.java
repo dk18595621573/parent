@@ -177,9 +177,9 @@ public class PdfUtils {
                     page.setCropBox(new PDRectangle(0, pageHeight - (j * cutHeight), pageWidth, cutHeight));
                     PDFTextStripperByArea stripper = new PDFTextStripperByArea();
                     stripper.addRegion(regionName, region);
-                    stripper.extractRegions(page);
                     stripper.setWordSeparator(TEXT_SPLIT);
                     stripper.setSortByPosition(true);
+                    stripper.extractRegions(page);
 
                     String text = stripper.getTextForRegion(regionName);
                     if (StringUtils.isBlank(text)) {
