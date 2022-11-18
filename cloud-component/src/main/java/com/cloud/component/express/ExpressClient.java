@@ -11,11 +11,9 @@ import cn.hutool.json.JSONUtil;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
-import com.cloud.component.express.domain.ExpressResult;
-import com.cloud.component.express.domain.SubscribeExpressResult;
-import com.cloud.component.express.consts.ExpressCallbackStatusCode;
 import com.cloud.component.express.consts.SubscribeExpressCode;
-import com.cloud.component.express.domain.*;
+import com.cloud.component.express.domain.ExpressResult;
+import com.cloud.component.express.domain.SubscribeExpressFrom;
 import com.cloud.component.express.exception.ExpressException;
 import com.cloud.component.properties.ExpressProperties;
 import com.cloud.component.util.HttpClientUtil;
@@ -28,12 +26,8 @@ import com.kuaidi100.sdk.request.SubscribeParam;
 import com.kuaidi100.sdk.request.SubscribeParameters;
 import com.kuaidi100.sdk.request.SubscribeReq;
 import com.kuaidi100.sdk.response.SubscribeResp;
-import com.kuaidi100.sdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,26 +53,26 @@ public class ExpressClient {
     /**
      * 快递100 查询快递信息接口
      *
-     * @param expressCode
-     * @param expressNo
-     * @param cellphone
-     * @return
+     * @param expressCode 快递公司编码
+     * @param expressNo 快递单号
+     * @param cellphone 收件人手机号
+     * @return 快递物流信息
      */
     public ExpressResult findExpress(final String expressCode, final String expressNo, final String cellphone) {
-        String expressNoN = expressNo.replaceAll(" ", "").replaceAll("[\\p{Cf}]", "");;
-        Map<String, String> paramMap = MapUtil.newHashMap(4);
+        String num = expressNo.replace(" ", "").replaceAll("[\\p{Cf}]", "");;
+        Map<String, String> paramMap = MapUtil.newHashMap(8);
         // 结果排序
         paramMap.put("order", "asc");
         // 快递公司
         paramMap.put("com", expressCode);
         // 快递单号
-        paramMap.put("num", expressNoN);
+        paramMap.put("num", num);
         // 手机号码
         paramMap.put("phone", cellphone);
         // 开通行政区域解析功能
         paramMap.put("resultv2", "4");
         String param = JsonUtil.toJson(paramMap);
-        Map<String, String> requestBody = MapUtil.newHashMap(3);
+        Map<String, String> requestBody = MapUtil.newHashMap(5);
         // 授权码，请申请企业版获取
         requestBody.put("customer", expressProperties.getCustomer());
         requestBody.put("sign", sign(param + expressProperties.getKey() + expressProperties.getCustomer()));
