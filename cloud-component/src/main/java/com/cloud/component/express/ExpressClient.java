@@ -8,13 +8,12 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
 import com.cloud.component.express.consts.SubscribeExpressCode;
 import com.cloud.component.express.domain.ExpressResult;
-import com.cloud.component.express.domain.SubscribeExpressFrom;
+import com.cloud.component.express.domain.SubscribeExpressParam;
 import com.cloud.component.express.exception.ExpressException;
 import com.cloud.component.properties.ExpressProperties;
 import com.cloud.component.util.HttpClientUtil;
@@ -28,7 +27,6 @@ import com.kuaidi100.sdk.request.SubscribeParameters;
 import com.kuaidi100.sdk.request.SubscribeReq;
 import com.kuaidi100.sdk.response.SubscribeResp;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;
 
@@ -45,9 +43,6 @@ public class ExpressClient {
      * 接口超时时间
      */
     private static final int TIMEOUT = 5000;
-
-    @Value("${cloud.system.domain}")
-    private String domain;
 
     private final ExpressProperties expressProperties;
 
@@ -132,23 +127,26 @@ public class ExpressClient {
 
     /**
      * 校验订阅快递信息请求参数
-     * @param subscribeExpressFrom 参数列表
+     * @param expressParam 参数列表
      * @return Boolean
      */
-    public Boolean checkSubscribeExpressFrom(SubscribeExpressFrom subscribeExpressFrom) {
-        if (subscribeExpressFrom == null) {
+    public Boolean checkSubscribeExpressVO(SubscribeExpressParam expressParam) {
+        if (expressParam == null) {
             return false;
         }
-        if (null == subscribeExpressFrom.getOrderId()) {
+        if (null == expressParam.getOrderId()) {
             return false;
         }
-        if (StringUtils.isBlank(subscribeExpressFrom.getExpressCode())) {
+        if (StringUtils.isBlank(expressParam.getExpressCode())) {
             return false;
         }
-        if (StringUtils.isBlank(subscribeExpressFrom.getExpressNo())) {
+        if (StringUtils.isBlank(expressParam.getExpressNo())) {
             return false;
         }
-        if (StringUtils.isBlank(subscribeExpressFrom.getCellphone())) {
+        if (StringUtils.isBlank(expressParam.getCellphone())) {
+            return false;
+        }
+        if (StringUtils.isBlank(expressParam.getExpressCallBackUrl())) {
             return false;
         }
         return true;
@@ -156,25 +154,25 @@ public class ExpressClient {
 
     /**
      * 订阅快递
-     * @param subscribeExpressFrom 参数列表
+     * @param expressParam 参数列表
      * @return String 订阅状态
      */
-    public String subscribeExpress(SubscribeExpressFrom subscribeExpressFrom) {
+    public SubscribeExpressCode subscribeExpress(SubscribeExpressParam expressParam) {
 
-        if (!checkSubscribeExpressFrom(subscribeExpressFrom)) {
+        if (!checkSubscribeExpressVO(expressParam)) {
             //订阅失败
-            return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
+            return SubscribeExpressCode.SUBSCRIPTION_FAIL;
         }
         //附加参数信息(回调地址，签名，是否开启行政区域解析等)
-        SubscribeParameters parameter = getSubscribeParameters(subscribeExpressFrom);
+        SubscribeParameters parameter = infoSubscribeParameters(expressParam);
         // 设置参数(设置key)
-        SubscribeParam param = getSubscribeParam(parameter,subscribeExpressFrom);
+        SubscribeParam param = infoSubscribeParam(parameter,expressParam);
         // 设置请求参数
-        SubscribeReq request = getSubscribeReq();
+        SubscribeReq request = infoSubscribeReq();
         // 设置请求接口
         IBaseClient subscribe = new Subscribe();
         try {
-            request.setParam(ChangeToJson(param));
+            request.setParam(changeToJson(param));
             HttpResult httpResult = subscribe.execute(request);
             if (HttpStatus.HTTP_OK == httpResult.getStatus()) {
                 String bodyData = httpResult.getBody();
@@ -183,56 +181,49 @@ public class ExpressClient {
 
                 if(SubscribeExpressCode.REPEAT_SUBSCRIPTION.getCode().equals(returnCode)){
                     // 重复订阅的请求
-                    return SubscribeExpressCode.REPEAT_SUBSCRIPTION.getCode();
+                    return SubscribeExpressCode.REPEAT_SUBSCRIPTION;
                 }
                 if (StrUtil.isBlank(bodyData)) {
-                    return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
+                    return SubscribeExpressCode.SUBSCRIPTION_FAIL;
                 }
             } else {
-                log.warn("调用订阅快递API接口响应失败:{}|{}", JsonUtil.toJson(subscribeExpressFrom),httpResult.getError());
+                log.warn("调用订阅快递API接口响应失败:{}|{}", JsonUtil.toJson(expressParam),httpResult.getError());
                 //请求失败 -> 订阅失败
-                return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
+                return SubscribeExpressCode.SUBSCRIPTION_FAIL;
             }
         } catch (Exception e) {
-            return SubscribeExpressCode.SUBSCRIPTION_FAIL.getCode();
+            return SubscribeExpressCode.SUBSCRIPTION_FAIL;
         }
-        return SubscribeExpressCode.SUBSCRIPTION_SUCCESS.getCode();
+        return SubscribeExpressCode.SUBSCRIPTION_SUCCESS;
     }
 
-    public SubscribeParameters getSubscribeParameters(SubscribeExpressFrom subscribeExpressFrom){
+    private SubscribeParameters infoSubscribeParameters(SubscribeExpressParam expressParam){
         SubscribeParameters parameter = new SubscribeParameters();
-        // 设置回调地址，在properties中配置
-        String expressCallBackUrl = domain + Constants.EXPRESS_CALLBACK_URL;
-        parameter.setCallbackurl(expressCallBackUrl + "?orderId=" + subscribeExpressFrom.getOrderId()
-                + "&expressCode=" + subscribeExpressFrom.getExpressCode()
-                + "&expressNo=" + subscribeExpressFrom.getExpressNo()
-                + "&cellphone=" + subscribeExpressFrom.getCellphone());
+        parameter.setCallbackurl(expressParam.getExpressCallBackUrl());
         String sign = sign(expressProperties.getKey() + expressProperties.getCustomer());
-        log.info("快递100订阅sign= {}",sign);
         parameter.setSalt(sign);
-        parameter.setPhone(subscribeExpressFrom.getCellphone());
+        parameter.setPhone(expressParam.getCellphone());
         //开通行政区域解析功能以及物流轨迹增加物流状态值
         parameter.setResultv2("4");
         return parameter;
     }
 
-    public SubscribeParam getSubscribeParam(SubscribeParameters parameter, SubscribeExpressFrom subscribeExpressFrom){
+    private SubscribeParam infoSubscribeParam(SubscribeParameters parameter, SubscribeExpressParam expressParam){
         SubscribeParam param = new SubscribeParam();
         param.setKey(expressProperties.getKey());
         param.setParameters(parameter);
-        param.setCompany(subscribeExpressFrom.getExpressCode());
-        param.setNumber(subscribeExpressFrom.getExpressNo());
-
+        param.setCompany(expressParam.getExpressCode());
+        param.setNumber(expressParam.getExpressNo());
         return param;
     }
 
-    public SubscribeReq getSubscribeReq(){
+    private SubscribeReq infoSubscribeReq(){
         SubscribeReq request = new SubscribeReq();
         request.setSchema(ApiInfoConstant.SUBSCRIBE_SCHEMA);
         return request;
     }
 
-    public SubscribeResp getSubscribeResp(){
+    public SubscribeResp infoSubscribeResp(){
         SubscribeResp response = new SubscribeResp();
         response.setResult(Boolean.TRUE);
         response.setReturnCode("200");
@@ -240,17 +231,8 @@ public class ExpressClient {
         return response;
     }
 
-    public String ChangeToJson(Object src) {
+    private String changeToJson(Object src) {
         return new Gson().toJson(src);
-    }
-
-    public boolean checkSign(String sign) {
-        log.info("快递100返回sign= {}",sign);
-        String ourSign = sign(expressProperties.getKey() + expressProperties.getCustomer());
-        if (ourSign.equals(sign)){
-            return true;
-        }
-        return false;
     }
 
 }

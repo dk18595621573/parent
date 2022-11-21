@@ -7,7 +7,7 @@ import lombok.Data;
  * @author nlsm
  */
 @Data
-public class SubscribeExpressFrom {
+public class SubscribeExpressParam {
 
     /**
      * 订单编码
@@ -28,6 +28,11 @@ public class SubscribeExpressFrom {
      * 手机号码
      */
     private String cellphone;
+
+    /**
+     * 订阅回调地址
+     */
+    private String expressCallBackUrl;
 
 
 }
