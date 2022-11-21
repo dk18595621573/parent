@@ -8,6 +8,7 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
@@ -27,6 +28,7 @@ import com.kuaidi100.sdk.request.SubscribeParameters;
 import com.kuaidi100.sdk.request.SubscribeReq;
 import com.kuaidi100.sdk.response.SubscribeResp;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Map;
 
@@ -44,11 +46,15 @@ public class ExpressClient {
      */
     private static final int TIMEOUT = 5000;
 
+    @Value("${cloud.system.domain}")
+    private String domain;
+
     private final ExpressProperties expressProperties;
 
     public ExpressClient(final ExpressProperties expressProperties) {
         this.expressProperties = expressProperties;
     }
+
 
     /**
      * 快递100 查询快递信息接口
@@ -196,8 +202,8 @@ public class ExpressClient {
     public SubscribeParameters getSubscribeParameters(SubscribeExpressFrom subscribeExpressFrom){
         SubscribeParameters parameter = new SubscribeParameters();
         // 设置回调地址，在properties中配置
-        String data = JsonUtil.toJson(subscribeExpressFrom);
-        parameter.setCallbackurl(expressProperties.getCallbackUrl() + "?orderId=" + subscribeExpressFrom.getOrderId()
+        String expressCallBackUrl = domain + Constants.EXPRESS_CALLBACK_URL;
+        parameter.setCallbackurl(expressCallBackUrl + "?orderId=" + subscribeExpressFrom.getOrderId()
                 + "&expressCode=" + subscribeExpressFrom.getExpressCode()
                 + "&expressNo=" + subscribeExpressFrom.getExpressNo()
                 + "&cellphone=" + subscribeExpressFrom.getCellphone());
