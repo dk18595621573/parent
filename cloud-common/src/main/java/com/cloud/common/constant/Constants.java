@@ -197,6 +197,4 @@ public class Constants {
         return roleId != null && 1L == roleId;
     }
 
-    public static final String EXPRESS_CALLBACK_URL = "/oms/express/callbackExpress";
-
 }
