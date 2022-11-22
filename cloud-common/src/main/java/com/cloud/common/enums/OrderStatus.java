@@ -16,6 +16,7 @@ public enum OrderStatus {
     ADDRESS_TO_BE_COMPLETED(8, "待补全地址"),
     IMEI_ABNORMAL(9, "串码异常"),
     AFTERMARKET(10, "售后"),
+    ON_THE_WAY(11, "在途"),// 前端status传11，后端查询5并且on_the_way为true的订单
     LOGISTICS_ABNORMAL(12, "物流异常"),
     REVOKE(13, "撤销"),
     NOT_RECOVERED(14, "未追回订单"),
