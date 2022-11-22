@@ -30,7 +30,7 @@ public class AgentJointOrder implements Serializable {
     private OrderMarketing data;
 
     @Data
-    public static class OrderMarketing implements Serializable{
+    public static class OrderMarketing implements Serializable {
         /**
          * 接龙订单id
          */
@@ -170,6 +170,10 @@ public class AgentJointOrder implements Serializable {
          * 发货时效（0：当天；1：明天：2：后天；n：n天后）
          */
         private Long deliveryDeadline;
+        /**
+         * 到货时效
+         */
+        private String deliveryDeadlineValue;
 
         /**
          * 快递要求
