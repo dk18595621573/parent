@@ -1,5 +1,8 @@
 package com.cloud.common.utils.uuid;
 
+import cn.hutool.core.util.ArrayUtil;
+import com.cloud.common.exception.ServiceException;
+
 import java.util.Random;
 
 /**
@@ -27,11 +30,6 @@ public class CodeUtil {
     private static final char FIX_CHAR = '7';
 
     /**
-     * 进制长度.
-     */
-    private static final int CHARS_LENGTH = CHARS.length;
-
-    /**
      * 默认随机码长度.
      */
     private static final int CODE_LENGTH = 10;
@@ -54,23 +52,38 @@ public class CodeUtil {
      * @return 随机码
      */
     public static String toCode(final long pk, final int codeLength) {
+        return toCode(CHARS, FIX_CHAR, pk, codeLength);
+    }
+
+    /**
+     * 根据ID生成随机码.
+     *
+     * @param pk         ID
+     * @param codeLength 长度
+     * @return 随机码
+     */
+    public static String toCode(final char[] chars, final char fixChar, final long pk, final int codeLength) {
+        if (ArrayUtil.isEmpty(chars) || ArrayUtil.contains(chars, fixChar)) {
+            throw new ServiceException("随机码基础库错误");
+        }
         long id = pk;
         char[] buf = new char[32];
         int charPos = 32;
-        while ((id / CHARS_LENGTH) > 0) {
-            int ind = (int) (id % CHARS_LENGTH);
-            buf[--charPos] = CHARS[ind];
-            id /= CHARS_LENGTH;
+        int length = chars.length;
+        while ((id / length) > 0) {
+            int ind = (int) (id % length);
+            buf[--charPos] = chars[ind];
+            id /= length;
         }
-        buf[--charPos] = CHARS[(int) (id % CHARS_LENGTH)];
+        buf[--charPos] = chars[(int) (id % length)];
         String str = new String(buf, charPos, 32 - charPos);
         // 不够长度的自动随机补全
         if (str.length() < codeLength) {
             StringBuilder sb = new StringBuilder();
-            sb.append(FIX_CHAR);
+            sb.append(fixChar);
             Random rnd = new Random();
             for (int i = 1; i < codeLength - str.length(); i++) {
-                sb.append(CHARS[rnd.nextInt(CHARS_LENGTH)]);
+                sb.append(chars[rnd.nextInt(length)]);
             }
             str += sb.toString();
         }
@@ -84,21 +97,26 @@ public class CodeUtil {
      * @return ID
      */
     public static long toId(final String code) {
+        return toId(CHARS, FIX_CHAR, code);
+    }
+
+    public static long toId(final char[] chars, final char fixChar, final String code) {
         char[] chs = code.toCharArray();
         long res = 0L;
+        int length = chars.length;
         for (int i = 0; i < chs.length; i++) {
-            if (chs[i] == FIX_CHAR) {
+            if (chs[i] == fixChar) {
                 break;
             }
             int ind = 0;
-            for (int j = 0; j < CHARS_LENGTH; j++) {
-                if (chs[i] == CHARS[j]) {
+            for (int j = 0; j < length; j++) {
+                if (chs[i] == chars[j]) {
                     ind = j;
                     break;
                 }
             }
             if (i > 0) {
-                res = res * CHARS_LENGTH + ind;
+                res = res * length + ind;
             } else {
                 res = ind;
             }
@@ -118,6 +136,6 @@ public class CodeUtil {
 //
 //        System.out.println("id1 = " + toId(code));
 //        System.out.println("id2 = " + toId(code2));
-//        System.out.println("id = " + toId("HHHHHHHH"));
+//        System.out.println("id = " + toId("88888888"));
 //    }
 }
