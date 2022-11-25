@@ -9,7 +9,6 @@ import com.cloud.webmvc.utils.SecurityUtils;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -41,7 +40,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 MDC.put(Constants.MDC_COMPANY_ID, String.valueOf(loginUser.getDeptId()));
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                SecurityUtils.setAuthentication(authenticationToken);
                 RequestThread.setUser(loginUser.toRequestUser());
             } else {
                 MDC.put(Constants.MDC_USER_ID, StringUtils.EMPTY);

@@ -65,7 +65,14 @@ public class SecurityUtils {
     }
 
     /**
-     * 获取Authentication
+     * 保存Authentication
+     */
+    public static void setAuthentication(Authentication authentication) {
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    /**
+     * 清理Authentication
      */
     public static void clearAuthentication() {
         SecurityContextHolder.clearContext();
