@@ -49,6 +49,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             }
             chain.doFilter(request, response);
         } finally {
+            SecurityUtils.clearAuthentication();
             RequestThread.clear();
             MDC.remove(Constants.MDC_USER_ID);
             MDC.remove(Constants.MDC_COMPANY_ID);

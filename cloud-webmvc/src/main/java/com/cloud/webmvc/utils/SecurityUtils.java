@@ -65,6 +65,13 @@ public class SecurityUtils {
     }
 
     /**
+     * 获取Authentication
+     */
+    public static void clearAuthentication() {
+        SecurityContextHolder.clearContext();
+    }
+
+    /**
      * 生成BCryptPasswordEncoder密码
      *
      * @param password 密码
