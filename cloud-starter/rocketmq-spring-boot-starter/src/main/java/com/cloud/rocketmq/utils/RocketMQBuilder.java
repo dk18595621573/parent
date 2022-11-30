@@ -27,6 +27,7 @@ public class RocketMQBuilder {
     private static final String REDIS_REPEAT_PREFIX_KEY = "ROCKETMQ_PROCESS";
     private static final String ROCKETMQ_KEYS = RocketMQHeaders.PREFIX + RocketMQHeaders.KEYS;
     private static final String ROCKETMQ_TAGS = RocketMQHeaders.PREFIX + RocketMQHeaders.TAGS;
+    private static final String ROCKETMQ_MESSAGE_ID = RocketMQHeaders.PREFIX + RocketMQHeaders.MESSAGE_ID;
 
     private final RocketMQProperties properties;
     private final StreamBridge streamBridge;
@@ -90,6 +91,20 @@ public class RocketMQBuilder {
             throw new RuntimeException("tags不存在");
         }
         return tags;
+    }
+
+    /**
+     * 获取消息Keys.
+     *
+     * @param event 事件对象
+     * @return T
+     */
+    public String getMessageId(final Message<?> event) {
+        String messageId = event.getHeaders().get(ROCKETMQ_MESSAGE_ID, String.class);
+        if (StringUtils.isBlank(messageId)) {
+            throw new RuntimeException("messageId不存在");
+        }
+        return messageId;
     }
 
     /**
