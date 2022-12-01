@@ -215,4 +215,27 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
             return false;
         }
     }
+
+    /**
+     * 计算两个时间相差是否在3个月内
+     *
+     * @param start 开始时间
+     * @param end   结束时间
+     * @return 对比结果true是在3个月内，false为不在3个月内
+     */
+    public static Boolean calculationMonth(Date start, Date end) {
+        if (start.after(end)) {
+            Date t = start;
+            start = end;
+            end = t;
+        }
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.setTime(start);
+        c2.setTime(end);
+        c1.add(Calendar.MONTH, 3);
+        if (c1.getTimeInMillis() < c2.getTimeInMillis()) {
+            return Boolean.FALSE;        }
+        return Boolean.TRUE;
+    }
 }
