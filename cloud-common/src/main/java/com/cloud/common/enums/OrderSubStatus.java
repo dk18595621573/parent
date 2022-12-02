@@ -110,6 +110,7 @@ public enum OrderSubStatus {
     REVOKE_NEW(131, "新建采购撤销"),
     REVOKE_PUBLISHED(132, "待发布撤销"),
     REVOKE_ADDRESS(133, "待补全地址撤销"),
+    REVOKE_DELIVERED(134, "待发货撤销"),
     ;
 
     private final Integer code;
