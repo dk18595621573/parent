@@ -225,20 +225,16 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
      * @param field   时间量单位 如java.util.Calendar.MONTH
      * @return 对比结果 true是在指定时间量内，false为不在指定时间量内
      */
-    public static Boolean calculationMonth(Date start, Date end, int amount, int field) {
+    public static boolean calculationMonth(Date start, Date end, int amount, int field) {
         if (start.after(end)) {
             Date t = start;
             start = end;
             end = t;
         }
         Calendar c1 = Calendar.getInstance();
-        Calendar c2 = Calendar.getInstance();
         c1.setTime(start);
-        c2.setTime(end);
         c1.add(field, amount);
-        if (c1.getTimeInMillis() < c2.getTimeInMillis()) {
-            return Boolean.FALSE;
-        }
-        return Boolean.TRUE;
+        Date time = c1.getTime();
+        return time.before(end) || time.equals(end);
     }
 }
