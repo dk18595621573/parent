@@ -3,6 +3,7 @@ package com.cloud.common.core.page;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,5 +25,9 @@ public class Page<T> implements Serializable {
     public Page(final List<T> data, final Long total) {
         this.data = data;
         this.total = total;
+    }
+
+    public static <T> Page<T> empty() {
+        return new Page<>(Collections.emptyList(), 0L);
     }
 }
