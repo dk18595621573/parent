@@ -44,6 +44,37 @@ public class MessagePayload implements Serializable {
      */
     private String imageUrl;
 
+    /**
+     * 文件名
+     */
+    public String name;
+
+    /**
+     * 文件大小
+     */
+    public Integer size;
+
+    /**
+     * 公众号id
+     */
+    private String appid;
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 跳转地址
+     */
+    private String pagePath;
+    /**
+     * 封面图地址
+     */
+    private String thumbUrl;
+    /**
+     * 小程序ID
+     */
+    private String username;
+
     public Message toMessage(MessageType type) {
         switch (type) {
             case TEXT:
@@ -52,6 +83,13 @@ public class MessagePayload implements Serializable {
                 return new ImageMessage(getUrl());
             case URL_LINK:
                 return new LinkMessage(getSourceUrl(), getTitle(), getSummary(), getImageUrl());
+            case FILE:
+                return new FileMessage(getName(), getUrl(), getSize());
+            case MINI_PROGRAM:
+                return new MiniProgramMessage(getAppid(), getDescription(), getPagePath(), getThumbUrl(), getTitle(), getUsername());
+            case VIDEO:
+                return new VideoMessage(getUrl());
+
         }
         return null;
     }
