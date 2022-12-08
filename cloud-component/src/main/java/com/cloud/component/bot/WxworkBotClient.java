@@ -146,6 +146,20 @@ public class WxworkBotClient {
     /**
      * 发送小程序消息
      * @param chatId 会话id
+     * @param description 描述
+     * @param pagePath 跳转地址
+     * @param thumbUrl 封面图地址
+     */
+    public MessageResponse sendMiniProgram(final String chatId, final String description, final String pagePath, final String thumbUrl) {
+        WxworkBotProperties.OutMessage outMessage = properties.getMessage();
+        return sendMessage(chatId, MessageType.MINI_PROGRAM,
+            new MiniProgramMessage(String.format("%s@app", outMessage.getGhId()),
+                description, pagePath, thumbUrl, outMessage.getTitle(), outMessage.getAppid()));
+    }
+
+    /**
+     * 发送小程序消息
+     * @param chatId 会话id
      * @param message 小程序消息
      */
     public MessageResponse sendMiniProgram(final String chatId, final MiniProgramMessage message) {

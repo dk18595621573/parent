@@ -15,9 +15,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FileMessage implements Message {
 
-    public String name;//	string	是	文件名
-    public String url;//	string	是	文件地址
-    public Integer size;//	number	否	文件大小
+    /**
+     * 文件名
+     */
+    public String name;
+    /**
+     * 文件地址
+     */
+    public String url;
+    /**
+     * 文件大小
+     *  非必填
+     */
+    public Integer size;
 
     public FileMessage(final String name, final String url) {
         this.name = name;

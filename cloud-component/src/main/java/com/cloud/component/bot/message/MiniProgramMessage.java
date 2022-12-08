@@ -16,15 +16,34 @@ import lombok.NoArgsConstructor;
 public class MiniProgramMessage implements Message {
 
     /**
-     * 关联的公众号ID(使用小程序appid发送消息, 接受到的小程序无法正常打开). 企微格式要求
+     * 小程序原始id
      */
-    private String appid;//	string	是
-    private String description;//	string	是	描述
-    private String pagePath;//	string	是	跳转地址
-    private String thumbUrl;//	string	是	封面图地址
-    private String title;//	string	是	标题
-    private String username;//	string	是	小程序ID
-    private String iconUrl;//	string	否	icon地址
+    private String appid;
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 跳转地址
+     */
+    private String pagePath;
+    /**
+     * 封面图地址
+     */
+    private String thumbUrl;
+    /**
+     * 标题
+     */
+    private String title;
+    /**
+     * 小程序APPID
+     */
+    private String username;
+    /**
+     * icon地址
+     *  非必填
+     */
+    private String iconUrl;
 
     public MiniProgramMessage(final String appid, final String description, final String pagePath, final String thumbUrl, final String title, final String username) {
         this.appid = appid;
