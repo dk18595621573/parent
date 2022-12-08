@@ -106,9 +106,4 @@ public class ApiHubsHoliday implements Holiday {
         private String holidayRecessCn;
     }
 
-    public static void main(String[] args) {
-        Holiday holiday = new ApiHubsHoliday();
-        List<HolidayResult> resultList = holiday.getDay(2022, null);
-        System.out.println("节假日操作---" + JSONUtil.toJsonStr(resultList));
-    }
 }
