@@ -9,6 +9,7 @@ import cn.hutool.http.Method;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
+import com.cloud.common.utils.sign.Md5Utils;
 import com.cloud.component.bot.consts.BotApiEnums;
 import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
@@ -223,6 +224,7 @@ public class WxworkBotClient {
      */
     public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
         log.info("[BOT]收到添加好友信息:【{}】【{}】", sign, data);
+        checkSign(sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
         return Optional.ofNullable(botEvent).map(BotEvent::getData).orElse(null);
     }
@@ -235,6 +237,7 @@ public class WxworkBotClient {
      */
     public SyncConsumerInfo parseSyncInfo(final String sign, final String data) {
         log.info("[BOT]收到数据同步:【{}】【{}】", sign, data);
+        checkSign(sign, data);
         return JsonUtil.parse(data, SyncConsumerInfo.class);
     }
 
@@ -295,6 +298,14 @@ public class WxworkBotClient {
         String body = execute.body();
         log.info("[BOT]响应结果【{}】:{}", url, body);
         return body;
+    }
+
+    private void checkSign(final String sign, final String data) {
+        String signature = Md5Utils.hash(data + properties.getApiToken());
+        if (!StringUtils.equals(sign, signature)) {
+            log.error("[BOT]数据同步签名验证失败【{}】【{}】", sign, signature);
+            throw new WxworkBotException("非法请求，签名错误");
+        }
     }
 
 }
