@@ -215,4 +215,26 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
             return false;
         }
     }
+
+    /**
+     * 计算两个时间相差是否在指定时间量内
+     *
+     * @param start 开始时间
+     * @param end   结束时间
+     * @param amount   指定时间量
+     * @param field   时间量单位 如java.util.Calendar.MONTH
+     * @return 对比结果 true是在指定时间量内，false为不在指定时间量内
+     */
+    public static boolean calculationMonth(Date start, Date end, int amount, int field) {
+        if (start.after(end)) {
+            Date t = start;
+            start = end;
+            end = t;
+        }
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(start);
+        c1.add(field, amount);
+        Date time = c1.getTime();
+        return time.before(end) || time.equals(end);
+    }
 }

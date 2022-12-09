@@ -46,7 +46,7 @@ public class PageForm implements Serializable {
     }
 
     public Boolean getReasonable() {
-        return StringUtils.isNull(reasonable) ? Boolean.TRUE : reasonable;
+        return StringUtils.isNull(reasonable) ? Boolean.FALSE : reasonable;
     }
 
     public PageParam toPageParam() {

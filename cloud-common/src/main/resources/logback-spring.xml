@@ -4,6 +4,8 @@
     <springProperty scope="context" name="log.path" source="logging.file.path" defaultValue="./logs"/>
     <springProperty scope="context" name="log.name" source="logging.file.name" defaultValue="sys"/>
 
+    <define name="hostname" class="com.cloud.common.logback.CanonicalHostNamePropertyDefiner"/>
+
     <!-- 日志输出格式 -->
     <property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS}|[%thread]|%X{TRACE}|%X{USER}|%X{COMPANY}|%-5level|%logger{20}[%method,%line]|%msg%n"/>
 

@@ -143,6 +143,11 @@ public class Constants {
 //    public static final String JWT_AUTHORITIES = "authorities";
 
     /**
+     * 登录用户ID
+     */
+    public static final String LOGIN_USERID = "userId:";
+
+    /**
      * 参数管理 cache key
      */
     public static final String SYS_CONFIG_KEY = "sys_config:";
@@ -153,9 +158,18 @@ public class Constants {
     public static final String SYS_DICT_KEY = "sys_dict:";
 
     /**
-     * 资源映射路径 前缀
+     * 所有权限标识
      */
-    public static final String RESOURCE_PREFIX = "/profile";
+    public static final String ALL_PERMISSION = "*:*:*";
+
+    /**
+     * 管理员角色权限标识
+     */
+    public static final String SUPER_ADMIN = "admin";
+
+    public static final String ROLE_DELIMETER = ",";
+
+    public static final String PERMISSION_DELIMETER = ",";
 
     /**
      * 雪花算法使用，暂时写死

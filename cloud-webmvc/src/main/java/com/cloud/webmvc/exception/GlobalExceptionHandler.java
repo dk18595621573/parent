@@ -2,6 +2,7 @@ package com.cloud.webmvc.exception;
 
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.exception.DemoModeException;
+import com.cloud.common.exception.PayException;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.core.exception.BaseException;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
@@ -126,5 +128,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DemoModeException.class)
     public Result<?> handleDemoModeException(DemoModeException e) {
         return Result.error("演示模式，不允许操作");
+    }
+
+    /**
+     * 支付异常
+     */
+    @ResponseStatus
+    @ExceptionHandler(PayException.class)
+    public Result<?> handlePayException(PayException e) {
+        return Result.error();
     }
 }

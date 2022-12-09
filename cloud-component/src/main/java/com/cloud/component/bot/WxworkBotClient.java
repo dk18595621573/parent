@@ -6,14 +6,20 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.http.Method;
+import com.cloud.common.constant.HttpStatus;
+import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.bot.consts.BotApiEnums;
 import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
 import com.cloud.component.bot.exception.WxworkBotException;
+import com.cloud.component.bot.message.FileMessage;
+import com.cloud.component.bot.message.ImageMessage;
 import com.cloud.component.bot.message.LinkMessage;
 import com.cloud.component.bot.message.Message;
+import com.cloud.component.bot.message.MiniProgramMessage;
 import com.cloud.component.bot.message.TextMessage;
+import com.cloud.component.bot.message.VideoMessage;
 import com.cloud.component.bot.request.BaseCallback;
 import com.cloud.component.bot.request.BotEvent;
 import com.cloud.component.bot.request.ConsumerInfo;
@@ -107,6 +113,15 @@ public class WxworkBotClient {
     }
 
     /**
+     * 发送图片消息
+     * @param chatId 会话id
+     * @param url 图片地址
+     */
+    public MessageResponse sendImage(final String chatId, final String url) {
+        return sendMessage(chatId, MessageType.IMAGE, new ImageMessage(url));
+    }
+
+    /**
      * 发送文本消息
      * @param chatId 会话id
      * @param title 链接标题
@@ -118,6 +133,49 @@ public class WxworkBotClient {
         return sendMessage(chatId, MessageType.URL_LINK, new LinkMessage(link, title, summary, image));
     }
 
+    /**
+     * 发送文件消息
+     * @param chatId 会话id
+     * @param url 文件地址
+     */
+    public MessageResponse sendFile(final String chatId, final String url) {
+        String name = StringUtils.substringAfterLast(url, "/");
+        return sendMessage(chatId, MessageType.FILE, new FileMessage(name, url));
+    }
+
+    /**
+     * 发送小程序消息
+     * @param chatId 会话id
+     * @param description 描述
+     * @param pagePath 跳转地址
+     * @param thumbUrl 封面图地址
+     */
+    public MessageResponse sendMiniProgram(final String chatId, final String description, final String pagePath, final String thumbUrl) {
+        WxworkBotProperties.OutMessage outMessage = properties.getMessage();
+        return sendMessage(chatId, MessageType.MINI_PROGRAM,
+            new MiniProgramMessage(String.format("%s@app", outMessage.getGhId()),
+                description, pagePath, thumbUrl, outMessage.getTitle(), outMessage.getAppid()));
+    }
+
+    /**
+     * 发送小程序消息
+     * @param chatId 会话id
+     * @param message 小程序消息
+     */
+    public MessageResponse sendMiniProgram(final String chatId, final MiniProgramMessage message) {
+        return sendMessage(chatId, MessageType.MINI_PROGRAM, message);
+    }
+
+    public MessageResponse sendVideo(final String chatId, final String url) {
+        return sendMessage(chatId, MessageType.VIDEO, new VideoMessage(url));
+    }
+
+    /**
+     * 给机器人的好友发送消息
+     * @param chatId 会话id
+     * @param messageType 消息类型
+     * @param message 消息内容
+     */
     private MessageResponse sendMessage(final String chatId, final MessageType messageType, Message message) {
         Map<String, Object> param = new HashMap<>();
         param.put("messageType", messageType.getCode());
@@ -230,7 +288,7 @@ public class WxworkBotClient {
         }
         log.info("[BOT]发起请求【{}】:{}", url, param);
         HttpResponse execute = request.setConnectionTimeout(5000).execute();
-        if (execute.getStatus() == BotConsts.HTTP_STATUS_FREQUENT) {
+        if (execute.getStatus() == HttpStatus.HTTP_STATUS_FREQUENT) {
             log.error("[BOT]响应[请求太频繁，稍后再试]:{}", url);
             throw new WxworkBotException(BotConsts.ERROR_CODE_FREQUENT, "请求太频繁，稍后再试");
         }

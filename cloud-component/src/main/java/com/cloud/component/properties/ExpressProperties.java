@@ -18,7 +18,6 @@ public class ExpressProperties {
 
     private String url;
 
-
     private String key;
 
     private String customer;

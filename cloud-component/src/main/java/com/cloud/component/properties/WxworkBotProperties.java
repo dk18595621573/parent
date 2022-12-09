@@ -3,6 +3,8 @@ package com.cloud.component.properties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.io.Serializable;
+
 /**
  * 企业机器人配置.
  *
@@ -33,6 +35,30 @@ public class WxworkBotProperties {
      * 机器人接口 token
      */
     private String botToken;
+
+    /**
+     * 发送消息参数
+     */
+    private OutMessage message = new OutMessage();
+
+    @Data
+    public static class OutMessage implements Serializable {
+
+        /**
+         * 小程序appid
+         */
+        private String appid;
+
+        /**
+         * 标题
+         */
+        private String title;
+
+        /**
+         * 小程序原始id
+         */
+        private String ghId;
+    }
 
 
 }

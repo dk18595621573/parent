@@ -22,6 +22,13 @@ public interface SseGroup {
      */
     String ADMIN_PUSH_API = "ADMIN_PUSH_API";
 
+    interface AdminMarketingGroup{
+        // 采购方接龙订单
+        String DEMAND_ORDER_MARKETING = "demand_order_marketing";
+        // 供应商接龙订单
+        String SUPPLIER_ORDER_MARKETING = "supplier_order_marketing";
+    }
+
     /**
      * 支付结果通知
      */

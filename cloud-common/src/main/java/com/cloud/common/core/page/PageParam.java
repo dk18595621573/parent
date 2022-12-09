@@ -18,7 +18,7 @@ public class PageParam implements Serializable {
 
     public static final int DEFAULT_SIZE = 10;
 
-    public static final int MAX_SIZE = 500;
+    public static final int MAX_SIZE = 2000;
 
     private Integer page;
 
@@ -36,7 +36,7 @@ public class PageParam implements Serializable {
     }
 
     public PageParam(final Integer page, final Integer size, final String orderBy) {
-        this(page, size, orderBy, true);
+        this(page, size, orderBy, false);
     }
 
     public PageParam(final Integer page, final Integer size, final String orderBy, final Boolean reasonable) {

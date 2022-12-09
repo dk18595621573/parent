@@ -15,5 +15,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ImageMessage implements Message {
 
+    /**
+     * 图片地址
+     */
     private String url;
+
+    /**
+     * 图片大小
+     *  非必填
+     */
+    public Integer size;
+
+    public ImageMessage(final String url) {
+        this.url = url;
+    }
 }

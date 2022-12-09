@@ -364,5 +364,10 @@ public class DemandOrder implements Serializable {
          */
         private List<EntrepotAddress> warehouseReceivingAddressList;
 
+        /**
+         * 接龙订单发货方式
+         */
+        private String logisticRequire;
+
     }
 }
