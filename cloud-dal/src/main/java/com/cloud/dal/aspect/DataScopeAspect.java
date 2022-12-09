@@ -2,8 +2,8 @@ package com.cloud.dal.aspect;
 
 import com.cloud.common.annotation.DataScope;
 import com.cloud.common.constant.Constants;
-import com.cloud.common.core.domain.model.RequestUser;
-import com.cloud.common.core.domain.model.Role;
+import com.cloud.common.core.model.RequestUser;
+import com.cloud.common.core.model.Role;
 import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.dal.model.BaseEntity;

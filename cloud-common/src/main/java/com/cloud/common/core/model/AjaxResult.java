@@ -1,4 +1,4 @@
-package com.cloud.common.core.domain;
+package com.cloud.common.core.model;
 
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.utils.StringUtils;

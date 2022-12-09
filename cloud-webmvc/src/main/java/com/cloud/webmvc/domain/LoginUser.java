@@ -1,9 +1,9 @@
 package com.cloud.webmvc.domain;
 
-import com.cloud.common.core.domain.model.BaseRequestInfo;
-import com.cloud.common.core.domain.model.Dept;
-import com.cloud.common.core.domain.model.RequestUser;
-import com.cloud.common.core.domain.model.Role;
+import com.cloud.common.core.model.BaseRequestInfo;
+import com.cloud.common.core.model.Dept;
+import com.cloud.common.core.model.RequestUser;
+import com.cloud.common.core.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;

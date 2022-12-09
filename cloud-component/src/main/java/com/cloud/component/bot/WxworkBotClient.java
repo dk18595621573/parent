@@ -31,6 +31,7 @@ import com.cloud.component.bot.request.SyncConsumerInfo;
 import com.cloud.component.bot.response.ApiResponse;
 import com.cloud.component.bot.response.BotResponse;
 import com.cloud.component.bot.response.BotUser;
+import com.cloud.component.bot.response.ChatResponse;
 import com.cloud.component.bot.response.Contact;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
@@ -82,6 +83,19 @@ public class WxworkBotClient {
         map.put("config_id", configId);
         ContactWayResponse response = exceute(BotApiEnums.CONTACTWAY_GET, map);
         return response.getContactWay();
+    }
+
+    /**
+     * 获取用户的会话id
+     * @param unionId 用户的unionId
+     * @return 会话id
+     */
+    public String queryChatId(final String unionId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("unionId", unionId);
+        map.put("botUserId", properties.getBotUserId());
+        ChatResponse response = exceute(BotApiEnums.GET_CHATID, map);
+        return response.getChatId();
     }
 
     /**

@@ -2,7 +2,7 @@ package com.cloud.webmvc.security.handle;
 
 import com.cloud.common.constant.Constants;
 import com.cloud.common.constant.HttpStatus;
-import com.cloud.common.core.domain.AjaxResult;
+import com.cloud.common.core.model.AjaxResult;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.core.manager.AsyncManager;

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.cloud.common.annotation.Log;
 import com.cloud.webmvc.controller.BaseController;
-import com.cloud.common.core.domain.AjaxResult;
+import com.cloud.common.core.model.AjaxResult;
 import com.cloud.common.enums.BusinessType;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;

@@ -1,4 +1,4 @@
-package com.cloud.common.core.domain;
+package com.cloud.common.core.model;
 
 import org.springframework.context.ApplicationEvent;
 

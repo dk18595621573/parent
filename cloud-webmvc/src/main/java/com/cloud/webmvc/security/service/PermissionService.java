@@ -2,7 +2,7 @@ package com.cloud.webmvc.security.service;
 
 import cn.hutool.core.collection.CollUtil;
 import com.cloud.common.constant.Constants;
-import com.cloud.common.core.domain.model.Role;
+import com.cloud.common.core.model.Role;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.domain.LoginUser;
 import com.cloud.webmvc.utils.SecurityUtils;

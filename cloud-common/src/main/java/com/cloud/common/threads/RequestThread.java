@@ -1,6 +1,6 @@
 package com.cloud.common.threads;
 
-import com.cloud.common.core.domain.model.RequestUser;
+import com.cloud.common.core.model.RequestUser;
 
 import java.util.HashMap;
 import java.util.Map;

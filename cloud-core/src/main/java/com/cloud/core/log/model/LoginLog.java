@@ -1,6 +1,6 @@
 package com.cloud.core.log.model;
 
-import com.cloud.common.core.domain.model.BaseRequestInfo;
+import com.cloud.common.core.model.BaseRequestInfo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 

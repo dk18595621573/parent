@@ -1,7 +1,7 @@
 package com.cloud.webmvc.controller;
 
 import com.cloud.common.constant.HttpStatus;
-import com.cloud.common.core.domain.AjaxResult;
+import com.cloud.common.core.model.AjaxResult;
 import com.cloud.common.core.page.Page;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;

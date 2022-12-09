@@ -1,4 +1,4 @@
-package com.cloud.common.core.domain.model;
+package com.cloud.common.core.model;
 
 import lombok.Data;
 
