@@ -1,4 +1,4 @@
-package com.cloud.component.holiday.domain;
+package com.cloud.common.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

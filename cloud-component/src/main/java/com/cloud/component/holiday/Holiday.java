@@ -1,6 +1,6 @@
 package com.cloud.component.holiday;
 
-import com.cloud.component.holiday.domain.HolidayResult;
+import com.cloud.common.core.model.HolidayResult;
 
 import java.util.List;
 
