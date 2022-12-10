@@ -21,7 +21,7 @@ public class HolidayResult implements Serializable {
     /** 节假日类型 */
     private Integer holidayType;
 
-    /** 节假日期 */
+    /** 节假日期(不能使用{@link cn.hutool.core.date.DateTime}日期类型) */
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date holiday;
 
