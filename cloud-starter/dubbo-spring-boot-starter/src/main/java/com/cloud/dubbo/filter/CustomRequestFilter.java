@@ -32,7 +32,7 @@ public class CustomRequestFilter extends AbstractFilter {
         try {
             if (isConsumerSide()) {
                 Map<String, Object> data = RequestThread.getData();
-                logger.debug("CustomRequestFilter Consumer：[{}]", data);
+                logger.debug("CustomRequestFilter MethodName： [{}]， Consumer：[{}] ", invocation.getMethodName(), data);
                 RpcContext.getContext().setAttachment(REQUEST_DATA, data);
             } else if (isProviderSide()) {
                 Object data = RpcContext.getContext().getObjectAttachment(REQUEST_DATA);
