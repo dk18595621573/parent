@@ -8,8 +8,8 @@ package com.cloud.common.enums;
  */
 public enum IsEnum implements BaseEnum {
 	
-	是(1, "是"),
-	否(2, "否"),
+	YES(1, "是"),
+	NO(2, "否"),
 	;
 	
 	Integer code;
@@ -21,7 +21,7 @@ public enum IsEnum implements BaseEnum {
 		this.msg = msg;
 	}
 
-	public Boolean sameCode(Integer code) {
+	public boolean sameCode(Integer code) {
 		return this.code.equals(code);
 	}
 
@@ -34,7 +34,7 @@ public enum IsEnum implements BaseEnum {
 	}
 	
 	@Override
-	public Boolean sameMsg(String msg) {
+	public boolean sameMsg(String msg) {
 		return this.msg.equals(msg);
 	}
 	

@@ -6,14 +6,36 @@ package com.cloud.common.enums;
  * @date 2022.12.10 13:01
  */
 public interface BaseEnum {
-	
-	Boolean sameCode(Integer code);
-	
+
+	/**
+	 * 是否匹配code
+	 * @param code
+	 * @return
+	 */
+	boolean sameCode(Integer code);
+
+	/**
+	 * 返回枚举名称
+	 * @return
+	 */
 	String name();
-	
+
+	/**
+	 * 获取枚举code
+	 * @return
+	 */
 	Integer code();
 
+	/**
+	 * 获取枚举msg
+	 * @return
+	 */
 	String msg();
-	
-	Boolean sameMsg(String msg);
+
+	/**
+	 * 是否匹配msg
+	 * @param msg
+	 * @return
+	 */
+	boolean sameMsg(String msg);
 }
