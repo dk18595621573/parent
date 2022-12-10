@@ -8,47 +8,52 @@ import com.cloud.common.core.model.HolidayResult;
 import com.cloud.common.enums.HolidayType;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.component.holiday.Holiday;
+import com.cloud.component.properties.HolidayProperties;
 import com.cloud.component.util.HttpClientUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author nlsm
  * 提莫的神秘小店免费节假日API，官网：<a href="http://timor.tech/api/holiday/">http://timor.tech/api/holiday/</a>
  */
 @Slf4j
-@Component
+@AllArgsConstructor
 public class TimorHoliday implements Holiday {
 
-    /** 请求接口 */
-    private static final String URL = "https://timor.tech/api/holiday/year/{}";
-
-    /** 请求成功 */
+    private HolidayProperties properties;
+    /**
+     * 请求成功
+     */
     private static final int SUCCEED = 0;
 
     @Override
     public List<HolidayResult> getDay(Integer year, Integer month) {
         // 判断传入的参数是否有问题
-        if (Objects.isNull(year)){
-            throw new ServiceException("传入年份为空数据");
+        if (Objects.isNull(year)) {
+            throw new ServiceException("查询年份不能为空");
         }
         String yearMonth = Objects.nonNull(month) ? StrUtil.format("{}-{}", year, month) : String.valueOf(year);
-        String sendUrl = StrUtil.format(URL, yearMonth);
-        Map<String, String> params = new HashMap<>(8);
+        String sendUrl = properties.getTimorUrl() + yearMonth;
+        Map<String, String> params = new HashMap<>(4);
         params.put("type", "Y");
         params.put("week", "Y");
         String httpGet = HttpClientUtil.doHttpGet(sendUrl, params);
-        log.info("提莫的神秘小店-->调用接口无结果，调用地址{}，返回结果{}", sendUrl, httpGet);
-        if (StrUtil.isBlank(httpGet)){
+        log.info("提莫的神秘小店-->调用地址:{}，接口参数:{}，返回结果:{}", sendUrl, params, httpGet);
+        if (StrUtil.isBlank(httpGet)) {
             return null;
         }
         // 将调用结果转换
         JSONObject jsonObject = JSONUtil.parseObj(httpGet);
-        Integer code = (Integer) jsonObject.get("code");
-        if (SUCCEED != code){
+        Integer code = jsonObject.getInt("code");
+        if (SUCCEED != code) {
             // 查询失败
             return null;
         }
@@ -61,16 +66,15 @@ public class TimorHoliday implements Holiday {
                 // 获取节假日类型
                 JSONObject typeJsonObject = type.get(timor.date);
                 HolidayResult result = new HolidayResult().setYear(year).setHoliday(DateUtil.parse(timor.getDate())).setRemark(timor.getName());
-                if (Objects.isNull(typeJsonObject)){
+                if (Objects.isNull(typeJsonObject)) {
                     result.setHolidayType(HolidayType.HOLIDAY.getCode());
                 } else {
-                    result.setHolidayType((Integer) typeJsonObject.get("type"));
+                    result.setHolidayType(typeJsonObject.getInt("type"));
                 }
                 holidayResultList.add(result);
             });
-        }catch (Exception e){
-            log.warn("提莫的神秘小店-->转换出现异常{}", e.getMessage());
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("提莫的神秘小店-->转换出现异常", e);
         }
         return holidayResultList;
     }
@@ -79,14 +83,20 @@ public class TimorHoliday implements Holiday {
      * 节假日返回参数转换接收
      */
     @Data
-    static class Param{
-        /** 放假为true 调休上班false */
+    static class Param {
+        /**
+         * 放假为true 调休上班false
+         */
         private Boolean holiday;
 
-        /** 节假日名称 */
+        /**
+         * 节假日名称
+         */
         private String name;
 
-        /** 节假日期 */
+        /**
+         * 节假日期
+         */
         private String date;
     }
 
