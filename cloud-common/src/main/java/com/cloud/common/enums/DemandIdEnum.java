@@ -1,22 +1,20 @@
 package com.cloud.common.enums;
 
 /**
- * 统一是否枚举
- * 1:是  2:否
+ * 采购方（需求方）ID枚举
  * @author zhushanshuo
- * @date 2022.12.10 13:01
+ * @date 2022.12.10 17:01
  */
-public enum IsEnum implements BaseEnum {
-	
-	YES(1, "是"),
-	NO(2, "否"),
+public enum DemandIdEnum implements BaseEnum {
+
+	N_L(3, "能良（需求方）"),
 	;
-	
+
 	Integer code;
-	
+
 	String msg;
 
-	IsEnum(Integer code, String msg) {
+	DemandIdEnum(Integer code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
