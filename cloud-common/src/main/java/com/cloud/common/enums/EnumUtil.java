@@ -22,6 +22,16 @@ public class EnumUtil {
 		return baseEnumArray;
 	}
 
+	public static String returnName(Class<? extends BaseEnum> clazz, String msg) {
+		BaseEnum[] baseEnumArray = list(clazz);
+		for (BaseEnum baseEnum : baseEnumArray) {
+			if (baseEnum.sameMsg(msg)) {
+				return baseEnum.name();
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * 枚举封装下拉框
 	 * @param clazz
