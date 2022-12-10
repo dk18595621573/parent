@@ -25,11 +25,13 @@ public enum IsEnum implements BaseEnum {
 		return this.code.equals(code);
 	}
 
-	public Integer code() {
+	@Override
+	public Integer getCode() {
 		return code;
 	}
 
-	public String msg() {
+	@Override
+	public String getMsg() {
 		return msg;
 	}
 	

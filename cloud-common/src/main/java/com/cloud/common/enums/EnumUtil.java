@@ -1,9 +1,7 @@
 package com.cloud.common.enums;
 
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.cloud.common.core.model.SelectVo;
-import com.cloud.common.utils.reflect.ReflectUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +44,7 @@ public class EnumUtil {
 	public static List<SelectVo> listSelect(Class<? extends BaseEnum> clazz) {
 		List<SelectVo> selectVoList = new ArrayList<>();
 		BaseEnum[] baseEnumArray = list(clazz);
-		Arrays.stream(baseEnumArray).forEach(item -> selectVoList.add(new SelectVo(item.code(), item.msg())));
+		Arrays.stream(baseEnumArray).forEach(item -> selectVoList.add(new SelectVo(item.getCode(), item.getMsg())));
 		return selectVoList;
 	}
 
@@ -60,7 +58,7 @@ public class EnumUtil {
 		BaseEnum[] baseEnumArray = list(clazz);
 		for (BaseEnum baseEnum : baseEnumArray) {
 			if (baseEnum.sameCode(code)) {
-				return baseEnum.msg();
+				return baseEnum.getMsg();
 			}
 		}
 		return null;
@@ -75,8 +73,8 @@ public class EnumUtil {
 	public static Integer containsMsg(Class<? extends BaseEnum> clazz, String msg) {
 		BaseEnum[] baseEnumArray = list(clazz);
 		for (BaseEnum baseEnum : baseEnumArray) {
-			if (baseEnum.msg().equals(msg)) {
-				return baseEnum.code();
+			if (baseEnum.getMsg().equals(msg)) {
+				return baseEnum.getCode();
 			}
 		}
 		return null;
@@ -104,11 +102,23 @@ public class EnumUtil {
 	public static void main(String[] args) {
 		System.out.println(EnumUtil.containsCode(IsEnum.class, 1));
 		System.out.println(EnumUtil.containsCode(IsEnum.class, 2));
+		System.out.println(EnumUtil.containsCode(IsEnum.class, 3));
 
 		System.out.println(EnumUtil.containsMsg(IsEnum.class, "是"));
 		System.out.println(EnumUtil.containsMsg(IsEnum.class, "否"));
 
 		System.out.println(EnumUtil.listSelect(IsEnum.class));
+
+		System.out.println(EnumUtil.containsCode(BillPayStatus.class, 1));
+		System.out.println(EnumUtil.containsCode(BillPayStatus.class, 2));
+		System.out.println(EnumUtil.containsCode(BillPayStatus.class, 3));
+
+		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "未支付"));
+		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "已支付"));
+		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "已确认"));
+		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "是"));
+
+		System.out.println(EnumUtil.listSelect(BillPayStatus.class));
 	}
 
 }

@@ -8,13 +8,6 @@ package com.cloud.common.enums;
 public interface BaseEnum {
 
 	/**
-	 * 是否匹配code
-	 * @param code
-	 * @return
-	 */
-	boolean sameCode(Integer code);
-
-	/**
 	 * 返回枚举名称
 	 * @return
 	 */
@@ -24,18 +17,31 @@ public interface BaseEnum {
 	 * 获取枚举code
 	 * @return
 	 */
-	Integer code();
+	Integer getCode();
 
 	/**
 	 * 获取枚举msg
 	 * @return
 	 */
-	String msg();
+	String getMsg();
 
 	/**
+	 * 抽象接口方法，不用子类实现
 	 * 是否匹配msg
 	 * @param msg
 	 * @return
 	 */
-	boolean sameMsg(String msg);
+	default boolean sameMsg(String msg) {
+		return getMsg().equals(msg);
+	}
+
+	/**
+	 * 抽象接口方法，不用子类实现
+	 * 是否匹配code
+	 * @param code
+	 * @return
+	 */
+	default boolean sameCode(Integer code) {
+		return getCode().equals(code);
+	}
 }
