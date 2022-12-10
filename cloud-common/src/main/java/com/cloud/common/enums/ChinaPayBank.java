@@ -6,7 +6,7 @@ package com.cloud.common.enums;
  * 银联打款
  */
 
-public enum ChinaPayBank {
+public enum ChinaPayBank implements BaseEnum {
 
     /**
      * 中国银行

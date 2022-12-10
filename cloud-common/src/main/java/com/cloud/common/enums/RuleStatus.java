@@ -4,7 +4,7 @@ package com.cloud.common.enums;
 /**
  * 规则状态（1: 有效；2:无效）
  */
-public enum RuleStatus {
+public enum RuleStatus implements BaseEnum {
     EFFICIENT(1, "有效"),
     INVALID(2, "无效"),
     ;

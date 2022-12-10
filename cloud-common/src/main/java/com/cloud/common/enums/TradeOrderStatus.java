@@ -6,7 +6,7 @@ package com.cloud.common.enums;
  * @author zenghao
  * @date 2022/5/19
  */
-public enum TradeOrderStatus {
+public enum TradeOrderStatus implements BaseEnum {
 
     CONFIRMING(1, "待确认"),
     INVALID(2, "已失效"),

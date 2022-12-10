@@ -6,7 +6,7 @@ package com.cloud.common.enums;
  * 法大大
  */
 
-public enum ContractStatus {
+public enum ContractStatus implements BaseEnum {
 
     /**
      * 采购合同

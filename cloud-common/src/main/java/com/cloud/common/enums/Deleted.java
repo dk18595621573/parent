@@ -3,7 +3,7 @@ package com.cloud.common.enums;
 /**
  * 是否被删除 0 未删除 1 已删除
  */
-public enum Deleted {
+public enum Deleted implements BaseEnum {
 
     NOT_DELETE(0, "未删除"),
     ALREADY_DELETE(1, "已删除"),

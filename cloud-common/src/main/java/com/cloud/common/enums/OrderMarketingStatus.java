@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * 接龙订单状态 1: 新建采购；2: 报价中；3:已完结
  */
-public enum OrderMarketingStatus {
+public enum OrderMarketingStatus implements BaseEnum {
     NOT_QUOTED(1, "新建采购"),
     IN_QUOTATION(2, "报价中"),
     COMPLETED(3, "已完结"),

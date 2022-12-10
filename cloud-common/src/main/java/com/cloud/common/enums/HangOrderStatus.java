@@ -3,7 +3,7 @@ package com.cloud.common.enums;
 /**
  * 挂单状态 ，描述是否撤销挂单（1: 有效；2:无效）
  */
-public enum HangOrderStatus {
+public enum HangOrderStatus implements BaseEnum {
     EFFICIENT(1, "有效"),
     INVALID(2, "无效");
 

@@ -6,7 +6,7 @@ package com.cloud.common.enums;
  * 保证金数据来源
  */
 
-public enum CapitalDetailType {
+public enum CapitalDetailType implements BaseEnum {
 
     /**
      * 数据来源（0.充值 1.抢单 2.串码 3.取消订单 4.物流补贴 5.撤销订单 6.毁单 7.退货追单 8.物流异常 9.接龙抢单）

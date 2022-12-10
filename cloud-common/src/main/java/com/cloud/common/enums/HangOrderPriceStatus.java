@@ -3,7 +3,7 @@ package com.cloud.common.enums;
 /**
  * 挂单价格状态 （1: 可出价；2:待确认 3.失效）
  */
-public enum HangOrderPriceStatus {
+public enum HangOrderPriceStatus implements BaseEnum {
 
     EFFICIENT(1, "可出价"),
     CONFIRMING(2, "待确认"),
