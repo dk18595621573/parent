@@ -19,13 +19,13 @@ public class HolidayConfig {
 
     @Bean
     @RefreshScope
-    public ApiHubsHoliday apiHubsHoliday(){
+    public ApiHubsHoliday apiHubsHoliday(HolidayProperties holidayProperties){
         return new ApiHubsHoliday();
     }
 
     @Bean
     @RefreshScope
-    public TimorHoliday timorHoliday(){
+    public TimorHoliday timorHoliday(HolidayProperties holidayProperties){
         return new TimorHoliday();
     }
 }

@@ -8,29 +8,33 @@ import com.cloud.common.core.model.HolidayResult;
 import com.cloud.common.enums.HolidayType;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.component.holiday.Holiday;
+import com.cloud.component.properties.HolidayProperties;
 import com.cloud.component.util.HttpClientUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author nlsm
  * 节假日调用(不是很稳定，更新不及时),详情见官方文档：<a href="http://www.apihubs.cn/#/holiday">www.apihubs.cn/#/holiday</a>
  */
 @Slf4j
-@Component
+@AllArgsConstructor
 public class ApiHubsHoliday implements Holiday {
 
-    /** 调用接口地址 */
-    private static final String API_HOLIDAY_URL = "https://api.apihubs.cn/holiday/get";
+    private HolidayProperties properties;
 
     @Override
     public List<HolidayResult> getDay(Integer year, Integer month) {
         // 判断传入的参数是否有问题
-        if (Objects.isNull(year)){
-            throw new ServiceException("传入年份为空数据");
+        if (Objects.isNull(year)) {
+            throw new ServiceException("查询年份不能为空");
         }
         Map<String, String> params = new HashMap<>(8);
         params.put("year", String.valueOf(year));
@@ -38,11 +42,11 @@ public class ApiHubsHoliday implements Holiday {
         params.put("page", "1");
         params.put("size", "366");
         //调用接口
-        String response = HttpClientUtil.doHttpGet(API_HOLIDAY_URL, params);
-        log.info("调用接口坞--->调用参数{},返回参数{}", API_HOLIDAY_URL, response);
+        String response = HttpClientUtil.doHttpGet(properties.getHubsUrl(), params);
+        log.info("调用接口坞--->调用地址:{}，接口参数:{}，返回结果:{}", properties.getHubsUrl(), params, response);
         List<HolidayResult> holidayResultList = new ArrayList<>();
         try {
-            if (StrUtil.isNotBlank(response)){
+            if (StrUtil.isNotBlank(response)) {
                 //转换json操作
                 JSONObject jsonObject = JSONUtil.parseObj(response);
                 JSONObject data = jsonObject.getJSONObject("data");
@@ -50,24 +54,23 @@ public class ApiHubsHoliday implements Holiday {
                 List<ApiHubsHoliday.Param> holidayResults = JSONUtil.toList(data.getJSONArray("list"), ApiHubsHoliday.Param.class);
                 for (ApiHubsHoliday.Param result : holidayResults) {
                     HolidayResult holidayResult = new HolidayResult().setHoliday(DateUtil.parse(result.getDateCn()))
-                            .setRemark(result.getHolidayCn() + "-" + result.getWeekendCn() + "(" + result.getHolidayOvertimeCn() + ")")
-                            .setYear(result.getYear());
+                        .setRemark(result.getHolidayCn() + "-" + result.getWeekendCn() + "(" + result.getHolidayOvertimeCn() + ")")
+                        .setYear(result.getYear());
                     //是否为工作日，不是工作日=节假日（包括周六周日），是工作日=工作日（包括调休）
-                    if (result.getWorkday() == 2){
+                    if (result.getWorkday() == 2) {
                         holidayResult.setHolidayType(HolidayType.HOLIDAY.getCode());
                         holidayResultList.add(holidayResult);
                     }
                 }
             }
-        } catch (Exception e){
-            log.error("操作失败,失败原因:{}", e.getMessage());
-            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("操作失败,失败原因:", e);
         }
         return holidayResultList;
     }
 
     @Data
-    static class Param{
+    static class Param {
         private Integer year;
         private Integer month;
         private Integer date;
