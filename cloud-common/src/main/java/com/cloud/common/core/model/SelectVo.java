@@ -1,7 +1,11 @@
 package com.cloud.common.core.model;
 
 
-public class SelectVo {
+import java.io.Serializable;
+
+public class SelectVo implements Serializable {
+
+	private static final long serialVersionUID = 1;
 	
 	private Integer id;
 	
