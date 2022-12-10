@@ -37,6 +37,11 @@ public class WxworkBotProperties {
     private String botToken;
 
     /**
+     * 机器人名称
+     */
+    private String botUserId;
+
+    /**
      * 发送消息参数
      */
     private OutMessage message = new OutMessage();

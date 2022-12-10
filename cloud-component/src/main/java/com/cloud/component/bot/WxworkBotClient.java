@@ -9,8 +9,6 @@ import cn.hutool.http.Method;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
-import com.cloud.common.utils.sign.Md5Utils;
-import com.cloud.component.bot.consts.BotApiEnums;
 import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
 import com.cloud.component.bot.exception.WxworkBotException;
@@ -30,8 +28,10 @@ import com.cloud.component.bot.request.ContactWayAddRequest;
 import com.cloud.component.bot.request.SentResult;
 import com.cloud.component.bot.request.SyncConsumerInfo;
 import com.cloud.component.bot.response.ApiResponse;
+import com.cloud.component.bot.response.BotApiEnums;
 import com.cloud.component.bot.response.BotResponse;
 import com.cloud.component.bot.response.BotUser;
+import com.cloud.component.bot.response.ChatResponse;
 import com.cloud.component.bot.response.Contact;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
@@ -83,6 +83,19 @@ public class WxworkBotClient {
         map.put("config_id", configId);
         ContactWayResponse response = exceute(BotApiEnums.CONTACTWAY_GET, map);
         return response.getContactWay();
+    }
+
+    /**
+     * 获取用户的会话id
+     * @param unionId 用户的unionId
+     * @return 会话id
+     */
+    public String queryChatId(final String unionId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("unionId", unionId);
+        map.put("botUserId", properties.getBotUserId());
+        ChatResponse response = exceute(BotApiEnums.GET_CHATID, map);
+        return response.getChatId();
     }
 
     /**
@@ -224,7 +237,6 @@ public class WxworkBotClient {
      */
     public ConsumerInfo parseConsumerInfo(final String sign, final String data) {
         log.info("[BOT]收到添加好友信息:【{}】【{}】", sign, data);
-        checkSign(sign, data);
         BotEvent<ConsumerInfo> botEvent = JsonUtil.parseGeneric(data, BotEvent.class, ConsumerInfo.class);
         return Optional.ofNullable(botEvent).map(BotEvent::getData).orElse(null);
     }
@@ -237,7 +249,6 @@ public class WxworkBotClient {
      */
     public SyncConsumerInfo parseSyncInfo(final String sign, final String data) {
         log.info("[BOT]收到数据同步:【{}】【{}】", sign, data);
-        checkSign(sign, data);
         return JsonUtil.parse(data, SyncConsumerInfo.class);
     }
 
@@ -298,14 +309,6 @@ public class WxworkBotClient {
         String body = execute.body();
         log.info("[BOT]响应结果【{}】:{}", url, body);
         return body;
-    }
-
-    private void checkSign(final String sign, final String data) {
-        String signature = Md5Utils.hash(data + properties.getApiToken());
-        if (!StringUtils.equals(sign, signature)) {
-            log.error("[BOT]数据同步签名验证失败【{}】【{}】", sign, signature);
-            throw new WxworkBotException("非法请求，签名错误");
-        }
     }
 
 }

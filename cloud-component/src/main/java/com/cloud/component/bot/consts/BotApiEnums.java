@@ -1,9 +1,7 @@
-package com.cloud.component.bot.consts;
+package com.cloud.component.bot.response;
 
 import cn.hutool.http.Method;
-import com.cloud.component.bot.response.BotResponse;
-import com.cloud.component.bot.response.ContactWayAddResponse;
-import com.cloud.component.bot.response.ContactWayResponse;
+import com.cloud.component.bot.consts.BotConsts;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -20,6 +18,7 @@ public enum BotApiEnums {
     BOT_LIST(BotConsts.BOT_API,  Method.GET, "/bot/list", BotResponse.class),
     CONCAT_LIST(BotConsts.BOT_API, Method.GET, "/contact/list", BotResponse.class),
     MESSAGE_SEND(BotConsts.BOT_API, Method.POST, "/message/send", BotResponse.class),
+    GET_CHATID(BotConsts.WXWORK_API, Method.GET, "/api/v1/instantReply/getChatId", ChatResponse.class),
     CONTACTWAY_ADD(BotConsts.WXWORK_API, Method.POST, "/api/v1/contactWay/add", ContactWayAddResponse.class),
     CONTACTWAY_GET(BotConsts.WXWORK_API, Method.GET, "/api/v1/contactWay/get", ContactWayResponse.class),
     ;
