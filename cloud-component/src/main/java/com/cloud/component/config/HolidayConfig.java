@@ -20,12 +20,12 @@ public class HolidayConfig {
     @Bean
     @RefreshScope
     public ApiHubsHoliday apiHubsHoliday(HolidayProperties holidayProperties){
-        return new ApiHubsHoliday();
+        return new ApiHubsHoliday(holidayProperties);
     }
 
     @Bean
     @RefreshScope
     public TimorHoliday timorHoliday(HolidayProperties holidayProperties){
-        return new TimorHoliday();
+        return new TimorHoliday(holidayProperties);
     }
 }
