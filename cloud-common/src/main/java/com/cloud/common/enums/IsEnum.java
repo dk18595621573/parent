@@ -21,10 +21,6 @@ public enum IsEnum implements BaseEnum {
 		this.msg = msg;
 	}
 
-	public boolean sameCode(Integer code) {
-		return this.code.equals(code);
-	}
-
 	@Override
 	public Integer getCode() {
 		return code;
@@ -34,11 +30,5 @@ public enum IsEnum implements BaseEnum {
 	public String getMsg() {
 		return msg;
 	}
-	
-	@Override
-	public boolean sameMsg(String msg) {
-		return this.msg.equals(msg);
-	}
-	
 
 }

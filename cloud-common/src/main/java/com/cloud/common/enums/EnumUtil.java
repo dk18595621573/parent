@@ -2,6 +2,7 @@ package com.cloud.common.enums;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.cloud.common.core.model.SelectVo;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,25 +101,6 @@ public class EnumUtil {
 	
 
 	public static void main(String[] args) {
-		System.out.println(EnumUtil.containsCode(IsEnum.class, 1));
-		System.out.println(EnumUtil.containsCode(IsEnum.class, 2));
-		System.out.println(EnumUtil.containsCode(IsEnum.class, 3));
-
-		System.out.println(EnumUtil.containsMsg(IsEnum.class, "是"));
-		System.out.println(EnumUtil.containsMsg(IsEnum.class, "否"));
-
-		System.out.println(EnumUtil.listSelect(IsEnum.class));
-
-		System.out.println(EnumUtil.containsCode(BillPayStatus.class, 1));
-		System.out.println(EnumUtil.containsCode(BillPayStatus.class, 2));
-		System.out.println(EnumUtil.containsCode(BillPayStatus.class, 3));
-
-		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "未支付"));
-		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "已支付"));
-		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "已确认"));
-		System.out.println(EnumUtil.containsMsg(BillPayStatus.class, "是"));
-
-		System.out.println(EnumUtil.listSelect(BillPayStatus.class));
 	}
 
 }
