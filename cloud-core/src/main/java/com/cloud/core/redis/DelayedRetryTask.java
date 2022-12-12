@@ -30,6 +30,16 @@ public abstract class DelayedRetryTask<T> extends DelayedTask<DelayRetry<T>> {
         }
     }
 
+    @Override
+    public void producer(final DelayRetry<T> task, final long delay) {
+        if (task.isExecute()) {
+            task.setExecute(false);
+            consumer(task);
+        } else {
+            super.producer(task, delay);
+        }
+    }
+
     /**
      * 执行任务
      *
