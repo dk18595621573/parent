@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author wyt
  * @date 2022/11/14 13:47
  */
-public enum OrderMarketingSubStatus {
+public enum OrderMarketingSubStatus implements BaseEnum {
 
     WAIT_SNATCH(0, "待抢单"),
     ORDER_SNATCHED(1, "已抢单"),

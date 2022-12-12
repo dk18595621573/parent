@@ -3,7 +3,7 @@ package com.cloud.common.enums;
 /**
  * 订单子状态（20:新建；21:撤销；22:超时发货；23:超时流拍，30:待抢单 ，31:待确认）
  */
-public enum OrderSubStatus {
+public enum OrderSubStatus implements BaseEnum {
 
     /** 没有子状态的时候需要将子状态调整为默认状态 */
     DEFAULT(0, "默认"),

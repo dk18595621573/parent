@@ -4,7 +4,7 @@ package com.cloud.common.enums;
  * @author dk185
  * 串码验证
  */
-public enum ImeiVerifyStatus {
+public enum ImeiVerifyStatus implements BaseEnum {
     STAY_QUERY(0, "默认(待查询)"),
     STAY_AUDIT(1, "待审核"),
     STAY_AFFIRM(2, "待确认"),

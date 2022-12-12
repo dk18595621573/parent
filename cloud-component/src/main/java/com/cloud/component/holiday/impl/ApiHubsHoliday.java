@@ -1,12 +1,12 @@
 package com.cloud.component.holiday.impl;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.common.core.model.HolidayResult;
 import com.cloud.common.enums.HolidayType;
 import com.cloud.common.exception.ServiceException;
+import com.cloud.common.utils.DateUtils;
 import com.cloud.component.holiday.Holiday;
 import com.cloud.component.properties.HolidayProperties;
 import com.cloud.component.util.HttpClientUtil;
@@ -14,11 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author nlsm
@@ -53,7 +49,7 @@ public class ApiHubsHoliday implements Holiday {
                 //转换对象
                 List<ApiHubsHoliday.Param> holidayResults = JSONUtil.toList(data.getJSONArray("list"), ApiHubsHoliday.Param.class);
                 for (ApiHubsHoliday.Param result : holidayResults) {
-                    HolidayResult holidayResult = new HolidayResult().setHoliday(DateUtil.parse(result.getDateCn()))
+                    HolidayResult holidayResult = new HolidayResult().setHoliday(DateUtils.parseDate(result.getDateCn()))
                         .setRemark(result.getHolidayCn() + "-" + result.getWeekendCn() + "(" + result.getHolidayOvertimeCn() + ")")
                         .setYear(result.getYear());
                     //是否为工作日，不是工作日=节假日（包括周六周日），是工作日=工作日（包括调休）

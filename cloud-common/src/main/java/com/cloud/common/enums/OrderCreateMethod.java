@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * 订单创建方式（1. 界面新建；2. Excel导入；3.erp拉取）
  */
-public enum OrderCreateMethod {
+public enum OrderCreateMethod implements BaseEnum {
     NEW_INTERFACE(1, "界面新建"),
     EXCEL_IMPORT(2, "Excel导入"),
     ERP_PULL(3, "erp拉取"),

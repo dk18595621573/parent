@@ -4,7 +4,7 @@ package com.cloud.common.enums;
  * @author dk185
  * 结算支付状态
  */
-public enum BillPayStatus {
+public enum BillPayStatus implements BaseEnum {
     /** 未支付 */
     NO_PAY(1, "未支付"),
     /** 已支付 */

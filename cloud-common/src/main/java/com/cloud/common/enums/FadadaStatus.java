@@ -6,7 +6,7 @@ package com.cloud.common.enums;
  * 法大大
  */
 
-public enum FadadaStatus {
+public enum FadadaStatus implements BaseEnum {
 
     /**
      * 签署回调code

@@ -3,7 +3,7 @@ package com.cloud.common.enums;
 /**
  * 是否是最新的挂单（1: 是；2: 否）
  */
-public enum NewestStatus {
+public enum NewestStatus implements BaseEnum {
     YES(1, "是"),
     NO(2, "否");
 
