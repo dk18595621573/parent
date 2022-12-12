@@ -38,7 +38,7 @@ public class DelayRetry<T> implements Serializable {
     /**
      * 每次重试时间间隔 单位:秒
      */
-    private long interval = 1L;
+    private long interval = DEFAULT_INTERVAL;
 
     /**
      * 是否使用相同的时间间隔 否的话会使用重试次数*间隔时间 默认false
