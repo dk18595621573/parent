@@ -111,6 +111,10 @@ public enum OrderSubStatus implements BaseEnum {
     REVOKE_PUBLISHED(132, "待发布撤销"),
     REVOKE_ADDRESS(133, "待补全地址撤销"),
     REVOKE_DELIVERED(134, "待发货撤销"),
+
+    /** 竞拍出价 */
+    AUCTIONING(150, "竞价中"),
+    AUCTION_STREAMING(151, "竞价流拍")
     ;
 
     private final Integer code;

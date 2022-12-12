@@ -20,6 +20,7 @@ public enum OrderStatus implements BaseEnum {
     LOGISTICS_ABNORMAL(12, "物流异常"),
     REVOKE(13, "撤销"),
     NOT_RECOVERED(14, "未追回订单"),
+    AUCTION_OFFER(15, "竞拍出价")
     ;
 
 
