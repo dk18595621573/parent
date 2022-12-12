@@ -9,8 +9,9 @@ public enum UserRoleEnum {
     ADMIN(1L, "admin", "管理员"),
     FINANCE(2L, "finance", "财务"),
     AFTER(3L, "after", "售后"),
-    BUSINESS(4L, "business", "商务"),
-    WAREHOUSE(5L, "warehouse", "仓库");
+    PURCHASING(4L, "purchasing", "采购"),
+    BUSINESS(5L, "business", "商务"),
+    WAREHOUSE(6L, "warehouse", "仓库");
 
     private final Long id;
     private final String code;
