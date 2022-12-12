@@ -46,11 +46,6 @@ public class DelayRetry<T> implements Serializable {
     private boolean useSameInterval;
 
     /**
-     * 是否立刻执行一次
-     */
-    private boolean execute;
-
-    /**
      * 数据
      */
     private T data;
