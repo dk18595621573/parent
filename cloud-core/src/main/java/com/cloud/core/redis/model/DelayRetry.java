@@ -18,12 +18,12 @@ public class DelayRetry<T> implements Serializable {
     /**
      * 默认最大重试次数 5次
      */
-    public static final int MAX_RETRY_COUNT = 5;
+    private static final int MAX_RETRY_COUNT = 5;
 
     /**
      * 默认每次重试时间间隔 15秒
      */
-    public static final long DEFAULT_INTERVAL = 15L;
+    private static final long DEFAULT_INTERVAL = 15L;
 
     /**
      * 当前重试次数
@@ -33,7 +33,7 @@ public class DelayRetry<T> implements Serializable {
     /**
      * 最大重试次数
      */
-    private int maxCount;
+    private int maxCount = MAX_RETRY_COUNT;
 
     /**
      * 每次重试时间间隔 单位:秒
