@@ -6,7 +6,8 @@ package com.cloud.common.enums;
 public enum PurchaseType implements BaseEnum {
     PURCHASE_WAREHOUSING(1, "批量采购"),
     DROP_SHIPPING(2, "一件代发"),
-    SOLITAIRE_MARKETING(3, "接龙抢单");
+    SOLITAIRE_MARKETING(3, "接龙抢单"),
+    INQUIRY_PURCHASE(4, "询价采购");
 
 
     private final Integer code;
