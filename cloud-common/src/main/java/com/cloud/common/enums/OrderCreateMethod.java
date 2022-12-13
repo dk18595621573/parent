@@ -9,7 +9,8 @@ public enum OrderCreateMethod implements BaseEnum {
     NEW_INTERFACE(1, "界面新建"),
     EXCEL_IMPORT(2, "Excel导入"),
     ERP_PULL(3, "erp拉取"),
-    SOLITAIRE_MARKETING(4, "接龙抢单")
+    SOLITAIRE_MARKETING(4, "接龙抢单"),
+    AUCTION_OFFER(5,"竞拍出价")
     ;
 
 
