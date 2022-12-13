@@ -52,6 +52,11 @@ public class AgentJointOrder implements Serializable {
         private String buyerCompanyName;
 
         /**
+         * 采购类型（3,接龙抢单 4,询价采购）
+         */
+        private Integer purchaseType;
+
+        /**
          * 产品类别
          */
         private String category;
