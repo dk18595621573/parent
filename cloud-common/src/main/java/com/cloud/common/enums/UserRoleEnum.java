@@ -1,5 +1,11 @@
 package com.cloud.common.enums;
 
+import com.cloud.common.constant.Constants;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+
 /**
  * 默认角色
  *
@@ -33,6 +39,10 @@ public enum UserRoleEnum {
 
     public String getName() {
         return name;
+    }
+
+    public static String getCodes() {
+        return Arrays.stream(UserRoleEnum.values()).map(UserRoleEnum::getCode).collect(Collectors.joining(Constants.ROLE_DELIMETER));
     }
 
 }

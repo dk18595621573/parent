@@ -45,6 +45,10 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return new Date();
     }
 
+    public static Date yesterday() {
+        return offsetDay(getNowDate(), -1);
+    }
+
     /**
      * 获取当前日期, 默认格式为yyyy-MM-dd
      *
@@ -163,6 +167,59 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         LocalDateTime localDateTime = LocalDateTime.of(temporalAccessor, LocalTime.of(0, 0, 0));
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
         return Date.from(zdt.toInstant());
+    }
+
+    public static Date beginOfDay(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.HOUR_OF_DAY, 0);
+        time.set(Calendar.MINUTE, 0);
+        time.set(Calendar.SECOND, 0);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
+    public static Date endOfDay(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.HOUR_OF_DAY, 23);
+        time.set(Calendar.MINUTE, 59);
+        time.set(Calendar.SECOND, 59);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
+    public static Date beginOfHour(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.MINUTE, 0);
+        time.set(Calendar.SECOND, 0);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
+    public static Date endOfHour(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.MINUTE, 59);
+        time.set(Calendar.SECOND, 59);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
+    public static Date offsetDay(final Date date, int offset) {
+        return offset(date, Calendar.DAY_OF_YEAR, offset);
+    }
+
+    public static Date offsetHour(final Date date, int offset) {
+        return offset(date, Calendar.HOUR_OF_DAY, offset);
+    }
+
+    public static Date offset(final Date date, int field, int offset) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.add(field, offset);
+        return time.getTime();
     }
 
     /**
