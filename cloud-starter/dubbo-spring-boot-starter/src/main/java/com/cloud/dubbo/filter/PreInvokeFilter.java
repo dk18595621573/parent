@@ -1,5 +1,6 @@
 package com.cloud.dubbo.filter;
 
+import cn.hutool.core.util.ObjectUtil;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.ConcurrentHashSet;
@@ -12,7 +13,9 @@ import org.apache.dubbo.rpc.support.AccessLogData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -92,6 +95,28 @@ public class PreInvokeFilter extends AbstractFilter {
     private AccessLogData buildAccessLogData(final Invoker<?> invoker, final Invocation inv) {
         AccessLogData logData = AccessLogData.newLogData();
         logData.buildAccessLogData(invoker, inv);
+
+        int length = inv.getArguments().length;
+        Object[] args = new Object[length];
+        for (int i = 0; i < length; i++) {
+            args[i] = processArg(inv.getArguments()[i]);
+        }
+        logData.setArguments(args);
         return logData;
+    }
+
+    /**
+     * 集合、数组，Map 长度超过二十则不打印内容
+     * @param arg 请求参数
+     * @return 长度超过二十则打印长度，否则打印数据内容
+     */
+    private Object processArg(Object arg) {
+        if (arg instanceof Collection || arg instanceof Map || arg.getClass().isArray()) {
+            int len = ObjectUtil.length(arg);
+            if (len > 20) {
+                return String.format("%s@%s", arg.getClass(), len);
+            }
+        }
+        return arg;
     }
 }
