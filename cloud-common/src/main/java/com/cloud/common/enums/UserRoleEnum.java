@@ -1,5 +1,8 @@
 package com.cloud.common.enums;
 
+import cn.hutool.core.util.StrUtil;
+
+
 /**
  * 默认角色
  *
@@ -33,6 +36,15 @@ public enum UserRoleEnum {
 
     public String getName() {
         return name;
+    }
+
+    public static String getCodes() {
+        UserRoleEnum[] values = UserRoleEnum.values();
+        StringBuffer stringBuffer = new StringBuffer();
+        for (UserRoleEnum value : values) {
+            stringBuffer.append(value.getCode() + ",");
+        }
+        return StrUtil.subPre(stringBuffer.toString(), stringBuffer.length() - 1);
     }
 
 }
