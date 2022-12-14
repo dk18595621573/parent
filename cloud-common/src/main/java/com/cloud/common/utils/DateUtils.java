@@ -164,6 +164,44 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return Date.from(zdt.toInstant());
     }
 
+    public static Date beginOfDay(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.HOUR_OF_DAY, 0);
+        time.set(Calendar.MINUTE, 0);
+        time.set(Calendar.SECOND, 0);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
+    public static Date endOfDay(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.HOUR_OF_DAY, 23);
+        time.set(Calendar.MINUTE, 59);
+        time.set(Calendar.SECOND, 59);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
+    public static Date beginOfHour(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.MINUTE, 0);
+        time.set(Calendar.SECOND, 0);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
+    public static Date endOfHour(final Date date) {
+        Calendar time = Calendar.getInstance();
+        time.setTime(date);
+        time.set(Calendar.MINUTE, 59);
+        time.set(Calendar.SECOND, 59);
+        time.set(Calendar.MILLISECOND, 0);
+        return time.getTime();
+    }
+
     /**
      * 获取时间
      *
