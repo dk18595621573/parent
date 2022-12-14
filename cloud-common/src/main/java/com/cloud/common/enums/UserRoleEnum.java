@@ -1,6 +1,9 @@
 package com.cloud.common.enums;
 
-import cn.hutool.core.util.StrUtil;
+import com.cloud.common.constant.Constants;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 
 /**
@@ -39,12 +42,7 @@ public enum UserRoleEnum {
     }
 
     public static String getCodes() {
-        UserRoleEnum[] values = UserRoleEnum.values();
-        StringBuffer stringBuffer = new StringBuffer();
-        for (UserRoleEnum value : values) {
-            stringBuffer.append(value.getCode() + ",");
-        }
-        return StrUtil.subPre(stringBuffer.toString(), stringBuffer.length() - 1);
+        return Arrays.stream(UserRoleEnum.values()).map(UserRoleEnum::getCode).collect(Collectors.joining(Constants.ROLE_DELIMETER));
     }
 
 }
