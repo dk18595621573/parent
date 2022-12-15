@@ -41,7 +41,6 @@ public class VelocityUtils {
         String moduleName = genTable.getModuleName();
         String businessName = genTable.getBusinessName();
         String packageName = genTable.getPackageName();
-        String tplCategory = genTable.getTplCategory();
         String functionName = genTable.getFunctionName();
 
         VelocityContext velocityContext = new VelocityContext();

@@ -13,14 +13,24 @@ import com.cloud.component.cmb.response.BaseResponse;
 import com.cloud.component.properties.CMBProperties;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.net.ssl.*;
-import java.io.*;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 招商工具类
@@ -102,10 +112,6 @@ public class CMBUtils {
                 }
                 result = sbf.toString();
             }
-        } catch (MalformedURLException e) {
-            throw new CMBException(e.getMessage());
-        } catch (IOException e) {
-            throw new CMBException(e.getMessage());
         } catch (Exception e) {
             throw new CMBException(e.getMessage());
         } finally {
@@ -113,21 +119,18 @@ public class CMBUtils {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
             if (null != os) {
                 try {
                     os.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
             if (null != is) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
             connection.disconnect();

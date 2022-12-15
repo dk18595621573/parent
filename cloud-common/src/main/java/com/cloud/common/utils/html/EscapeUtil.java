@@ -119,7 +119,7 @@ public class EscapeUtil {
                     tmp.append(content.substring(lastPos));
                     lastPos = content.length();
                 } else {
-                    tmp.append(content.substring(lastPos, pos));
+                    tmp.append(content, lastPos, pos);
                     lastPos = pos;
                 }
             }
@@ -127,14 +127,14 @@ public class EscapeUtil {
         return tmp.toString();
     }
 
-    public static void main(String[] args) {
-        String html = "<script>alert(1);</script>";
-        String escape = EscapeUtil.escape(html);
-        // String html = "<scr<script>ipt>alert(\"XSS\")</scr<script>ipt>";
-        // String html = "<123";
-        // String html = "123>";
-        System.out.println("clean: " + EscapeUtil.clean(html));
-        System.out.println("escape: " + escape);
-        System.out.println("unescape: " + EscapeUtil.unescape(escape));
-    }
+//    public static void main(String[] args) {
+//        String html = "<script>alert(1);</script>";
+//        String escape = EscapeUtil.escape(html);
+//        // String html = "<scr<script>ipt>alert(\"XSS\")</scr<script>ipt>";
+//        // String html = "<123";
+//        // String html = "123>";
+//        System.out.println("clean: " + EscapeUtil.clean(html));
+//        System.out.println("escape: " + escape);
+//        System.out.println("unescape: " + EscapeUtil.unescape(escape));
+//    }
 }
