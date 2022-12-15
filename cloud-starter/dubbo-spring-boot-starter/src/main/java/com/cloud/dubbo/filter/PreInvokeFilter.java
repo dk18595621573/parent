@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -111,6 +112,9 @@ public class PreInvokeFilter extends AbstractFilter {
      * @return 长度超过二十则打印长度，否则打印数据内容
      */
     private Object processArg(Object arg) {
+        if (Objects.isNull(arg)) {
+            return null;
+        }
         if (arg instanceof Collection || arg instanceof Map || arg.getClass().isArray()) {
             int len = ObjectUtil.length(arg);
             if (len > 20) {
