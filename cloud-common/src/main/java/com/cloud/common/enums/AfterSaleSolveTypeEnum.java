@@ -5,17 +5,17 @@ package com.cloud.common.enums;
  * @author zhushanshuo
  * @date 2022.12.16 15:01
  */
-public enum ClientEnum implements BaseEnum {
+public enum AfterSaleSolveTypeEnum implements BaseEnum {
 
-	SUPPLY(1, "供应商"),
-	PURCHASE(2, "采购方"),
+	DEFAULT(0, "默认"),
+	SOLVED(1, "已解决"),
 	;
 
 	Integer code;
 
 	String msg;
 
-	ClientEnum(Integer code, String msg) {
+	AfterSaleSolveTypeEnum(Integer code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
