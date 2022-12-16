@@ -56,9 +56,8 @@ public class CustomExceptionFilter implements Filter, Filter.Listener {
                 }
 
                 // for the exception not found in method's signature, print ERROR message in server's log.
-                LOGGER.error("Got unchecked and undeclared exception which called by " + RpcContext.getContext().getRemoteHost()
-                    + ". service: " + invoker.getInterface().getName() + ", method: " + invocation.getMethodName()
-                    + ", exception: " + exception.getClass().getName() + ": " + exception.getMessage(), exception);
+                LOGGER.error("dubbo业务异常【" + exceptionMethod(invoker, invocation)+ "】异常: "
+                    + exception.getClass().getName() + ": " + exception.getMessage(), exception);
 
                 // directly throw if exception class and interface class are in the same jar file.
                 String serviceFile = ReflectUtils.getCodeBase(invoker.getInterface());
@@ -87,19 +86,22 @@ public class CustomExceptionFilter implements Filter, Filter.Listener {
                 // otherwise, wrap with RuntimeException and throw back to the client
                 appResponse.setException(new RuntimeException(StringUtils.toString(exception)));
             } catch (Throwable e) {
-                LOGGER.warn("Fail to ExceptionFilter when called by " + RpcContext.getContext().getRemoteHost()
-                    + ". service: " + invoker.getInterface().getName() + ", method: " + invocation.getMethodName()
-                    + ", exception: " + e.getClass().getName() + ": " + e.getMessage(), e);
+                LOGGER.warn("dubbo异常过滤器执行失败【" + exceptionMethod(invoker, invocation) + ", 失败原因: "
+                    + e.getClass().getName() + ": " + e.getMessage(), e);
             }
         }
     }
 
     @Override
     public void onError(final Throwable e, final Invoker<?> invoker, final Invocation invocation) {
-        LOGGER.error("Got unchecked and undeclared exception which called by "
-//            + RpcContext.getServiceContext().getRemoteHost() + ". service: " + invoker.getInterface().getName()
-            + RpcContext.getContext().getRemoteHost() + ". service: " + invoker.getInterface().getName()
-            + ", method: " + invocation.getMethodName() + ", exception: " + e.getClass().getName() + ": " + e.getMessage(), e);
+        LOGGER.error("dubbo业务异常【" + exceptionMethod(invoker, invocation) + "】 exception: "
+            + e.getClass().getName() + ": " + e.getMessage(), e);
+    }
+
+    private String exceptionMethod(final Invoker<?> invoker, final Invocation invocation) {
+        // RpcContext.getServiceContext().getRemoteHost() + ". service: " + invoker.getInterface().getName()
+        return RpcContext.getContext().getRemoteHost() + ": " + invoker.getInterface().getName()
+            + "." + invocation.getMethodName();
     }
 }
 
