@@ -20,6 +20,7 @@ public abstract class DelayedRetryTask<T> extends DelayedTask<DelayRetry<T>> {
             if (!retry) {
                 throw new RuntimeException("任务处理失败");
             }
+            log.info("[RETRY]【{}】第[{}]次重试:处理成功", getTaskGroup(), task.getCount());
         } catch (Exception e) {
             log.error("[RETRY]【{}】第[{}]次重试失败:", getTaskGroup(), task.getCount(), e);
             if (hasNext(task)) {
