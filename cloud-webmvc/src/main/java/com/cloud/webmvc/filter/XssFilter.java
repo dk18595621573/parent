@@ -1,19 +1,17 @@
 package com.cloud.webmvc.filter;
 
+import com.cloud.common.enums.HttpMethod;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.xss.XssHttpServletRequestWrapper;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 防止XSS攻击的过滤器
@@ -21,20 +19,14 @@ import java.util.List;
  * @author author
  */
 public class XssFilter implements Filter {
+
     /**
      * 排除链接
      */
-    public List<String> excludes = new ArrayList<>();
+    private final String[] excludes;
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        String tempExcludes = filterConfig.getInitParameter("excludes");
-        if (StringUtils.isNotEmpty(tempExcludes)) {
-            String[] url = tempExcludes.split(",");
-            for (int i = 0; url != null && i < url.length; i++) {
-                excludes.add(url[i]);
-            }
-        }
+    public XssFilter(final String[] excludes) {
+        this.excludes = excludes;
     }
 
     @Override
@@ -54,7 +46,7 @@ public class XssFilter implements Filter {
         String url = request.getServletPath();
         String method = request.getMethod();
         // GET DELETE 不过滤
-        if (method == null || method.matches("GET") || method.matches("DELETE")) {
+        if (method == null || method.matches(HttpMethod.GET.name()) || method.matches(HttpMethod.DELETE.name())) {
             return true;
         }
         return StringUtils.matches(url, excludes);

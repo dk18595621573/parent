@@ -1,15 +1,15 @@
 package com.cloud.common.utils;
 
+import com.cloud.common.constant.Constants;
+import com.cloud.common.core.text.StrFormatter;
+import org.springframework.util.AntPathMatcher;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.springframework.util.AntPathMatcher;
-import com.cloud.common.constant.Constants;
-import com.cloud.common.core.text.StrFormatter;
 
 /**
  * 字符串工具类
@@ -431,6 +431,25 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return 是否匹配
      */
     public static boolean matches(String str, List<String> strs) {
+        if (isEmpty(str) || isEmpty(strs)) {
+            return false;
+        }
+        for (String pattern : strs) {
+            if (isMatch(pattern, str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 查找指定字符串是否匹配指定字符串列表中的任意一个字符串
+     *
+     * @param str  指定字符串
+     * @param strs 需要检查的字符串数组
+     * @return 是否匹配
+     */
+    public static boolean matches(String str, String[] strs) {
         if (isEmpty(str) || isEmpty(strs)) {
             return false;
         }
