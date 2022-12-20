@@ -44,7 +44,7 @@ public class CustomRequestFilter extends AbstractFilter {
             }
             return invoker.invoke(invocation);
         } catch (Exception e) {
-            logger.error("Exception in TenantFilter ({} -> {})", invoker, invocation, e);
+            logger.error("Exception in CustomRequestFilter ({} -> {})", invoker, invocation, e);
             return invoker.invoke(invocation);
         } finally {
             //服务器提供者清理线程中的请求信息

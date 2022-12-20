@@ -47,6 +47,11 @@ public class SystemProperties {
     private SecurityProperties security = new SecurityProperties();
 
     /**
+     * xss配置
+     */
+    private XssProperties xss = new XssProperties();
+
+    /**
      * 获取地址开关
      */
     private boolean addressEnabled;

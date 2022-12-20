@@ -1,14 +1,13 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.common.utils.StringUtils;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.webmvc.filter.HeaderFilter;
 import com.cloud.webmvc.filter.RepeatableFilter;
 import com.cloud.webmvc.filter.XssFilter;
 import com.cloud.webmvc.properties.SystemProperties;
+import com.cloud.webmvc.properties.XssProperties;
 import com.cloud.webmvc.security.service.TokenStrategy;
 import com.cloud.webmvc.security.service.strategy.RedisTokenStrategy;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -22,8 +21,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.DispatcherType;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -33,12 +30,6 @@ import java.util.TimeZone;
  */
 @Configuration
 public class ApplicationConfig {
-
-    @Value("${xss.excludes}")
-    private String excludes;
-
-    @Value("${xss.urlPatterns}")
-    private String urlPatterns;
 
     /**
      * 时区配置
@@ -86,17 +77,16 @@ public class ApplicationConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(value = "xss.enabled", havingValue = "true")
-    public FilterRegistrationBean<XssFilter> xssFilterRegistration() {
+    @ConditionalOnProperty(value = XssProperties.ENABLED, havingValue = "true")
+    public FilterRegistrationBean<XssFilter> xssFilterRegistration(SystemProperties systemProperties) {
+        XssProperties xss = systemProperties.getXss();
+
         FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
         registration.setDispatcherTypes(DispatcherType.REQUEST);
-        registration.setFilter(new XssFilter());
-        registration.addUrlPatterns(StringUtils.split(urlPatterns, ","));
+        registration.setFilter(new XssFilter(xss.getExcludes()));
+        registration.addUrlPatterns(xss.getUrlPatterns());
         registration.setName("xssFilter");
         registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
-        Map<String, String> initParameters = new HashMap<String, String>();
-        initParameters.put("excludes", excludes);
-        registration.setInitParameters(initParameters);
         return registration;
     }
 
