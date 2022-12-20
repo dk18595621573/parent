@@ -1,14 +1,14 @@
 package com.cloud.webmvc.aspect;
 
+import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.enums.BusinessStatus;
+import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.core.log.model.OperateLog;
 import com.cloud.core.manager.AsyncManager;
 import com.cloud.webmvc.annotation.Log;
-import com.cloud.webmvc.domain.LoginUser;
 import com.cloud.webmvc.security.service.AsyncFactory;
-import com.cloud.webmvc.utils.SecurityUtils;
 import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.utils.ip.IpUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +63,7 @@ public class LogAspect {
     protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
         try {
             // 获取当前的用户
-            LoginUser loginUser = SecurityUtils.getLoginUser();
+            RequestUser loginUser = RequestThread.getUser();
 
             // *========数据库日志=========*//
             OperateLog operLog = new OperateLog();

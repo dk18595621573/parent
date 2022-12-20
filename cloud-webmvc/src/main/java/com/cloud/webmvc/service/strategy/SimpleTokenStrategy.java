@@ -1,12 +1,11 @@
-package com.cloud.webmvc.security.service.strategy;
+package com.cloud.webmvc.service.strategy;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import com.cloud.common.constant.Constants;
+import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.webmvc.domain.LoginUser;
 import com.cloud.webmvc.properties.TokenProperties;
-import com.cloud.webmvc.security.service.TokenStrategy;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,14 +23,14 @@ public class SimpleTokenStrategy implements TokenStrategy {
         }
 
         @Override
-        public LoginUser getLoginUser(final HttpServletRequest request) {
+        public RequestUser getLoginUser(final HttpServletRequest request) {
             // 获取请求携带的令牌
             String token = getToken(request, tokenProperties.getHeader());
             if (StringUtils.isNotEmpty(token)) {
                 try {
                     Claims claims = parseToken(token, tokenProperties.getSecret());
                     // 解析用户信息
-                    return claims.get(Constants.LOGIN_USER_KEY, LoginUser.class);
+                    return claims.get(Constants.LOGIN_USER_KEY, RequestUser.class);
                 } catch (Exception e) {
                 }
             }
@@ -39,7 +38,7 @@ public class SimpleTokenStrategy implements TokenStrategy {
         }
 
         @Override
-        public String createToken(final LoginUser loginUser) {
+        public String createToken(final RequestUser loginUser) {
             Map<String, Object> claims = new HashMap<>();
             claims.put(Constants.LOGIN_USER_KEY, loginUser);
             return Jwts.builder()

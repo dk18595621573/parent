@@ -2,11 +2,11 @@ package com.cloud.webmvc.controller;
 
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.model.AjaxResult;
+import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.core.page.Page;
+import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.webmvc.domain.LoginUser;
-import com.cloud.webmvc.utils.SecurityUtils;
 import com.cloud.webmvc.domain.TableDataInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,8 +108,8 @@ public class BaseController {
     /**
      * 获取用户缓存信息
      */
-    public LoginUser getLoginUser() {
-        return SecurityUtils.getLoginUser();
+    public RequestUser getLoginUser() {
+        return RequestThread.getUser();
     }
 
     /**
