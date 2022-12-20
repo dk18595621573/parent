@@ -8,6 +8,7 @@ import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.excel.listener.ProcessAllListener;
 import com.cloud.webmvc.excel.listener.ProcessBatchListener;
 import com.cloud.webmvc.excel.listener.ProcessRowListener;
+import com.cloud.webmvc.excel.strategy.RowMergeStrategy;
 import lombok.experimental.UtilityClass;
 
 import java.io.InputStream;
@@ -93,7 +94,7 @@ public class ExcelUtil {
      * @param <T> 列表数据类型
      * @param writeHandler 拦截器对象
      */
-    public static <T, M extends WriteHandler> void write(OutputStream outputStream, String sheetName, List<T> datas, Class<T> clazz, M writeHandler) {
+    public static <T> void write(OutputStream outputStream, String sheetName, List<T> datas, Class<T> clazz, WriteHandler writeHandler) {
         EasyExcel.write(outputStream, clazz)
                 .registerWriteHandler(writeHandler)
                 .sheet(sheetName)
