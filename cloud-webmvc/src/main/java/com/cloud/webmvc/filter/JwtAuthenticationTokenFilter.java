@@ -35,7 +35,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 tokenService.verifyToken(loginUser);
                 MDC.put(Constants.MDC_USER_ID, String.valueOf(loginUser.getUserId()));
                 MDC.put(Constants.MDC_COMPANY_ID, String.valueOf(loginUser.getDeptId()));
-                RequestThread.setUser(loginUser.toRequestUser());
+                RequestThread.setUser(loginUser);
             } else {
                 MDC.put(Constants.MDC_USER_ID, StringUtils.EMPTY);
                 MDC.put(Constants.MDC_COMPANY_ID, StringUtils.EMPTY);

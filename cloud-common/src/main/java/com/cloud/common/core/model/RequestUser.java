@@ -2,6 +2,7 @@ package com.cloud.common.core.model;
 
 import lombok.Data;
 
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -58,18 +59,40 @@ public class RequestUser extends BaseRequestInfo {
      */
     private Dept dept;
 
-    public RequestUser toRequestUser() {
-        RequestUser user = new RequestUser();
-        user.setUserId(this.getUserId());
-        user.setUsername(this.getUsername());
-        user.setDeptId(this.getDeptId());
-        user.setToken(this.getToken());
-        user.setLoginTime(this.getLoginTime());
-        user.setExpireTime(this.getExpireTime());
-
-        user.setPermissions(this.getPermissions());
-        user.setRoles(this.getRoles());
-        user.setDept(this.getDept());
-        return user;
+    public RequestUser() {
     }
+
+    public RequestUser(Long userId, Dept dept, String username) {
+        this.setUserId(userId);
+        this.setDeptId(dept.getDeptId());
+        this.setUsername(username);
+        this.setDept(dept);
+    }
+
+    public RequestUser(Long userId, Dept dept, String username, Set<Role> roles) {
+        this.setUserId(userId);
+        this.setDeptId(dept.getDeptId());
+        this.setUsername(username);
+        this.setDept(dept);
+        this.setRoles(roles);
+    }
+
+    public RequestUser(Long userId, Dept dept, String username, Set<Role> roles, Set<String> permissions) {
+        this.setUserId(userId);
+        this.setDeptId(dept.getDeptId());
+        this.setUsername(username);
+        this.setPermissions(permissions);
+        this.setDept(dept);
+        this.setRoles(roles);
+    }
+
+    public void fromRequestInfo(BaseRequestInfo requestInfo) {
+        if (Objects.nonNull(requestInfo)) {
+            this.setIpaddr(requestInfo.getIpaddr());
+            this.setLoginLocation(requestInfo.getLoginLocation());
+            this.setBrowser(requestInfo.getBrowser());
+            this.setOs(requestInfo.getOs());
+        }
+    }
+
 }
