@@ -1,6 +1,7 @@
 package com.cloud.webmvc.excel;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.handler.WriteHandler;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.common.utils.StringUtils;
@@ -81,6 +82,22 @@ public class ExcelUtil {
             .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
             .sheet(sheetName)
             .doWrite(datas);
+    }
+
+    /**
+     * 写文件
+     * @param outputStream 输出流
+     * @param sheetName 第一个sheet页名称
+     * @param datas 列表数据
+     * @param clazz 数据类型
+     * @param <T> 列表数据类型
+     * @param writeHandler 拦截器对象
+     */
+    public static <T, M extends WriteHandler> void write(OutputStream outputStream, String sheetName, List<T> datas, Class<T> clazz, M writeHandler) {
+        EasyExcel.write(outputStream, clazz)
+                .registerWriteHandler(writeHandler)
+                .sheet(sheetName)
+                .doWrite(datas);
     }
 
     /**
