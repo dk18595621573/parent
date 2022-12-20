@@ -4,7 +4,10 @@ import com.cloud.common.utils.StringUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.config.BeanExpressionContext;
+import org.springframework.beans.factory.config.BeanExpressionResolver;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -21,12 +24,15 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
      * Spring应用上下文环境
      */
     private static ConfigurableListableBeanFactory beanFactory;
-
     private static ApplicationContext applicationContext;
+    private static BeanExpressionResolver resolver;
+    private static BeanExpressionContext expressionContext;
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         SpringUtils.beanFactory = beanFactory;
+            SpringUtils.resolver = beanFactory.getBeanExpressionResolver();
+            SpringUtils.expressionContext = new BeanExpressionContext(beanFactory, null);
     }
 
     @Override
@@ -97,6 +103,26 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
      */
     public static String[] getAliases(String name) throws NoSuchBeanDefinitionException {
         return beanFactory.getAliases(name);
+    }
+
+    /**
+     * 解析 SPEL
+     * @param value
+     * @return
+     */
+    public static Object resolveExpression(String value){
+        String resolvedValue = resolve(value);
+        if (!(resolvedValue.startsWith("#{") && value.endsWith("}"))) {
+            return resolvedValue;
+        }
+        return resolver.evaluate(resolvedValue, expressionContext);
+    }
+
+    private static String resolve(String value){
+        if (beanFactory instanceof ConfigurableBeanFactory) {
+            return beanFactory.resolveEmbeddedValue(value);
+        }
+        return value;
     }
 
     /**
