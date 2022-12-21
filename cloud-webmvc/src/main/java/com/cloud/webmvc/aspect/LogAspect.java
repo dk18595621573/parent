@@ -8,7 +8,7 @@ import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.core.log.model.OperateLog;
 import com.cloud.core.manager.AsyncManager;
 import com.cloud.webmvc.annotation.Log;
-import com.cloud.webmvc.security.service.AsyncFactory;
+import com.cloud.webmvc.service.AsyncFactory;
 import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.utils.ip.IpUtils;
 import lombok.extern.slf4j.Slf4j;

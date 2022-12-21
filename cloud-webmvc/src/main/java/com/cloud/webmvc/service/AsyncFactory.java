@@ -1,4 +1,4 @@
-package com.cloud.webmvc.security.service;
+package com.cloud.webmvc.service;
 
 import com.cloud.common.constant.Constants;
 import com.cloud.common.core.model.BaseRequestInfo;

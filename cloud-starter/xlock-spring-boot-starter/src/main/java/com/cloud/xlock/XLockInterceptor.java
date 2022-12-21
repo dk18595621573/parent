@@ -123,4 +123,17 @@ public class XLockInterceptor {
         LOCKED_HOLDER.get().remove(keyInfo.getLockId());
         xLockSpelResolver.remove(keyInfo);
     }
+
+//    /**
+//     * 清除线程上分布式锁.
+//     *
+//     * @param keyInfo keyInfo
+//     */
+//    private void unLock(final KeyInfo keyInfo) {
+//        LockedInfo lockedInfo = LOCKED_HOLDER.get().remove(keyInfo.getLockId());
+//        if (Objects.nonNull(lockedInfo)) {
+//            lockedInfo.getLockService().unlock(keyInfo);
+//        }
+//        xLockSpelResolver.remove(keyInfo);
+//    }
 }
