@@ -95,22 +95,18 @@ public enum OrderSubStatus implements BaseEnum {
     LOGISTICS_NO_SIGN(124, "签收异常"),
 
     /** 售后 */
-    AFTER_LOGISTICS(101, "退物流费用"),
-    CONSENT_AFTER_LOGISTICS(102, "同意退物流费用"),
-    DECLINE_AFTER_LOGISTICS(103, "拒绝退物流费用"),
-    SETTLEMENT(104, "结算"),
-    CONSENT_SETTLEMENT(105, "同意结算"),
-    DECLINE_SETTLEMENT(106, "拒绝结算"),
-    REFUND(107, "退货"),
-    CONSENT_REFUND(108, "同意退货"),
-    DECLINE_REFUND(109, "拒绝退货"),
-    AFTER_SALE(110, "转售后"),
+    AFTERMARKET_WAIT_INSPECTION_GOODS(100, "售后-待验货(待寄回)"),
+    AFTERMARKET_INSPECTION_GOODS(101, "售后-已验货(已寄回)"),
 
     /** 撤销 */
     REVOKE_NEW(131, "新建采购撤销"),
     REVOKE_PUBLISHED(132, "待发布撤销"),
     REVOKE_ADDRESS(133, "待补全地址撤销"),
     REVOKE_DELIVERED(134, "待发货撤销"),
+
+    /** 未追回订单 */
+    NOT_RECOVERED_WAIT_INSPECTION_GOODS(140, "未追回订单-待验货(待寄回)"),
+    NOT_RECOVERED_INSPECTION_GOODS(141, "未追回订单-已验货(已寄回)"),
 
     /** 竞拍出价 */
     AUCTIONING(150, "竞价中"),
