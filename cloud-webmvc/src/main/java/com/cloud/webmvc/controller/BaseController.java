@@ -4,12 +4,10 @@ import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.model.AjaxResult;
 import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.core.page.Page;
-import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.domain.TableDataInfo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.cloud.webmvc.utils.SecurityUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -22,7 +20,6 @@ import java.util.Date;
  * @author author
  */
 public class BaseController {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
@@ -109,27 +106,27 @@ public class BaseController {
      * 获取用户缓存信息
      */
     public RequestUser getLoginUser() {
-        return RequestThread.getUser();
+        return SecurityUtils.getLoginUser();
     }
 
     /**
      * 获取登录用户id
      */
     public Long getUserId() {
-        return getLoginUser().getUserId();
+        return SecurityUtils.getUserId();
     }
 
     /**
      * 获取登录部门id
      */
     public Long getDeptId() {
-        return getLoginUser().getDeptId();
+        return SecurityUtils.getDeptId();
     }
 
     /**
      * 获取登录用户名
      */
     public String getUsername() {
-        return getLoginUser().getUsername();
+        return SecurityUtils.getUsername();
     }
 }
