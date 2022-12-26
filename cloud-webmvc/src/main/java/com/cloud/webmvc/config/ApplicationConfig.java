@@ -1,21 +1,15 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.core.redis.RedisCache;
 import com.cloud.webmvc.filter.HeaderFilter;
 import com.cloud.webmvc.filter.RepeatableFilter;
 import com.cloud.webmvc.filter.XssFilter;
 import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.webmvc.properties.XssProperties;
-import com.cloud.webmvc.security.service.TokenStrategy;
-import com.cloud.webmvc.security.service.strategy.RedisTokenStrategy;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -61,20 +55,6 @@ public class ApplicationConfig {
         return new CorsFilter(source);
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public TokenStrategy tokenStrategy(SystemProperties systemProperties, RedisCache redisCache) {
-        return new RedisTokenStrategy(redisCache, systemProperties.getToken());
-    }
-
-    /**
-     * 强散列哈希加密实现
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     @ConditionalOnProperty(value = XssProperties.ENABLED, havingValue = "true")

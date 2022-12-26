@@ -1,12 +1,11 @@
-package com.cloud.webmvc.security.service.strategy;
+package com.cloud.webmvc.service.strategy;
 
 import com.cloud.common.constant.Constants;
+import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.uuid.IdUtils;
 import com.cloud.core.redis.RedisCache;
-import com.cloud.webmvc.domain.LoginUser;
 import com.cloud.webmvc.properties.TokenProperties;
-import com.cloud.webmvc.security.service.TokenStrategy;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,7 +27,7 @@ public class RedisTokenStrategy implements TokenStrategy {
         }
 
         @Override
-        public LoginUser getLoginUser(final HttpServletRequest request) {
+        public RequestUser getLoginUser(final HttpServletRequest request) {
             // 获取请求携带的令牌
             String token = getToken(request, tokenProperties.getHeader());
             if (StringUtils.isNotEmpty(token)) {
@@ -45,7 +44,7 @@ public class RedisTokenStrategy implements TokenStrategy {
         }
 
         @Override
-        public String createToken(final LoginUser loginUser) {
+        public String createToken(final RequestUser loginUser) {
             String token = IdUtils.simpleUUID() + "-" + loginUser.getUserId();
             loginUser.setToken(token);
             refreshToken(loginUser);
@@ -57,7 +56,7 @@ public class RedisTokenStrategy implements TokenStrategy {
         }
 
         @Override
-        public void refreshToken(final LoginUser loginUser) {
+        public void refreshToken(final RequestUser loginUser) {
             loginUser.setLoginTime(System.currentTimeMillis());
             int expireTime = tokenProperties.getExpireTime();
             loginUser.setExpireTime(loginUser.getLoginTime() + expireTime * MILLIS_MINUTE);

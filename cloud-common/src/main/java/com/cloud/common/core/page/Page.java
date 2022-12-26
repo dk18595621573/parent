@@ -1,5 +1,6 @@
 package com.cloud.common.core.page;
 
+import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -29,5 +30,9 @@ public class Page<T> implements Serializable {
 
     public static <T> Page<T> empty() {
         return new Page<>(Collections.emptyList(), 0L);
+    }
+
+    public boolean isEmpty() {
+        return CollUtil.isEmpty(data);
     }
 }

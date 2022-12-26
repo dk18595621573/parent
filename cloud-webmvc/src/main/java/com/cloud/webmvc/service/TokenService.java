@@ -1,8 +1,9 @@
-package com.cloud.webmvc.security.service;
+package com.cloud.webmvc.service;
 
 import com.cloud.common.core.model.BaseRequestInfo;
+import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.service.strategy.TokenStrategy;
 import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.utils.ip.AddressUtils;
 import com.cloud.webmvc.utils.ip.IpUtils;
@@ -47,18 +48,18 @@ public class TokenService {
      *
      * @return 用户信息
      */
-    public LoginUser getLoginUser(HttpServletRequest request) {
+    public RequestUser getLoginUser(HttpServletRequest request) {
         return tokenStrategy.getLoginUser(request);
     }
 
-    public String createToken(LoginUser loginUser) {
+    public String createToken(RequestUser loginUser) {
         return tokenStrategy.createToken(loginUser);
     }
 
     /**
      * 设置用户身份信息
      */
-    public void setLoginUser(LoginUser loginUser) {
+    public void setLoginUser(RequestUser loginUser) {
         if (StringUtils.isNotNull(loginUser) && StringUtils.isNotEmpty(loginUser.getToken())) {
             refreshToken(loginUser);
         }
@@ -78,7 +79,7 @@ public class TokenService {
      * @param loginUser
      * @return 令牌
      */
-    public void verifyToken(LoginUser loginUser) {
+    public void verifyToken(RequestUser loginUser) {
         long expireTime = loginUser.getExpireTime();
         long currentTime = System.currentTimeMillis();
         if (expireTime - currentTime <= MILLIS_MINUTE_TEN) {
@@ -91,7 +92,7 @@ public class TokenService {
      *
      * @param loginUser 登录信息
      */
-    public void refreshToken(LoginUser loginUser) {
+    public void refreshToken(RequestUser loginUser) {
         tokenStrategy.refreshToken(loginUser);
     }
 

@@ -1,11 +1,11 @@
-package com.cloud.webmvc.security.service;
+package com.cloud.webmvc.service.strategy;
 
 import com.cloud.common.constant.Constants;
+import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.webmvc.domain.LoginUser;
+import com.cloud.webmvc.exception.AuthorizationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import org.springframework.security.access.AuthorizationServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,14 +26,14 @@ public interface TokenStrategy {
      * @param request request
      * @return 登录用户
      */
-    LoginUser getLoginUser(HttpServletRequest request);
+    RequestUser getLoginUser(HttpServletRequest request);
 
     /**
      * 根据登录用户创建token
      * @param loginUser 登录用户
      * @return token
      */
-    String createToken(LoginUser loginUser);
+    String createToken(RequestUser loginUser);
 
     /**
      * 移除登录用户
@@ -41,16 +41,16 @@ public interface TokenStrategy {
      */
     default void delLoginUser(String token) {
         //默认抛出异常，踢出登录用户
-        throw new AuthorizationServiceException("系统踢出");
+        throw new AuthorizationException("系统踢出");
     }
 
     /**
      * 使用新的用户信息刷新token
      * @param loginUser 登录用户
      */
-    default void refreshToken(LoginUser loginUser) {
+    default void refreshToken(RequestUser loginUser) {
         //默认抛出异常刷新用户
-        throw new AuthorizationServiceException("系统刷新");
+        throw new AuthorizationException("系统刷新");
     }
 
     /**
