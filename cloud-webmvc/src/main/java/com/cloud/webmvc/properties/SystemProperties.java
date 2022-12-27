@@ -31,8 +31,8 @@ public class SystemProperties {
      */
     private String domain;
 
-    /** 订阅地址(快递100) */
-    private String callbackUrl;
+    /** api项目域名 */
+    private String apiDomain;
 
     /**
      * 移动端域名
