@@ -4,6 +4,8 @@ import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.common.threads.RequestThread;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -13,6 +15,9 @@ import java.util.Objects;
  * @author author
  */
 public class SecurityUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
+
     /**
      * 用户ID
      **/
@@ -20,7 +25,8 @@ public class SecurityUtils {
         try {
             return getLoginUser().getUserId();
         } catch (Exception e) {
-            throw new ServiceException("获取用户ID异常", HttpStatus.UNAUTHORIZED);
+            LOGGER.error("获取用户ID异常", e);
+            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -31,7 +37,8 @@ public class SecurityUtils {
         try {
             return getLoginUser().getDeptId();
         } catch (Exception e) {
-            throw new ServiceException("获取部门ID异常", HttpStatus.UNAUTHORIZED);
+            LOGGER.error("获取部门ID异常", e);
+            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -42,7 +49,8 @@ public class SecurityUtils {
         try {
             return getLoginUser().getUsername();
         } catch (Exception e) {
-            throw new ServiceException("获取用户账户异常", HttpStatus.UNAUTHORIZED);
+            LOGGER.error("获取用户名异常", e);
+            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -52,7 +60,8 @@ public class SecurityUtils {
     public static RequestUser getLoginUser() {
         RequestUser user = RequestThread.getUser();
         if (Objects.isNull(user)) {
-            throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
+            LOGGER.error("获取登录用户信息失败");
+            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
         return user;
     }
