@@ -47,4 +47,9 @@ public interface TopicConstants {
      */
     String ORDER_MARKETING = "TOPIC-ORDER-MARKETING";
 
+    /**
+     * 询价采购报价中
+     */
+    String INQUIRY_HANG_ORDER = "TOPIC-INQUIRY-HANG-ORDER";
+
 }

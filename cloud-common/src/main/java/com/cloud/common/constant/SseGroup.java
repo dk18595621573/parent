@@ -58,4 +58,14 @@ public interface SseGroup {
 
     }
 
+    /**
+     * 采购方订单分组
+     */
+    interface DemandOrderGroup {
+        /**
+         * 询价采购报价中
+         */
+        String INQUIRY_HANG_ORDER = "inquiry_hang_order";
+    }
+
 }
