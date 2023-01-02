@@ -1,5 +1,6 @@
 package com.cloud.component.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -10,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = CMBProperties.CMB_PREFIX)
 public class CMBProperties{
 
-    public static final String CMB_PREFIX = "cloud.cmb";
+    public static final String CMB_PREFIX = Constants.CONFIG_PREFIX + "cmb";
 
     /**
      * 用户id

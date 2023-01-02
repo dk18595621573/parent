@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = OcrProperties.OCR_PREFIX)
 public class OcrProperties {
-    public static final String OCR_PREFIX = "cloud.tencent.ocr";
+    public static final String OCR_PREFIX = TencentProperties.TENCENT_PREFIX + ".ocr";
 
     /**
      * 设置区域.

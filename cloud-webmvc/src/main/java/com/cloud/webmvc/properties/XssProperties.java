@@ -1,5 +1,6 @@
 package com.cloud.webmvc.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 @Data
 public class XssProperties implements Serializable {
 
-    public static final String ENABLED = "cloud.system.xss.enabled";
+    public static final String ENABLED = Constants.CONFIG_PREFIX + "xss.enabled";
 
     private String[] excludes;
 

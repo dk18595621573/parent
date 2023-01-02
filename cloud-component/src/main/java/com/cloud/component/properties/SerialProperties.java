@@ -1,5 +1,6 @@
 package com.cloud.component.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -9,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = SerialProperties.SERIAL_PREFIX)
 public class SerialProperties {
-    public static final String SERIAL_PREFIX = "cloud.serial";
+    public static final String SERIAL_PREFIX = Constants.CONFIG_PREFIX + "serial";
     /**
      *  请求路径
      */

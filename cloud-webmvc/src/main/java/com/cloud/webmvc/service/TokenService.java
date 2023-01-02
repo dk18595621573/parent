@@ -2,7 +2,6 @@ package com.cloud.webmvc.service;
 
 import com.cloud.common.core.model.BaseRequestInfo;
 import com.cloud.common.core.model.RequestUser;
-import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.service.strategy.TokenStrategy;
 import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.utils.ip.AddressUtils;
@@ -23,16 +22,16 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Component
 public class TokenService {
-
-    private static final long MILLIS_MINUTE_TEN = 20 * TokenStrategy.MILLIS_MINUTE;
     @Autowired
     private TokenStrategy tokenStrategy;
 
     public BaseRequestInfo buildRequestInfo() {
         try {
+            HttpServletRequest request = ServletUtils.getRequest();
+            UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader(HttpHeaders.USER_AGENT));
+            String ip = IpUtils.getIpAddr(request);
+
             BaseRequestInfo requestInfo = new BaseRequestInfo();
-            UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader(HttpHeaders.USER_AGENT));
-            String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
             requestInfo.setIpaddr(ip);
             requestInfo.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
             requestInfo.setBrowser(userAgent.getBrowser().getName());
@@ -57,43 +56,19 @@ public class TokenService {
     }
 
     /**
-     * 设置用户身份信息
+     * 刷新token数据
+     *
+     * @param loginUser 登录信息
      */
-    public void setLoginUser(RequestUser loginUser) {
-        if (StringUtils.isNotNull(loginUser) && StringUtils.isNotEmpty(loginUser.getToken())) {
-            refreshToken(loginUser);
-        }
+    public String refreshToken(RequestUser loginUser) {
+        return tokenStrategy.refreshToken(loginUser);
     }
 
     /**
      * 删除用户身份信息
      */
-    public void delLoginUser(String token) {
-        tokenStrategy.delLoginUser(token);
-    }
-
-
-    /**
-     * 验证令牌有效期，相差不足20分钟，自动刷新缓存
-     *
-     * @param loginUser
-     * @return 令牌
-     */
-    public void verifyToken(RequestUser loginUser) {
-        long expireTime = loginUser.getExpireTime();
-        long currentTime = System.currentTimeMillis();
-        if (expireTime - currentTime <= MILLIS_MINUTE_TEN) {
-            refreshToken(loginUser);
-        }
-    }
-
-    /**
-     * 刷新令牌有效期
-     *
-     * @param loginUser 登录信息
-     */
-    public void refreshToken(RequestUser loginUser) {
-        tokenStrategy.refreshToken(loginUser);
+    public void delLoginUser(Long userId, String token) {
+        tokenStrategy.delLoginUser(userId, token);
     }
 
 }

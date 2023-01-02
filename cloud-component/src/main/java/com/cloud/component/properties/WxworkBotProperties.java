@@ -1,5 +1,6 @@
 package com.cloud.component.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
 @Data
 @ConfigurationProperties(prefix = WxworkBotProperties.BOT_PREFIX)
 public class WxworkBotProperties {
-    public static final String BOT_PREFIX = "cloud.bot";
+    public static final String BOT_PREFIX = Constants.CONFIG_PREFIX + "bot";
 
     /**
      * 企微接口相关域名

@@ -1,5 +1,6 @@
 package com.cloud.component.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -13,7 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = ExpressProperties.EXPRESS_PREFIX)
 public class ExpressProperties {
 
-    public static final String EXPRESS_PREFIX = "cloud.express";
+    public static final String EXPRESS_PREFIX = Constants.CONFIG_PREFIX + "express";
 
 
     private String url;

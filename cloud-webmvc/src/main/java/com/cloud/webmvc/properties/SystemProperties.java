@@ -1,5 +1,6 @@
 package com.cloud.webmvc.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -9,8 +10,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author author
  */
 @Data
-@ConfigurationProperties(prefix = "cloud.system")
+@ConfigurationProperties(prefix = SystemProperties.PREFIX)
 public class SystemProperties {
+
+    public static final String PREFIX = Constants.CONFIG_PREFIX + "system";
     /**
      * 项目名称
      */

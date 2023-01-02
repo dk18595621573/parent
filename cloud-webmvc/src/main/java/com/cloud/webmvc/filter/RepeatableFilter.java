@@ -1,7 +1,9 @@
 package com.cloud.webmvc.filter;
 
 import com.cloud.common.utils.StringUtils;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,9 +19,11 @@ import java.io.IOException;
  *
  * @author author
  */
+@Component
+@Order
 public class RepeatableFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

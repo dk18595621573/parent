@@ -1,5 +1,6 @@
 package com.cloud.component.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @ConfigurationProperties(prefix = ChinaPayProperties.CHINAPAY_PREFIX)
 public class ChinaPayProperties implements Serializable {
 
-    public static final String CHINAPAY_PREFIX = "cloud.chinapay";
+    public static final String CHINAPAY_PREFIX = Constants.CONFIG_PREFIX + "chinapay";
     /**
      * 银联域名
      */

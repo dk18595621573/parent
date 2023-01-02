@@ -1,7 +1,5 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.webmvc.filter.HeaderFilter;
-import com.cloud.webmvc.filter.RepeatableFilter;
 import com.cloud.webmvc.filter.XssFilter;
 import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.webmvc.properties.XssProperties;
@@ -70,28 +68,4 @@ public class ApplicationConfig {
         return registration;
     }
 
-    @Bean
-    public FilterRegistrationBean<HeaderFilter> headerFilterRegistration() {
-        FilterRegistrationBean<HeaderFilter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(new HeaderFilter());
-        registration.addUrlPatterns("/*");
-        registration.setName("headerFilter");
-        registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
-        return registration;
-    }
-
-    @Bean
-    public FilterRegistrationBean<RepeatableFilter> repeatableFilterRegistration() {
-        FilterRegistrationBean<RepeatableFilter> registration = new FilterRegistrationBean<>();
-        registration.setFilter(new RepeatableFilter());
-        registration.addUrlPatterns("/*");
-        registration.setName("repeatableFilter");
-        registration.setOrder(FilterRegistrationBean.LOWEST_PRECEDENCE);
-        return registration;
-    }
-
-    @Bean
-    public ServerConfig serverConfig() {
-        return new ServerConfig();
-    }
 }

@@ -21,6 +21,13 @@ public interface TokenStrategy {
 
     long MILLIS_MINUTE = 60 * MILLIS_SECOND;
 
+    long MILLIS_MINUTE_TEN = 20 * TokenStrategy.MILLIS_MINUTE;
+
+    /**
+     * 令牌前缀
+     */
+    String LOGIN_USER_KEY = "login_user_key";
+
     /**
      * 从请求数据中获取登录用户
      * @param request request
@@ -37,9 +44,10 @@ public interface TokenStrategy {
 
     /**
      * 移除登录用户
+     * @param userId 当前登录的用户id
      * @param token 用户token
      */
-    default void delLoginUser(String token) {
+    default void delLoginUser(Long userId, String token) {
         //默认抛出异常，踢出登录用户
         throw new AuthorizationException("系统踢出");
     }
@@ -48,9 +56,8 @@ public interface TokenStrategy {
      * 使用新的用户信息刷新token
      * @param loginUser 登录用户
      */
-    default void refreshToken(RequestUser loginUser) {
-        //默认抛出异常刷新用户
-        throw new AuthorizationException("系统刷新");
+    default String refreshToken(RequestUser loginUser) {
+        return createToken(loginUser);
     }
 
     /**

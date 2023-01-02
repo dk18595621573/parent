@@ -1,10 +1,8 @@
 package com.cloud.component.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  *  华盛配置属性
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = HSProperties.HS_PREFIX)
 public class HSProperties {
 
-    public static final String HS_PREFIX = "cloud.hs";
+    public static final String HS_PREFIX = Constants.CONFIG_PREFIX + "hs";
 
     /**
      * 华盛服务器路径

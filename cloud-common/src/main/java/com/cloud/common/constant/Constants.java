@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
  * @author author
  */
 public class Constants {
+
+    public static final String CONFIG_PREFIX = "cloud.";
     /**
      * UTF-8 字符集
      */
@@ -46,6 +48,11 @@ public class Constants {
      * 通用失败标识
      */
     public static final String FAIL = "1";
+
+    /**
+     * 分隔符 中划线
+     */
+    public static final String DASH = "-";
 
     /**
      * 通用失败标识
@@ -105,11 +112,6 @@ public class Constants {
      * 令牌前缀
      */
     public static final String TOKEN_PREFIX = "Bearer ";
-
-    /**
-     * 令牌前缀
-     */
-    public static final String LOGIN_USER_KEY = "login_user_key";
 
     public static final String MDC_TRACE_ID = "TRACE";
 

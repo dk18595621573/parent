@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = SmsProperties.SMS_PREFIX)
 public class SmsProperties {
-    public static final String SMS_PREFIX = "cloud.tencent.sms";
+    public static final String SMS_PREFIX = TencentProperties.TENCENT_PREFIX + ".sms";
 
     /**
      * 短信应用id

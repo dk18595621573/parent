@@ -1,4 +1,4 @@
-Application Version: ${cloud.system.version}
+Application Version: ${cloud-parent.version}
 Spring Boot Version: ${spring-boot.version}
 ////////////////////////////////////////////////////////////////////
 //                          _ooOoo_                               //

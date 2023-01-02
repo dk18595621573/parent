@@ -20,7 +20,7 @@ import java.util.Objects;
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
 
-    private static final String[] ALLOW_VISIT_PATHS = {"/doc.html", "/swagger-resources", "/webjars/**", "/*/api-docs", "/druid/**"};
+    private static final String[] ALLOW_VISIT_PATHS = {"/doc.html", "/swagger-resources", "/webjars/**", "/*/api-docs", "/login"};
     @Autowired(required = false)
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
     @Autowired

@@ -1,9 +1,10 @@
 package com.cloud.webmvc.interceptor;
 
-import com.cloud.webmvc.annotation.RepeatSubmit;
 import com.cloud.common.core.model.AjaxResult;
 import com.cloud.common.utils.json.JsonUtil;
+import com.cloud.webmvc.annotation.RepeatSubmit;
 import com.cloud.webmvc.utils.ServletUtils;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -19,21 +20,20 @@ import java.lang.reflect.Method;
 public abstract class RepeatSubmitInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (handler instanceof HandlerMethod) {
-            HandlerMethod handlerMethod = (HandlerMethod) handler;
-            Method method = handlerMethod.getMethod();
-            RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
-            if (annotation != null) {
-                if (this.isRepeatSubmit(request, annotation)) {
-                    AjaxResult ajaxResult = AjaxResult.error(annotation.message());
-                    ServletUtils.renderString(response, JsonUtil.toJson(ajaxResult));
-                    return false;
-                }
-            }
-            return true;
-        } else {
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+
+        Method method = ((HandlerMethod) handler).getMethod();
+        RepeatSubmit annotation = AnnotationUtils.findAnnotation(method, RepeatSubmit.class);
+        if (annotation != null) {
+            if (this.isRepeatSubmit(request, annotation)) {
+                AjaxResult ajaxResult = AjaxResult.error(annotation.message());
+                ServletUtils.renderString(response, JsonUtil.toJson(ajaxResult));
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

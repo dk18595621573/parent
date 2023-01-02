@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = CosProperties.COS_PREFIX)
 public class CosProperties {
 
-    public static final String COS_PREFIX = "cloud.tencent.cos";
+    public static final String COS_PREFIX = TencentProperties.TENCENT_PREFIX + ".cos";
 
     /**
      * 存储桶名称.

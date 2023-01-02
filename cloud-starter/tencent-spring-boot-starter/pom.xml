@@ -34,10 +34,9 @@
             <artifactId>spring-cloud-context</artifactId>
         </dependency>
 
-        <!-- hutool -->
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <groupId>com.cloud</groupId>
+            <artifactId>cloud-common</artifactId>
         </dependency>
 
         <!-- 腾讯云cos -->

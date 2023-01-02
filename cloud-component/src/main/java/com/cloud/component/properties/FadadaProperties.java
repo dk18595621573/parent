@@ -1,5 +1,6 @@
 package com.cloud.component.properties;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -12,7 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = FadadaProperties.FADADA_PREFIX)
 public class FadadaProperties {
 
-    public static final String FADADA_PREFIX = "cloud.fadada";
+    public static final String FADADA_PREFIX = Constants.CONFIG_PREFIX + "fadada";
     /**
      * 注册appId
      */

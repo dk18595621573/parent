@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.core.model.Role;
-import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.StringUtils;
+import com.cloud.webmvc.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -32,7 +32,7 @@ public class PermissionService {
         if (StringUtils.isEmpty(permission)) {
             return false;
         }
-        RequestUser loginUser = RequestThread.getUser();
+        RequestUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getPermissions())) {
             return false;
         }
@@ -59,7 +59,7 @@ public class PermissionService {
         if (StringUtils.isEmpty(permissions)) {
             return false;
         }
-        RequestUser loginUser = RequestThread.getUser();
+        RequestUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getPermissions())) {
             return false;
         }
@@ -102,7 +102,7 @@ public class PermissionService {
         if (StringUtils.isEmpty(roles)) {
             return false;
         }
-        RequestUser loginUser = RequestThread.getUser();
+        RequestUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getRoles())) {
             return false;
         }
