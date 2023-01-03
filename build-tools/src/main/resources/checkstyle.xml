@@ -1,0 +1,374 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="error"/>
+    <property name="fileExtensions" value="java, properties, xml"/>
+    <module name="Header">
+        <property name="fileExtensions" value="java"/>
+    </module>
+    <!-- 检查文件是否包含制表符-->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+    <!-- 检查文件的长度（行） default max=2000 -->
+    <module name="FileLength"/>
+    <!-- 检查文件是否以一个空行结束-->
+    <module name="NewlineAtEndOfFile">
+        <property name="lineSeparator" value="lf"/>
+    </module>
+    <!-- 检查*.properties配置文件 是否有相同的key-->
+    <module name="Translation"/>
+    <!-- 检测属性文件中的重复键-->
+    <module name="UniqueProperties"/>
+    <module name="SeverityMatchFilter"/>
+
+    <module name="TreeWalker">
+        <!-- Naming Conventions -->
+        <!-- 包名的检查（只允许小写字母），默认^[a-z]+(\.[a-zA-Z_][a-zA-Z_0-9_]*)*$ -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+            <message key="name.invalidPattern" value="包名 ''{0}'' 要符合 ''{1}''格式."/>
+        </module>
+        <!-- Class或Interface名检查，默认^[A-Z][a-zA-Z0-9]*$-->
+        <module name="TypeName"/>
+        <!-- 非static型变量的检查 -->
+        <module name="MemberName"/>
+        <!-- 方法的参数名 -->
+        <module name="ParameterName"/>
+        <!-- 方法名的检查 -->
+        <module name="MethodName"/>
+        <!--检查接口类型参数名称是否符合format属性指定的格式-->
+        <module name="InterfaceTypeParameterName"/>
+        <!--检查类类型参数名称是否符合format属性指定的格式-->
+        <module name="ClassTypeParameterName"/>
+        <!--检查类类型参数名称是否符合format属性指定的格式-->
+        <module name="MethodTypeParameterName"/>
+        <!-- 常量名的检查（只允许大写），默认^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$ -->
+        <module name="ConstantName"/>
+        <!-- 仅仅是static型的变量（不包括static final型）的检查 -->
+        <module name="StaticVariableName"/>
+        <!-- 局部的非final型的变量，包括catch中的参数的检查 -->
+        <module name="LocalVariableName"/>
+        <!-- 局部的final变量，包括catch中的参数的检查 -->
+        <module name="LocalFinalVariableName"/>
+        <!--检查catch参数名称是否符合format属性指定的格式-->
+        <module name="CatchParameterName"/>
+        <!--检查目标元素名称中连续大写字母长度，允许强制执行骆驼命名-->
+        <module name="AbbreviationAsWordInName">
+            <property name="allowedAbbreviationLength" value="6"/>
+        </module>
+
+        <!-- Size Violations -->
+        <!-- 每行字符数 -->
+        <module name="LineLength">
+            <property name="max" value="200"/>
+        </module>
+        <!--检查匿名内部类长度限制-->
+        <module name="AnonInnerLength">
+            <property name="max" value="60"/>
+        </module>
+        <!--检查方法长度限制-->
+        <module name="MethodLength"/>
+        <!--检查“外部”级别的已定义类型的数量-->
+        <module name="OuterTypeNumber"/>
+
+        <!-- Whitespace -->
+        <!--检查For初始化空白填充-->
+        <module name="EmptyForInitializerPad"/>
+        <!--检查Iterator初始化空白填充-->
+        <module name="EmptyForIteratorPad">
+            <property name="option" value="space"/>
+        </module>
+        <!--方法名后跟左圆括号"(" -->
+        <module name="MethodParamPad"/>
+        <!--检查圆括号的填充符策略，也就是在左圆括号之后和右圆括号之前是否需要有一个空格-->
+        <module name="ParenPad"/>
+        <!--在类型转换时，不允许左圆括号右边有空格，也不允许与右圆括号左边有空格 -->
+        <module name="TypecastParenPad"/>
+        <!--检查所选语句是否不是换行的-->
+        <module name="NoLineWrap"/>
+        <!--操作符换行策略检查 -->
+        <module name="OperatorWrap"/>
+        <!--检查使用分隔符的换行-->
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapDot"/>
+            <property name="tokens" value="DOT"/>
+            <property name="option" value="nl"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapComma"/>
+            <property name="tokens" value="COMMA"/>
+            <property name="option" value="EOL"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapEllipsis"/>
+            <property name="tokens" value="ELLIPSIS"/>
+            <property name="option" value="EOL"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapArrayDeclarator"/>
+            <property name="tokens" value="ARRAY_DECLARATOR"/>
+            <property name="option" value="EOL"/>
+        </module>
+        <module name="SeparatorWrap">
+            <property name="id" value="SeparatorWrapMethodRef"/>
+            <property name="tokens" value="METHOD_REF"/>
+            <property name="option" value="nl"/>
+        </module>
+        <!-- 检查尖括号 -->
+        <module name="GenericWhitespace"/>
+        <!-- 检查在某个特定关键字之前应保留空格 -->
+        <module name="NoWhitespaceBefore"/>
+        <!-- 检查在某个特定关键字之后应保留空格 -->
+        <module name="NoWhitespaceAfter"/>
+        <!-- 检查分隔符周围是否有空白 -->
+        <module name="WhitespaceAround"/>
+        <!--检查一个令牌后跟空格，除了它在迭代器的空分号后没有检查空格-->
+        <module name="WhitespaceAfter"/>
+        <!-- 检查非空白字符是否由不超过一个空格分隔 -->
+        <module name="SingleSpaceSeparator"/>
+        <!-- 检查空行分隔符 -->
+        <module name="EmptyLineSeparator">
+            <property name="allowMultipleEmptyLines" value="false"/>
+            <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
+        </module>
+
+        <!-- Imports -->
+        <!--　检查没有import语句使用*符号, excludes: 定义可以使用*导入的包 -->
+        <module name="AvoidStarImport"/>
+        <!-- 检查是否找到静态导入 -->
+        <module name="AvoidStaticImport">
+            <property name="excludes" value="java.awt.*,org.junit.Assert.*,org.hamcrest.CoreMatchers.*,org.mockito.Mockito.*,org.mockito.ArgumentMatchers.*"/>
+        </module>
+        <!-- 检查是否从非法的包中导入了类 -->
+        <module name="IllegalImport"/>
+        <!-- 检查是否导入了多余的包 -->
+        <module name="RedundantImport"/>
+        <!-- 没用的import检查-->
+        <module name="UnusedImports"/>
+        <!-- 检查导入声明组是否按用户指定的顺序显示-->
+        <module name="CustomImportOrder"/>
+
+        <!-- Annotations -->
+        <!-- 检查语言元素上注释的位置 -->
+        <module name="AnnotationLocation">
+            <property name="id" value="AnnotationLocationMostCases"/>
+            <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF"/>
+        </module>
+        <module name="AnnotationLocation">
+            <property name="id" value="AnnotationLocationVariables"/>
+            <property name="tokens" value="VARIABLE_DEF"/>
+            <property name="allowSamelineMultipleAnnotations" value="true"/>
+        </module>
+        <!-- 此检查使用注释来控制样式 -->
+        <module name="AnnotationUseStyle"/>
+        <!-- 当存在{@inheritDoc} javadoc标记时，此类用于验证java.lang.Override注释是否存在-->
+        <module name="MissingOverride"/>
+        <!-- 此检查允许您指定哪些警告 -->
+        <module name="SuppressWarnings"/>
+        <!-- 此类用于验证java.lang.Deprecated注释是否存在，并且存在任何一个@deprecated Javadoc标记-->
+        <module name="MissingDeprecated"/>
+        <module name="SuppressWarningsHolder"/>
+
+        <!-- Modifiers -->
+        <!-- 检查修饰符的顺序是否遵照java语言规范，默认public、protected、private、abstract、static、final、transient、volatile、synchronized、native、strictfp -->
+        <module name="ModifierOrder"/>
+        <!-- 检查接口和annotation中是否有多余修饰符，如接口方法不必使用public -->
+        <module name="RedundantModifier"/>
+
+        <!-- Coding -->
+        <!--检查数组初始化是否包含可选的尾随逗号-->
+        <module name="ArrayTrailingComma"/>
+        <!--　检查定义了共变equals()方法的类中是否同样覆盖了equals(java.lang.Object)方法 -->
+        <module name="CovariantEquals"/>
+        <!--　检查switch语句中的default是否在所有的case分支之后 -->
+        <module name="DefaultComesLast"/>
+        <!--检查类和接口中的声明顺序-->
+        <module name="DeclarationOrder"/>
+        <!-- 检查空的代码段 -->
+        <module name="EmptyStatement"/>
+        <!--检查一个可能为null的字符串是否在equals()比较的左边-->
+        <module name="EqualsAvoidNull"/>
+        <!--检查类和对象成员是否初始化为默认值-->
+        <module name="ExplicitInitialization"/>
+        <!--　检查switch语句中是否存在跨越分支, 如果一个case分支的代码中缺少break、return、throw或continue语句，那么就会导致跨越分支 -->
+        <module name="FallThrough"/>
+        <!--　检查是否有不合法的实例化操作，是否使用工厂方法更好 -->
+        <module name="IllegalInstantiation"/>
+        <!--　非法异常捕捉,不允许捕捉java.lang.Exception、java.lang.Error、java.lang.RuntimeException的行为 -->
+        <module name="IllegalCatch">
+            <property name="illegalClassNames" value="java.lang.Error"/>
+            <message key="illegal.catch" value="禁止捕获： ''{0}''."/>
+        </module>
+
+        <!-- 检查是否抛出了未声明的异常-->
+        <module name="IllegalThrows"/>
+        <!-- 检查从未使用过特定的类或接口-->
+        <module name="IllegalType">
+            <property name="tokens" value="METHOD_DEF,PARAMETER_DEF,VARIABLE_DEF"/>
+        </module>
+        <!-- 检查非法的分隔符的下个字符-->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
+            <property name="format" value="\\u00(09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\(0(10|11|12|14|15|42|47)|134)"/>
+            <property name="message" value="Consider using special escape sequence instead of octal value or Unicode escaped value."/>
+        </module>
+        <!-- 检查switch语句是否有default -->
+        <module name="MissingSwitchDefault"/>
+        <!-- 检查循环控制的变量是否在代码块中被修改-->
+        <!--<module name="ModifiedControlVariable"/>-->
+        <!-- 检查代码段和代码行中是否有多次变量声明-->
+        <!--<module name="MultipleVariableDeclarationsMultipleVariableDeclarations"/>-->
+        <!--　限制if-else代码块的嵌套层数（默认值为1）-->
+        <module name="NestedIfDepth">
+            <property name="max" value="3"/>
+        </module>
+        <!--　限制try代码块的嵌套层数（默认值为1）-->
+        <module name="NestedTryDepth"/>
+        <!-- 检查是否覆盖了clone()-->
+        <module name="NoClone"/>
+        <!-- 检查是否有定义finalize()-->
+        <module name="NoFinalizer"/>
+        <!-- 检查覆盖的clone()是否有调用super.clone()-->
+        <module name="SuperClone"/>
+        <!-- 检查覆盖的finalize()是否有调用super.finalize()-->
+        <module name="SuperFinalize"/>
+        <!-- 检查每行只有一个语句 -->
+        <module name="OneStatementPerLine"/>
+        <!-- 检查重载方法是否组合在一起 -->
+        <module name="OverloadMethodsDeclarationOrder"/>
+        <!-- 确保一个类具有一个包声明，并且（可选地）包名要与源代码文件所在的目录名相匹配 -->
+        <module name="PackageDeclaration"/>
+        <!-- 不允许对参数进行赋值 -->
+        <module name="ParameterAssignment"/>
+        <!-- 检查是否有过度复杂的布尔表达式 -->
+        <module name="SimplifyBooleanExpression"/>
+        <!-- 检查是否有过于复杂的布尔返回代码段 -->
+        <module name="SimplifyBooleanReturn"/>
+        <!-- 检查在判断字符串是否相等时是否使用了正确的形式 -->
+        <module name="StringLiteralEquality"/>
+        <!-- 检查代码中是否使用了不必要的圆括号 -->
+        <!--<module name="UnnecessaryParentheses"/>-->
+        <!-- 检查变量声明与其首次使用之间的距离 -->
+        <module name="VariableDeclarationUsageDistance"/>
+
+        <!-- Block Checks -->
+        <!-- 检查是否有空代码块 -->
+        <module name="EmptyBlock"/>
+        <!-- 检查空的catch块，几乎没有跳过违规的选项 -->
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected|ignore"/>
+        </module>
+        <!-- 检查是否有嵌套代码块 -->
+        <module name="AvoidNestedBlocks"/>
+        <!--　检查代码块周围是否有大括号，可以检查do、else、if、for、while等关键字所控制的代码块 -->
+        <module name="NeedBraces"/>
+        <!-- 检查左大括号位置 -->
+        <module name="LeftCurly"/>
+        <!-- 检查右大括号位置 -->
+        <module name="RightCurly"/>
+        <!-- 检查在重写了equals方法后是否重写了hashCode方法 -->
+        <module name="EqualsHashCode"/>
+
+        <!-- Class Design -->
+        <!-- 检查只有private构造函数的类是否声明为final -->
+        <module name="FinalClass"/>
+        <!-- cannot recognize for lombok @NoArgsConstructor(access = AccessLevel.PRIVATE), just ignore -->
+        <!-- 检查工具类是否有putblic的构造器 -->
+        <!--<module name="HideUtilityClassConstructor"/>-->
+        <!-- 检查每个顶级类，接口或枚举是否驻留在自己的源文件中 -->
+        <module name="OneTopLevelClass"/>
+        <!-- 检查接口是否仅定义类型 -->
+        <!--<module name="InterfaceIsType"/>-->
+        <!-- 在所有方法和字段声明之后，检查嵌套（内部）类/接口是否在类的底部声明-->
+        <module name="InnerTypeLast"/>
+        <!--　检查类成员的可见性。
+         只有static final的类成员可以是公有的，其他的类成员必须是私有的，除非设置了protectedAllowed属性或packageAllowed属性
+         packageAllowed: 变量包内成员可以访问
+         protectedAllowed: 变量是受保护的
+         publicMemberPattern: 可以公开访问的变量所匹配的命名形式 -->
+        <module name="VisibilityModifier">
+            <property name="packageAllowed" value="false"/>
+            <property name="protectedAllowed" value="true"/>
+            <property name="publicMemberPattern" value="^serialVersionUID$"/>
+        </module>
+        <!-- 确保异常（定义为符合某些正则表达式的任何类名）是不可变的-->
+        <!--<module name="MutableException"/>-->
+        <!-- 将异常抛出语句的数量配置为一个指定的限值（默认值为1）-->
+        <module name="ThrowsCount"/>
+
+        <!-- Miscellaneous -->
+        <!-- 检查数组类型定义的样式 -->
+        <module name="ArrayTypeStyle"/>
+        <!-- 检查是否在long类型是否定义了大写的L-->
+        <module name="UpperEll"/>
+        <!-- 限制使用Unicode转义 -->
+        <module name="AvoidEscapedUnicodeCharacters"/>
+        <!-- 检查其他令牌下面的受限令牌-->
+        <module name="DescendantToken"/>
+        <!-- 检查方法名、构造函数、catch块的参数是否是final的-->
+        <module name="FinalParameters"/>
+        <!-- 检查代码中正确的缩进-->
+        <module name="Indentation"/>
+        <!-- 检查外部类型名称和文件名是否匹配-->
+        <module name="OuterTypeFilename"/>
+        <!-- 检查TODO:注释 -->
+        <module name="TodoComment"/>
+        <!-- 确保是否要代码行注释-->
+        <module name="TrailingComment"/>
+        <!-- 检查是否有未注释的main方法-->
+        <module name="UncommentedMain">
+            <property name="excludedClasses" value=".*Application$"/>
+        </module>
+
+        <!-- Javadoc Comments -->
+        <!-- 检查@子句的顺序 -->
+        <module name="AtclauseOrder">
+            <property name="tagOrder" value="@param, @return, @throws, @deprecated"/>
+        </module>
+        <!-- 检查@子句标记后面是描述 -->
+        <module name="NonEmptyAtclauseDescription"/>
+        <!-- 检查类和接口的javadoc。默认不检查author和version tags -->
+        <module name="JavadocType">
+            <property name="authorFormat" value="\S"/>
+            <property name="allowUnknownTags" value="true"/>
+            <property name="allowMissingParamTags" value="true"/>
+        </module>
+        <!-- 检查Javadoc段落 -->
+        <module name="JavadocParagraph"/>
+        <!-- 检查javadoc的格式 -->
+        <module name="JavadocStyle"/>
+        <!-- 检查@子句中延续行的缩进-->
+        <module name="JavadocTagContinuationIndentation"/>
+        <!-- 检查JavaDoc块是否适合单行并且不包含@子句 -->
+        <module name="SingleLineJavadoc"/>
+        <!-- 检查Javadoc摘要语句是否包含不建议使用的短语 -->
+        <module name="SummaryJavadoc"/>
+
+        <!-- 检查方法的javadoc的注释
+             scope: 可以检查的方法的范围，例如：public只能检查public修饰的方法，private可以检查所有的方法
+             allowMissingParamTags: 是否忽略对参数注释的检查
+             allowMissingThrowsTags: 是否忽略对throws注释的检查
+             allowMissingReturnTag: 是否忽略对return注释的检查
+              -->
+        <module name="JavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowMissingParamTags" value="false"/>
+            <property name="allowMissingThrowsTags" value="false"/>
+            <property name="allowMissingReturnTag" value="false"/>
+            <property name="tokens" value="METHOD_DEF,ANNOTATION_FIELD_DEF"/>
+            <property name="allowUndeclaredRTE" value="true"/>
+            <property name="allowThrowsTagsForSubclasses" value="true"/>
+            <property name="allowedAnnotations" value="Override, Test, Before, After, BeforeClass, AfterClass, Parameterized, Parameters"/>
+            <property name="ignoreMethodNamesRegex" value="^assert.*$|^verify.*$"/>
+            <!-- 允许get set 方法没有注释-->
+            <property name="allowMissingPropertyJavadoc" value="true"/>
+        </module>
+
+        <!-- Filters -->
+        <module name="SuppressionCommentFilter"/>
+        <module name="SuppressWithNearbyCommentFilter"/>
+    </module>
+</module>
