@@ -2,6 +2,7 @@ package com.cloud.common.constant;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.cloud.common.core.model.Role;
 import com.cloud.common.utils.uuid.ShortSnowflake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,30 +120,7 @@ public class Constants {
 
     public static final String MDC_COMPANY_ID = "COMPANY";
 
-//    /**
-//     * 用户ID
-//     */
-//    public static final String JWT_USERID = "userid";
-//
-//    /**
-//     * 用户名称
-//     */
-//    public static final String JWT_USERNAME = "sub";
-//
-//    /**
-//     * 用户头像
-//     */
-//    public static final String JWT_AVATAR = "avatar";
-//
-//    /**
-//     * 创建时间
-//     */
-//    public static final String JWT_CREATED = "created";
-//
-//    /**
-//     * 用户权限
-//     */
-//    public static final String JWT_AUTHORITIES = "authorities";
+    public static final Role ROLE_SYSTEM = new Role(-1L, "系统默认", "system", "");
 
     /**
      * 登录用户ID

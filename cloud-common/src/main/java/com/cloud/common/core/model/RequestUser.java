@@ -1,7 +1,9 @@
 package com.cloud.common.core.model;
 
+import com.cloud.common.constant.Constants;
 import lombok.Data;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,6 +15,11 @@ import java.util.Set;
  */
 @Data
 public class RequestUser extends BaseRequestInfo {
+
+    public static final RequestUser SYSTEM = new RequestUser(-1L,
+        new Dept(-1L, "系统"), "system",
+        Collections.singleton(Constants.ROLE_SYSTEM),
+        Collections.singleton(Constants.ALL_PERMISSION));
 
     /**
      * 用户ID

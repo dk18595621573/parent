@@ -2,6 +2,7 @@ package com.cloud.dal.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.handlers.StrictFill;
+import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.dal.model.BaseEntity;
@@ -29,12 +30,12 @@ public class MetaObjectHandlerAdapter implements MetaObjectHandler {
     @Override
     public void insertFill(final MetaObject metaObject) {
         if (metaObject.getOriginalObject() instanceof BaseEntity) {
-            Long operatorId = ObjectUtils.defaultIfNull(RequestThread.getUserId(), 0L);
+            RequestUser user = ObjectUtils.defaultIfNull(RequestThread.getUser(), RequestUser.SYSTEM);
 
             Date now = DateUtils.getNowDate();
             List<StrictFill<?, ?>> list = new ArrayList<>(4);
-            list.add(StrictFill.of("createBy", Long.class, operatorId));
-            list.add(StrictFill.of("updateBy", Long.class, operatorId));
+            list.add(StrictFill.of("createBy", Long.class, user.getUserId()));
+            list.add(StrictFill.of("updateBy", Long.class, user.getUserId()));
             list.add(StrictFill.of("createTime", Date.class, now));
             list.add(StrictFill.of("updateTime", Date.class, now));
             this.strictInsertFill(findTableInfo(metaObject), metaObject, list);
@@ -49,10 +50,12 @@ public class MetaObjectHandlerAdapter implements MetaObjectHandler {
     @Override
     public void updateFill(final MetaObject metaObject) {
         if (metaObject.getOriginalObject() instanceof BaseEntity) {
-            Long operatorId = ObjectUtils.defaultIfNull(RequestThread.getUserId(), 0L);
+            RequestUser user = ObjectUtils.defaultIfNull(RequestThread.getUser(), RequestUser.SYSTEM);
 
-            this.setFieldValByName("updateBy", operatorId, metaObject);
-            this.setFieldValByName("updateTime", DateUtils.getNowDate(), metaObject);
+            List<StrictFill<?, ?>> list = new ArrayList<>(2);
+            list.add(StrictFill.of("updateBy", Long.class, user.getUserId()));
+            list.add(StrictFill.of("updateTime", Date.class, DateUtils.getNowDate()));
+            this.strictUpdateFill(findTableInfo(metaObject), metaObject, list);
         }
     }
 
