@@ -57,7 +57,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 写文件
+     * 写文件.
      * @param outputStream 输出流
      * @param datas 列表数据
      * @param clazz 数据类型
@@ -71,7 +71,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 写文件
+     * 写文件.
      * @param outputStream 输出流
      * @param sheetName 第一个sheet页名称
      * @param datas 列表数据
@@ -86,7 +86,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 写文件
+     * 写文件.
      * @param outputStream 输出流
      * @param sheetName 第一个sheet页名称
      * @param datas 列表数据
@@ -102,7 +102,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 全部读取 直接读取整个excel
+     * 全部读取 直接读取整个excel.
      * @param inputStream excel输入流
      * @param function 读取完成后操作事件
      * @param clazz 读取的数据类型
@@ -122,7 +122,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 逐行读取
+     * 逐行读取.
      * @param inputStream excel输入流
      * @param consumer 读取每行操作事件
      * @param clazz 读取的数据类型
@@ -136,7 +136,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 批量读取
+     * 分批次读取.
      * @param inputStream excel输入流
      * @param consumer 批量操作事件
      * @param batch 读取达到指定次数后操作事件
@@ -149,7 +149,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 批量读取 默认100行进行一次操作
+     * 分批次读取 默认 每100行 进行一次操作.
      * @param inputStream excel输入流
      * @param consumer 批量操作事件
      * @param clazz 读取的数据类型

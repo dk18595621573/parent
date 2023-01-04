@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 客户端工具类
@@ -76,7 +78,7 @@ public class ServletUtils {
     }
 
     /**
-     * 获取session
+     * 获取session.
      */
     public static HttpSession getSession() {
         return getRequest().getSession();
@@ -88,7 +90,7 @@ public class ServletUtils {
     }
 
     /**
-     * 将字符串渲染到客户端
+     * 将字符串渲染到客户端.
      *
      * @param response 渲染对象
      * @param string   待渲染的字符串
@@ -102,6 +104,16 @@ public class ServletUtils {
         } catch (IOException e) {
             log.error("ServletUtils.renderString ERROR:", e);
         }
+    }
+
+    /**
+     * 导出 Excel 设置响应头.
+     * @param response 响应
+     * @param filename excel文件名
+     */
+    public static void renderExcel(final HttpServletResponse response, final String filename) {
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setHeader("Content-disposition", "attachment; filename=" + URLEncoder.encode(filename + ".xlsx", StandardCharsets.UTF_8));
     }
 
     /**
