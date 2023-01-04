@@ -9,11 +9,14 @@ import com.cloud.webmvc.properties.TokenProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class RedisTokenStrategy implements TokenStrategy {
 
     private static final String LOGIN_USER_CODE = "login_user_code";
@@ -88,6 +91,21 @@ public class RedisTokenStrategy implements TokenStrategy {
         } else {
             //删除用户所有登录记录
             redisCache.deleteObject(userKey);
+        }
+    }
+
+    @Override
+    public void clearInvalidToken() {
+        Collection<String> keys = redisCache.keys(tokenProperties.getCachePrefix() + "*");
+        long now = System.currentTimeMillis();
+        for (String key : keys) {
+            Map<String, RequestUser> cacheMap = redisCache.getCacheMap(key);
+            for (RequestUser user : cacheMap.values()) {
+                if (user.getExpireTime() < now) {
+                    log.warn("用户【{}-{}】长时间未操作登录已过期:{}", user.getUserId(), user.getToken(), user.getExpireTime());
+                    delLoginUser(user.getUserId(), user.getToken());
+                }
+            }
         }
     }
 

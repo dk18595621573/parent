@@ -87,5 +87,5 @@ public interface TokenStrategy {
         return token;
     }
 
-
+    default void clearInvalidToken() {}
 }

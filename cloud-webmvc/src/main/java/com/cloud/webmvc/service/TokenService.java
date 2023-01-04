@@ -71,4 +71,10 @@ public class TokenService {
         tokenStrategy.delLoginUser(userId, token);
     }
 
+    /**
+     * 清除过期无效的token
+     */
+    public void clearInvalidToken() {
+        tokenStrategy.clearInvalidToken();
+    }
 }
