@@ -39,7 +39,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
      * 自定义拦截规则
      */
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(final InterceptorRegistry registry) {
         String[] allowPathArr = ALLOW_VISIT_PATHS;
         if (ArrayUtils.isNotEmpty(systemProperties.getSecurity().getAllows())) {
             String[] arr = systemProperties.getSecurity().getAllows();

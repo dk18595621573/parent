@@ -2,7 +2,9 @@ package com.cloud.core.manager;
 
 import com.cloud.common.utils.Threads;
 import com.cloud.core.utils.SpringUtils;
+import org.slf4j.MDC;
 
+import java.util.Map;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -39,22 +41,21 @@ public class AsyncManager {
      * 执行任务
      *
      */
-    public void execute(Execute exec) {
+    public void execute(AsyncExecute exec) {
+        Map<String, String> contextMap = MDC.getCopyOfContextMap();
         executor.schedule(new TimerTask() {
             @Override
             public void run() {
-                exec.run();
+                try {
+                    if (contextMap != null) {
+                        MDC.setContextMap(contextMap);
+                    }
+                    exec.run();
+                } finally {
+                    MDC.clear();
+                }
             }
         }, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
-    }
-
-    /**
-     * 执行任务
-     *
-     * @param task 任务
-     */
-    public void execute(TimerTask task) {
-        executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -64,9 +65,4 @@ public class AsyncManager {
         Threads.shutdownAndAwaitTermination(executor);
     }
 
-    @FunctionalInterface
-    public interface Execute {
-
-        void run();
-    }
 }
