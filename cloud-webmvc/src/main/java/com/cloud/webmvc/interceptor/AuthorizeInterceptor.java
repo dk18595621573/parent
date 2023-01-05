@@ -1,9 +1,6 @@
 package com.cloud.webmvc.interceptor;
 
 import cn.hutool.core.convert.Convert;
-import com.cloud.common.constant.HttpStatus;
-import com.cloud.common.core.model.RequestUser;
-import com.cloud.common.exception.ServiceException;
 import com.cloud.common.threads.RequestThread;
 import com.cloud.core.utils.SpringUtils;
 import com.cloud.webmvc.annotation.PreAuthorize;
@@ -42,14 +39,9 @@ public class AuthorizeInterceptor implements HandlerInterceptor {
         }
 
         Method method = ((HandlerMethod) handler).getMethod();
-        RequestUser loginUser = tokenService.getLoginUser(request);
-        RequestThread.setUser(loginUser);
         SkipAuth skipAuth = AnnotationUtils.findAnnotation(method, SkipAuth.class);
         if (Objects.nonNull(skipAuth)) {
             return true;
-        }
-        if(Objects.isNull(loginUser)) {
-            throw new ServiceException("登录已失效，请重新登录", HttpStatus.UNAUTHORIZED);
         }
 
         PreAuthorize authorize = AnnotationUtils.findAnnotation(method, PreAuthorize.class);
