@@ -16,8 +16,8 @@ import java.util.Set;
 @Data
 public class RequestUser extends BaseRequestInfo {
 
-    public static final RequestUser SYSTEM = new RequestUser(-1L,
-        new Dept(-1L, "系统"), "system",
+    public static final RequestUser SYSTEM = new RequestUser(Constants.SYSTEM_USERID,
+        Constants.DEPT_SYSTEM, Constants.SYSTEM_USERNAME,
         Collections.singleton(Constants.ROLE_SYSTEM),
         Collections.singleton(Constants.ALL_PERMISSION));
 
