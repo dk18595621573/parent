@@ -1,5 +1,6 @@
 package com.cloud.dubbo.filter;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
@@ -80,7 +81,9 @@ public class PreInvokeFilter extends AbstractFilter {
                 if (LOGGER.isInfoEnabled()) {
                     LogData logData = it.next();
                     MDC.clear();
-                    MDC.setContextMap(logData.getMdc());
+                    if (CollUtil.isNotEmpty(logData.getMdc())) {
+                        MDC.setContextMap(logData.getMdc());
+                    }
                     LOGGER.info(logData.getData().getLogMessage());
                 }
             }
