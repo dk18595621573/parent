@@ -10,8 +10,7 @@ import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcException;
 import org.apache.dubbo.rpc.support.AccessLogData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,13 +28,12 @@ import java.util.concurrent.TimeUnit;
  */
 @Activate(group = CommonConstants.CONSUMER)
 public class PreInvokeFilter extends AbstractFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PreInvokeFilter.class);
 
     private static final int LOG_MAX_BUFFER = 5000;
 
     private static final long LOG_OUTPUT_INTERVAL = 5000;
 
-    private static final Set<AccessLogData> LOG_ENTRIES = new ConcurrentHashSet<>();
+    private static final Set<LogData> LOG_ENTRIES = new ConcurrentHashSet<>();
 
     private static final ScheduledExecutorService SCHEDULED = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("Preinvoke-Log", true));
 
@@ -46,7 +44,7 @@ public class PreInvokeFilter extends AbstractFilter {
     @Override
     public Result invoke(final Invoker<?> invoker, final Invocation invocation) throws RpcException {
         try {
-            AccessLogData logData = buildAccessLogData(invoker, invocation);
+            LogData logData = buildAccessLogData(invoker, invocation);
             log(logData);
         } catch (Exception e) {
             if (LOGGER.isWarnEnabled()) {
@@ -61,7 +59,7 @@ public class PreInvokeFilter extends AbstractFilter {
      *
      * @param logData logdata
      */
-    private void log(final AccessLogData logData) {
+    private void log(final LogData logData) {
         if (LOG_ENTRIES.size() < LOG_MAX_BUFFER) {
             LOG_ENTRIES.add(logData);
         } else {
@@ -78,9 +76,12 @@ public class PreInvokeFilter extends AbstractFilter {
      */
     private void writeLog() {
         if (!LOG_ENTRIES.isEmpty()) {
-            for (Iterator<AccessLogData> it = LOG_ENTRIES.iterator(); it.hasNext(); it.remove()) {
+            for (Iterator<LogData> it = LOG_ENTRIES.iterator(); it.hasNext(); it.remove()) {
                 if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info(it.next().getLogMessage());
+                    LogData logData = it.next();
+                    MDC.clear();
+                    MDC.setContextMap(logData.getMdc());
+                    LOGGER.info(logData.getData().getLogMessage());
                 }
             }
         }
@@ -93,17 +94,17 @@ public class PreInvokeFilter extends AbstractFilter {
      * @param inv     invocation
      * @return AccessLogData
      */
-    private AccessLogData buildAccessLogData(final Invoker<?> invoker, final Invocation inv) {
-        AccessLogData logData = AccessLogData.newLogData();
-        logData.buildAccessLogData(invoker, inv);
+    private LogData buildAccessLogData(final Invoker<?> invoker, final Invocation inv) {
+        AccessLogData accessLogData = AccessLogData.newLogData();
+        accessLogData.buildAccessLogData(invoker, inv);
 
         int length = inv.getArguments().length;
         Object[] args = new Object[length];
         for (int i = 0; i < length; i++) {
             args[i] = processArg(inv.getArguments()[i]);
         }
-        logData.setArguments(args);
-        return logData;
+        accessLogData.setArguments(args);
+        return new LogData(accessLogData, MDC.getCopyOfContextMap());
     }
 
     /**
@@ -122,5 +123,22 @@ public class PreInvokeFilter extends AbstractFilter {
             }
         }
         return arg;
+    }
+
+    static class LogData {
+        private final AccessLogData data;
+        private final Map<String, String> mdc;
+
+        LogData(AccessLogData data, Map<String, String> mdc) {
+            this.data = data;
+            this.mdc = mdc;
+        }
+        public AccessLogData getData() {
+            return data;
+        }
+
+        public Map<String, String> getMdc() {
+            return mdc;
+        }
     }
 }

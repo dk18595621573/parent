@@ -2,6 +2,7 @@ package com.cloud.common.constant;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.cloud.common.core.model.Dept;
 import com.cloud.common.core.model.Role;
 import com.cloud.common.utils.uuid.ShortSnowflake;
 import org.slf4j.Logger;
@@ -120,7 +121,11 @@ public class Constants {
 
     public static final String MDC_COMPANY_ID = "COMPANY";
 
+    public static final Long SYSTEM_USERID = -1L;
+    public static final String SYSTEM_USERNAME = "system";
+    public static final Dept DEPT_SYSTEM = new Dept(-1L, "系统默认");
     public static final Role ROLE_SYSTEM = new Role(-1L, "系统默认", "system", "");
+    public static final Long ROLE_ADMIN_ID = 1L;
 
     /**
      * 登录用户ID
@@ -183,7 +188,7 @@ public class Constants {
      * @return 结果
      */
     public static boolean isAdminRole(Long roleId) {
-        return roleId != null && 1L == roleId;
+        return roleId != null && roleId.equals(ROLE_ADMIN_ID);
     }
 
 }

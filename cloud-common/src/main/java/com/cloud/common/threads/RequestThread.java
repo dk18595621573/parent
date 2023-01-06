@@ -34,6 +34,15 @@ public class RequestThread {
         THREAD_LOCAL.set(map);
     }
 
+    public static void removeParam(String key) {
+        Map<String, Object> map = THREAD_LOCAL.get();
+        if (map == null) {
+            map = new HashMap<>();
+        }
+        map.remove(key);
+        THREAD_LOCAL.set(map);
+    }
+
     public static Object getParam(String key) {
         Map<String, Object> map = THREAD_LOCAL.get();
         if (map == null) {

@@ -1,8 +1,9 @@
 package com.cloud.dubbo.filter;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.rpc.Filter;
 import org.apache.dubbo.rpc.RpcContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 抽象过滤器.
@@ -10,8 +11,9 @@ import org.apache.dubbo.rpc.RpcContext;
  * @author zenghao
  * @date 2022/8/15
  */
-@Slf4j
 public abstract class AbstractFilter implements Filter {
+
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractFilter.class.getPackageName());
 
     protected boolean isConsumerSide() {
 //        URL consumerUrl = ObjectUtils.defaultIfNull(RpcContext.getServiceContext().getConsumerUrl(), RpcContext.getServiceContext().getUrl());

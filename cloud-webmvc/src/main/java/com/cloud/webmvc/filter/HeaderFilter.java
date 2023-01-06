@@ -2,6 +2,7 @@ package com.cloud.webmvc.filter;
 
 import com.cloud.common.constant.Constants;
 import com.cloud.common.core.model.RequestUser;
+import com.cloud.common.threads.RequestThread;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class HeaderFilter extends OncePerRequestFilter {
             if (StringUtils.isNotNull(loginUser)) {
                 MDC.put(Constants.MDC_USER_ID, String.valueOf(loginUser.getUserId()));
                 MDC.put(Constants.MDC_COMPANY_ID, String.valueOf(loginUser.getDeptId()));
+                RequestThread.setUser(loginUser);
             } else {
                 MDC.put(Constants.MDC_USER_ID, Constants.DASH);
                 MDC.put(Constants.MDC_COMPANY_ID, Constants.DASH);
@@ -48,6 +50,7 @@ public class HeaderFilter extends OncePerRequestFilter {
             chain.doFilter(request, response);
         } finally {
             MDC.clear();
+            RequestThread.clear();
         }
     }
 }

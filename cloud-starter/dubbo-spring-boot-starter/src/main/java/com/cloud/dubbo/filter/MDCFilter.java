@@ -9,8 +9,6 @@ import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 
@@ -22,8 +20,6 @@ import org.slf4j.MDC;
 @Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER})
 public class MDCFilter extends AbstractFilter {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Override
     public Result invoke(final Invoker<?> invoker, final Invocation invocation) throws RpcException {
         try {
@@ -33,7 +29,7 @@ public class MDCFilter extends AbstractFilter {
                 MDC.put(Constants.MDC_TRACE_ID, RpcContext.getContext().getAttachment(Constants.MDC_TRACE_ID));
             }
         } catch (Exception e) {
-            logger.error("Exception in TraceIdFilter (" + invoker + " -> " + invocation + ")", e);
+            LOGGER.error("Exception in TraceIdFilter (" + invoker + " -> " + invocation + ")", e);
         }
         return invoker.invoke(invocation);
     }

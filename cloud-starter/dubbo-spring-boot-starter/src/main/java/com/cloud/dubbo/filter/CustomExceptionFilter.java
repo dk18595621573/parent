@@ -2,8 +2,6 @@ package com.cloud.dubbo.filter;
 
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
-import org.apache.dubbo.common.logger.Logger;
-import org.apache.dubbo.common.logger.LoggerFactory;
 import org.apache.dubbo.common.utils.ReflectUtils;
 import org.apache.dubbo.common.utils.StringUtils;
 import org.apache.dubbo.rpc.Filter;
@@ -22,8 +20,7 @@ import java.lang.reflect.Method;
  * @author breggor
  */
 @Activate(group = CommonConstants.PROVIDER)
-public class CustomExceptionFilter implements Filter, Filter.Listener {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomExceptionFilter.class);
+public class CustomExceptionFilter extends  AbstractFilter implements Filter, Filter.Listener {
 
     private static final String PROJECT_PACKAGE = "com.cloud";
 

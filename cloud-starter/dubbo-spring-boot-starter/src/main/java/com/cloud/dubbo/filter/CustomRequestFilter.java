@@ -8,8 +8,6 @@ import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.Result;
 import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Objects;
@@ -23,8 +21,6 @@ import java.util.Objects;
 @Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER})
 public class CustomRequestFilter extends AbstractFilter {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private static final String REQUEST_DATA = "REQUEST-DATA";
 
     @Override
@@ -32,19 +28,19 @@ public class CustomRequestFilter extends AbstractFilter {
         try {
             if (isConsumerSide()) {
                 Map<String, Object> data = RequestThread.getData();
-                logger.debug("CustomRequestFilter MethodName： [{}.{}]， Consumer：[{}] ",
+                LOGGER.debug("CustomRequestFilter MethodName： [{}.{}]， Consumer：[{}] ",
                     invoker.getInterface().getName(), invocation.getMethodName(), data);
                 RpcContext.getContext().setAttachment(REQUEST_DATA, data);
             } else if (isProviderSide()) {
                 Object data = RpcContext.getContext().getObjectAttachment(REQUEST_DATA);
-                logger.debug("CustomRequestFilter Provider：[{}]", data);
+                LOGGER.debug("CustomRequestFilter Provider：[{}]", data);
                 if (Objects.nonNull(data) && data instanceof Map) {
                     RequestThread.setData((Map<String, Object>) data);
                 }
             }
             return invoker.invoke(invocation);
         } catch (Exception e) {
-            logger.error("Exception in CustomRequestFilter ({} -> {})", invoker, invocation, e);
+            LOGGER.error("Exception in CustomRequestFilter ({} -> {})", invoker, invocation, e);
             return invoker.invoke(invocation);
         } finally {
             //服务器提供者清理线程中的请求信息
