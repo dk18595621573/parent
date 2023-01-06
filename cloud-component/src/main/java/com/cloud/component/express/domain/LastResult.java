@@ -89,7 +89,7 @@ public class LastResult {
      * @return true:拒签 false:不是拒签
      */
     public boolean checkRejected() {
-        if (ExpressResult.State.ALREADY_PIN_SINGLE.equals(getState())) {
+        if (ExpressResult.State.BACK_TO_SIGN.equals(getState())) {
             ExpressResult.RouteInfo route = getRouteInfo();
             if (!Objects.isNull(route)) {
                 ExpressResult.Info from = route.getFrom();
