@@ -4,6 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author nlsm
@@ -80,6 +81,25 @@ public class LastResult {
      */
     public boolean rejected(){
         return ArrayUtil.contains(ExpressResult.VISA_SIGN_ARRAY, this.getState());
+    }
+
+
+    /**
+     * 是否拒签
+     * @return true:拒签 false:不是拒签
+     */
+    public boolean checkRejected() {
+        if (ExpressResult.State.ALREADY_PIN_SINGLE.equals(getState())) {
+            ExpressResult.RouteInfo route = getRouteInfo();
+            if (!Objects.isNull(route)) {
+                ExpressResult.Info from = route.getFrom();
+                ExpressResult.Info to = route.getTo();
+                if (!Objects.isNull(from) && !Objects.isNull(to)) {
+                    return from.getNumber().equals(to.getNumber());
+                }
+            }
+        }
+        return Boolean.TRUE;
     }
 
 }

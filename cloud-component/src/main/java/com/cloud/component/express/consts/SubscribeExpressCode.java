@@ -18,7 +18,10 @@ public enum SubscribeExpressCode {
     SUBSCRIPTION_SUCCESS("200", "订阅成功"),
 
     SUBSCRIPTION_FAIL("500", "订阅失败"),
-    REPEAT_SUBSCRIPTION("501", "重复订阅");
+    REPEAT_SUBSCRIPTION("501", "重复订阅"),
+
+    SIGN_FOR_NORMAL("1", "拒签转正常签收");
+
 
     private final String code;
 
