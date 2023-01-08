@@ -1,7 +1,7 @@
 package com.cloud.dal.aspect;
 
 import cn.hutool.core.collection.CollUtil;
-import com.cloud.common.annotation.DataScope;
+import com.cloud.dal.annotation.DataScope;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.threads.RequestThread;

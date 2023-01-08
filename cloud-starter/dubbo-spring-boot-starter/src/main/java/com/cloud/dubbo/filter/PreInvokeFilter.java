@@ -36,7 +36,7 @@ public class PreInvokeFilter extends AbstractFilter {
 
     private static final Set<LogData> LOG_ENTRIES = new ConcurrentHashSet<>();
 
-    private static final ScheduledExecutorService SCHEDULED = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("Preinvoke-Log", true));
+    private static final ScheduledExecutorService SCHEDULED = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("PreInvoke-Log", true));
 
     public PreInvokeFilter() {
         SCHEDULED.scheduleWithFixedDelay(this::writeLog, LOG_OUTPUT_INTERVAL, LOG_OUTPUT_INTERVAL, TimeUnit.MILLISECONDS);
