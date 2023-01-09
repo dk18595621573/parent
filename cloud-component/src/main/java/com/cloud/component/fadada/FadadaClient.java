@@ -477,8 +477,7 @@ public class FadadaClient {
             JSONObject jsonObject = JSONUtil.parseObj(result);
             String returnCode = jsonObject.getStr("code");
             if (StrUtil.isBlank(returnCode)) {
-                fadadaRefusalCode = FadadaRefusalCode.API_EXCEPTION;
-                return fadadaRefusalCode;
+                return FadadaRefusalCode.API_EXCEPTION;
             }
             fadadaRefusalCode = FadadaRefusalCode.fromCode(returnCode);
         } catch (Exception e) {
