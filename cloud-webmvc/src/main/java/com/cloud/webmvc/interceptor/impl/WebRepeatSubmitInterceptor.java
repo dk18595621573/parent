@@ -3,6 +3,7 @@ package com.cloud.webmvc.interceptor.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.utils.RedisKeyUtil;
+import com.cloud.common.utils.StringUtils;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.webmvc.annotation.RepeatSubmit;
 import com.cloud.webmvc.filter.RepeatedlyRequestWrapper;
@@ -17,11 +18,15 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * web防止重复提交拦截器
+ *
  * @author:zhanll
  * @date:2023-01-09 10:21
  */
 @Slf4j
 public class WebRepeatSubmitInterceptor extends RepeatSubmitInterceptor {
+
+    private static final String KEY_GLOBAL = "GLOBAL";
+    private static final String KEY_PARAM = "PARAM";
 
     @Resource
     private RedisCache redisCache;
@@ -29,10 +34,8 @@ public class WebRepeatSubmitInterceptor extends RepeatSubmitInterceptor {
     @Override
     public boolean isRepeatSubmit(HttpServletRequest request, RepeatSubmit annotation) {
         long expireSeconds = annotation.interval();
-        String token = "";
-        if(ObjectUtil.equal(annotation.hasToken(), Boolean.TRUE)){
-            token = SecurityUtils.getLoginUser().getToken();
-        }
+        String token = ObjectUtil.equal(annotation.hasToken(), Boolean.TRUE) ? SecurityUtils.getLoginUser().getToken() : KEY_GLOBAL;
+
         // 获取请求参数
         String nowParams = "";
         if (request instanceof RepeatedlyRequestWrapper) {
@@ -40,16 +43,10 @@ public class WebRepeatSubmitInterceptor extends RepeatSubmitInterceptor {
             nowParams = HttpHelper.getBodyString(repeatedlyRequest);
         }
         // 生成redisKey = repeat_submit: + 请求地址 + (token) + 请求参数
-        StringBuilder key = new StringBuilder();
-        if(ObjectUtil.isNotEmpty(token)){
-            key.append(token).append(":");
-        }
-        String redisKey = RedisKeyUtil.generate(Constants.REPEAT_SUBMIT_KEY, request.getRequestURI(),
-                key.append(nowParams).toString());
+        String redisKey = RedisKeyUtil.generate(Constants.REPEAT_SUBMIT_KEY, request.getRequestURI(), token, StringUtils.defaultIfBlank(nowParams, KEY_PARAM));
         // 生成对应value
-        String redisValue = redisKey;
-        log.info("redisKey:{}", redisKey);
-        return !redisCache.setIfAbsent(redisKey, redisValue, expireSeconds, TimeUnit.MILLISECONDS);
+        log.debug("WebRepeat防止重复提交拦截器缓存key:{}", redisKey);
+        return !redisCache.setIfAbsent(redisKey, redisKey, expireSeconds, TimeUnit.MILLISECONDS);
     }
 
 }
