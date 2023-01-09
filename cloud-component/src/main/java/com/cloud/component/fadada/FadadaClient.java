@@ -1,16 +1,24 @@
 package com.cloud.component.fadada;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpException;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.common.utils.sign.Base64;
 import com.cloud.component.chinapay.util.Encryptor;
+import com.cloud.component.express.consts.ErrorCode;
+import com.cloud.component.fadada.consts.FadadaRefusalCode;
+import com.cloud.component.fadada.execption.FadadaException;
 import com.cloud.component.fadada.request.*;
 import com.cloud.component.fadada.response.*;
 import com.cloud.component.properties.FadadaProperties;
+import com.cloud.component.util.HttpClientUtil;
 import com.fadada.sdk.base.client.FddBaseClient;
 import com.fadada.sdk.base.model.req.*;
 import com.fadada.sdk.extra.client.FddExtraClient;
@@ -23,6 +31,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -39,6 +48,8 @@ public class FadadaClient {
     private final FadadaProperties fadadaProperties;
 
     private final FddExtraClient fddExtraClient;
+
+    private static final String EXTSIGN_REFUSAL_URL = "https://FDDServer:Port/api/contract_reject_sign.api";
 
     /**
      * 1. 注册账号
@@ -432,5 +443,47 @@ public class FadadaClient {
             abstracts = Base64.encode(encode1.getBytes());
         }
         return abstracts;
+    }
+
+    /**
+     * 拒签
+     *
+     * @param transactionId 交易号
+     * @param contractId   合同id
+     * @param customerId   客户编号
+     * @param rejectReason   拒签理由
+     * @return 加密后的摘要
+     */
+    public FadadaRefusalCode refusal(String transactionId, String contractId, String customerId, String rejectReason) {
+        log.info("调用法大大拒签接口-> 交易号：{}，合同id：{},客户编号：{}，拒签理由：{}", transactionId,contractId,customerId,rejectReason);
+
+        Map<String, String> requestBody = MapUtil.newHashMap(8);
+        requestBody.put("appId",fadadaProperties.getAddId());
+        requestBody.put("v",fadadaProperties.getAddId());
+        requestBody.put("timestamp",DateUtils.parseDateToStr(DateUtils.YYYYMMDDHHMMSS,DateUtils.getNowDate()));
+        requestBody.put("msgDigest",this.abstracts(fadadaProperties.getType(),fadadaProperties.getAddId()));
+        requestBody.put("transactionId",transactionId);
+        requestBody.put("contractId",contractId);
+        requestBody.put("customerId",customerId);
+        requestBody.put("rejectReason",rejectReason);
+        FadadaRefusalCode fadadaRefusalCode = null;
+        try {
+            //调用法大大拒签接口
+            String result = HttpClientUtil.doHttpPost(EXTSIGN_REFUSAL_URL, requestBody);
+            log.info("调用法大大拒签接口返回数据{},交易号：{}，合同id：{},客户编号：{}，拒签理由：{}", result,transactionId,contractId,customerId,rejectReason);
+            if (StrUtil.isBlank(result)) {
+                throw new FadadaException(FadadaRefusalCode.API_EXCEPTION);
+            }
+            JSONObject jsonObject = JSONUtil.parseObj(result);
+            String returnCode = jsonObject.getStr("code");
+            if (StrUtil.isBlank(returnCode)) {
+                fadadaRefusalCode = FadadaRefusalCode.API_EXCEPTION;
+                return fadadaRefusalCode;
+            }
+            fadadaRefusalCode = FadadaRefusalCode.fromCode(returnCode);
+        } catch (Exception e) {
+            fadadaRefusalCode = FadadaRefusalCode.API_EXCEPTION;
+        }
+        return fadadaRefusalCode;
     }
 }
