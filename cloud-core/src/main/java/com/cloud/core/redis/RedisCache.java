@@ -297,27 +297,26 @@ public class RedisCache {
      * @return 生成编号
      */
     public String soleId(String prefix, String suffix, String key, Date date) {
+        RedisAtomicLong atomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
         long thousand=1000,hundred=100,ten=10;
         if (prefix == null){
             prefix = "";
         }
-        String serialNumber = prefix;
-        serialNumber += DateUtil.today().replace("-", "");
-        RedisAtomicLong atomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+        StringBuilder serialNumber = new StringBuilder(prefix).append(DateUtil.today().replace("-", ""));
         atomicLong.expireAt(DateUtil.endOfDay(date));
         long id = atomicLong.getAndIncrement();
         if (id >= thousand){
-            serialNumber += id;
+            serialNumber.append(id);
         } else if (id >= hundred) {
-            serialNumber += "0" + id;
+            serialNumber.append("0").append(id);
         } else if (id >= ten) {
-            serialNumber += "00" + id;
+            serialNumber.append("00").append(id);
         } else {
-            serialNumber += "000" + id;
+            serialNumber.append("000").append(id);
         }
         if (suffix == null){
             suffix = "";
         }
-        return serialNumber + suffix;
+        return  serialNumber.append(suffix).toString();
     }
 }
