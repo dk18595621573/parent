@@ -1,6 +1,6 @@
 package com.cloud.common.enums;
 
-import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.ArrayUtil;
 import com.cloud.common.core.model.SelectVo;
 
 import java.util.ArrayList;
@@ -29,10 +29,12 @@ public class EnumUtil {
      * @return 枚举名称
      */
     public static String returnName(Class<? extends BaseEnum> clazz, String msg) {
-        BaseEnum[] baseEnumArray = list(clazz);
-        for (BaseEnum baseEnum : baseEnumArray) {
-            if (baseEnum.sameMsg(msg)) {
-                return baseEnum.name();
+        BaseEnum[] baseEnumArray = getEnumInstances(clazz);
+        if (ArrayUtil.isNotEmpty(baseEnumArray)) {
+            for (BaseEnum baseEnum : baseEnumArray) {
+                if (baseEnum.sameMsg(msg)) {
+                    return baseEnum.name();
+                }
             }
         }
         return null;
@@ -46,8 +48,10 @@ public class EnumUtil {
      */
     public static List<SelectVo> listSelect(Class<? extends BaseEnum> clazz) {
         List<SelectVo> selectVoList = new ArrayList<>();
-        BaseEnum[] baseEnumArray = list(clazz);
-        Arrays.stream(baseEnumArray).forEach(item -> selectVoList.add(new SelectVo(item.getCode(), item.getMsg())));
+        BaseEnum[] baseEnumArray = getEnumInstances(clazz);
+        if (ArrayUtil.isNotEmpty(baseEnumArray)) {
+            Arrays.stream(baseEnumArray).forEach(item -> selectVoList.add(new SelectVo(item.getCode(), item.getMsg())));
+        }
         return selectVoList;
     }
 
@@ -59,10 +63,12 @@ public class EnumUtil {
      * @return 枚举code对应的msg
      */
     public static String containsCode(Class<? extends BaseEnum> clazz, Integer code) {
-        BaseEnum[] baseEnumArray = list(clazz);
-        for (BaseEnum baseEnum : baseEnumArray) {
-            if (baseEnum.sameCode(code)) {
-                return baseEnum.getMsg();
+        BaseEnum[] baseEnumArray = getEnumInstances(clazz);
+        if (ArrayUtil.isNotEmpty(baseEnumArray)) {
+            for (BaseEnum baseEnum : baseEnumArray) {
+                if (baseEnum.sameCode(code)) {
+                    return baseEnum.getMsg();
+                }
             }
         }
         return null;
@@ -76,30 +82,33 @@ public class EnumUtil {
      * @return 枚举msg对应的code
      */
     public static Integer containsMsg(Class<? extends BaseEnum> clazz, String msg) {
-        BaseEnum[] baseEnumArray = list(clazz);
-        for (BaseEnum baseEnum : baseEnumArray) {
-            if (baseEnum.getMsg().equals(msg)) {
-                return baseEnum.getCode();
+        BaseEnum[] baseEnumArray = getEnumInstances(clazz);
+
+        if (ArrayUtil.isNotEmpty(baseEnumArray)) {
+            for (BaseEnum baseEnum : baseEnumArray) {
+                if (baseEnum.getMsg().equals(msg)) {
+                    return baseEnum.getCode();
+                }
             }
         }
         return null;
     }
 
     /**
-     * 遍历枚举
+     * 获取枚举实例
      *
      * @param clazz 枚举class对象
      * @return 枚举数组
      */
-    private static BaseEnum[] list(Class<? extends BaseEnum> clazz) {
-        BaseEnum[] baseEnumArray = MAP.get(clazz);
-        if (ObjectUtil.isNotEmpty(baseEnumArray)) {
-            baseEnumArray = MAP.get(clazz);
-        } else {
-            baseEnumArray = clazz.getEnumConstants();
-            MAP.put(clazz, baseEnumArray);
+    private static BaseEnum[] getEnumInstances(Class<? extends BaseEnum> clazz) {
+        BaseEnum[] enums = MAP.get(clazz);
+        if (ArrayUtil.isEmpty(enums)) {
+            enums = clazz.getEnumConstants();
+            if (ArrayUtil.isNotEmpty(enums)) {
+                MAP.put(clazz, enums);
+            }
         }
-        return baseEnumArray;
+        return enums;
     }
 
 }
