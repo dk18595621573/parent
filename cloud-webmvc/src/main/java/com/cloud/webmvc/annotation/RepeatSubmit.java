@@ -26,4 +26,10 @@ public @interface RepeatSubmit {
      * 提示消息
      */
     String message() default "不允许重复提交，请稍候再试";
+
+    /**
+     * 是否需要token
+     * @return
+     */
+    boolean hasToken() default false;
 }
