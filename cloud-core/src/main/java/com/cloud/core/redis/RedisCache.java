@@ -1,16 +1,14 @@
 package com.cloud.core.redis;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -290,5 +288,33 @@ public class RedisCache {
      */
     public Long removeZset(String key, Object value) {
         return redisTemplate.opsForZSet().remove(key, value);
+    }
+
+    /**
+     * redis自增id方法
+     * @param prefix 前缀
+     * @param key kay
+     * @return 生成编号
+     */
+    public String soleId(String prefix, String key, Date date) {
+        long thousand=1000,hundred=100,ten=10;
+        if (prefix == null){
+            prefix = "";
+        }
+        String serialNumber = prefix;
+        serialNumber += DateUtil.today().replace("-", "");
+        RedisAtomicLong atomicLong = new RedisAtomicLong(key, Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+        atomicLong.expireAt(DateUtil.endOfDay(date));
+        long id = atomicLong.getAndIncrement();
+        if (id >= thousand){
+            serialNumber += id;
+        } else if (id >= hundred) {
+            serialNumber += "0" + id;
+        } else if (id >= ten) {
+            serialNumber += "00" + id;
+        } else {
+            serialNumber += "000" + id;
+        }
+        return serialNumber;
     }
 }
