@@ -1,14 +1,11 @@
 package com.cloud.webmvc.interceptor;
 
 import cn.hutool.core.convert.Convert;
-import com.cloud.common.threads.RequestThread;
 import com.cloud.core.utils.SpringUtils;
 import com.cloud.webmvc.annotation.PreAuthorize;
 import com.cloud.webmvc.annotation.SkipAuth;
 import com.cloud.webmvc.exception.AuthorizationException;
-import com.cloud.webmvc.service.TokenService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -28,9 +25,6 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class AuthorizeInterceptor implements HandlerInterceptor {
-
-    @Autowired
-    private TokenService tokenService;
 
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) {
@@ -52,11 +46,6 @@ public class AuthorizeInterceptor implements HandlerInterceptor {
             }
         }
         return true;
-    }
-
-    @Override
-    public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final Exception ex) {
-        RequestThread.clear();
     }
 
 }
