@@ -1,16 +1,15 @@
 package com.cloud.webmvc.interceptor.impl;
 
-import com.cloud.webmvc.annotation.RepeatSubmit;
-import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.common.constant.Constants;
-import com.cloud.core.redis.RedisCache;
-import com.cloud.common.utils.json.JsonUtil;
-import com.cloud.webmvc.filter.RepeatedlyRequestWrapper;
 import com.cloud.common.utils.StringUtils;
-import com.cloud.webmvc.utils.http.HttpHelper;
+import com.cloud.common.utils.json.JsonUtil;
+import com.cloud.core.redis.RedisCache;
+import com.cloud.webmvc.annotation.RepeatSubmit;
+import com.cloud.webmvc.filter.RepeatedlyRequestWrapper;
 import com.cloud.webmvc.interceptor.RepeatSubmitInterceptor;
+import com.cloud.webmvc.properties.SystemProperties;
+import com.cloud.webmvc.utils.http.HttpHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -23,7 +22,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author author
  */
-@Component
 public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
     public final String REPEAT_PARAMS = "repeatParams";
 
