@@ -296,7 +296,7 @@ public class RedisCache {
      * @param key kay
      * @return 生成编号
      */
-    public String soleId(String prefix, String key, Date date) {
+    public String soleId(String prefix, String suffix, String key, Date date) {
         long thousand=1000,hundred=100,ten=10;
         if (prefix == null){
             prefix = "";
@@ -315,6 +315,6 @@ public class RedisCache {
         } else {
             serialNumber += "000" + id;
         }
-        return serialNumber;
+        return serialNumber + suffix;
     }
 }
