@@ -5,7 +5,7 @@ package com.cloud.common.enums;
  * @author zhushanshuo
  * @date 2023.01.09 13:01
  */
-public enum InvoicePlanEnum implements BaseEnum {
+public enum InvoicePlanStatusEnum implements BaseEnum {
 
 	UN_REACH(10, "未到票"),
 	SOME_REACH(20, "部分到票"),
@@ -18,7 +18,7 @@ public enum InvoicePlanEnum implements BaseEnum {
 
 	String msg;
 
-	InvoicePlanEnum(Integer code, String msg) {
+	InvoicePlanStatusEnum(Integer code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
