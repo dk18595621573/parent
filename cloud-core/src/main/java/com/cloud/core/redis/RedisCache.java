@@ -315,6 +315,9 @@ public class RedisCache {
         } else {
             serialNumber += "000" + id;
         }
+        if (suffix == null){
+            suffix = "";
+        }
         return serialNumber + suffix;
     }
 }
