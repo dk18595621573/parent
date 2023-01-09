@@ -139,7 +139,7 @@ public class FadadaClient {
         params.setDocTitle(uploaddocsRequest.getDocTitle());
         //合同标题
         //PDF文档
-        params.setFile(new File(uploaddocsRequest.getFile()));
+        params.setFile(uploaddocsRequest.getFile());
         //合同类型 目前仅支持pdf格式
         params.setDocType(uploaddocsRequest.getDocType());
         String result = fddBaseClient.invokeUploadDocs(params);
@@ -284,6 +284,8 @@ public class FadadaClient {
         params.setSignKeyword(extsignRequest.getSignKeyword());
         //0-所有关键字签章 （默认） 1-第一个关键字签章 2-最后一个关键字签章
         params.setKeywordStrategy(extsignRequest.getKeywordStrategy());
+        // 签署结果异步通知url
+        params.setNotifyUrl(extsignRequest.getNotifyUrl());
         String result = fddBaseClient.invokeExtSign(params);
         log.info("法大大返回参数，手动签署：{}", result);
         return result;
