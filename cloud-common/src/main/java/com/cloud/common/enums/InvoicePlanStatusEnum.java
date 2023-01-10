@@ -7,7 +7,7 @@ package com.cloud.common.enums;
  */
 public enum InvoicePlanStatusEnum implements BaseEnum {
 
-	UN_REACH(10, "未到票"),
+	UN_REACH(10, "未开票"),
 	SOME_REACH(20, "部分到票"),
 	WAIT_CHECK(30, "待核验"),
 	CHECK_SUCCESS(40, "核验成功"),
