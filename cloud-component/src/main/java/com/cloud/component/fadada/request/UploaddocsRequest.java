@@ -2,6 +2,8 @@ package com.cloud.component.fadada.request;
 
 import lombok.Data;
 
+import java.io.File;
+
 /**
  * 合同模板信息
  *
@@ -39,6 +41,6 @@ public class UploaddocsRequest {
      * PDF模板    docUrl和file 两个参数必选一
      * <p> 必填
      */
-    private String file;
+    private File file;
 
 }

@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class FadadaAddSignatureResponse extends FadadaSignatureDataResponse {
 
+    public static final String CODE_SUCCESS = "1";
+
     /**
      * 印章id
      * 必填

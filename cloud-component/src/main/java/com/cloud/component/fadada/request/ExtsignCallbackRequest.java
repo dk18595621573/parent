@@ -14,13 +14,13 @@ public class ExtsignCallbackRequest {
      * 交易号
      * <p> 必填
      */
-    private String transactionId;
+    private String transaction_id;
 
     /**
      * 合同编号
      * <p> 必填
      */
-    private String contractId;
+    private String contract_id;
 
     /**
      * 签章结果代码
@@ -28,31 +28,31 @@ public class ExtsignCallbackRequest {
      * 3001（签章失败）
      * <p> 必填
      */
-    private String resultCode;
+    private String result_code;
 
     /**
      * 签章结果描述
      * <p> 必填
      */
-    private String resultDesc;
+    private String result_desc;
 
     /**
      * 下载地址
      * <p> 必填
      */
-    private String downloadUrl;
+    private String download_url;
 
     /**
      * 查看地址
      * <p> 必填
      */
-    private String viewpdfUrl;
+    private String viewpdf_url;
 
     /**
      * 加密后的摘要
      * <p> 必填
      */
-    private String msgDigest;
+    private String msg_digest;
 
 
 }
