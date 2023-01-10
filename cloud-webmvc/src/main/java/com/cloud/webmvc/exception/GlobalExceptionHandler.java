@@ -1,6 +1,7 @@
 package com.cloud.webmvc.exception;
 
 import com.cloud.common.constant.HttpStatus;
+import com.cloud.common.exception.CallbackException;
 import com.cloud.common.exception.DemoModeException;
 import com.cloud.common.exception.PayException;
 import com.cloud.common.exception.ServiceException;
@@ -137,4 +138,14 @@ public class GlobalExceptionHandler {
     public Result<?> handlePayException(PayException e) {
         return Result.error();
     }
+
+    /**
+     * 回调异常
+     */
+    @ResponseStatus
+    @ExceptionHandler(CallbackException.class)
+    public Result<?> handlePayException(CallbackException e) {
+        return Result.error();
+    }
+
 }
