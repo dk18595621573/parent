@@ -454,35 +454,13 @@ public class FadadaClient {
      * @param rejectReason   拒签理由
      * @return 加密后的摘要
      */
-    public FadadaRefusalCode refusal(String transactionId, String contractId, String customerId, String rejectReason) {
-        log.info("调用法大大拒签接口-> 交易号：{}，合同id：{},客户编号：{}，拒签理由：{}", transactionId,contractId,customerId,rejectReason);
-
-        Map<String, String> requestBody = MapUtil.newHashMap(8);
-        requestBody.put("appId",fadadaProperties.getAddId());
-        requestBody.put("v",fadadaProperties.getAddId());
-        requestBody.put("timestamp",DateUtils.parseDateToStr(DateUtils.YYYYMMDDHHMMSS,DateUtils.getNowDate()));
-        requestBody.put("msgDigest",this.abstracts(fadadaProperties.getType(),fadadaProperties.getAddId()));
-        requestBody.put("transactionId",transactionId);
-        requestBody.put("contractId",contractId);
-        requestBody.put("customerId",customerId);
-        requestBody.put("rejectReason",rejectReason);
-        FadadaRefusalCode fadadaRefusalCode = null;
-        try {
-            //调用法大大拒签接口
-            String result = HttpClientUtil.doHttpPost(EXTSIGN_REFUSAL_URL, requestBody);
-            log.info("调用法大大拒签接口返回数据{},交易号：{}，合同id：{},客户编号：{}，拒签理由：{}", result,transactionId,contractId,customerId,rejectReason);
-            if (StrUtil.isBlank(result)) {
-                throw new FadadaException(FadadaRefusalCode.API_EXCEPTION);
-            }
-            JSONObject jsonObject = JSONUtil.parseObj(result);
-            String returnCode = jsonObject.getStr("code");
-            if (StrUtil.isBlank(returnCode)) {
-                return FadadaRefusalCode.API_EXCEPTION;
-            }
-            fadadaRefusalCode = FadadaRefusalCode.fromCode(returnCode);
-        } catch (Exception e) {
-            fadadaRefusalCode = FadadaRefusalCode.API_EXCEPTION;
-        }
-        return fadadaRefusalCode;
+    public FadadaDataResponse refusal(String transactionId, String contractId, String customerId, String rejectReason) {
+        ContractRejectSignParams params = new ContractRejectSignParams();
+        params.setContractId(contractId);
+        params.setCustomerId(customerId);
+        params.setRejectReason(rejectReason);
+        params.setTransactionId(transactionId);
+        String result = fddExtraClient.invokeContractRejectSign(params);
+        return JsonUtil.parse(result, FadadaDataResponse.class);
     }
 }
