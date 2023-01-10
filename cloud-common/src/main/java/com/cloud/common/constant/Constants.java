@@ -121,8 +121,10 @@ public class Constants {
 
     public static final String MDC_COMPANY_ID = "COMPANY";
 
-    public static final Long SYSTEM_USERID = -1L;
+    public static final Long SYSTEM_USERID = 0L;
     public static final String SYSTEM_USERNAME = "system";
+
+    public static final String SYSTEM_NICKNAME = "系统";
     public static final Dept DEPT_SYSTEM = new Dept(-1L, "系统默认");
     public static final Role ROLE_SYSTEM = new Role(-1L, "系统默认", "system", "");
     public static final Long ROLE_ADMIN_ID = 1L;
