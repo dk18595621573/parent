@@ -1,7 +1,9 @@
 package com.cloud.common.utils.word;
 
+import com.cloud.common.exception.ServiceException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 import java.util.Map;
@@ -11,6 +13,7 @@ import java.util.Map;
  * @author peijiawei
  * @date 1/10/23 11:50 AM
  */
+@Slf4j
 public class WordTemplateUtils {
 
     private WordTemplateUtils(){};
@@ -41,9 +44,8 @@ public class WordTemplateUtils {
      * @param templateName 生成的word名称
      */
     public String createWord(Map<String, Object> dataMap, String templateName, String filePath) {
-        long start = System.currentTimeMillis();
-        //logger.debug("word生成开始计时: {} ", new SimpleDateFormat("hh:mm:ss.SSS").format(start));
         try {
+            filePath = System.getProperty("user.home").concat("/").concat(filePath);
             @SuppressWarnings("deprecation")
             Configuration configuration = Configuration.getDefaultConfiguration();
             configuration.setDefaultEncoding("UTF-8");
@@ -66,22 +68,16 @@ public class WordTemplateUtils {
                 out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UTF-8"));
                 // 将模板和数据模型合并生成文件
                 template.process(dataMap,out);
-
             } catch (Exception e) {
-                File file = new File(filePath);
-                if(file.exists()){
-                    file.delete();
-                }
-                throw new RuntimeException("word文件写入失败",e);
+                log.error("word文件写入失败", e);
+                throw new ServiceException("word文件写入失败");
+            } finally {
+                out.flush();
+                out.close();
             }
-            // 关闭流
-            out.flush();
-            out.close();
-            long end = System.currentTimeMillis();
-//            logger.debug("word生成计时结束：{}  耗时：{}",
-//                    new SimpleDateFormat("hh:mm:ss.SSS").format(end), end - start);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("word文件写入失败", e);
+            throw new ServiceException("word文件写入失败");
         }
         return filePath;
     }
