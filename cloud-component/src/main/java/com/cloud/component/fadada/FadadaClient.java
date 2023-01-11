@@ -7,7 +7,9 @@ import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.common.utils.sign.Base64;
+import com.cloud.common.utils.uuid.IdUtils;
 import com.cloud.component.chinapay.util.Encryptor;
+import com.cloud.component.fadada.consts.FadadaStatusCode;
 import com.cloud.component.fadada.request.*;
 import com.cloud.component.fadada.response.*;
 import com.cloud.component.properties.FadadaProperties;
@@ -15,6 +17,8 @@ import com.fadada.sdk.base.client.FddBaseClient;
 import com.fadada.sdk.base.model.req.*;
 import com.fadada.sdk.extra.client.FddExtraClient;
 import com.fadada.sdk.extra.model.req.*;
+import com.fadada.sdk.utils.crypt.CryptTool;
+import com.fadada.sdk.utils.crypt.FddEncryptTool;
 import com.fadada.sdk.verify.client.FddVerifyClient;
 import com.fadada.sdk.verify.model.req.ApplyCertParams;
 import com.fadada.sdk.verify.model.req.CompanyVerifyUrlParams;
@@ -380,7 +384,7 @@ public class FadadaClient {
      */
     public FadadaDataResponse smsText(SmsTextParams params) {
         // 手机号
-        params.setMobile(params.getMobile());
+        params.setMobile(FddEncryptTool.encrypt(params.getMobile(), fadadaProperties.getAppKey()));
         // 短信类型 1：填充模板 2：自定义内容
         params.setMessageType(params.getMessageType());
         // 短信内容
@@ -389,6 +393,31 @@ public class FadadaClient {
         params.setCode(params.getCode());
         String result = fddExtraClient.invokeSmsText(params);
         log.info("法大大返回参数，自定义短信：{}", result);
+        return JsonUtil.parse(result, FadadaDataResponse.class);
+    }
+    public FadadaDataResponse smsShortUrl(PushShortUrlSmsParams pushShortUrlParams) {
+        PushShortUrlSmsParams params = new PushShortUrlSmsParams();
+        //原始链接，不超3000位
+        params.setSourceUrl(pushShortUrlParams.getSourceUrl());
+        //有效时间，单位min，最长不超过10080
+        params.setExpireTime(pushShortUrlParams.getExpireTime());
+        //手机号,使用3DES对数据加密：3DES(手机号,接入方秘钥)
+        params.setMobile(CryptTool.encrypt(pushShortUrlParams.getMobile(), fadadaProperties.getAppKey()));
+        //短信类型1填充模板 2自定义模板
+        // 1填充模板：云端填充短信模板生成短信内容并发送。详情见sms_template_type
+        //2自定义模板：调用方传message_content，云端将其发送给用户
+        params.setMessageType(pushShortUrlParams.getMessageType());
+        //短信模板:message_type为1时候不能为空
+        //1：签署时候推送短链
+        //短信模板内容：您有一份来自[${platform}]的合同需要签署，请点击下面的签署链接完成合同签署！${shortUrl}
+        //2：实名认证时候推送短链
+        //短信模板内容：[${platform}]邀请您进行身份认证，请点击链接开始认证${shortUrl}
+        params.setSmsTemplateType(pushShortUrlParams.getSmsTemplateType());
+        //自定义短信模板内容：message_type为2时候不能为空
+        // 1.如：[${platform}]您要推送的短链是${shortUrl} 建议不超过500位
+        // 2.不能存在【】中括号，【】会被拦截，可以使用<>代替。
+        params.setMessageContent(pushShortUrlParams.getMessageContent());
+        String result = fddExtraClient.invokePushShortUrlSms(params);
         return JsonUtil.parse(result, FadadaDataResponse.class);
     }
 
