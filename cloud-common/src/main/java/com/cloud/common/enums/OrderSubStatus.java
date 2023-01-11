@@ -82,7 +82,10 @@ public enum OrderSubStatus implements BaseEnum {
     WAREHOUSE_THEN_AFFIRM(74, "供应商已收"),
     /** 待发布、报价中追单 */
     USER_CHARGEBACK(75, "用户退单"),
-
+    /** 华盛订单退款 */
+    REIMBURSE_HS(76,"华盛退款订单"),
+    /** 华盛订单退货拦截 */
+    RETURN_INTERCEPTION_HS(77,"华盛退货拦截"),
     /** 补全地址 */
     ADDRESS_COMPLETED_ERROR(81, "补全地址（未补全）"),
 
