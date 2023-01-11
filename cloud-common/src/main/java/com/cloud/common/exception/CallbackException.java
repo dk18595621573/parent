@@ -8,7 +8,6 @@ package com.cloud.common.exception;
 public final class CallbackException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public CallbackException(Throwable cause) {
-        super(cause);
+    public CallbackException() {
     }
 }
