@@ -1,6 +1,7 @@
 package com.cloud.component.express.domain;
 
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,6 +15,12 @@ import java.util.List;
  */
 @Data
 public class ExpressResult implements Serializable {
+
+    /** 省市区编码截取位置 */
+    private static final int PROVINCE_AREA_CODE_SUB = 8;
+
+    /** 省市编码截取位置 */
+    private static final int PROVINCE_CITY_CODE_SUB = 6;
 
     /** 签收状态 */
     interface State{
@@ -118,5 +125,18 @@ public class ExpressResult implements Serializable {
         private String number;
         /** 省市区名称 */
         private String name;
+
+        /**
+         * 获取区域编码：省、市、区。不需要到镇级别
+         * @param toArea 是否到区级别(true省市区 false省市)
+         * @return 省市区编码
+         */
+        public String getAreaCode(Boolean toArea) {
+            if (Boolean.TRUE.equals(toArea)){
+                return StrUtil.subPre(this.number, PROVINCE_AREA_CODE_SUB);
+            }else {
+                return StrUtil.subPre(this.number, PROVINCE_CITY_CODE_SUB);
+            }
+        }
     }
 }
