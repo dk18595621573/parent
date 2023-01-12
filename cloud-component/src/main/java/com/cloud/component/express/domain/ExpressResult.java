@@ -16,12 +16,6 @@ import java.util.List;
 @Data
 public class ExpressResult implements Serializable {
 
-    /** 省市区编码截取位置 */
-    private static final int PROVINCE_AREA_CODE_SUB = 8;
-
-    /** 省市编码截取位置 */
-    private static final int PROVINCE_CITY_CODE_SUB = 6;
-
     /** 签收状态 */
     interface State{
         /** 快件已签收 */
@@ -121,6 +115,13 @@ public class ExpressResult implements Serializable {
 
     @Data
     public static class Info{
+        /** 省市区编码截取位置 */
+        private static final int PROVINCE_AREA_CODE_SUB = 8;
+        /** 省市编码截取位置 */
+        private static final int PROVINCE_CITY_CODE_SUB = 6;
+        /** 区域编码为空 */
+        private static final String NULL_DISTRICT = "00";
+
         /** 行政区域编码 */
         private String number;
         /** 省市区名称 */
@@ -137,6 +138,15 @@ public class ExpressResult implements Serializable {
             }else {
                 return StrUtil.subPre(this.number, PROVINCE_CITY_CODE_SUB);
             }
+        }
+
+        /**
+         * 校验地区编码是否到达地区级别
+         * @return true到达地区级别 false没有到达地区级别
+         */
+        public Boolean checkAreaCode(){
+            String areaCode = StrUtil.sub(this.number, PROVINCE_AREA_CODE_SUB - 2, PROVINCE_AREA_CODE_SUB);
+            return !NULL_DISTRICT.equals(areaCode);
         }
     }
 }

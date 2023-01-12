@@ -89,14 +89,21 @@ public class LastResult {
      * @return true:拒签 false:不是拒签
      */
     public boolean checkRejected() {
-        if (ExpressResult.State.BACK_TO_SIGN.equals(getState())) {
-            ExpressResult.RouteInfo route = getRouteInfo();
-            if (!Objects.isNull(route)) {
-                ExpressResult.Info from = route.getFrom();
-                ExpressResult.Info to = route.getTo();
-                if (!Objects.isNull(from) && !Objects.isNull(to)) {
-                    return from.getNumber().equals(to.getNumber());
-                }
+        if (!ExpressResult.State.BACK_TO_SIGN.equals(getState())) {
+            return Boolean.TRUE;
+        }
+        ExpressResult.RouteInfo route = getRouteInfo();
+        if (Objects.isNull(route)){
+            return Boolean.TRUE;
+        }
+        ExpressResult.Info from = route.getFrom();
+        ExpressResult.Info to = route.getTo();
+        if (!Objects.isNull(from) && !Objects.isNull(to)) {
+            // 判断出发地是否只有省市
+            if (from.checkAreaCode()){
+                return Objects.equals(from.getAreaCode(true), to.getAreaCode(true));
+            } else {
+                return Objects.equals(from.getAreaCode(false), to.getAreaCode(false));
             }
         }
         return Boolean.TRUE;
