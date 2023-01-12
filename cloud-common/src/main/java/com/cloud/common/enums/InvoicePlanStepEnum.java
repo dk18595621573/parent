@@ -2,7 +2,7 @@ package com.cloud.common.enums;
 
 public enum InvoicePlanStepEnum implements BaseEnum {
 
-    ZERO(0, "未提醒"), ONE(1, "提醒开票"), TWO(2, "提醒核验");
+    ZERO(0, "未提醒"), ONE(1, "提醒开票"), TWO(2, "提醒核验"), THREE(3, "核验结束");
 
     Integer code;
 
