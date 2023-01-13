@@ -16,7 +16,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum BotApiEnums {
+public enum BotApiEnums implements BotApi {
 
     BOT_LIST(BotConsts.BOT_API,  Method.GET, "/bot/list", BotResponse.class),
     CONCAT_LIST(BotConsts.BOT_API, Method.GET, "/contact/list", BotResponse.class),
@@ -42,9 +42,5 @@ public enum BotApiEnums {
     private final String url;
 
     private final Class<?> responseClass;
-
-    public boolean isBotRequest() {
-        return getType() == BotConsts.BOT_API;
-    }
 
 }

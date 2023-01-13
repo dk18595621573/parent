@@ -9,6 +9,7 @@ import cn.hutool.http.Method;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
+import com.cloud.component.bot.consts.BotApi;
 import com.cloud.component.bot.consts.BotApiEnums;
 import com.cloud.component.bot.consts.BotConsts;
 import com.cloud.component.bot.consts.MessageType;
@@ -252,7 +253,7 @@ public class WxworkBotClient {
         return JsonUtil.parse(data, SyncConsumerInfo.class);
     }
 
-    public <T> T exceute(final BotApiEnums botApi, final Map<String, Object> param) {
+    public <T> T exceute(final BotApi botApi, final Map<String, Object> param) {
         String url;
         Map<String, Object> requestMap = Objects.isNull(param) ? new HashMap<>() : param;
         boolean isBotRequest = botApi.isBotRequest();
