@@ -101,6 +101,53 @@ public class HttpClientUtil {
      * @param getParams 请求参数
      * @return
      */
+    public static byte[] doHttpGetBytes(String uri, Map<String, String> getParams) {
+        HttpGet httpGet = null;
+        CloseableHttpResponse response = null;
+        try {
+            URIBuilder uriBuilder = new URIBuilder(uri);
+            if (null != getParams && !getParams.isEmpty()) {
+                List<NameValuePair> list = new ArrayList<>();
+                for (Map.Entry<String, String> param : getParams.entrySet()) {
+                    list.add(new BasicNameValuePair(param.getKey(), param.getValue()));
+                }
+                uriBuilder.setParameters(list);
+            }
+            httpGet = new HttpGet(uriBuilder.build());
+            response = httpClient.execute(httpGet);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (HttpStatus.SC_OK == statusCode) {
+                HttpEntity entity = response.getEntity();
+                if (null != entity) {
+                    return EntityUtils.toByteArray(entity);
+                }
+            }
+        } catch (Exception e) {
+            log.error("CloseableHttpClient-get-请求异常", e);
+        } finally {
+            try {
+                if (null != response)
+                    response.close();
+            } catch (IOException e) {
+                log.error("CloseableHttpClient-post-请求异常,释放连接异常", e);
+            }
+            try {
+                if (null != httpGet)
+                    httpGet.releaseConnection();
+            } catch (Exception e) {
+                log.error("CloseableHttpClient-post-请求异常,释放连接异常", e);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * httpclient get
+     *
+     * @param uri       请求地址
+     * @param getParams 请求参数
+     * @return
+     */
     public static String doHttpGet(String uri, Map<String, String> getParams) {
         HttpGet httpGet = null;
         CloseableHttpResponse response = null;
