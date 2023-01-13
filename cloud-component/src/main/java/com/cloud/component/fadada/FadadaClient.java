@@ -75,14 +75,10 @@ public class FadadaClient {
     /**
      * 3. 获取个人实名认证地址
      */
-    public FadadaDataResponse getPersonVerifyUrl(PersonVerifyUrlParams params) {
-        //证件正面照图片文件
-        params.setIdentFrontImg(new File(""));
-        //证件反面照图片文件
-        params.setIdentBackImg(new File(""));
+    public FadadaCompanyUrlResponse getPersonVerifyUrl(PersonVerifyUrlParams params) {
         String result = fddVerifyClient.invokePersonVerifyUrl(params);
         log.info("法大大返回参数，获取个人实名认证地址：{}", result);
-        return JsonUtil.parse(result, FadadaDataResponse.class);
+        return JsonUtil.parse(result, FadadaCompanyUrlResponse.class);
     }
 
     /**
