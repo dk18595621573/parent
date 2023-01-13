@@ -125,8 +125,8 @@ public class GlobalExceptionHandler {
     /**
      * 请求参数异常
      */
-    @ExceptionHandler(IllegalStateException.class)
-    public Result<?> handleIllegalStateException(IllegalStateException e) {
+    @ExceptionHandler({IllegalStateException.class, IllegalArgumentException.class})
+    public Result<?> handleIllegalStateException(Exception e) {
         log.error(e.getMessage(), e);
         return Result.error("请求参数异常");
     }
