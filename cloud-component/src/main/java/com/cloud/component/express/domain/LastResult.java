@@ -99,12 +99,8 @@ public class LastResult {
         ExpressResult.Info from = route.getFrom();
         ExpressResult.Info to = route.getTo();
         if (!Objects.isNull(from) && !Objects.isNull(to)) {
-            // 判断出发地是否只有省市
-            if (from.checkAreaCode()){
-                return Objects.equals(from.getAreaCode(true), to.getAreaCode(true));
-            } else {
-                return Objects.equals(from.getAreaCode(false), to.getAreaCode(false));
-            }
+            // 判断出发地是否只有省市区
+            return Objects.equals(from.getAreaCode(true), to.getAreaCode(true));
         }
         return Boolean.TRUE;
     }
