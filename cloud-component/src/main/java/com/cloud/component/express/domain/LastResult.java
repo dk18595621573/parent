@@ -100,7 +100,7 @@ public class LastResult {
         ExpressResult.Info to = route.getTo();
         if (!Objects.isNull(from) && !Objects.isNull(to)) {
             // 判断出发地是否只有省市区
-            return Objects.equals(from.getAreaCode(true), to.getAreaCode(true));
+            return Objects.equals(from.getAreaCode(false), to.getAreaCode(false));
         }
         return Boolean.TRUE;
     }
