@@ -16,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -130,6 +131,18 @@ public class GlobalExceptionHandler {
     public Result<?> handleIllegalStateException(Exception e) {
         log.error(e.getMessage(), e);
         return Result.error("请求参数异常");
+    }
+
+    /**
+     * 文件大小限制异常
+     */
+    @ExceptionHandler(MultipartException.class)
+    public Result<?> multipartException(MultipartException e) {
+        log.error(e.getMessage(), e);
+        if ("io.undertow.server.RequestTooBigException".equals(e.getCause().getCause().getClass().getName())) {
+            return Result.error("文件大小超出限制");
+        }
+        return Result.error("文件异常");
     }
 
     /**
