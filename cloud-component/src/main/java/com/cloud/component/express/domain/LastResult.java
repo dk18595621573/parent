@@ -72,7 +72,7 @@ public class LastResult {
      * @return true:已签收 false:未签收
      */
     public boolean signed() {
-        return LogisticsStatus.signed(this.getStatus());
+        return LogisticsStatus.signed(this.getState());
     }
 
     /**
@@ -80,7 +80,7 @@ public class LastResult {
      * @return true:拒签 false:不是拒签
      */
     public boolean rejected(){
-        return LogisticsStatus.rejected(this.getStatus());
+        return LogisticsStatus.rejected(this.getState());
     }
 
 
