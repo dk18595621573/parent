@@ -1,6 +1,7 @@
 package com.cloud.common.utils.word;
 
 import com.cloud.common.exception.ServiceException;
+import com.cloud.common.utils.uuid.IdUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +41,12 @@ public class WordTemplateUtils {
      * <p>
      * @param dataMap 需要动态填充的数据
      * @param templateName 模板名称
-     * @param filePath 生成word的路径
      * @param templateName 生成的word名称
      */
-    public String createWord(Map<String, Object> dataMap, String templateName, String filePath) {
+    public File createWord(Map<String, Object> dataMap, String templateName) {
         try {
-            filePath = System.getProperty("user.home").concat("/").concat(filePath);
+            File outFile = File.createTempFile(IdUtils.simpleUUID(), ".doc");
+
             @SuppressWarnings("deprecation")
             Configuration configuration = Configuration.getDefaultConfiguration();
             configuration.setDefaultEncoding("UTF-8");
@@ -54,7 +55,6 @@ public class WordTemplateUtils {
             // 获取模板
             Template template = configuration.getTemplate(templateName);
             // 输出文件
-            File outFile = new File(filePath);
             // 如果输出目标文件夹不存在，则创建
             if (!outFile.getParentFile().exists()) {
                 outFile.getParentFile().mkdirs();
@@ -75,11 +75,11 @@ public class WordTemplateUtils {
                 out.flush();
                 out.close();
             }
+            return outFile;
         } catch (Exception e) {
             log.error("word文件写入失败", e);
             throw new ServiceException("word文件写入失败");
         }
-        return filePath;
     }
 
 }
