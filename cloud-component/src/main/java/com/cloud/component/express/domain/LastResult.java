@@ -1,6 +1,6 @@
 package com.cloud.component.express.domain;
 
-import cn.hutool.core.util.ArrayUtil;
+import com.cloud.common.core.model.LogisticsStatus;
 import lombok.Data;
 
 import java.util.List;
@@ -72,7 +72,7 @@ public class LastResult {
      * @return true:已签收 false:未签收
      */
     public boolean signed() {
-        return ArrayUtil.contains(ExpressResult.SIGN_SIGN_ARRAY, this.getState());
+        return LogisticsStatus.signed(this.getStatus());
     }
 
     /**
@@ -80,7 +80,7 @@ public class LastResult {
      * @return true:拒签 false:不是拒签
      */
     public boolean rejected(){
-        return ArrayUtil.contains(ExpressResult.VISA_SIGN_ARRAY, this.getState());
+        return LogisticsStatus.rejected(this.getStatus());
     }
 
 
@@ -89,7 +89,7 @@ public class LastResult {
      * @return true:拒签 false:不是拒签
      */
     public boolean checkRejected() {
-        if (!ExpressResult.State.BACK_TO_SIGN.equals(getState())) {
+        if (!LogisticsStatus.SubState.BACK_TO_SIGN.getCode().equals(getState())) {
             return Boolean.TRUE;
         }
         ExpressResult.RouteInfo route = getRouteInfo();

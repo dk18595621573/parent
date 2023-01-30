@@ -1,7 +1,7 @@
 package com.cloud.component.express.domain;
 
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.cloud.common.core.model.LogisticsStatus;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,35 +15,6 @@ import java.util.List;
  */
 @Data
 public class ExpressResult implements Serializable {
-
-    /** 签收状态 */
-    interface State{
-        /** 快件已签收 */
-        String SIGN = "3";
-        /** 本人签收 */
-        String SELF_SIGN = "301";
-        /** 派件异常后签收 */
-        String ERROR_SIGN = "302";
-        /** 代签 */
-        String HOLOGRAPH_SIGN = "303";
-        /** 投柜或站签收 */
-        String CAST_ARK_SIGN = "304";
-
-        /** 退签 */
-        String BACK_TO_SIGN = "4";
-
-        /** 已销单 */
-        String ALREADY_PIN_SINGLE = "401";
-
-        /** 拒签 */
-        String VISA_REJECTED = "14";
-
-    }
-
-    /** 签收状态集合 */
-    public final static String[] SIGN_SIGN_ARRAY = {State.SIGN, State.SELF_SIGN, State.ERROR_SIGN, State.HOLOGRAPH_SIGN, State.CAST_ARK_SIGN};
-    /** 拒签状态集合 */
-    public final static String[] VISA_SIGN_ARRAY = {State.ALREADY_PIN_SINGLE, State.BACK_TO_SIGN, State.VISA_REJECTED};
 
     /**
      * 单号
@@ -73,7 +44,7 @@ public class ExpressResult implements Serializable {
      * @return true:已签收 false:未签收
      */
     public boolean signed() {
-        return ArrayUtil.contains(SIGN_SIGN_ARRAY, getState());
+        return LogisticsStatus.signed(this.getState());
     }
 
     /**
@@ -81,7 +52,7 @@ public class ExpressResult implements Serializable {
      * @return true:拒签 false:不是拒签
      */
     public boolean rejected(){
-        return ArrayUtil.contains(VISA_SIGN_ARRAY, getState());
+        return LogisticsStatus.rejected(this.getState());
     }
 
 
