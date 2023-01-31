@@ -165,23 +165,19 @@ public class HSClient {
      * @param ordId  主订单号    32
      */
     public LogisticsMessageParam getExpress(String mobile, String ordId) {
-        try {
-            if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId)) {
-                throw new ServiceException("参数缺失");
-            }
-            Map<String, Object> paramMap = new HashMap<>();
-            paramMap.put("mobile", mobile);
-            paramMap.put("ordId", ordId);
-
-            StatusUpdateResult response = HSUtil.doProcess(HSConst.METHOD_GET_EXPRESS, paramMap, StatusUpdateResult.class);
-            LogisticsMessageParam logisticsMessageVO = JSON.parseObject(JSONUtil.toJsonStr(response.getResp().getMsg()), LogisticsMessageParam.class);
-            if (ObjectUtil.isEmpty(logisticsMessageVO)) {
-                return null;
-            }
-            return logisticsMessageVO;
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
+        if (StrUtil.isBlank(mobile) || StrUtil.isBlank(ordId)) {
+            throw new ServiceException("参数缺失");
         }
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("mobile", mobile);
+        paramMap.put("ordId", ordId);
+
+        StatusUpdateResult response = HSUtil.doProcess(HSConst.METHOD_GET_EXPRESS, paramMap, StatusUpdateResult.class);
+        LogisticsMessageParam logisticsMessageVO = JSON.parseObject(JSONUtil.toJsonStr(response.getResp().getMsg()), LogisticsMessageParam.class);
+        if (ObjectUtil.isEmpty(logisticsMessageVO)) {
+            return null;
+        }
+        return logisticsMessageVO;
     }
 
     /**
