@@ -27,6 +27,7 @@ public class VatInvoiceMap {
         NAME_MAP.put("合计金额", "amountWithoutTax");
         NAME_MAP.put("合计税额", "taxAmount");
         NAME_MAP.put("价税合计(大写)", "amountUpper");
+        NAME_MAP.put("价税合计(小写)", "amountLower");
         NAME_MAP.put("小写金额", "amount");
         NAME_MAP.put("销售方地址、电话", "sellerAddressPhone");
         NAME_MAP.put("销售方开户行及账号", "sellerBankAccount");

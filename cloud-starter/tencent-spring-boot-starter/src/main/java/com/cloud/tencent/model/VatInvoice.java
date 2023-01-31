@@ -39,6 +39,8 @@ public class VatInvoice {
     private String taxAmount;
     /** 价税合计(大写) */
     private String amountUpper;
+    /** 价税合计(小写) */
+    private String amountLower;
     /** 小写金额 */
     private String amount;
     /** 销售方地址、电话 */
