@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
     /**
      * 权限校验异常
      */
+    @ResponseStatus(org.springframework.http.HttpStatus.FORBIDDEN)
     @ExceptionHandler(AuthorizationException.class)
     public Result<?> handleAccessDeniedException(AuthorizationException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
@@ -44,6 +45,7 @@ public class GlobalExceptionHandler {
     /**
      * 请求方式不支持
      */
+    @ResponseStatus(org.springframework.http.HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<?> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e,
                                                           HttpServletRequest request) {
