@@ -17,7 +17,7 @@ public class FadadaProperties {
     /**
      * 注册appId
      */
-    private String addId;
+    private String appId;
 
     /**
      * 注册appKey
