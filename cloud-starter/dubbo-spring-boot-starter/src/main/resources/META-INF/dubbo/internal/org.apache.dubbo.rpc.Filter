@@ -2,3 +2,4 @@ custom=com.cloud.dubbo.filter.CustomExceptionFilter
 preinvoke=com.cloud.dubbo.filter.PreInvokeFilter
 mdc=com.cloud.dubbo.filter.MDCFilter
 customreq=com.cloud.dubbo.filter.CustomRequestFilter
+invokeResultFilter=com.cloud.dubbo.filter.InvokeResultFilter
