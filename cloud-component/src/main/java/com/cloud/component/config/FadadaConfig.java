@@ -31,19 +31,19 @@ public class FadadaConfig {
     @Bean
     @RefreshScope
     public FddVerifyClient fddVerifyClient(FadadaProperties fadadaProperties) {
-        return new FddVerifyClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
+        return new FddVerifyClient(fadadaProperties.getAppId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
 
     @Bean
     @RefreshScope
     public FddBaseClient fddBaseClient(FadadaProperties fadadaProperties) {
-        return new FddBaseClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
+        return new FddBaseClient(fadadaProperties.getAppId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
 
     @Bean
     @RefreshScope
     public FddExtraClient fddExtraClient(FadadaProperties fadadaProperties) {
-        return new FddExtraClient(fadadaProperties.getAddId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
+        return new FddExtraClient(fadadaProperties.getAppId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
     }
 
     @Bean

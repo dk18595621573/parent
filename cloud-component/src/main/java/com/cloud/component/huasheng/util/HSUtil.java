@@ -48,7 +48,7 @@ public class HSUtil {
             log.info("华盛接口调用参数：{}", map);
 
             // 发送请求
-            HttpRequest request = HttpRequest.post(getUrl(map)).body(JSONUtil.toJsonStr(map)).timeout(5000);
+            HttpRequest request = HttpRequest.post(getUrl(map)).body(JSONUtil.toJsonStr(map)).timeout(15000);
             request.removeHeader(Header.USER_AGENT);
             String response = request.execute().body();
             log.info("华盛返回结果：{}", response);

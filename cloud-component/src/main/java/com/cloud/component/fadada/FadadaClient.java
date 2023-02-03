@@ -448,7 +448,7 @@ public class FadadaClient {
         String encode = Encryptor.encode(format, Encryptor.ALG_SHA1);
         // 3.计算 timestamp的MD5值，并和app_id，步骤 2 中得到的字符串拼接得到新的字符串
         String timestamp = DateUtil.format(DateUtil.date(), DateUtils.dateTimeNow());
-        String format1 = String.format(fadadaProperties.getAddId(), Encryptor.encode(timestamp, Encryptor.ALG_SHA1), encode);
+        String format1 = String.format(fadadaProperties.getAppId(), Encryptor.encode(timestamp, Encryptor.ALG_SHA1), encode);
         // 4.对步骤3中得到的字符串进行SHA1加密
         String encode1 = Encryptor.encode(format1, Encryptor.ALG_SHA1);
         // 5.对步骤 4 中得到的字符串进⾏base64 加密
