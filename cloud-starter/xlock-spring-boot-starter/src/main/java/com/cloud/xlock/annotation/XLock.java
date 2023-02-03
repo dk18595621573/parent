@@ -18,11 +18,18 @@ import java.util.concurrent.TimeUnit;
 public @interface XLock {
 
     /**
+     * 自定义业务key前缀.
+     *
+     * @return 自定义业务key前缀
+     */
+    String prefix();
+
+    /**
      * 使用spel:自定义业务key.
      *
      * @return 自定义业务key
      */
-    String[] keys() default {};
+    String[] keys();
 
     /**
      * 锁类型.

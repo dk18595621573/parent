@@ -82,7 +82,7 @@ public class XLockSpelResolver {
         KeyInfo.KeyInfoBuilder builder = KeyInfo.builder();
         final Object[] args = joinPoint.getArgs();
         Method method = getMethod(joinPoint);
-        List<String> xlockKeys = getXLockKey(xLock.keys(), method, args);
+        List<String> xlockKeys = getXLockKey(xLock.prefix(), xLock.keys(), method, args);
         List<String> xkeyParams = getXkeyParameter(method.getParameters(), args);
         if (CollectionUtils.isEmpty(xlockKeys) && CollectionUtils.isEmpty(xkeyParams)) {
             throw new KeyBuilderException("@XLock @XKey 都没有设置key");
@@ -103,8 +103,11 @@ public class XLockSpelResolver {
      * @param params 参数
      * @return 锁key信息
      */
-    private List<String> getXLockKey(final String[] keys, final Method method, final Object[] params) {
+    private List<String> getXLockKey(final String prefix, final String[] keys, final Method method, final Object[] params) {
         List<String> result = new ArrayList<>();
+        if (StringUtils.hasText(prefix)) {
+            result.add(prefix);
+        }
         EvaluationContext context = new MethodBasedEvaluationContext(null, method, params, PARAMETER_NAME_DISCOVERER);
         for (String key : keys) {
             if (StringUtils.hasLength(key)) {
