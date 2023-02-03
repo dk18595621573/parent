@@ -284,6 +284,8 @@ public class FadadaClient {
         params.setSignKeyword(extsignRequest.getSignKeyword());
         //0-所有关键字签章 （默认） 1-第一个关键字签章 2-最后一个关键字签章
         params.setKeywordStrategy(extsignRequest.getKeywordStrategy());
+        // 签署结果同步URL
+        params.setReturnUrl(extsignRequest.getReturnUrl());
         // 签署结果异步通知url
         params.setNotifyUrl(extsignRequest.getNotifyUrl());
         String result = fddBaseClient.invokeExtSign(params);

@@ -199,4 +199,8 @@ public class ExtsignRequest {
      */
     private String keyy;
 
+    /**
+     * 返回的签署地址
+     */
+    private String respReturnUrl;
 }

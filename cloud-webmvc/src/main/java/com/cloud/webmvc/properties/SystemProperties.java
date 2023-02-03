@@ -38,6 +38,11 @@ public class SystemProperties {
     private String apiDomain;
 
     /**
+     * 醒市无仓web域名
+     */
+    private String warehouseWebDomain;
+
+    /**
      * 移动端域名
      */
     private String mobileDomain;
