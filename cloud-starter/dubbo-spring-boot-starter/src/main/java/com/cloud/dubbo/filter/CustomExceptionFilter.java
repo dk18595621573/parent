@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
  * @author breggor
  */
 @Activate(group = CommonConstants.PROVIDER)
-public class CustomExceptionFilter extends  AbstractFilter implements Filter, Filter.Listener {
+public class CustomExceptionFilter extends AbstractFilter implements Filter, Filter.Listener {
 
     private static final String PROJECT_PACKAGE = "com.cloud";
 
@@ -53,7 +53,7 @@ public class CustomExceptionFilter extends  AbstractFilter implements Filter, Fi
                 }
 
                 // for the exception not found in method's signature, print ERROR message in server's log.
-                LOGGER.error("dubbo业务异常【" + exceptionMethod(invoker, invocation)+ "】异常: "
+                LOGGER.error("dubbo业务异常【" + methodInfo(invoker, invocation) + "】异常: "
                     + exception.getClass().getName() + ": " + exception.getMessage(), exception);
 
                 // directly throw if exception class and interface class are in the same jar file.
@@ -83,7 +83,7 @@ public class CustomExceptionFilter extends  AbstractFilter implements Filter, Fi
                 // otherwise, wrap with RuntimeException and throw back to the client
                 appResponse.setException(new RuntimeException(StringUtils.toString(exception)));
             } catch (Throwable e) {
-                LOGGER.warn("dubbo异常过滤器执行失败【" + exceptionMethod(invoker, invocation) + ", 失败原因: "
+                LOGGER.warn("dubbo异常过滤器执行失败【" + methodInfo(invoker, invocation) + ", 失败原因: "
                     + e.getClass().getName() + ": " + e.getMessage(), e);
             }
         }
@@ -91,14 +91,13 @@ public class CustomExceptionFilter extends  AbstractFilter implements Filter, Fi
 
     @Override
     public void onError(final Throwable e, final Invoker<?> invoker, final Invocation invocation) {
-        LOGGER.error("dubbo业务异常【" + exceptionMethod(invoker, invocation) + "】 exception: "
+        LOGGER.error("dubbo业务异常【" + methodInfo(invoker, invocation) + "】 exception: "
             + e.getClass().getName() + ": " + e.getMessage(), e);
     }
 
-    private String exceptionMethod(final Invoker<?> invoker, final Invocation invocation) {
-        // RpcContext.getServiceContext().getRemoteHost() + ". service: " + invoker.getInterface().getName()
-        return RpcContext.getContext().getRemoteHost() + ": " + invoker.getInterface().getName()
-            + "." + invocation.getMethodName();
+    @Override
+    protected String methodInfo(final Invoker<?> invoker, final Invocation invocation) {
+        return RpcContext.getContext().getRemoteHost() + ": " + super.methodInfo(invoker, invocation);
     }
 }
 

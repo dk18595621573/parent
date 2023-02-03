@@ -1,6 +1,8 @@
 package com.cloud.dubbo.filter;
 
 import org.apache.dubbo.rpc.Filter;
+import org.apache.dubbo.rpc.Invocation;
+import org.apache.dubbo.rpc.Invoker;
 import org.apache.dubbo.rpc.RpcContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,10 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractFilter implements Filter {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractFilter.class.getPackageName());
+
+    protected String methodInfo(final Invoker<?> invoker, final Invocation invocation) {
+        return invoker.getInterface().getName() + "." + invocation.getMethodName();
+    }
 
     protected boolean isConsumerSide() {
 //        URL consumerUrl = ObjectUtils.defaultIfNull(RpcContext.getServiceContext().getConsumerUrl(), RpcContext.getServiceContext().getUrl());
