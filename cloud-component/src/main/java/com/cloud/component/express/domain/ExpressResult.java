@@ -1,6 +1,6 @@
 package com.cloud.component.express.domain;
 
-import cn.hutool.core.util.StrUtil;
+import com.cloud.common.core.model.LogisticsRouteInfo;
 import com.cloud.common.core.model.LogisticsStatus;
 import lombok.Data;
 
@@ -37,7 +37,7 @@ public class ExpressResult implements Serializable {
     private List<ExpressItem> data;
 
     /** 行政区域解析 */
-    private RouteInfo routeInfo;
+    private LogisticsRouteInfo routeInfo;
 
     /**
      * 是否已签收
@@ -69,55 +69,5 @@ public class ExpressResult implements Serializable {
          */
         private String context;
 
-    }
-
-    @Data
-    public static class RouteInfo implements Serializable{
-
-        /** 出发地城市信息 */
-        private Info from;
-
-        /** 当前城市信息 */
-        private Info cur;
-
-        /** 目的地城市信息 */
-        private Info to;
-    }
-
-    @Data
-    public static class Info{
-        /** 省市区编码截取位置 */
-        private static final int PROVINCE_AREA_CODE_SUB = 8;
-        /** 省市编码截取位置 */
-        private static final int PROVINCE_CITY_CODE_SUB = 6;
-        /** 区域编码为空 */
-        private static final String NULL_DISTRICT = "00";
-
-        /** 行政区域编码 */
-        private String number;
-        /** 省市区名称 */
-        private String name;
-
-        /**
-         * 获取区域编码：省、市、区。不需要到镇级别
-         * @param toArea 是否到区级别(true省市区 false省市)
-         * @return 省市区编码
-         */
-        public String getAreaCode(Boolean toArea) {
-            if (Boolean.TRUE.equals(toArea)){
-                return StrUtil.subPre(this.number, PROVINCE_AREA_CODE_SUB);
-            }else {
-                return StrUtil.subPre(this.number, PROVINCE_CITY_CODE_SUB);
-            }
-        }
-
-        /**
-         * 校验地区编码是否到达地区级别
-         * @return true到达地区级别 false没有到达地区级别
-         */
-        public Boolean checkAreaCode(){
-            String areaCode = StrUtil.sub(this.number, PROVINCE_AREA_CODE_SUB - 2, PROVINCE_AREA_CODE_SUB);
-            return !NULL_DISTRICT.equals(areaCode);
-        }
     }
 }
