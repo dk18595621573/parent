@@ -1,5 +1,6 @@
 package com.cloud.component.config;
 
+import com.cloud.component.fadada.FadadaAuthClient;
 import com.cloud.component.fadada.FadadaClient;
 import com.cloud.component.properties.FadadaProperties;
 import com.fadada.sdk.base.client.FddBaseClient;
@@ -48,9 +49,19 @@ public class FadadaConfig {
 
     @Bean
     @RefreshScope
+    public FadadaAuthClient fadadaAuthClient(FadadaProperties fadadaProperties) {
+        return new FadadaAuthClient(fadadaProperties.getAppId(), fadadaProperties.getAppKey(), fadadaProperties.getVersion(), fadadaProperties.getHost());
+    }
+
+    @Bean
+    @RefreshScope
     @ConditionalOnMissingBean
-    public FadadaClient fadadaClient(FddVerifyClient fddVerifyClient, FddBaseClient fddBaseClient, FadadaProperties fadadaProperties, FddExtraClient fddExtraClient) {
-        return new FadadaClient(fddVerifyClient, fddBaseClient, fadadaProperties, fddExtraClient);
+    public FadadaClient fadadaClient(FddVerifyClient fddVerifyClient,
+                                     FddBaseClient fddBaseClient,
+                                     FadadaProperties fadadaProperties,
+                                     FddExtraClient fddExtraClient,
+                                     FadadaAuthClient fadadaAuthClient) {
+        return new FadadaClient(fddVerifyClient, fddBaseClient, fadadaProperties, fddExtraClient, fadadaAuthClient);
     }
 
 }

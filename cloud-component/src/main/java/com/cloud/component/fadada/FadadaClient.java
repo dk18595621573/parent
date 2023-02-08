@@ -7,9 +7,9 @@ import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.common.utils.sign.Base64;
-import com.cloud.common.utils.uuid.IdUtils;
 import com.cloud.component.chinapay.util.Encryptor;
-import com.cloud.component.fadada.consts.FadadaStatusCode;
+import com.cloud.component.fadada.params.CompanyRemittanceSubmitParams;
+import com.cloud.component.fadada.params.PersonThreeEleAuthParams;
 import com.cloud.component.fadada.request.*;
 import com.cloud.component.fadada.response.*;
 import com.cloud.component.properties.FadadaProperties;
@@ -26,7 +26,6 @@ import com.fadada.sdk.verify.model.req.PersonVerifyUrlParams;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
 import java.util.Objects;
 
 /**
@@ -43,6 +42,7 @@ public class FadadaClient {
     private final FadadaProperties fadadaProperties;
 
     private final FddExtraClient fddExtraClient;
+    private final FadadaAuthClient fadadaAuthClient;
 
     /**
      * 1. 注册账号
@@ -494,5 +494,21 @@ public class FadadaClient {
         String result = fddBaseClient.invokeBeforeAuthSign(params);
         log.info("法大大返回参数，获取自动授权页面：{}", result);
         return result;
+    }
+
+    public String personThreeEleAuth(PersonThreeEleAuthParams params) {
+        try {
+            return fadadaAuthClient.invokePersonThreeEleAuth(params);
+        } catch (Exception var3) {
+            throw new RuntimeException(var3);
+        }
+    }
+
+    public String companyRemittanceSubmit(CompanyRemittanceSubmitParams params) {
+        try {
+            return fadadaAuthClient.invokeCompanyRemittanceSubmit(params);
+        } catch (Exception var3) {
+            throw new RuntimeException(var3);
+        }
     }
 }
