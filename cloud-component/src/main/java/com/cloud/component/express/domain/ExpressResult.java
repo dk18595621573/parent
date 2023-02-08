@@ -39,6 +39,9 @@ public class ExpressResult implements Serializable {
     /** 行政区域解析 */
     private LogisticsRouteInfo routeInfo;
 
+    /** 快递是否订阅 */
+    private Boolean subscribed;
+
     /**
      * 是否已签收
      * @return true:已签收 false:未签收
