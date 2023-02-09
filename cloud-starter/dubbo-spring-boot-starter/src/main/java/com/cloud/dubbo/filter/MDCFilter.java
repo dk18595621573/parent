@@ -35,7 +35,7 @@ public class MDCFilter extends AbstractFilter {
                 RequestUser user = RequestThread.getUser();
                 if (Objects.nonNull(user)) {
                     MDC.put(Constants.MDC_USER_ID, String.valueOf(user.getUserId()));
-                    MDC.put(Constants.MDC_USER_ID, String.valueOf(user.getDeptId()));
+                    MDC.put(Constants.MDC_COMPANY_ID, String.valueOf(user.getDeptId()));
                 }
             }
             return invoker.invoke(invocation);
