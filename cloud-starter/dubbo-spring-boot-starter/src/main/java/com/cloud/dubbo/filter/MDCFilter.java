@@ -1,6 +1,8 @@
 package com.cloud.dubbo.filter;
 
 import com.cloud.common.constant.Constants;
+import com.cloud.common.core.model.RequestUser;
+import com.cloud.common.threads.RequestThread;
 import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.common.utils.StringUtils;
@@ -11,13 +13,15 @@ import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.MDC;
 
+import java.util.Objects;
+
 
 /**
  * MDC参数设置filter.
  *
  * @author breggor
  */
-@Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER})
+@Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER}, order = -9999)
 public class MDCFilter extends AbstractFilter {
 
     @Override
@@ -27,9 +31,18 @@ public class MDCFilter extends AbstractFilter {
                 RpcContext.getContext().setAttachment(Constants.MDC_TRACE_ID, MDC.get(Constants.MDC_TRACE_ID));
             } else if (isProviderSide() && StringUtils.isNotEmpty(RpcContext.getContext().getAttachment(Constants.MDC_TRACE_ID))) {
                 MDC.put(Constants.MDC_TRACE_ID, RpcContext.getContext().getAttachment(Constants.MDC_TRACE_ID));
+                RequestUser user = RequestThread.getUser();
+                if (Objects.nonNull(user)) {
+                    MDC.put(Constants.MDC_USER_ID, String.valueOf(user.getUserId()));
+                    MDC.put(Constants.MDC_USER_ID, String.valueOf(user.getDeptId()));
+                }
             }
         } catch (Exception e) {
             LOGGER.error("Exception in TraceIdFilter (" + invoker + " -> " + invocation + ")", e);
+        } finally {
+            if (isProviderSide()) {
+                MDC.clear();
+            }
         }
         return invoker.invoke(invocation);
     }

@@ -18,7 +18,7 @@ import java.util.Objects;
  * @author zenghao
  * @date 2021/1/24
  */
-@Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER})
+@Activate(group = {CommonConstants.CONSUMER, CommonConstants.PROVIDER}, order = -10000)
 public class CustomRequestFilter extends AbstractFilter {
 
     private static final String REQUEST_DATA = "REQUEST-DATA";
@@ -38,16 +38,15 @@ public class CustomRequestFilter extends AbstractFilter {
                     RequestThread.setData((Map<String, Object>) data);
                 }
             }
-            return invoker.invoke(invocation);
         } catch (Exception e) {
             LOGGER.error("Exception in CustomRequestFilter ({} -> {})", invoker, invocation, e);
-            return invoker.invoke(invocation);
         } finally {
             //服务器提供者清理线程中的请求信息
             if (isProviderSide()) {
                 RequestThread.clear();
             }
         }
+        return invoker.invoke(invocation);
     }
 
 //    @Override
