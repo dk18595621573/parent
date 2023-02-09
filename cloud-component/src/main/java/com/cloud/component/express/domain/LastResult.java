@@ -1,5 +1,6 @@
 package com.cloud.component.express.domain;
 
+import com.cloud.common.core.model.LogisticsRouteInfo;
 import com.cloud.common.core.model.LogisticsStatus;
 import lombok.Data;
 
@@ -63,7 +64,7 @@ public class LastResult {
     /**
      * 出发地，目的地信息
      */
-    private ExpressResult.RouteInfo routeInfo;
+    private LogisticsRouteInfo routeInfo;
 
     private boolean isLoop;
 
@@ -92,12 +93,12 @@ public class LastResult {
         if (!LogisticsStatus.SubState.BACK_TO_SIGN.getCode().equals(getState())) {
             return Boolean.TRUE;
         }
-        ExpressResult.RouteInfo route = getRouteInfo();
+        LogisticsRouteInfo route = getRouteInfo();
         if (Objects.isNull(route)){
             return Boolean.TRUE;
         }
-        ExpressResult.Info from = route.getFrom();
-        ExpressResult.Info to = route.getTo();
+        LogisticsRouteInfo.Info from = route.getFrom();
+        LogisticsRouteInfo.Info to = route.getTo();
         if (!Objects.isNull(from) && !Objects.isNull(to)) {
             // 判断出发地是否只有省市区
             return Objects.equals(from.getAreaCode(true), to.getAreaCode(true));

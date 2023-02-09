@@ -7,9 +7,9 @@ import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.common.utils.sign.Base64;
-import com.cloud.common.utils.uuid.IdUtils;
 import com.cloud.component.chinapay.util.Encryptor;
-import com.cloud.component.fadada.consts.FadadaStatusCode;
+import com.cloud.component.fadada.params.CompanyRemittanceSubmitParams;
+import com.cloud.component.fadada.params.PersonThreeEleAuthParams;
 import com.cloud.component.fadada.request.*;
 import com.cloud.component.fadada.response.*;
 import com.cloud.component.properties.FadadaProperties;
@@ -26,7 +26,6 @@ import com.fadada.sdk.verify.model.req.PersonVerifyUrlParams;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
 import java.util.Objects;
 
 /**
@@ -43,6 +42,7 @@ public class FadadaClient {
     private final FadadaProperties fadadaProperties;
 
     private final FddExtraClient fddExtraClient;
+    private final FadadaAuthClient fadadaAuthClient;
 
     /**
      * 1. 注册账号
@@ -248,20 +248,22 @@ public class FadadaClient {
      * 2002：业务异常，失败原因见msg
      * 2003：其他错误，请联系法大大
      */
-    public FadadaResultResponse extsignAuto() {
+    public FadadaResultResponse extsignAuto(ExtsignRequest extsignRequest) {
         ExtSignAutoParams params = new ExtSignAutoParams();
         //平台自定义唯一交易号
-        params.setTransactionId("UUID12312414124");
+        params.setTransactionId(extsignRequest.getTransactionId());
         //此处传入调用上传或填充合同接口成功时定义的合同编号
-        params.setContractId("UUIContraction123123");
+        params.setContractId(extsignRequest.getContractId());
         //此处传入认证成功后成功申请证书的客户编号
-        params.setCustomerId("UUIContraction123123");
-        params.setDocTitle("如：租赁合同协议");
+        params.setCustomerId(extsignRequest.getCustomerId());
+        params.setDocTitle(extsignRequest.getDocTitle());
         //0-关键字（默认）1-坐标
-        params.setPositionType("0");
-        params.setSignKeyword("出租人签字");
+        params.setPositionType(extsignRequest.getPositionType());
+        params.setSignKeyword(extsignRequest.getSignKeyword());
         //0：所有关键字签章 1：第一个关键字签章； 2：最后一个关键字签章
-        params.setKeywordStrategy("2");
+        params.setKeywordStrategy(extsignRequest.getKeywordStrategy());
+        // 客户角色 1-接入平台；
+        params.setClientRole("1");
         String result = fddBaseClient.invokeExtSignAuto(params);
         log.info("法大大返回参数，自动签署：{}", result);
         return JsonUtil.parse(result, FadadaResultResponse.class);
@@ -277,6 +279,8 @@ public class FadadaClient {
         //此处传入调用上传或填充合同接口成功时定义的合同编号
         params.setContractId(extsignRequest.getContractId());
         //此处传入认证成功后成功申请证书的客户编号
+        // 签署结果同步URL
+        params.setReturnUrl(extsignRequest.getReturnUrl());
         params.setCustomerId(extsignRequest.getCustomerId());
         params.setDocTitle(extsignRequest.getDocTitle());
         //0-关键字（默认）1-坐标
@@ -284,8 +288,6 @@ public class FadadaClient {
         params.setSignKeyword(extsignRequest.getSignKeyword());
         //0-所有关键字签章 （默认） 1-第一个关键字签章 2-最后一个关键字签章
         params.setKeywordStrategy(extsignRequest.getKeywordStrategy());
-        // 签署结果同步URL
-        params.setReturnUrl(extsignRequest.getReturnUrl());
         // 签署结果异步通知url
         params.setNotifyUrl(extsignRequest.getNotifyUrl());
         String result = fddBaseClient.invokeExtSign(params);
@@ -478,5 +480,35 @@ public class FadadaClient {
         params.setTransactionId(transactionId);
         String result = fddExtraClient.invokeContractRejectSign(params);
         return JsonUtil.parse(result, FadadaDataResponse.class);
+    }
+
+
+    public String beforeAuthSign(BeforeAuthSignRequest authSignRequest) {
+        BeforeAuthSignParams params = new BeforeAuthSignParams();
+        params.setTransactionId(authSignRequest.getTransactionId());//平台自定义唯一交易号
+        params.setAuthType(authSignRequest.getAuthType());//1:授权自动签（目前只能填1）
+        params.setContractId(authSignRequest.getContractId());//指该份线上授权委托书的合同编号，自定义即可
+        params.setCustomerId(authSignRequest.getCustomerId());//传入注册返回的个人或企业客户编号
+        params.setReturnUrl(authSignRequest.getReturnUrl());//同步通知签署结果地址
+        params.setNotifyUrl(authSignRequest.getNotifyUrl());//异步通知签署结果地址
+        String result = fddBaseClient.invokeBeforeAuthSign(params);
+        log.info("法大大返回参数，获取自动授权页面：{}", result);
+        return result;
+    }
+
+    public String personThreeEleAuth(PersonThreeEleAuthParams params) {
+        try {
+            return fadadaAuthClient.invokePersonThreeEleAuth(params);
+        } catch (Exception var3) {
+            throw new RuntimeException(var3);
+        }
+    }
+
+    public String companyRemittanceSubmit(CompanyRemittanceSubmitParams params) {
+        try {
+            return fadadaAuthClient.invokeCompanyRemittanceSubmit(params);
+        } catch (Exception var3) {
+            throw new RuntimeException(var3);
+        }
     }
 }
