@@ -38,6 +38,7 @@ public class CustomRequestFilter extends AbstractFilter {
                     RequestThread.setData((Map<String, Object>) data);
                 }
             }
+            return invoker.invoke(invocation);
         } catch (Exception e) {
             LOGGER.error("Exception in CustomRequestFilter ({} -> {})", invoker, invocation, e);
         } finally {

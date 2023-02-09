@@ -38,6 +38,7 @@ public class MDCFilter extends AbstractFilter {
                     MDC.put(Constants.MDC_USER_ID, String.valueOf(user.getDeptId()));
                 }
             }
+            return invoker.invoke(invocation);
         } catch (Exception e) {
             LOGGER.error("Exception in MDCFilter (" + invoker + " -> " + invocation + ")", e);
         } finally {
