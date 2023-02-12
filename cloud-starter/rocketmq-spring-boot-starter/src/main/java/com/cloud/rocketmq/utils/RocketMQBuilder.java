@@ -29,6 +29,11 @@ public class RocketMQBuilder {
     private static final String ROCKETMQ_TAGS = RocketMQHeaders.PREFIX + RocketMQHeaders.TAGS;
     private static final String ROCKETMQ_MESSAGE_ID = RocketMQHeaders.PREFIX + RocketMQHeaders.MESSAGE_ID;
 
+    /**
+     * 腾讯云延迟消息自定义属性名。对应的值应该是 标准毫秒化的时间戳
+     */
+    private static final String DELAY_SEND_TIME = "__STARTDELIVERTIME";
+
     private final RocketMQProperties properties;
     private final StreamBridge streamBridge;
     private final RedisCache redisCache;
@@ -46,6 +51,28 @@ public class RocketMQBuilder {
         }
         String tags = StringUtils.defaultString(event.tags(), event.getClass().getSimpleName());
         return MessageBuilder.withPayload(event).setHeader(RocketMQHeaders.TAGS, tags).setHeader(RocketMQHeaders.KEYS, event.keys()).build();
+    }
+
+    /**
+     * 构建延迟消息.
+     *
+     * @param event 事件对象
+     * @param sendTime 延迟发送的时间戳
+     * @param <T>   事件类型
+     * @return T
+     */
+    public <T extends BaseEvent> Message<T> buildDelayMessage(final T event, final long sendTime) {
+        if (StringUtils.isBlank(event.keys())) {
+            throw new RuntimeException("keys是必填项");
+        }
+
+        String tags = StringUtils.defaultString(event.tags(), event.getClass().getSimpleName());
+        return MessageBuilder.withPayload(event)
+            //设置延迟发送的时间
+            .setHeader(DELAY_SEND_TIME, sendTime)
+            //设置tag和key
+            .setHeader(RocketMQHeaders.TAGS, tags)
+            .setHeader(RocketMQHeaders.KEYS, event.keys()).build();
     }
 
     /**
