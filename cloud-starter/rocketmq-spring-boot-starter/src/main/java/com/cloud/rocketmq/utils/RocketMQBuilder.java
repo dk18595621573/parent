@@ -57,11 +57,11 @@ public class RocketMQBuilder {
      * 构建延迟消息.
      *
      * @param event 事件对象
-     * @param sendTime 延迟发送的时间戳
+     * @param delayTime 延迟发送的时间戳
      * @param <T>   事件类型
      * @return T
      */
-    public <T extends BaseEvent> Message<T> buildDelayMessage(final T event, final long sendTime) {
+    public <T extends BaseEvent> Message<T> buildDelayMessage(final T event, final long delayTime) {
         if (StringUtils.isBlank(event.keys())) {
             throw new RuntimeException("keys是必填项");
         }
@@ -69,7 +69,7 @@ public class RocketMQBuilder {
         String tags = StringUtils.defaultString(event.tags(), event.getClass().getSimpleName());
         return MessageBuilder.withPayload(event)
             //设置延迟发送的时间
-            .setHeader(DELAY_SEND_TIME, sendTime)
+            .setHeader(DELAY_SEND_TIME, delayTime)
             //设置tag和key
             .setHeader(RocketMQHeaders.TAGS, tags)
             .setHeader(RocketMQHeaders.KEYS, event.keys()).build();
@@ -91,6 +91,26 @@ public class RocketMQBuilder {
         }
         log.info("[MQ消息-生产消息][{}]--{}", topic, message);
     }
+
+    /**
+     * 生产消息，推送到mq
+     *   兼容腾讯rocketmq的topic写法，自动带上namespace
+     * @param topic topic
+     * @param event 消息数据
+     * @param delayTime 延迟发送的时间戳
+     * @param <T> 消息数据泛型
+     */
+    public <T extends BaseEvent> void sendDelay(final String topic, final T event, final long delayTime) {
+        Message<T> message = this.buildDelayMessage(event, delayTime);
+        if (StringUtils.isBlank(properties.getNamespace())) {
+            streamBridge.send(topic, message);
+        } else {
+            streamBridge.send(properties.getNamespace() + "%" +topic, message);
+        }
+        log.info("[MQ消息-生产延时消息][{},{}]--{}", topic, delayTime, message);
+    }
+
+
 
     /**
      * 获取消息Keys.
