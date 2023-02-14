@@ -140,6 +140,8 @@ public class FadadaClient {
         //合同标题
         //PDF文档
         params.setFile(uploaddocsRequest.getFile());
+        // pdf url
+        params.setDocUrl(uploaddocsRequest.getDocUrl());
         //合同类型 目前仅支持pdf格式
         params.setDocType(uploaddocsRequest.getDocType());
         String result = fddBaseClient.invokeUploadDocs(params);
@@ -511,4 +513,15 @@ public class FadadaClient {
             throw new RuntimeException(var3);
         }
     }
+
+    public String gotoBatchSemiAutoSignPage(GotoBatchSemiAutoSignPageParams params) {
+        try {
+            return fddExtraClient.invokeGotoBatchSemiAutoSignPage(params);
+        } catch (Exception var3) {
+            throw new RuntimeException(var3);
+        }
+    }
+
+
+
 }
