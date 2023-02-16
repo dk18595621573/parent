@@ -90,6 +90,9 @@ public enum OrderSubStatus implements BaseEnum {
     ADDRESS_COMPLETED_ERROR(81, "补全地址（未补全）"),
 
     /** 异常订单 */
+    PDD_ALREADY_SOLD(91, "拼多多已销售"),
+    ACTIVATE(92, "已激活"),
+    IMEI_ERROR(93, "串码错误"),
 
     /** 物流异常 */
     LOGISTICS_DESTINATION_ABNORMAL(121, "物流目的地异常"),
