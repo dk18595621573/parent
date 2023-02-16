@@ -65,7 +65,6 @@ public class YaBaoSerialClient {
             log.error("手机序列号查询失败！接口连接异常", e);
             verifySerial.setCode(-1);
             verifySerial.setMessage("接口连接异常");
-            throw new ServiceException("手机序列号查询失败!接口连接异常");
         }
         return verifySerial;
     }
