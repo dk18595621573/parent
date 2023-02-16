@@ -16,7 +16,7 @@ public enum YbErrorEnum implements BaseEnum {
 	WAIT_DEV(5730605, "系统/接口维护，请稍后再试"),
 	API_NAME_NOT_EXIST(5730606, "invalid apiname，接口不存在"),
 	IMEI_ERROR(5730611, "序列号错误，正则不通过"),
-	XIAOMI_YB(5730612, "序列号无效，输入错误或查不到"),
+	IMEI_NOT_EXIST(5730612, "序列号无效，输入错误或查不到"),
 	;
 
 	Integer code;
