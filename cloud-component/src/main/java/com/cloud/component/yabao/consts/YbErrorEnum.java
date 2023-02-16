@@ -28,6 +28,14 @@ public enum YbErrorEnum implements BaseEnum {
 		this.msg = msg;
 	}
 
+	public static Boolean needTryYabaoCheck(Integer code) {
+		return KEY_ERROR.sameCode(code)
+				|| BALANCE_NO.sameCode(code)
+				|| IP_FORBIDDEN.sameCode(code)
+				|| WAIT_DEV.sameCode(code)
+				|| API_NAME_NOT_EXIST.sameCode(code);
+	}
+
 	@Override
 	public Integer getCode() {
 		return code;
