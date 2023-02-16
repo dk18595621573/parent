@@ -68,4 +68,40 @@ public class YaBaoSerialClient {
         }
         return verifySerial;
     }
+
+    public static void main(String[] args) {
+        YabaoVerifySerial yy = tt("华为", "863536060023586");
+        System.out.println(JSON.toJSONString(yy));
+    }
+
+    public static YabaoVerifySerial tt(String brand, String sn) {
+        log.info("YaBaoSerialClient query start ...");
+        YabaoVerifySerial verifySerial = new YabaoVerifySerial();
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("key", "97b7c0af067848e2c95314e01d88161b");
+        queryMap.put("sn", sn);
+        queryMap.put("apiname", EnumUtil.containsCode(InterfaceEnum.class, EnumUtil.containsMsg(BrandEnum.class, brand)));
+        log.info("YaBaoSerialClient query start, {}", JSON.toJSONString(queryMap));
+        String url = "https://www.phpdream.net/api/api.php";
+        try {
+            log.info("YaBaoSerialClient手机序列号查询:[{}]:{}", url, queryMap);
+            String response = HttpUtil.get(url, queryMap, SerialConstant.TIMEOUT);
+            log.info("YaBaoSerialClient手机序列号查询结果[{}]:{}", url, response);
+            JSONObject resultJson = JSONUtil.parseObj(response);
+            if (Constants.SUCCESS_I.equals(resultJson.get("code"))) {
+                verifySerial = JSONUtil.toBean(resultJson.getJSONObject("data"), YabaoVerifySerial.class);
+                verifySerial.setCode(Constants.SUCCESS_I);
+            } else {
+                String message = resultJson.getStr("message");
+                log.info("手机序列号查询失败：{}", message);
+                verifySerial.setMessage(message);
+                verifySerial.setCode(Integer.parseInt(resultJson.get("code") + ""));
+            }
+        } catch (Exception e) {
+            log.error("手机序列号查询失败！接口连接异常", e);
+            verifySerial.setCode(-1);
+            verifySerial.setMessage("接口连接异常");
+        }
+        return verifySerial;
+    }
 }

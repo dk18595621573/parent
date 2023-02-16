@@ -71,7 +71,7 @@ public class YabaoVerifySerial {
 
     private String isRepair;     //是否维修，枚举值（空代表不是，1代表是）（华为荣耀）
 
-    private String formatRecords;     //{"激活日期": "已于 2020/6/11 激活","出厂日期": "2020/3/26","电子保卡日期": "2020/6/11"}（华为荣耀）
+    private String format_records;     //{"激活日期": "已于 2020/6/11 激活","出厂日期": "2020/3/26","电子保卡日期": "2020/6/11"}（华为荣耀）
 
     private String activatedStatus;     //激活状态，枚举值（已激活、未激活）（华为荣耀）
 
