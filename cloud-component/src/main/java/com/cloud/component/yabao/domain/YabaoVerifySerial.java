@@ -125,6 +125,10 @@ public class YabaoVerifySerial {
 
     private String activateDate;     //激活日期（小米）
 
+    private Integer code;  // code返回码
+
+    private String message; // 返回描述
+
     private Long createBy;     //创建人id
 
     private String createName;     //创建人名称

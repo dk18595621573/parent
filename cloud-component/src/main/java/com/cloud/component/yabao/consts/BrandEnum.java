@@ -3,25 +3,25 @@ package com.cloud.component.yabao.consts;
 import com.cloud.common.enums.BaseEnum;
 
 /**
- * 接口
+ * 品牌
  *
  * @author zhushanshuo
  * @date 2023.02.15 13:01
  */
-public enum InterfaceEnum implements BaseEnum {
+public enum BrandEnum implements BaseEnum {
 
-	HUAWEI_YB(10, "huawei_yb"),
-	HONOR_YB(20, "honor_yb"),
-	APPLE_WARRANTY_YB(30, "apple_warranty_yb"),
-	SUMSUNG_YB(40, "sumsung_yb"),
-	XIAOMI_YB(50, "xiaomi_yb"),
+	HUAWEI_YB(10, "华为"),
+	HONOR_YB(20, "荣耀"),
+	APPLE_WARRANTY_YB(30, "苹果"),
+	SUMSUNG_YB(40, "三星"),
+	XIAOMI_YB(50, "小米"),
 	;
 
 	Integer code;
 
 	String msg;
 
-	InterfaceEnum(Integer code, String msg) {
+	BrandEnum(Integer code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}
