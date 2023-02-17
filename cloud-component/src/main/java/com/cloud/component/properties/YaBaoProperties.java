@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = YaBaoProperties.YA_BAO_PREFIX)
 public class YaBaoProperties {
-    public static final String YA_BAO_PREFIX = Constants.CONFIG_PREFIX + "yaBao";
+    public static final String YA_BAO_PREFIX = Constants.CONFIG_PREFIX + "yabao";
     /**
      *  请求路径
      */
