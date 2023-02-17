@@ -10,11 +10,11 @@ import com.cloud.common.enums.BaseEnum;
  */
 public enum BrandEnum implements BaseEnum {
 
-	HUAWEI_YB(10, "华为"),
-	HONOR_YB(20, "荣耀"),
-	APPLE_WARRANTY_YB(30, "苹果"),
-	SUMSUNG_YB(40, "三星"),
-	XIAOMI_YB(50, "小米"),
+	HUAWEI_YB(InterfaceEnum.HUAWEI_YB.getCode(), "华为"),
+	HONOR_YB(InterfaceEnum.HONOR_YB.getCode(), "荣耀"),
+	APPLE_WARRANTY_YB(InterfaceEnum.APPLE_WARRANTY_YB.getCode(), "苹果"),
+	SUMSUNG_YB(InterfaceEnum.SUMSUNG_YB.getCode(), "三星"),
+	XIAOMI_YB(InterfaceEnum.XIAOMI_YB.getCode(), "小米"),
 	;
 
 	Integer code;
