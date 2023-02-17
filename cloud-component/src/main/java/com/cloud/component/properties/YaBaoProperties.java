@@ -14,10 +14,10 @@ public class YaBaoProperties {
     /**
      *  请求路径
      */
-    private String url = "https://www.phpdream.net/api/api.php";
+    private String url;
 
     /**
      *  密钥
      */
-    private String key = "97b7c0af067848e2c95314e01d88161b";
+    private String key;
 }

@@ -2,6 +2,7 @@ package com.cloud.component.yabao.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  * @create: Thu Feb 16 11:18:17 CST 2023
  **/
 @Data
-public class YabaoVerifySerial {
+public class YabaoVerifySerial implements Serializable {
     private Long id;     //主键id
 
     private Long orderId;     //订单id
