@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Import;
  * @author zenghao
  * @date 2022/7/19
  */
-@Import(value = {FadadaConfig.class, ChinaPayConfig.class, ExpressConfig.class, SerialConfig.class, CMBConfig.class, WxworkBotConfig.class, HSConfig.class, HolidayConfig.class})
+@Import(value = {FadadaConfig.class, ChinaPayConfig.class, ExpressConfig.class,
+    SerialConfig.class, CMBConfig.class, WxworkBotConfig.class,
+    HSConfig.class, HolidayConfig.class, YaBaoConfig.class})
 public class ComponentAutoConfiguration {
 }
