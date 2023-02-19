@@ -12,6 +12,9 @@ import java.util.Date;
  **/
 @Data
 public class YabaoVerifySerial implements Serializable {
+
+    private String balance;
+
     private Long id;     //主键id
 
     private Long orderId;     //订单id

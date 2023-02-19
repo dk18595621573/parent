@@ -10,6 +10,8 @@ import com.cloud.common.enums.BaseEnum;
  */
 public enum InterfaceEnum implements BaseEnum {
 
+	BALANCE(1, "balance"),
+
 	HUAWEI_YB(10, "huawei_yb"),
 	HONOR_YB(20, "honor_yb"),
 	APPLE_WARRANTY_YB(30, "apple_warranty_yb"),

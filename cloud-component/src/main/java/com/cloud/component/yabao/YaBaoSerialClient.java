@@ -70,7 +70,11 @@ public class YaBaoSerialClient {
     }
 
     public static void main(String[] args) {
-        YabaoVerifySerial yy = tt("华为", "863536060023586");
+        YabaoVerifySerial yy = tt("余额", "0000000000000038");
+        System.out.println(JSON.toJSONString(yy));
+        yy = tt("华为", "863536060023586");
+        System.out.println(JSON.toJSONString(yy));
+        yy = tt("余额", "0000000000000038");
         System.out.println(JSON.toJSONString(yy));
     }
 

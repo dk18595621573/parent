@@ -10,6 +10,8 @@ import com.cloud.common.enums.BaseEnum;
  */
 public enum BrandEnum implements BaseEnum {
 
+	BALANCE(InterfaceEnum.BALANCE.getCode(), "余额"),
+
 	HUAWEI_YB(InterfaceEnum.HUAWEI_YB.getCode(), "华为"),
 	HONOR_YB(InterfaceEnum.HONOR_YB.getCode(), "荣耀"),
 	APPLE_WARRANTY_YB(InterfaceEnum.APPLE_WARRANTY_YB.getCode(), "苹果"),
