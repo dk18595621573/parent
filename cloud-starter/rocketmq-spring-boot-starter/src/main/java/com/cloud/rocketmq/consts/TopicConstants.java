@@ -55,6 +55,6 @@ public interface TopicConstants {
     /**
      * 小程序消息异常消息推送
      */
-    String NEWS_ERROR_ORDER = "TOPIC-NEWS-ERROR-ORDER";
+    String NEWS_ORDER = "TOPIC-NEWS-ORDER";
 
 }
