@@ -6,10 +6,9 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.cloud.common.constant.Constants;
 import com.cloud.common.enums.EnumUtil;
-import com.cloud.common.exception.ServiceException;
+import com.cloud.common.utils.StringUtils;
 import com.cloud.component.properties.YaBaoProperties;
 import com.cloud.component.serial.consts.SerialConstant;
-import com.cloud.component.serial.domain.Serial;
 import com.cloud.component.yabao.consts.BrandEnum;
 import com.cloud.component.yabao.consts.InterfaceEnum;
 import com.cloud.component.yabao.domain.YabaoVerifySerial;
@@ -59,6 +58,9 @@ public class YaBaoSerialClient {
                 log.info("手机序列号查询失败：{}", message);
                 verifySerial.setMessage(message);
                 verifySerial.setCode(Integer.parseInt(resultJson.get("code") + ""));
+                if (StringUtils.isNotEmpty(resultJson.get("errCode") + "")) {
+                    verifySerial.setErrCode(Integer.parseInt(resultJson.get("errCode") + ""));
+                }
                 return verifySerial;
             }
         } catch (Exception e) {
