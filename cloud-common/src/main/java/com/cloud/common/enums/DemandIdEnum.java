@@ -7,7 +7,7 @@ package com.cloud.common.enums;
  */
 public enum DemandIdEnum implements BaseEnum {
 
-	N_L(3, "能良（需求方）"),
+	N_L(3, "上海能良电子科技有限公司"),
 	;
 
 	Integer code;

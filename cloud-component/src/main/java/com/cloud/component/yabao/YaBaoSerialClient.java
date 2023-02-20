@@ -29,6 +29,10 @@ public class YaBaoSerialClient {
         this.yaBaoProperties = yaBaoProperties;
     }
 
+    public YabaoVerifySerial queryBalance() {
+        return privateQuery(BrandEnum.BALANCE.getMsg(), "");
+    }
+
     /**
      * 查询手机序列号
      *
@@ -37,6 +41,10 @@ public class YaBaoSerialClient {
      * @return
      */
     public YabaoVerifySerial query(String brand, String sn) {
+        return privateQuery(brand, sn);
+    }
+
+    private YabaoVerifySerial privateQuery(String brand, String sn) {
         log.info("YaBaoSerialClient query start ...");
         YabaoVerifySerial verifySerial = new YabaoVerifySerial();
         Map<String, Object> queryMap = new HashMap<>();

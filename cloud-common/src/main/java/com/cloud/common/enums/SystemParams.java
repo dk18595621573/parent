@@ -66,7 +66,14 @@ public enum SystemParams {
      * 0:当天  1:明天  2:后天
      */
     DELIVERY_TIME_AFTER("delivery.time.after", "2"),
-
+    /**
+     * 供应商列表tag统计缓存时间，缓存时间单位分钟,0表示不缓存
+     */
+    SUPPLIER_TAG_COUNT_CACHE("supplier.tag.count.cache","0"),
+    /**
+     * 需求方列表tag统计缓存时间，缓存时间单位分钟,0表示不缓存
+     */
+    DEMAND_TAG_COUNT_CACHE("demand.tag.count.cache","0");
     ;
     
     private final String code;
