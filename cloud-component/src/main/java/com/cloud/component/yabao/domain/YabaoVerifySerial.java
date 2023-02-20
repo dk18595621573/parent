@@ -133,6 +133,8 @@ public class YabaoVerifySerial implements Serializable {
 
     private String message; // 返回描述
 
+    private Integer errCode; // 错误码
+
     private Long createBy;     //创建人id
 
     private String createName;     //创建人名称
