@@ -56,7 +56,7 @@ public class NewsMessage extends BaseEvent implements Serializable {
     public String keys() {
         String keys = super.keys();
         if (StringUtils.isBlank(keys)) {
-            return StrUtil.format("{}-{}-{}", this.orderId, this.companyId, this.userId);
+            return StrUtil.format("{}-{}-{}-{}", this.orderId, this.companyId, this.userId, status);
         }
         return keys;
     }
