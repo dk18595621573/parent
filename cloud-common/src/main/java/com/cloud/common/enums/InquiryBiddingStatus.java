@@ -3,13 +3,13 @@ package com.cloud.common.enums;
 import java.util.Objects;
 
 /**
- * 供应商询价采购出价状态 竞价中、已成交、未达成、已撤销
+ * 供应商询价采购出价状态 竞价中、已成交、未达成、已撤销，已毁单
  */
 public enum InquiryBiddingStatus implements BaseEnum {
     BIDDING(1, "竞价中"),
     COMPLETE(2, "已成交"),
     NOT_COMPLETE(3, "未达成"),
-    REVOKE_INQUIRY(4,"已撤销"),
+    REVOKE_BIDDING(4,"已撤销"),
     REVOKE_DELIVERED(5,"已毁单")
     ;
 
