@@ -100,6 +100,7 @@ public enum OrderSubStatus implements BaseEnum {
     LOGISTICS_NO_FLOW(123, "物流无流转信息"),
     LOGISTICS_NO_SIGN(124, "签收异常"),
     LOGISTICS_KNOTTY(125, "疑难"),
+    NO_SIGN_DAYS(126, "7天未签收异常"),
 
     /** 售后 */
     AFTERMARKET_WAIT_INSPECTION_GOODS(100, "售后-待验货(待寄回)"),
