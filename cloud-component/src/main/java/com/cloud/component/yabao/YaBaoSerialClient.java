@@ -72,7 +72,7 @@ public class YaBaoSerialClient {
                 verifySerial.setCode(code);
 
                 Integer errCode = resultJson.getInt("errCode");
-                if (Objects.isNull(errCode)) {
+                if (!Objects.isNull(errCode)) {
                     verifySerial.setErrCode(errCode);
                 }
                 return verifySerial;
