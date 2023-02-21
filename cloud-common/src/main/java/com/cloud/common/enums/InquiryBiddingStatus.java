@@ -9,7 +9,8 @@ public enum InquiryBiddingStatus implements BaseEnum {
     BIDDING(1, "竞价中"),
     COMPLETE(2, "已成交"),
     NOT_COMPLETE(3, "未达成"),
-    REVOKE(4, "已撤销")
+    REVOKE_INQUIRY(4,"已撤销"),
+    REVOKE_DELIVERED(5,"已毁单")
     ;
 
     private final Integer code;
