@@ -100,6 +100,7 @@ public enum OrderSubStatus implements BaseEnum {
     LOGISTICS_NO_FLOW(123, "物流无流转信息"),
     LOGISTICS_NO_SIGN(124, "签收异常"),
     LOGISTICS_KNOTTY(125, "疑难"),
+    NO_SIGN_DAYS(126, "7天未签收异常"),
 
     /** 售后 */
     AFTERMARKET_WAIT_INSPECTION_GOODS(100, "售后-待验货(待寄回)"),
@@ -110,6 +111,7 @@ public enum OrderSubStatus implements BaseEnum {
     REVOKE_PUBLISHED(132, "待发布撤销"),
     REVOKE_ADDRESS(133, "待补全地址撤销"),
     REVOKE_DELIVERED(134, "待发货撤销"),
+    REVOKE_INQUIRY(135, "群接龙撤销出价"),
 
     /** 未追回订单 */
     NOT_RECOVERED_WAIT_INSPECTION_GOODS(140, "未追回订单-待验货(待寄回)"),
