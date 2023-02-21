@@ -1,5 +1,6 @@
 package com.cloud.component.yabao;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -66,7 +67,7 @@ public class YaBaoSerialClient {
                 log.info("手机序列号查询失败：{}", message);
                 verifySerial.setMessage(message);
                 verifySerial.setCode(Integer.parseInt(resultJson.get("code") + ""));
-                if (StringUtils.isNotEmpty(resultJson.get("errCode") + "")) {
+                if (ObjectUtil.isNotEmpty(resultJson.get("errCode")) && StringUtils.isNotEmpty(resultJson.get("errCode") + "")) {
                     verifySerial.setErrCode(Integer.parseInt(resultJson.get("errCode") + ""));
                 }
                 return verifySerial;
@@ -80,11 +81,11 @@ public class YaBaoSerialClient {
     }
 
     public static void main(String[] args) {
-        YabaoVerifySerial yy = tt("余额", "0000000000000038");
+        YabaoVerifySerial yy = tt("余额", "862691061607126");
         System.out.println(JSON.toJSONString(yy));
-        yy = tt("华为", "863536060023586");
+        yy = tt("华为", "862691061607126");
         System.out.println(JSON.toJSONString(yy));
-        yy = tt("余额", "0000000000000038");
+        yy = tt("余额", "862691061607126");
         System.out.println(JSON.toJSONString(yy));
     }
 
