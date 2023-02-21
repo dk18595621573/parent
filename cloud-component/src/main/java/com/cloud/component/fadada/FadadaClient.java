@@ -22,6 +22,7 @@ import com.fadada.sdk.utils.crypt.FddEncryptTool;
 import com.fadada.sdk.verify.client.FddVerifyClient;
 import com.fadada.sdk.verify.model.req.ApplyCertParams;
 import com.fadada.sdk.verify.model.req.CompanyVerifyUrlParams;
+import com.fadada.sdk.verify.model.req.FindCompanyCertParams;
 import com.fadada.sdk.verify.model.req.PersonVerifyUrlParams;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -397,6 +398,7 @@ public class FadadaClient {
         log.info("法大大返回参数，自定义短信：{}", result);
         return JsonUtil.parse(result, FadadaDataResponse.class);
     }
+
     public FadadaDataResponse smsShortUrl(PushShortUrlSmsParams pushShortUrlParams) {
         PushShortUrlSmsParams params = new PushShortUrlSmsParams();
         //原始链接，不超3000位
@@ -469,9 +471,9 @@ public class FadadaClient {
      * 拒签
      *
      * @param transactionId 交易号
-     * @param contractId   合同id
-     * @param customerId   客户编号
-     * @param rejectReason   拒签理由
+     * @param contractId    合同id
+     * @param customerId    客户编号
+     * @param rejectReason  拒签理由
      * @return 加密后的摘要
      */
     public FadadaDataResponse refusal(String transactionId, String contractId, String customerId, String rejectReason) {
@@ -498,6 +500,20 @@ public class FadadaClient {
         return result;
     }
 
+    /**
+     * 17 查询企业实名认证信息
+     *
+     * @param transactionNo 认证交易号
+     * @return 企业实名信息
+     */
+    public FadadaCompanyCertInfoResponse companyCertInfo(String transactionNo) {
+        FindCompanyCertParams params = new FindCompanyCertParams();
+        params.setVerifiedSerialNo(transactionNo);
+        String result = fddVerifyClient.invokeFindCompanyCert(params);
+        log.info("法大大返回参数，查询企业实名认证信息【{}】]", result);
+        return JsonUtil.parse(result, FadadaCompanyCertInfoResponse.class);
+    }
+
     public String personThreeEleAuth(PersonThreeEleAuthParams params) {
         try {
             return fadadaAuthClient.invokePersonThreeEleAuth(params);
@@ -521,7 +537,6 @@ public class FadadaClient {
             throw new RuntimeException(var3);
         }
     }
-
 
 
 }
