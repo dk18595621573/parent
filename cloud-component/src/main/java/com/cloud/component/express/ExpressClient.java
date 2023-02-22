@@ -79,8 +79,9 @@ public class ExpressClient {
         requestBody.put("sign", sign(param + expressProperties.getKey() + expressProperties.getCustomer()));
         requestBody.put("param", param);
 
-        ExpressResult expressResult = null;
+        ExpressResult expressResult;
         try {
+            log.info("快递100调用入参--{}", JSONUtil.toJsonStr(requestBody));
             String result = HttpClientUtil.doHttpPost(expressProperties.getUrl(), requestBody);
             log.info("调用快递API返回单号[{}]的快递信息数据：{}", expressNo, result);
             if (StrUtil.isBlank(result)) {
