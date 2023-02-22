@@ -1,5 +1,6 @@
 package com.cloud.component.bot.request;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.cloud.component.bot.message.MessagePayload;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -16,6 +17,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class SentResult implements Serializable {
+
+    private static final Integer[] DELETED_STATUS = {153, 157,158,159};
 
     @JsonProperty("requestId")
     private String requestId;
@@ -38,8 +41,20 @@ public class SentResult implements Serializable {
     @JsonProperty("externalRequestId")
     private String externalRequestId;
 
+    /**
+     * 发送消息是否成功
+     * @return 发送成功
+     */
     public boolean success() {
         return 0 == this.getErrorCode();
+    }
+
+    /**
+     * 是否已被删除
+     * @return 拉黑、删除等情况均视为删除
+     */
+    public boolean deleted() {
+        return ArrayUtil.contains(DELETED_STATUS, this.getErrorCode());
     }
 
 //  errorCode
