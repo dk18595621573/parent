@@ -19,9 +19,9 @@ public enum BrandEnum implements BaseEnum {
 	XIAOMI_YB(InterfaceEnum.XIAOMI_YB.getCode(), "小米"),
 	;
 
-	Integer code;
+	private final Integer code;
 
-	String msg;
+	private final String msg;
 
 	BrandEnum(Integer code, String msg) {
 		this.code = code;

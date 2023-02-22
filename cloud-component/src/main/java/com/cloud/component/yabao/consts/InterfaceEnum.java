@@ -19,9 +19,9 @@ public enum InterfaceEnum implements BaseEnum {
 	XIAOMI_YB(50, "xiaomi_yb"),
 	;
 
-	Integer code;
+	private final Integer code;
 
-	String msg;
+	private final String msg;
 
 	InterfaceEnum(Integer code, String msg) {
 		this.code = code;
