@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class FadadaCompanyCertCompanyResponse {
 
+    public static final String VERIFY_TYPE_PAY = "0";
+
     /**
      * 关联法人/代理人交易号
      */
