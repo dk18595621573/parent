@@ -12,6 +12,9 @@ import java.util.Objects;
 @UtilityClass
 public class LogisticsStatus {
 
+    /** 未查询到 */
+    public static final String STATE_NO = "-1";
+
     /**
      * 签收子状态
      */
@@ -135,6 +138,16 @@ public class LogisticsStatus {
     public final static String[] KNOTTY_ARRAY = {SubState.KNOTTY.code, SubState.KNOTTY_TIMEOUT_NO_SIGN.code, SubState.KNOTTY_TIMEOUT_NO_UPDATE.code, SubState.KNOTTY_REJECTION.code, SubState.KNOTTY_DELIVERY_ERROR.code,
                                                     SubState.KNOTTY_TIMEOUT_NOT_FOUND.code, SubState.KNOTTY_CAN_NOT_CONTACT.code, SubState.KNOTTY_EXCEED_SCOPE.code, SubState.KNOTTY_RETENTION.code,
                                                     SubState.KNOTTY_DAMAGED.code, SubState.KNOTTY_CHARGEBACK.code};
+
+
+    /**
+     * 判断是否未查询到数据
+     * @param state 状态
+     * @return true：未查询到 false：有数据
+     */
+    public static boolean query(String state) {
+        return Objects.equals(LogisticsStatus.STATE_NO, state);
+    }
 
     /**
      * 判断是否签收
