@@ -20,11 +20,11 @@ public enum PaymentSummaryStatusEnum implements BaseEnum {
 
     @Override
     public Integer getCode() {
-        return null;
+        return code;
     }
 
     @Override
     public String getMsg() {
-        return null;
+        return msg;
     }
 }
