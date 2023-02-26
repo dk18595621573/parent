@@ -50,7 +50,6 @@ public class ExpressClient {
         this.expressProperties = expressProperties;
     }
 
-
     /**
      * 快递100 查询快递信息接口
      *
@@ -113,17 +112,6 @@ public class ExpressClient {
      */
     public static String sign(String msg) {
         return SecureUtil.md5(msg).toUpperCase();
-    }
-
-    public static void main(String[] args) {
-        ExpressProperties properties = new ExpressProperties();
-        properties.setUrl("https://poll.kuaidi100.com/poll/query.do");
-        properties.setKey("wBfjOuYf6894");
-        properties.setCustomer("C7AF17641A07E84D1C93C43645515C69");
-
-        ExpressClient expressClient = new ExpressClient(properties);
-        ExpressResult express2 = expressClient.findExpress("shunfeng", "SF1358981020011", "15325014087");
-        System.out.println(express2);
     }
 
     /**

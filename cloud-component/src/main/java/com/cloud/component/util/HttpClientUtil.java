@@ -1,7 +1,6 @@
 package com.cloud.component.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -15,6 +14,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.config.SocketConfig;
 import org.apache.http.conn.ConnectionKeepAliveStrategy;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
@@ -237,35 +237,23 @@ public class HttpClientUtil {
         return null;
     }
 
-    /**
-     * httpclient post
-     *
-     * @param uri       请求地址
-     * @param reqParams json串
-     * @param header 请求头
-     * @return
-     */
-    public static String doHttpPost(String uri, String reqParams, String header) {
-        HttpPost httpPost = null;
+    public static String doPostJson(String url, String json) {
+        // 创建Httpclient对象
+        CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
+        HttpPost httpPost = null;
+        String resultString = "";
         try {
-            httpPost = new HttpPost(uri);
-            httpPost.addHeader("Content-Type", header);
-            if (StringUtils.isNotBlank(reqParams)) {
-                StringEntity postingString = new StringEntity(reqParams, "utf-8");
-                httpPost.setEntity(postingString);
-            }
+            // 创建Http Post请求
+            httpPost = new HttpPost(url);
+            // 创建请求内容
+            StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+            httpPost.setEntity(entity);
+            // 执行http请求
             response = httpClient.execute(httpPost);
-            int statusCode = response.getStatusLine().getStatusCode();
-            if (HttpStatus.SC_OK == statusCode) {
-                HttpEntity entity = response.getEntity();
-                if (null != entity) {
-                    String resStr = EntityUtils.toString(entity, "utf-8");
-                    return resStr;
-                }
-            }
+            resultString = EntityUtils.toString(response.getEntity(), "utf-8");
         } catch (Exception e) {
-            log.error("CloseableHttpClient-post-请求异常", e);
+            e.printStackTrace();
         } finally {
             try {
                 if (null != response)
@@ -280,6 +268,6 @@ public class HttpClientUtil {
                 log.error("CloseableHttpClient-post-请求异常,释放连接异常", e);
             }
         }
-        return null;
+        return resultString;
     }
 }
