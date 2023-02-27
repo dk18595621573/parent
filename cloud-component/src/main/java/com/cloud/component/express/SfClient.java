@@ -102,7 +102,7 @@ public class SfClient {
                 throw new ServiceException("顺丰拦截失败，失败原因:" + resultJson.get("message"));
             }
         } catch (Exception e) {
-            log.info("顺丰下单查询出现异常--{}", e.getMessage());
+            log.info("顺丰拦截出现异常--{}", e.getMessage());
             throw new RuntimeException(e);
         }
     }
