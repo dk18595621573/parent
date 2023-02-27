@@ -21,6 +21,9 @@ public class ExpressResult implements Serializable {
      */
     private String nu;
 
+    /** 快递公司名称 */
+    private String company;
+
     /**
      * 快递公司编码,一律用小写字母
      */
