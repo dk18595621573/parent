@@ -68,7 +68,7 @@ public class InterceptParams implements Serializable {
      * 新目的地
      */
     @Data
-    public static class NewDestAddress{
+    public static class NewDestAddress implements Serializable{
         /** 省，如广东省，必输 */
         private String province;
 
