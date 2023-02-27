@@ -59,11 +59,12 @@ public class SfClient {
             log.info("顺丰下单返回参数--{}", httpPost);
             if (!JSONUtil.isJson(httpPost)) {
                 log.info("顺丰下单查询失败--{}", httpPost);
-                return new SearchResult().setOrderNumber(orderNumber).setAbnormalReason(httpPost);
+                return new SearchResult().setOrderNumber(orderNumber).setMailNumber(mailNumber).setAbnormalReason(httpPost);
             }
             JSONObject parseObj = JSONUtil.parseObj(httpPost);
             if (!HTTP_STATUS.equals(parseObj.get(HTTP_CODE_NAME).toString())) {
-                return null;
+                return new SearchResult().setOrderNumber(orderNumber).setMailNumber(mailNumber)
+                        .setAbnormalReason(parseObj.get("message").toString());
             }
             searchResult = JSONUtil.toBean(parseObj.get("data").toString(), SearchResult.class);
         } catch (Exception e) {
