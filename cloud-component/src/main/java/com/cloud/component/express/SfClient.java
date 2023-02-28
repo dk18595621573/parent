@@ -7,6 +7,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.component.express.domain.InterceptParams;
+import com.cloud.component.express.domain.InterceptResult;
 import com.cloud.component.express.domain.SearchResult;
 import com.cloud.component.express.util.CommonUtils;
 import com.cloud.component.properties.SfProperties;
@@ -78,7 +79,7 @@ public class SfClient {
      * 运单通缉拦截接口(通用)
      * @param params 拦截入参
      */
-    public void intercept(InterceptParams params) {
+    public InterceptResult intercept(InterceptParams params) {
         String requestId = IdUtil.randomUUID();
         String timestamp = String.valueOf(DateUtil.current(false));
         try {
@@ -99,12 +100,13 @@ public class SfClient {
             }
             JSONObject resultJson = JSONUtil.parseObj(httpPost);
             if (!HTTP_STATUS.equals(resultJson.get(HTTP_CODE_NAME).toString())) {
-                throw new ServiceException("顺丰拦截失败，失败原因:" + resultJson.get("message"));
+                return new InterceptResult(resultJson.get("errorCode").toString(), resultJson.get("message").toString());
             }
         } catch (Exception e) {
             log.info("顺丰拦截出现异常--{}", e.getMessage());
             throw new RuntimeException(e);
         }
+        return new InterceptResult(true);
     }
 
 }
