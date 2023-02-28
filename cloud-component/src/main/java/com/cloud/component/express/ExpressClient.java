@@ -162,6 +162,7 @@ public class ExpressClient {
         IBaseClient subscribe = new Subscribe();
         try {
             request.setParam(changeToJson(param));
+            log.info("快递100调用发送参数--{}", JSONUtil.toJsonStr(param));
             HttpResult httpResult = subscribe.execute(request);
             if (HttpStatus.HTTP_OK == httpResult.getStatus()) {
                 String bodyData = httpResult.getBody();
