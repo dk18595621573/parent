@@ -13,6 +13,9 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class SearchResult implements Serializable {
 
+    /** 已下单状态 */
+    public static final int PLACED_AN_ORDER = 1;
+
     /** 订单号 */
     private String orderNumber;
 
