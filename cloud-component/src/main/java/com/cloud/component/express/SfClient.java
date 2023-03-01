@@ -42,7 +42,7 @@ public class SfClient {
      * @return 数据返回
      */
     public SearchResult orderSearch(String orderNumber, String mailNumber) {
-        String requestId = IdUtil.randomUUID();
+        String requestId = IdUtil.simpleUUID();
         String timestamp = String.valueOf(DateUtil.current(false));
         SearchResult searchResult;
         try {
@@ -80,7 +80,7 @@ public class SfClient {
      * @param params 拦截入参
      */
     public InterceptResult intercept(InterceptParams params) {
-        String requestId = IdUtil.randomUUID();
+        String requestId = IdUtil.simpleUUID();
         String timestamp = String.valueOf(DateUtil.current(false));
         try {
             String sign = CommonUtils.generateSign(sfProperties.getAppId(), requestId, timestamp, sfProperties.getAppSecret());
