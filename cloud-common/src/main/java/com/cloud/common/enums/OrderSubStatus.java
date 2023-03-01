@@ -93,6 +93,8 @@ public enum OrderSubStatus implements BaseEnum {
     PDD_ALREADY_SOLD(91, "拼多多已销售"),
     ACTIVATE(92, "已激活"),
     IMEI_ERROR(93, "串码错误"),
+    IMEI_INPUT_ERROR(94,"序列号错误"),
+    IMEI_NOT_EXIST(95,"序列号不存在"),
 
     /** 物流异常 */
     LOGISTICS_DESTINATION_ABNORMAL(121, "物流目的地异常"),
