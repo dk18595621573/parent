@@ -20,6 +20,7 @@
         <module>rocketmq-spring-boot-starter</module>
         <module>seata-spring-boot-starter</module>
         <module>idempotent-spring-boot-starter</module>
+        <module>swagger-spring-boot-starter</module>
     </modules>
 
     <properties>
