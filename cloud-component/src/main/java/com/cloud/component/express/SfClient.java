@@ -109,4 +109,33 @@ public class SfClient {
         return new InterceptResult(true);
     }
 
+    public static void main(String[] args) {
+        SfProperties properties = new SfProperties();
+        properties.setUrl("https://united-store-uat-ms.sf-express.com/zt/hd-united-store-openserver/");
+        properties.setAppId("175894");
+        properties.setAppSecret("cf46a21b7cbaa497");
+        properties.setSenderOrgCode("SHYMSW");
+        properties.setAppName("上海雨萌电子商务");
+        InterceptParams params = new InterceptParams();
+        params.setWayBillNO("SF1020128247047");
+        params.setShipperCode("shunfeng");
+        params.setServiceCode("2");
+        params.setRole("1");
+        params.setPayMode("4");
+        params.setMonthlyCardNo("9999999999");
+        InterceptParams.NewDestAddress newDestAddress = new InterceptParams.NewDestAddress();
+        //如商品已发出 则拦截至能良售后仓
+        newDestAddress.setProvince("浙江省");
+        newDestAddress.setCity("金华市");
+        newDestAddress.setCounty("金东区");
+        newDestAddress.setAddress("金义快速路1号 浙江今飞摩轮1号库 不要放丰巢");
+        newDestAddress.setContact("郭学涛");
+        newDestAddress.setPhone("19121499692");
+        params.setNewDestAddress(newDestAddress);
+
+        SfClient sfClient = new SfClient(properties);
+//        sfClient.intercept(params);
+        sfClient.orderSearch("", "SF1020128247047");
+    }
+
 }
