@@ -1,5 +1,7 @@
 package com.cloud.common.enums;
 
+import java.util.Objects;
+
 /**
  * 群接龙模式
  */
@@ -12,8 +14,27 @@ public enum OrderMarketingModel {
 
     private final String msg;
 
-    private OrderMarketingModel(Integer code, String msg) {
+    OrderMarketingModel(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public static OrderMarketingModel fromCode(Integer code) {
+        if (Objects.nonNull(code)) {
+            for (OrderMarketingModel status : OrderMarketingModel.values()) {
+                if (status.getCode().equals(code)) {
+                    return status;
+                }
+            }
+        }
+        return null;
     }
 }
