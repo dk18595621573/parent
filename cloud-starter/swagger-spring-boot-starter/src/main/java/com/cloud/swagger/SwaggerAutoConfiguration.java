@@ -54,7 +54,7 @@ public class SwaggerAutoConfiguration {
             // 扫描所有有注解的api，用这种方式更灵活
             .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
             // 扫描指定包中的swagger注解
-            // .apis(RequestHandlerSelectors.basePackage("com.cloud.project.tool.swagger"))
+            //.apis(RequestHandlerSelectors.basePackage("com.cloud"))
             // 扫描所有 .apis(RequestHandlerSelectors.any())
             .paths(PathSelectors.any())
             .build()
@@ -68,7 +68,6 @@ public class SwaggerAutoConfiguration {
      */
     private List<SecurityScheme> securitySchemes() {
         List<SecurityScheme> apiKeyList = new ArrayList<SecurityScheme>();
-        apiKeyList.add(new ApiKey("Authorization", "Authorization", In.HEADER.toValue()));
         if (CollUtil.isNotEmpty(swaggerProperties.getApiKeys())) {
             swaggerProperties.getApiKeys().forEach(o -> {
                 apiKeyList.add(new ApiKey(o.getName(), o.getKeyname(), o.getPassAs()));
