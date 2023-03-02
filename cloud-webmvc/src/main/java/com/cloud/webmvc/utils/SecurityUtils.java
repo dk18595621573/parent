@@ -25,7 +25,7 @@ public class SecurityUtils {
         try {
             return getLoginUser().getUserId();
         } catch (Exception e) {
-            LOGGER.error("获取用户ID异常", e);
+            LOGGER.warn("获取用户ID异常", e);
             throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
     }
@@ -37,7 +37,7 @@ public class SecurityUtils {
         try {
             return getLoginUser().getDeptId();
         } catch (Exception e) {
-            LOGGER.error("获取部门ID异常", e);
+            LOGGER.warn("获取部门ID异常", e);
             throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
     }
@@ -49,7 +49,7 @@ public class SecurityUtils {
         try {
             return getLoginUser().getUsername();
         } catch (Exception e) {
-            LOGGER.error("获取用户名异常", e);
+            LOGGER.warn("获取用户名异常", e);
             throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
     }
@@ -60,7 +60,7 @@ public class SecurityUtils {
     public static RequestUser getLoginUser() {
         RequestUser user = RequestThread.getUser();
         if (Objects.isNull(user)) {
-            LOGGER.error("获取登录用户信息失败");
+            LOGGER.warn("获取登录用户信息失败");
             throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
         }
         return user;
