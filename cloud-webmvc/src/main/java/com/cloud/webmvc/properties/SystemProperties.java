@@ -14,38 +14,36 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class SystemProperties {
 
     public static final String PREFIX = Constants.CONFIG_PREFIX + "system";
-    /**
-     * 项目名称
-     */
-    private String name;
 
     /**
-     * 版本
+     * 模块名
      */
-    private String version;
+    private String module;
 
     /**
-     * swagger文档开关
+     * api项目域名
      */
-    private boolean swaggerEnabled;
-
-    /**
-     * 本项目域名
-     */
-    private String domain;
-
-    /** api项目域名 */
     private String apiDomain;
 
     /**
-     * 醒市无仓web域名
+     * web域名
      */
-    private String warehouseWebDomain;
+    private String webDomain;
 
     /**
-     * 移动端域名
+     * 运营平台域名
      */
-    private String mobileDomain;
+    private String admDomain;
+
+    /**
+     * 获取地址开关
+     */
+    private boolean addressEnabled;
+
+    /**
+     * 验证码类型
+     */
+    private String captchaType;
 
     /**
      * token配置
@@ -61,15 +59,5 @@ public class SystemProperties {
      * xss配置
      */
     private XssProperties xss = new XssProperties();
-
-    /**
-     * 获取地址开关
-     */
-    private boolean addressEnabled;
-
-    /**
-     * 验证码类型
-     */
-    private String captchaType;
 
 }
