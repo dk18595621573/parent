@@ -16,7 +16,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * 腾讯云配置.
@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2023/3/2
  */
 @ConditionalOnClass(name = "com.tencentcloudapi.common.Credential")
+@Import(value = {TencentCloudConfig.OcrAutoConfig.class, TencentCloudConfig.SmsAutoConfig.class})
 public class TencentCloudConfig {
 
     /**
@@ -41,7 +42,6 @@ public class TencentCloudConfig {
     /**
      * OCR自动装配.
      */
-    @Configuration
     @ConditionalOnProperty(prefix = OcrProperties.OCR_PREFIX, name = "enabled", havingValue = "true")
     @EnableConfigurationProperties(value = {OcrProperties.class})
     public static class OcrAutoConfig {
@@ -70,7 +70,6 @@ public class TencentCloudConfig {
     /**
      * SMS短信自动装配.
      */
-    @Configuration
     @ConditionalOnProperty(prefix = SmsProperties.SMS_PREFIX, name = "enabled", havingValue = "true")
     @EnableConfigurationProperties(value = {SmsProperties.class})
     public static class SmsAutoConfig {
