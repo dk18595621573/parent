@@ -2,6 +2,7 @@ package com.cloud.component.bot;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -9,6 +10,7 @@ import cn.hutool.http.Method;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
+import com.cloud.component.bot.config.WxworkBotConfigHolder;
 import com.cloud.component.bot.consts.BotApi;
 import com.cloud.component.bot.consts.BotApiEnums;
 import com.cloud.component.bot.consts.BotConsts;
@@ -59,6 +61,27 @@ public class WxworkBotClient {
 
     private final WxworkBotProperties properties;
 
+    public WxworkBotClient switchoverTo(String name) {
+        if (properties.getConfigs().containsKey(name)) {
+            WxworkBotConfigHolder.set(name);
+            return this;
+        }
+        log.error("企微机器人配置【{}】不存在", name);
+        throw new WxworkBotException("系统配置不存在");
+    }
+
+    /**
+     * 根据机器人id获取机器的类型
+     * @param botId 机器人id
+     * @return botType
+     */
+    public String getBotType(String botId) {
+        checkBotConfig();
+        Optional<String> optional = properties.getConfigs()
+            .entrySet().stream().filter(e -> e.getValue().getUserId().equals(botId)).map(Map.Entry::getKey).findFirst();
+        return optional.orElse(null);
+    }
+
     /**
      * 添加渠道二维码
      * @param user 渠道二维码绑定的用户id
@@ -94,7 +117,7 @@ public class WxworkBotClient {
     public String queryChatId(final String unionId) {
         Map<String, Object> map = new HashMap<>();
         map.put("unionId", unionId);
-        map.put("botUserId", properties.getBotUserId());
+        map.put("botUserId", getBotConfig(WxworkBotConfigHolder.get()).getUserId());
         ChatResponse response = exceute(BotApiEnums.GET_CHATID, map);
         return response.getChatId();
     }
@@ -259,7 +282,7 @@ public class WxworkBotClient {
         boolean isBotRequest = botApi.isBotRequest();
         if (isBotRequest) {
             url = properties.getBotDomain() + botApi.getUrl();
-            requestMap.put("token", properties.getBotToken());
+            requestMap.put("token", getBotConfig(WxworkBotConfigHolder.get()).getToken());
         } else {
             url = properties.getApiDomain() + botApi.getUrl() + "?token=" + properties.getApiToken();
         }
@@ -312,4 +335,25 @@ public class WxworkBotClient {
         return body;
     }
 
+    /**
+     * 获取当前需要使用的机器人配置.
+     * @param configName 配置名称
+     * @return 企微机器人配置
+     */
+    private WxworkBotProperties.BotConfig getBotConfig(String configName) {
+        checkBotConfig();
+        WxworkBotProperties.BotConfig config = properties.getConfigs().get(configName);
+        if (Objects.isNull(config)) {
+            log.error("没有找到【{}】相关企微机器人配置:{}", configName, properties);
+            throw new WxworkBotException("系统配置错误");
+        }
+        return config;
+    }
+
+    private void checkBotConfig() {
+        if (MapUtil.isEmpty(properties.getConfigs())) {
+            log.error("没有找到企微机器人配置:{}", properties);
+            throw new WxworkBotException("系统配置错误");
+        }
+    }
 }

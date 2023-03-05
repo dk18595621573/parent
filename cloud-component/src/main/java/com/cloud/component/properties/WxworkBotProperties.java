@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 企业机器人配置.
@@ -33,20 +34,18 @@ public class WxworkBotProperties {
     private String botDomain;
 
     /**
-     * 机器人接口 token
+     * 机器人配置
      */
-    private String botToken;
-
-    /**
-     * 机器人名称
-     */
-    private String botUserId;
+    private Map<String, BotConfig> configs;
 
     /**
      * 发送消息参数
      */
     private OutMessage message = new OutMessage();
 
+    /**
+     * 小程序消息配置
+     */
     @Data
     public static class OutMessage implements Serializable {
 
@@ -64,6 +63,23 @@ public class WxworkBotProperties {
          * 小程序原始id
          */
         private String ghId;
+    }
+
+    /**
+     * 机器人配置
+     */
+    @Data
+    public static class BotConfig implements Serializable {
+
+        /**
+         * 机器人账号id
+         */
+        private String userId;
+
+        /**
+         * 机器人配置token
+         */
+        private String token;
     }
 
 

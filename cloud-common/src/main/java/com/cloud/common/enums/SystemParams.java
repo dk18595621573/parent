@@ -73,7 +73,11 @@ public enum SystemParams {
     /**
      * 需求方列表tag统计缓存时间，缓存时间单位分钟,0表示不缓存
      */
-    DEMAND_TAG_COUNT_CACHE("demand.tag.count.cache","0");
+    DEMAND_TAG_COUNT_CACHE("demand.tag.count.cache","0"),
+    /**
+     * 一件代发屏蔽指定品牌和品类(0,不屏蔽; 1,屏蔽)
+     */
+    NO_SHOW_BRAND_CATEGORY("no.show.brand.category","0");
     ;
     
     private final String code;
