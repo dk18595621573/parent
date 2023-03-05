@@ -8,9 +8,7 @@ package com.cloud.component.bot.config;
  */
 public class WxworkBotConfigHolder {
 
-  public static final String DEFAULT_CONFIG = "default";
-
-  private static final ThreadLocal<String> THREAD_LOCAL = ThreadLocal.withInitial(() -> DEFAULT_CONFIG);
+  private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<>();
 
   /**
    * 获取当前配置策略.

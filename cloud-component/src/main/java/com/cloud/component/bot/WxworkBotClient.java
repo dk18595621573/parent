@@ -71,6 +71,18 @@ public class WxworkBotClient {
     }
 
     /**
+     * 根据机器人id获取机器的类型
+     * @param botId 机器人id
+     * @return botType
+     */
+    public String getBotType(String botId) {
+        checkBotConfig();
+        Optional<String> optional = properties.getConfigs()
+            .entrySet().stream().filter(e -> e.getValue().getUserId().equals(botId)).map(Map.Entry::getKey).findFirst();
+        return optional.orElse(null);
+    }
+
+    /**
      * 添加渠道二维码
      * @param user 渠道二维码绑定的用户id
      * @param state 渠道二维码参数
@@ -329,16 +341,19 @@ public class WxworkBotClient {
      * @return 企微机器人配置
      */
     private WxworkBotProperties.BotConfig getBotConfig(String configName) {
-        String name = StringUtils.defaultString(configName, WxworkBotConfigHolder.DEFAULT_CONFIG);
+        checkBotConfig();
+        WxworkBotProperties.BotConfig config = properties.getConfigs().get(configName);
+        if (Objects.isNull(config)) {
+            log.error("没有找到【{}】相关企微机器人配置:{}", configName, properties);
+            throw new WxworkBotException("系统配置错误");
+        }
+        return config;
+    }
+
+    private void checkBotConfig() {
         if (MapUtil.isEmpty(properties.getConfigs())) {
             log.error("没有找到企微机器人配置:{}", properties);
             throw new WxworkBotException("系统配置错误");
         }
-        WxworkBotProperties.BotConfig config = properties.getConfigs().get(name);
-        if (Objects.isNull(config)) {
-            log.error("没有找到【{}】相关企微机器人配置:{}", name, properties);
-            throw new WxworkBotException("系统配置错误");
-        }
-        return config;
     }
 }
