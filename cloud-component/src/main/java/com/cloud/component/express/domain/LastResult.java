@@ -69,6 +69,9 @@ public class LastResult {
      */
     private LogisticsRouteInfo routeInfo;
 
+    /** 快递是否订阅 */
+    private Boolean subscribed;
+
     private boolean isLoop;
 
     /**
