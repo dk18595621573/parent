@@ -52,6 +52,9 @@ public class LastResult {
      */
     private String com;
 
+    /** 物流公司编码 */
+    private String comName;
+
     /**
      * 快递明细
      */
@@ -65,6 +68,9 @@ public class LastResult {
      * 出发地，目的地信息
      */
     private LogisticsRouteInfo routeInfo;
+
+    /** 快递是否订阅 */
+    private Boolean subscribed;
 
     private boolean isLoop;
 
