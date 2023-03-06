@@ -46,7 +46,7 @@ public class ExpressResult implements Serializable {
     private Boolean subscribed;
 
     /** 物流跟踪状态 */
-    private String status;
+    private String traceStatus;
 
     /**
      * 是否已签收
