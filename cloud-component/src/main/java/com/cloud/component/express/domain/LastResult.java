@@ -52,6 +52,9 @@ public class LastResult {
      */
     private String com;
 
+    /** 物流公司编码 */
+    private String comName;
+
     /**
      * 快递明细
      */
