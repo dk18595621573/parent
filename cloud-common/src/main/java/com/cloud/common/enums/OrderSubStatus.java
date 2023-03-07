@@ -30,11 +30,13 @@ public enum OrderSubStatus implements BaseEnum {
     REVOKE_EPIDEMIC(29, "供应商疫情原因撤销"),
 
     /** 待抢单 */
-    PENDING_ORDER(30, "待抢单"),
+    PENDING_ORDER(30, "待抢单（默认均在交易市场不显示）"),
     /** 待确认 */
     TO_BE_CONFIRMED(31, "抢单待确认"),
-    WEB_HIDDEN(32, "web隐藏"),
-    WECHAT_APPLET_HIDDEN(33, "小程序web隐藏"),
+    /** 小程序显示 */
+    WEB_HIDDEN(32, "小程序显示"),
+    /** 小程序web显示 */
+    WECHAT_APPLET_HIDDEN(33, "小程序web显示"),
 
     /** 目前需要提交串码 */
     TO_BE_COMPLETE(40, "待完善发货信息"),
