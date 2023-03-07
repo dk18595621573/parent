@@ -17,6 +17,7 @@ public enum MenuEnum {
     PAYER("payer", "C", "付款主体"),
     MANAGEMENT("management", "C", "店铺管理"),
     COMPANY_MANAGEMENT("companyManagement", "C", "供应商管理"),
+    DEMAND_MANAGEMENT("demandManagement", "C", "采购商管理"),
     READONLY("readonly", "R", "只读");
 
 
