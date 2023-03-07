@@ -22,4 +22,20 @@ public class CMBProperties{
      * 前置机访问地址
      */
     private String URL;
+
+    /**
+     * 银行公钥.
+     */
+    private String publicKey;
+
+    /**
+     * 商户私钥.
+     */
+    private String privateKey;
+
+    /**
+     * 对称秘钥.
+     */
+    private String aesKey;
+
 }
