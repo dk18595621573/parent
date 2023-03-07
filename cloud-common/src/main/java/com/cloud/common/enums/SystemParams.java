@@ -77,8 +77,17 @@ public enum SystemParams {
     /**
      * 一件代发屏蔽指定品牌和品类(0,不屏蔽; 1,屏蔽)
      */
-    NO_SHOW_BRAND_CATEGORY("no.show.brand.category","0");
-    ;
+    NO_SHOW_BRAND_CATEGORY("no.show.brand.category","0"),
+    /**
+     * web端交易市场展示的同省同sku的订单数
+     */
+    WEB_SHOW_NUM("web.show.num","2"),
+    /**
+     * 小程序端交易市场展示的同省同sku的订单数
+     */
+    WECHAT_SHOW_NUM("wechat.show.num","5");
+
+
     
     private final String code;
     
