@@ -150,13 +150,23 @@ public class PayEnum {
         private final String explain;
 
         /**
+         * 根据code获取.
+         *
+         * @param code code
+         * @return 结果
+         */
+        public static RtnFlg getByCode(final Integer code) {
+            return Arrays.stream(RtnFlg.values()).filter(i -> i.getCode() == code).findFirst().orElse(null);
+        }
+
+        /**
          * 根据name获取.
          *
          * @param name name
          * @return 结果
          */
-        public static RtnFlg getByName(final Integer name) {
-            return Arrays.stream(RtnFlg.values()).filter(i -> i.getCode() == name).findFirst().orElse(null);
+        public static RtnFlg getByName(final String name) {
+            return Arrays.stream(RtnFlg.values()).filter(i -> i.getName().equals(name)).findFirst().orElse(null);
         }
     }
 
