@@ -12,7 +12,11 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class BatchPayQueryRes extends BaseResponse {
+
+    private static final long serialVersionUID = 5378951055862041107L;
+
     private List<BatchPayQuery> bb1qrybtz1;
+
 
 
     @Data

@@ -44,4 +44,14 @@ public interface CmbConst {
      */
     String RCV_CHK = "1";
 
+    /**
+     * PDF文件后缀名.
+     */
+    String PDF_SUFFIX = ".pdf";
+
+    /**
+     * PNG文件后缀名.
+     */
+    String PNG_SUFFIX = ".png";
+
 }

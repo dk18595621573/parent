@@ -23,37 +23,48 @@ public class PayEnum {
         /**
          * AUT：等待审批.
          */
-        AUT("AUT", "帐务查询"),
+        AUT(1, "AUT", "等待审批"),
 
         /**
          * NTE：终审完毕.
          */
-        NTE("NTE", "终审完毕"),
+        NTE(2, "NTE", "终审完毕"),
 
         /**
-         * BNK：银行处理中.
+         * BNK：银行处理中/可疑.
+         * 表示状态未知，需要人工介入处理
          */
-        BNK("BNK", "银行处理中"),
+        BNK(3, "BNK", "银行处理中"),
 
         /**
          * WRF：银行处理中.
          */
-        WRF("WRF", "银行处理中"),
+        WRF(4, "WRF", "银行处理中"),
 
         /**
          * FIN：完成.
          */
-        FIN("FIN", "完成"),
+        FIN(5, "FIN", "完成"),
 
         /**
          * OPR：数据接收中.
          */
-        OPR("OPR", "数据接收中");
+        OPR(6, "OPR", "数据接收中"),
+
+        /**
+         * APW：银行人工审批.
+         */
+        APW(7, "APW", "银行人工审批");
 
         /**
          * code.
          */
-        private final String code;
+        private final int code;
+
+        /**
+         * name.
+         */
+        private final String name;
 
         /**
          * 说明.
@@ -66,8 +77,18 @@ public class PayEnum {
          * @param code code
          * @return 结果
          */
-        public static ReqSts getByCode(final String code) {
-            return Arrays.stream(ReqSts.values()).filter(i -> i.getCode().equals(code)).findFirst().orElse(null);
+        public static ReqSts getByCode(final Integer code) {
+            return Arrays.stream(ReqSts.values()).filter(i -> i.getCode() == code).findFirst().orElse(null);
+        }
+
+        /**
+         * 根据name获取.
+         *
+         * @param name name
+         * @return 结果
+         */
+        public static ReqSts getByName(final String name) {
+            return Arrays.stream(ReqSts.values()).filter(i -> i.getName().equals(name)).findFirst().orElse(null);
         }
     }
 
@@ -79,44 +100,49 @@ public class PayEnum {
     public enum RtnFlg {
 
         /**
-         * S：成功银行支付成功.
+         * S：成功 银行支付成功.
          */
-        S("S", "成功银行支付成功"),
+        S(1,"S", "成功"),
 
         /**
-         * F：失败银行支付失败.
+         * F：失败 银行支付失败.
          */
-        F("F", "失败银行支付失败"),
+        F(2,"F", "失败"),
 
         /**
-         * B：退票银行支付被退票.
+         * B：退票 银行支付被退票.
          */
-        B("B", "退票银行支付被退票"),
+        B(3,"B", "退票"),
 
         /**
-         * R：否决企业审批否决.
+         * R：否决 企业审批否决.
          */
-        R("R", "否决企业审批否决"),
+        R(4,"R", "否决"),
 
         /**
-         * D：过期企业过期不审批.
+         * D：过期 企业过期不审批.
          */
-        D("D", "过期企业过期不审批"),
+        D(5,"D", "过期"),
 
         /**
-         * C：撤消企业撤销.
+         * C：撤消 企业撤销.
          */
-        C("C", "撤消企业撤销"),
+        C(6,"C", "撤消"),
 
         /**
-         * U：银行挂账.
+         * U：挂账 银行挂账.
          */
-        U("U", "银行挂账");
+        U(7,"U", "挂账");
 
         /**
          * code.
          */
-        private final String code;
+        private final int code;
+
+        /**
+         * name.
+         */
+        private final String name;
 
         /**
          * 说明.
@@ -124,13 +150,13 @@ public class PayEnum {
         private final String explain;
 
         /**
-         * 根据code获取.
+         * 根据name获取.
          *
-         * @param code code
+         * @param name name
          * @return 结果
          */
-        public static RtnFlg getByCode(final String code) {
-            return Arrays.stream(RtnFlg.values()).filter(i -> i.getCode().equals(code)).findFirst().orElse(null);
+        public static RtnFlg getByName(final Integer name) {
+            return Arrays.stream(RtnFlg.values()).filter(i -> i.getCode() == name).findFirst().orElse(null);
         }
     }
 
