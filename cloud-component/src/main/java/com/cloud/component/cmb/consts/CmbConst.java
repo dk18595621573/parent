@@ -39,4 +39,9 @@ public interface CmbConst {
      */
     String RMB = "10";
 
+    /**
+     * 行内收方账号户名校验.
+     */
+    String RCV_CHK = "1";
+
 }

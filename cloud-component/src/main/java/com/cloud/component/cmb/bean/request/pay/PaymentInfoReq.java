@@ -109,7 +109,10 @@ public class PaymentInfoReq implements Serializable {
     private String trsTyp;
 
     /**
-     * 行内收方账号户名校验
+     * 行内收方账号户名校验.
+     * 1：校验
+     * 空或者其他值：不校验
+     * 如果为1，行内收方账号与户名不相符则支付经办失败。
      */
     private String rcvChk;
 

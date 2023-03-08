@@ -5,12 +5,12 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import com.cloud.common.utils.DateUtils;
-import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.cmb.bean.request.BaseRequest;
 import com.cloud.component.cmb.bean.request.CmbRequest;
 import com.cloud.component.cmb.bean.request.account.AccountInfoReq;
 import com.cloud.component.cmb.bean.request.account.AccountReq;
 import com.cloud.component.cmb.bean.request.account.BatchBalanceReq;
+import com.cloud.component.cmb.bean.request.account.BranchReq;
 import com.cloud.component.cmb.bean.request.account.BusinessModelReq;
 import com.cloud.component.cmb.bean.request.account.HistoryBalanceReq;
 import com.cloud.component.cmb.bean.request.account.ReceiptReq;
@@ -27,6 +27,7 @@ import com.cloud.component.cmb.bean.response.CmbResponse;
 import com.cloud.component.cmb.bean.response.account.AccountInfoRes;
 import com.cloud.component.cmb.bean.response.account.AccountRes;
 import com.cloud.component.cmb.bean.response.account.BatchBalanceRes;
+import com.cloud.component.cmb.bean.response.account.BranchRes;
 import com.cloud.component.cmb.bean.response.account.BusinessModelRes;
 import com.cloud.component.cmb.bean.response.account.HistoryBalanceRes;
 import com.cloud.component.cmb.bean.response.account.ReceiptRes;
@@ -126,6 +127,20 @@ public class CMBClient {
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
         return response.toBody(AccountInfoRes.class);
+    }
+
+    /**
+     * 查询分行号信息.
+     *
+     * @param request 请求参数
+     * @return 结果
+     */
+    public BranchRes getBranch(final BranchReq request) throws CmbApiException {
+        Assert.notNull(request, "请求参数不能为空");
+        log.info("[招商银行] - 查询分行号信息请求参数：{}", request.getJsonParams());
+        // 执行请求调度
+        CmbResponse response = this.executeInternal(request);
+        return response.toBody(BranchRes.class);
     }
 
     /**
@@ -322,7 +337,7 @@ public class CMBClient {
             DECODER.decode(response);
             // 解密响应数据
             decryptData = new String(CmbCryptor.CMBSM4DecryptWithCBC(cmbProperties.getAesKey().getBytes(), getVector(cmbProperties.getUID()), DECODER.decode(response)), StandardCharsets.UTF_8);
-            log.info("【解密响应数据】：{} ", decryptData);
+            log.info("【解密响应数据】：\n{} ", JSONUtil.parse(decryptData).toStringPretty());
         } catch (Exception e) {
             log.error("调用招商银行接口异常：{}", ExceptionUtils.getStackTrace(e));
             throw new CmbApiException("调用招商银行接口异常");
@@ -361,7 +376,7 @@ public class CMBClient {
         objectRequest.setBody(JSONUtil.parseObj(request.getJsonParams()));
         // 请求参数
         cmbRequest.setRequest(objectRequest);
-        log.info("【请求参数】：{} ", JsonUtil.toJson(cmbRequest));
+        log.info("【请求报文】：\n{} ", JSONUtil.parse(cmbRequest).toStringPretty());
         return cmbRequest;
     }
 
