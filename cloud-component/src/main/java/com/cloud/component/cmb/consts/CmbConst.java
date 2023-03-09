@@ -18,6 +18,11 @@ public interface CmbConst {
      */
     String ALG_SM = "SM";
 
+    /**
+     * 招商中文名.
+     */
+    String ZHAO_SHANG = "招商";
+
     /*************** 请求参数KEY *****************/
     String UID_KEY = "UID";
     String FUNCODE_KEY = "FUNCODE";
