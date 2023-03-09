@@ -54,4 +54,9 @@ public interface CmbConst {
      */
     String PNG_SUFFIX = ".png";
 
+    /*************** 响应参数常量 ****************/
+
+    String CDC_SERVER = "CDCServer:";
+    String ERR_MSG = "ErrMsg:";
+
 }

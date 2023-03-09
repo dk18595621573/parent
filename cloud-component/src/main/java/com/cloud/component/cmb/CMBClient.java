@@ -334,6 +334,10 @@ public class CMBClient {
         try {
             String response = CmbUtils.doPostForm(url, params);
             log.info("【响应参数】：{}", response);
+            // 返回结果中包含这个两个字符，可能是没有白名单，也可能用户没有权限，或者其他错误
+            if ((response.contains(CmbConst.CDC_SERVER) && response.contains(CmbConst.ERR_MSG))) {
+                throw new CmbApiException(response);
+            }
             DECODER.decode(response);
             // 解密响应数据
             decryptData = new String(CmbCryptor.CMBSM4DecryptWithCBC(cmbProperties.getAesKey().getBytes(), getVector(cmbProperties.getUID()), DECODER.decode(response)), StandardCharsets.UTF_8);
