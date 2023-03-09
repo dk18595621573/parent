@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 public class ReceiptRes extends BaseResponse {
     private static final long serialVersionUID = -6437196926061362186L;
 
-    /*************** 打印模式为PDF时返回如下内容 ********************/
+    //************** 打印模式为PDF时返回如下内容 ********************/
 
     /**
      * 验证码.
@@ -35,7 +35,7 @@ public class ReceiptRes extends BaseResponse {
      */
     private String istnbr;
 
-    /*************** 打印模式为OFD时返回如下内容 ********************/
+    //************** 打印模式为OFD时返回如下内容 ********************/
 
     /**
      * 响应码.

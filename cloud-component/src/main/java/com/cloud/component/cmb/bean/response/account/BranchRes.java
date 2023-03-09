@@ -7,6 +7,9 @@ import lombok.experimental.Accessors;
 
 /**
  * 查询分行号信息响应.
+ *
+ * @author nlsm
+ * @date 2023-3-9 13:02:32
  */
 @Data
 @Accessors(chain = true)
