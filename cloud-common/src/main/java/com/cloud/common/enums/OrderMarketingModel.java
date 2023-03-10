@@ -7,7 +7,8 @@ import java.util.Objects;
  */
 public enum OrderMarketingModel {
     INQUIRY_MODEL(1, "询报价"),
-    MARKETING_MODEL(2, "一口价");
+    MARKETING_MODEL(2, "一口价"),
+    TRIVALENT_MODEL(3, "三价");
 
 
     private final Integer code;
