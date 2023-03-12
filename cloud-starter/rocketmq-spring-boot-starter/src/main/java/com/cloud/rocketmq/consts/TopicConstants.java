@@ -57,4 +57,9 @@ public interface TopicConstants {
      */
     String NEWS_ORDER = "TOPIC-NEWS-ORDER";
 
+    /**
+     * 指定企业消息推送
+     */
+    String COMPANY_MESSAGE_PUSH = "TOPIC-COMPANY-MESSAGE-PUSH";
+
 }
