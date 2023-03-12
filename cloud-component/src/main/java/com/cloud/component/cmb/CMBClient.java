@@ -336,12 +336,16 @@ public class CMBClient {
             log.info("【响应参数】：{}", response);
             // 返回结果中包含这个两个字符，可能是没有白名单，也可能用户没有权限，或者其他错误
             if ((response.contains(CmbConst.CDC_SERVER) && response.contains(CmbConst.ERR_MSG))) {
-                throw new CmbApiException(response);
+                // 获取异常信息
+                String errMsg = response.substring(response.indexOf(CmbConst.ERR_MSG) + CmbConst.ERR_MSG.length());
+                throw new CmbApiException(errMsg);
             }
             DECODER.decode(response);
             // 解密响应数据
             decryptData = new String(CmbCryptor.CMBSM4DecryptWithCBC(cmbProperties.getAesKey().getBytes(), getVector(cmbProperties.getUID()), DECODER.decode(response)), StandardCharsets.UTF_8);
             log.info("【解密响应数据】：\n{} ", JSONUtil.parse(decryptData).toStringPretty());
+        } catch (CmbApiException e) {
+            throw e;
         } catch (Exception e) {
             log.error("调用招商银行接口异常：{}", ExceptionUtils.getStackTrace(e));
             throw new CmbApiException("调用招商银行接口异常");
