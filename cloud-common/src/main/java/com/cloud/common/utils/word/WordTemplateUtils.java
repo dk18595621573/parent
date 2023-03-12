@@ -7,6 +7,7 @@ import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -45,6 +46,7 @@ public class WordTemplateUtils {
             File outFile = File.createTempFile(IdUtils.simpleUUID(), ".doc");
             @SuppressWarnings("deprecation")
             Configuration configuration = Configuration.getDefaultConfiguration();
+            configuration.setLocale(Locale.CHINESE);
             configuration.setDefaultEncoding("UTF-8");
             configuration.setTemplateLoader(new RemoteTemplateLoader(templateUrl));
             Template template = configuration.getTemplate(templateName);

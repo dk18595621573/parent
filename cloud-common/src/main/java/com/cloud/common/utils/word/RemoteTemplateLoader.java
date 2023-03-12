@@ -35,6 +35,7 @@ public class RemoteTemplateLoader extends URLTemplateLoader {
         name = name.replace("_zh", "");
         name = name.replace("_CN", "");
         name = name.replace("_#Hans", "");
+        name = name.replace("_en", "");
         String fullPath = this.remotePath + name;
         log.info("远程URL地址:{}",fullPath);
         if ((this.remotePath.equals("/")) && (!isSchemeless(fullPath))) {
