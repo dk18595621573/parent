@@ -1,6 +1,7 @@
 package com.cloud.component.cmb.bean.request.pay;
 
 import com.cloud.component.cmb.bean.request.BaseCmbRequest;
+import com.cloud.component.cmb.bean.request.common.PaymentInfo;
 import com.cloud.component.cmb.bean.response.pay.BatchPayRes;
 import com.cloud.component.cmb.consts.FunCodeEnum;
 import lombok.Data;
@@ -31,7 +32,7 @@ public class BatchPayReq extends BaseCmbRequest<BatchPayRes> implements Serializ
     /**
      * 支付信息集合.
      */
-    private List<PaymentInfoReq> bb1paybhx1;
+    private List<PaymentInfo> bb1paybhx1;
 
     @Override
     public String getFuncode() {

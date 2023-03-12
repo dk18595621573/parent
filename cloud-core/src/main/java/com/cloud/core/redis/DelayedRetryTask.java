@@ -22,7 +22,7 @@ public abstract class DelayedRetryTask<T> extends DelayedTask<DelayRetry<T>> {
             }
             log.info("[RETRY]【{}】第[{}]次重试:处理成功", getTaskGroup(), task.getCount());
         } catch (Exception e) {
-            log.error("[RETRY]【{}】第[{}]次重试失败:", getTaskGroup(), task.getCount(), e);
+            log.warn("[RETRY]【{}】第[{}]次重试失败:", getTaskGroup(), task.getCount(), e);
             if (hasNext(task)) {
                 long delay = nextTime(task);
                 log.info("[RETRY]【{}】准备间隔{}秒后进行第[{}]次重试", getTaskGroup(), delay, task.getCount());

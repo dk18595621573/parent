@@ -32,27 +32,21 @@ public class WordTemplateUtils {
     }
 
     /**
-     * 模板存放位置
-     */
-    private static final String TEMPLATE_PATH = "/word/ftl/";
-
-    /**
      * 根据模板创建word
      * <p>
      * @param dataMap 需要动态填充的数据
      * @param templateName 模板名称
+     * @param templateUrl 生成的word url
      * @param templateName 生成的word名称
      */
-    public File createWord(Map<String, Object> dataMap, String templateName) {
+    public File createWord(Map<String, Object> dataMap, String templateUrl, String templateName) {
+        log.info("获取ftl文件地址 templateUrl:{},templateName:{}", templateUrl, templateName);
         try {
             File outFile = File.createTempFile(IdUtils.simpleUUID(), ".doc");
-
             @SuppressWarnings("deprecation")
             Configuration configuration = Configuration.getDefaultConfiguration();
             configuration.setDefaultEncoding("UTF-8");
-            // ftl模板文件统一放至 maven目录src/main/resources word 包下面
-            configuration.setClassForTemplateLoading(WordTemplateUtils.class, TEMPLATE_PATH);
-            // 获取模板
+            configuration.setTemplateLoader(new RemoteTemplateLoader(templateUrl));
             Template template = configuration.getTemplate(templateName);
             // 输出文件
             // 如果输出目标文件夹不存在，则创建
@@ -61,7 +55,7 @@ public class WordTemplateUtils {
             }
             if (outFile.exists()) {
                 outFile.delete();
-            }      /* SaveAs ExportAsFixedFormat*/
+            }
             Writer out = null;
             // 生成文件
             try {

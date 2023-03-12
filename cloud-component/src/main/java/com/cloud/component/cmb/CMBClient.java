@@ -98,7 +98,7 @@ public class CMBClient {
         log.info("[招商银行] - 可经办业务模式查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(BusinessModelRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -112,7 +112,7 @@ public class CMBClient {
         log.info("[招商银行] - 查询可经办的账户列表请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(AccountRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -126,7 +126,7 @@ public class CMBClient {
         log.info("[招商银行] - 账户详细信息查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(AccountInfoRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -140,7 +140,7 @@ public class CMBClient {
         log.info("[招商银行] - 查询分行号信息请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(BranchRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -154,7 +154,7 @@ public class CMBClient {
         log.info("[招商银行] - 查询账户历史余额请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(HistoryBalanceRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -168,7 +168,7 @@ public class CMBClient {
         log.info("[招商银行] - 批量查询余额请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(BatchBalanceRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -182,7 +182,7 @@ public class CMBClient {
         log.info("[招商银行] - 账户交易信息查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(TransactionRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -196,7 +196,7 @@ public class CMBClient {
         log.info("[招商银行] - 单笔回单查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(ReceiptRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -210,7 +210,7 @@ public class CMBClient {
         log.info("[招商银行] - 电子回单异步查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(SyncReceiptRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -224,7 +224,7 @@ public class CMBClient {
         log.info("[招商银行] - 回单异步打印结果查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(ReceiptUrlRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -238,11 +238,11 @@ public class CMBClient {
         log.info("[招商银行] - 企银支付单笔经办请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(SinglePayRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
-     * 企银支付业务查询
+     * 企银支付业务查询.
      *
      * @param request 请求参数
      * @return 结果
@@ -252,7 +252,7 @@ public class CMBClient {
         log.info("[招商银行] - 企银支付业务查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(PaymentInfoRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -266,7 +266,7 @@ public class CMBClient {
         log.info("[招商银行] - 企银支付批量经办请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(BatchPayRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -280,7 +280,7 @@ public class CMBClient {
         log.info("[招商银行] - 企银批量支付批次查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(BatchPayQueryRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -294,7 +294,7 @@ public class CMBClient {
         log.info("[招商银行] - 企银批量支付明细查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         CmbResponse response = this.executeInternal(request);
-        return response.toBody(BatchPayInfoQueryRes.class);
+        return response.toBody(request.getResponseClass());
     }
 
     /**
@@ -336,12 +336,16 @@ public class CMBClient {
             log.info("【响应参数】：{}", response);
             // 返回结果中包含这个两个字符，可能是没有白名单，也可能用户没有权限，或者其他错误
             if ((response.contains(CmbConst.CDC_SERVER) && response.contains(CmbConst.ERR_MSG))) {
-                throw new CmbApiException(response);
+                // 获取异常信息
+                String errMsg = response.substring(response.indexOf(CmbConst.ERR_MSG) + CmbConst.ERR_MSG.length());
+                throw new CmbApiException(errMsg);
             }
             DECODER.decode(response);
             // 解密响应数据
             decryptData = new String(CmbCryptor.CMBSM4DecryptWithCBC(cmbProperties.getAesKey().getBytes(), getVector(cmbProperties.getUID()), DECODER.decode(response)), StandardCharsets.UTF_8);
             log.info("【解密响应数据】：\n{} ", JSONUtil.parse(decryptData).toStringPretty());
+        } catch (CmbApiException e) {
+            throw e;
         } catch (Exception e) {
             log.error("调用招商银行接口异常：{}", ExceptionUtils.getStackTrace(e));
             throw new CmbApiException("调用招商银行接口异常");
