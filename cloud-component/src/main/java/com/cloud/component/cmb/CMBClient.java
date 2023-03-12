@@ -242,7 +242,7 @@ public class CMBClient {
     }
 
     /**
-     * 企银支付业务查询
+     * 企银支付业务查询.
      *
      * @param request 请求参数
      * @return 结果
