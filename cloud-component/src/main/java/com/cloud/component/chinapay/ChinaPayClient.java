@@ -89,7 +89,7 @@ public class ChinaPayClient {
             // 返回报文的base64 解密
             String respData = new String(Base64.decode(response.getRespData().toCharArray()), StandardCharsets.UTF_8);
             result = JsonUtil.parse(respData, request.responseClass());
-            if (!BaseResponse.SUCCESS_CODE.equals(result.getRespCode())) {
+            if (!BaseResponse.SUCCESS_CODE.equals(result.getRespCode()) && !BaseResponse.SUB_BANK_CODE.equals(result.getRespCode())) {
                 log.error("银联接口响应失败:[{} - {}]", result.getRespCode(), result.getRespMsg());
                 throw new ChinaPayException(result.getRespCode(), result.getRespMsg());
             }

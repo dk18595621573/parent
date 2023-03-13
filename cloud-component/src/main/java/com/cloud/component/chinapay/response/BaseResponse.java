@@ -15,6 +15,8 @@ public class BaseResponse implements Serializable {
 
     public static final String SUCCESS_CODE = "00000000";
 
+    public static final String SUB_BANK_CODE = "80010150";
+
     /**
      * 应答状态
      * 必填
