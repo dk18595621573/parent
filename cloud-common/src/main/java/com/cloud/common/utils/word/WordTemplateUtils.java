@@ -46,8 +46,8 @@ public class WordTemplateUtils {
             File outFile = File.createTempFile(IdUtils.simpleUUID(), ".doc");
             @SuppressWarnings("deprecation")
             Configuration configuration = Configuration.getDefaultConfiguration();
-            configuration.setLocale(Locale.CHINESE);
             configuration.setDefaultEncoding("UTF-8");
+            configuration.setLocalizedLookup(false);
             configuration.setTemplateLoader(new RemoteTemplateLoader(templateUrl));
             Template template = configuration.getTemplate(templateName);
             // 输出文件
