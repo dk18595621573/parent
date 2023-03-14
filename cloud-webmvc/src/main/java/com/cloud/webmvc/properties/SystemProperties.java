@@ -1,6 +1,8 @@
 package com.cloud.webmvc.properties;
 
 import com.cloud.common.constant.Constants;
+import com.cloud.common.utils.StringUtils;
+import jodd.util.StringPool;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -59,5 +61,17 @@ public class SystemProperties {
      * xss配置
      */
     private XssProperties xss = new XssProperties();
+
+    /**
+     * 获取项目域名.
+     *
+     * @return 项目域名
+     */
+    private String getModuleDomain() {
+        if (StringUtils.isBlank(module)) {
+            return apiDomain;
+        }
+        return apiDomain.concat(StringPool.SLASH).concat(module);
+    }
 
 }
