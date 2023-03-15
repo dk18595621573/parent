@@ -1,7 +1,9 @@
 package com.cloud.component.fadada;
 
+import com.cloud.component.fadada.api.CancellationOfContractApi;
 import com.cloud.component.fadada.api.CompanyRemittanceSubmitAuthApi;
 import com.cloud.component.fadada.api.PersonThreeEleAuthApi;
+import com.cloud.component.fadada.params.CancellationOfContractParams;
 import com.cloud.component.fadada.params.CompanyRemittanceSubmitParams;
 import com.cloud.component.fadada.params.PersonThreeEleAuthParams;
 import com.fadada.sdk.extra.model.api.QuerySignResult;
@@ -32,6 +34,21 @@ public class FadadaAuthClient extends DefaultFddClient {
         try {
             CompanyRemittanceSubmitAuthApi submitAuthApi = new CompanyRemittanceSubmitAuthApi();
             return super.invoke(submitAuthApi, params);
+        } catch (Exception var3) {
+            throw new RuntimeException(var3);
+        }
+    }
+
+    /**
+     * 合同撤销
+     * @author peijiawei
+     * @date 3/15/23 1:24 PM
+     * @param params:
+     */
+    public String invokeCancellationOfContract(CancellationOfContractParams params) {
+        try {
+            CancellationOfContractApi cancelApi = new CancellationOfContractApi();
+            return super.invoke(cancelApi, params);
         } catch (Exception var3) {
             throw new RuntimeException(var3);
         }

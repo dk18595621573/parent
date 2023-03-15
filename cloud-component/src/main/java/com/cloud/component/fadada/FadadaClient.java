@@ -8,6 +8,7 @@ import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.common.utils.sign.Base64;
 import com.cloud.component.chinapay.util.Encryptor;
+import com.cloud.component.fadada.params.CancellationOfContractParams;
 import com.cloud.component.fadada.params.CompanyRemittanceSubmitParams;
 import com.cloud.component.fadada.params.PersonThreeEleAuthParams;
 import com.cloud.component.fadada.request.*;
@@ -538,5 +539,13 @@ public class FadadaClient {
         }
     }
 
+    public FadadaDataResponse cancellationOfContract(CancellationOfContractParams params) {
+        try {
+            String result = fadadaAuthClient.invokeCancellationOfContract(params);
+            return JsonUtil.parse(result, FadadaDataResponse.class);
+        } catch (Exception var3) {
+            throw new RuntimeException(var3);
+        }
+    }
 
 }
