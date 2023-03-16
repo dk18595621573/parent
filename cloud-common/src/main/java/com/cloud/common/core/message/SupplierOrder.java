@@ -268,6 +268,11 @@ public class SupplierOrder implements Serializable {
         private Date tradeTime;
 
         /**
+         * 抢单人
+         */
+        private String competeUser;
+
+        /**
          * 企业信誉度 1:已合作，无固定额度 2:已合作，固定额度内 3:已合作，额度已用完 4:平台担保 5:未合作 6:黑名单
          */
         private Integer companyCredit;
