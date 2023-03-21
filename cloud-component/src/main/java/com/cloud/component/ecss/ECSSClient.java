@@ -21,6 +21,7 @@ import com.cloud.component.ecss.exception.ECSSApiException;
 import com.cloud.component.ecss.utils.XmlUtil;
 import com.cloud.component.properties.ECSSProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.HashMap;
@@ -159,14 +160,17 @@ public class ECSSClient {
     private String getSign(final Map<String, Object> map) {
         // 按照字母先后顺序排序
         TreeMap<String, Object> treeMap = MapUtil.newTreeMap(map, String::compareTo);
+        // 头和尾需要拼接appSecret
+        String appSecret = MapUtil.getStr(map, ECSSConst.APP_SECRET_KEY);
+        appSecret = StringUtils.isBlank(appSecret) ? ecssProperties.getAppSecret() : appSecret;
         // key + value ...... key + value
-        StringBuilder builder = new StringBuilder(ecssProperties.getAppSecret());
+        StringBuilder builder = new StringBuilder(appSecret);
         // 跳过生成签名的数据
         List<String> ignoreKey = ListUtil.toList(ECSSConst.SHOP_ID_KEY, ECSSConst.APP_SECRET_KEY, ECSSConst.XML_KEY);
         for (Map.Entry<String, Object> entry : treeMap.entrySet()) {
             builder.append(entry.getKey()).append(entry.getValue());
         }
-        builder.append(ecssProperties.getAppSecret());
+        builder.append(appSecret);
         log.info("签名数据：{}", builder);
         String sign = Md5Utils.hash(builder.toString()).toUpperCase();
         log.info("签名：{}", sign);
