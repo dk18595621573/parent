@@ -78,6 +78,7 @@ public abstract class BaseECSSRequest<T> implements BaseRequest<T> {
      * @return map格式请求参数
      */
     @Override
+    @JsonIgnore
     public Map<String, Object> getParams() {
         return BeanUtil.beanToMap(this, false, true);
     }
