@@ -127,4 +127,16 @@ public class ECSSClient {
         return sign;
     }
 
+
+    /**
+     * 根据skuid获取广移的库存
+     * @param skuId
+     * @return
+     */
+    public static Integer getSkuStock(String skuId){
+        return 100;
+    }
+
+
+
 }

@@ -8,6 +8,7 @@ import java.util.Objects;
 public enum BelongType {
     DEFAULT("DEFAULT", "默认内部系统"),
     HUASHENG("HUASHENG","华盛"),
+    GUANGYI("GUANGYI","广移"),
     OTHERS("OTHERS","其他")
 
     ;

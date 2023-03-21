@@ -90,6 +90,12 @@ public enum OrderSubStatus implements BaseEnum {
     REIMBURSE_HS(76,"华盛退款订单"),
     /** 华盛订单退货拦截 */
     RETURN_INTERCEPTION_HS(77,"华盛退货拦截"),
+
+    /** 华盛订单退款 */
+    REIMBURSE_GY(78,"广移退款订单"),
+    /** 华盛订单退货拦截 */
+    RETURN_INTERCEPTION_GY(79,"广移退货拦截"),
+
     /** 补全地址 */
     ADDRESS_COMPLETED_ERROR(81, "补全地址（未补全）"),
 
