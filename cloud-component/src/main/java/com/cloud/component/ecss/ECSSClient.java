@@ -1,5 +1,6 @@
 package com.cloud.component.ecss;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
@@ -8,9 +9,11 @@ import cn.hutool.http.ContentType;
 import cn.hutool.http.HttpUtil;
 import com.cloud.common.utils.sign.Md5Utils;
 import com.cloud.component.ecss.bean.request.BaseRequest;
+import com.cloud.component.ecss.bean.request.order.DeliverGoodsRequest;
 import com.cloud.component.ecss.bean.request.order.OrderCreateRequest;
 import com.cloud.component.ecss.bean.request.order.OrderInquiryRequest;
 import com.cloud.component.ecss.bean.response.ECSSResponse;
+import com.cloud.component.ecss.bean.response.order.DeliverGoodsResponse;
 import com.cloud.component.ecss.bean.response.order.OrderCreateResponse;
 import com.cloud.component.ecss.bean.response.order.OrderInquiryResponse;
 import com.cloud.component.ecss.consts.ECSSConst;
@@ -22,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -71,6 +75,31 @@ public class ECSSClient {
         return this.executeInternal(request, false);
     }
 
+    /**
+     * 发货接口.
+     *
+     * @param request 请求参数
+     * @return 结果
+     */
+    public DeliverGoodsResponse deliverGoods(final DeliverGoodsRequest request) throws ECSSApiException {
+        Assert.notNull(request, "请求参数不能为空");
+        log.info("[ECSS平台] - 发货接口请求参数：{}", request.getXmlParams());
+        // 执行请求调度
+        return this.executeInternal(request, true);
+    }
+
+    /**
+     * 签名校验.
+     *
+     * @param sign 需要校验的签名
+     * @param map  签名数据
+     * @return 结果
+     */
+    public boolean verifySign(final String sign, final Map<String, Object> map) {
+        // 获取签名
+        String verifySign = this.getSign(map);
+        return sign.equals(verifySign);
+    }
 
     /**
      * 执行请求调用.
@@ -138,6 +167,8 @@ public class ECSSClient {
         TreeMap<String, Object> treeMap = MapUtil.newTreeMap(map, String::compareTo);
         // key + value ...... key + value
         StringBuilder builder = new StringBuilder(ecssProperties.getAppSecret());
+        // 跳过生成签名的数据
+        List<String> ignoreKey = ListUtil.toList(ECSSConst.SHOP_ID_KEY, ECSSConst.APP_SECRET_KEY, ECSSConst.XML_KEY);
         for (Map.Entry<String, Object> entry : treeMap.entrySet()) {
             builder.append(entry.getKey()).append(entry.getValue());
         }

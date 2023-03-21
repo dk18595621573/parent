@@ -32,7 +32,7 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
     /**
      * 订单列表信息.
      */
-    @JacksonXmlProperty(localName = "order")
+    @JacksonXmlProperty(localName = "orderList")
     @JacksonXmlElementWrapper(localName = "orderList")
     private List<Order> orderList;
 

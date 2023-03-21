@@ -28,7 +28,12 @@ public class ECSSEnum {
         /**
          * 订单查询（获取）接口.
          */
-        ORDER_INQUIRY("ECSSOrderInquiry", "订单查询（获取）接口");
+        ORDER_INQUIRY("ECSSOrderInquiry", "订单查询（获取）接口"),
+
+        /**
+         * 发货接口.
+         */
+        DELIVER_GOODS("ECSSDeliverGoods", "发货接口");
 
         /**
          * code.
@@ -85,9 +90,9 @@ public class ECSSEnum {
         private final Integer code;
 
         /**
-         * 说明.
+         * 描述.
          */
-        private final String explain;
+        private final String desc;
 
         /**
          * 根据code获取.
