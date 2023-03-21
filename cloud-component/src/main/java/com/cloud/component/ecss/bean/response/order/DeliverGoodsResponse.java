@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
- * 订单同步接口响应参数.
+ * 发货 接口响应参数.
  *
  * @author Luo
  * @date 2023-03-20 14:25
@@ -23,7 +23,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "response")
-public class OrderCreateResponse extends ECSSResponse {
+public class DeliverGoodsResponse extends ECSSResponse {
 
     private static final long serialVersionUID = -889303419942088773L;
 
