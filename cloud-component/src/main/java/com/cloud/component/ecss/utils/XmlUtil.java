@@ -5,6 +5,8 @@ import com.cloud.component.ecss.exception.ECSSRuntimeException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.Objects;
 
@@ -14,8 +16,14 @@ import java.util.Objects;
  * @author Luo
  * @date 2023-03-21 14:09
  */
+@Slf4j
 @UtilityClass
 public class XmlUtil {
+
+    /**
+     * 头部.
+     */
+    public static final String HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
 
     /**
      * 创建XmlMapper对象，用于实体与Json和xml之间的相互转换.
@@ -33,9 +41,10 @@ public class XmlUtil {
             return null;
         }
         try {
-            return XML_MAPPER.writeValueAsString(cls);
+            return HEAD.concat(XML_MAPPER.writeValueAsString(cls));
         } catch (JsonProcessingException e) {
-            throw new ECSSRuntimeException(e);
+            log.error("参数转换异常：{}", ExceptionUtils.getStackTrace(e));
+            throw new ECSSRuntimeException("参数转换异常");
         }
     }
 
@@ -54,7 +63,8 @@ public class XmlUtil {
         try {
             return XML_MAPPER.readValue(xml, cls);
         } catch (JsonProcessingException e) {
-            throw new ECSSRuntimeException(e);
+            log.error("参数转换异常：{}", ExceptionUtils.getStackTrace(e));
+            throw new ECSSRuntimeException("参数转换异常");
         }
     }
 

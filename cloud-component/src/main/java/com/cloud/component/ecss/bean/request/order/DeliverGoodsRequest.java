@@ -31,7 +31,7 @@ public class DeliverGoodsRequest extends BaseECSSRequest<DeliverGoodsResponse> i
     /**
      * 订单列表信息.
      */
-    @JacksonXmlProperty(localName = "orderList")
+    @JacksonXmlProperty(localName = "order")
     @JacksonXmlElementWrapper(localName = "orderList")
     private List<Order> orderList;
 

@@ -18,15 +18,15 @@ import com.cloud.component.ecss.bean.response.order.OrderCreateResponse;
 import com.cloud.component.ecss.bean.response.order.OrderInquiryResponse;
 import com.cloud.component.ecss.consts.ECSSConst;
 import com.cloud.component.ecss.exception.ECSSApiException;
+import com.cloud.component.ecss.utils.XmlUtil;
 import com.cloud.component.properties.ECSSProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 /**
@@ -37,11 +37,6 @@ import java.util.TreeMap;
  */
 @Slf4j
 public class ECSSClient {
-
-    /**
-     * 创建XmlMapper对象，用于实体与Json和xml之间的相互转换.
-     */
-    private static final XmlMapper XML_MAPPER = new XmlMapper();
 
     private final ECSSProperties ecssProperties;
 
@@ -140,20 +135,19 @@ public class ECSSClient {
             response = HttpUtil.createPost(url).form(hashMap).charset(CharsetUtil.UTF_8).contentType(ContentType.FORM_URLENCODED.getValue()).execute().body();
             log.info("【响应参数】：{}", response);
             // 数据转换
-            ecssResponse = XML_MAPPER.readValue(response, ECSSResponse.class);
+            ecssResponse = XmlUtil.toBean(response, ECSSResponse.class);
         } catch (Exception e) {
             log.error("调用ECSS平台接口异常：{}", ExceptionUtils.getStackTrace(e));
             throw new ECSSApiException("调用ECSS平台接口异常");
+        }
+        if (Objects.isNull(ecssResponse)) {
+            throw new ECSSApiException("调用ECSS平台接口失败");
         }
         // 判断是否请求成功
         if (!ecssResponse.success()) {
             throw new ECSSApiException(ecssResponse.getCode(), ecssResponse.getDesc());
         }
-        try {
-            return XML_MAPPER.readValue(response, request.getResponseClass());
-        } catch (JsonProcessingException e) {
-            throw new ECSSApiException("解析ECSS接口响应异常");
-        }
+        return XmlUtil.toBean(response, request.getResponseClass());
     }
 
     /**

@@ -2,10 +2,8 @@ package com.cloud.component.ecss.bean.request;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.cloud.common.utils.json.JsonUtil;
-import com.cloud.component.ecss.exception.ECSSRuntimeException;
+import com.cloud.component.ecss.utils.XmlUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -51,14 +49,7 @@ public abstract class BaseECSSRequest<T> implements BaseRequest<T> {
     @Override
     @JsonIgnore
     public String getXmlParams() {
-        String xml;
-        try {
-            XmlMapper xmlMapper = new XmlMapper();
-            xml = xmlMapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            throw new ECSSRuntimeException("参数转换异常");
-        }
-        return xml;
+        return XmlUtil.toXml(this);
     }
 
     /**
