@@ -6,7 +6,6 @@ import com.cloud.component.ecss.exception.ECSSRuntimeException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -32,7 +31,7 @@ public abstract class BaseECSSRequest<T> implements BaseRequest<T> {
     /**
      * 具体响应实现类.
      */
-    @XStreamOmitField
+    @JsonIgnore
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private final Class<T> clazz;

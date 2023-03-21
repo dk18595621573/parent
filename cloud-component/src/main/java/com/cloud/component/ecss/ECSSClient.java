@@ -14,8 +14,8 @@ import com.cloud.component.ecss.bean.response.order.OrderCreateResponse;
 import com.cloud.component.ecss.consts.ECSSConst;
 import com.cloud.component.ecss.exception.ECSSApiException;
 import com.cloud.component.properties.ECSSProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
@@ -31,6 +31,11 @@ import java.util.TreeMap;
  */
 @Slf4j
 public class ECSSClient {
+
+    /**
+     * 创建XmlMapper对象，用于实体与Json和xml之间的相互转换.
+     */
+    private static final XmlMapper XML_MAPPER = new XmlMapper();
 
     private final ECSSProperties ecssProperties;
 
@@ -60,7 +65,6 @@ public class ECSSClient {
      * @return 具体的API响应结果
      * @throws ECSSApiException API调用异常
      */
-    @SneakyThrows
     private <T extends ECSSResponse> T executeInternal(final BaseRequest<T> request) throws ECSSApiException {
         // 接口请求参数
         HashMap<String, Object> hashMap = MapUtil.newHashMap();
@@ -79,7 +83,6 @@ public class ECSSClient {
         // 请求地址
         String url = ecssProperties.getUrl();
         log.info("【请求地址】：{}", url);
-        XmlMapper xmlMapper = new XmlMapper();
         // 发送请求
         String response;
         ECSSResponse ecssResponse;
@@ -87,7 +90,7 @@ public class ECSSClient {
             response = HttpUtil.createPost(url).form(hashMap).charset(CharsetUtil.UTF_8).contentType(ContentType.FORM_URLENCODED.getValue()).execute().body();
             log.info("【响应参数】：{}", response);
             // 数据转换
-            ecssResponse = xmlMapper.readValue(response, ECSSResponse.class);
+            ecssResponse = XML_MAPPER.readValue(response, ECSSResponse.class);
         } catch (Exception e) {
             log.error("调用ECSS平台接口异常：{}", ExceptionUtils.getStackTrace(e));
             throw new ECSSApiException("调用ECSS平台接口异常");
@@ -96,7 +99,11 @@ public class ECSSClient {
         if (!ecssResponse.success()) {
             throw new ECSSApiException(ecssResponse.getCode(), ecssResponse.getDesc());
         }
-        return xmlMapper.readValue(response, request.getResponseClass());
+        try {
+            return XML_MAPPER.readValue(response, request.getResponseClass());
+        } catch (JsonProcessingException e) {
+            throw new ECSSApiException("解析ECSS接口响应异常");
+        }
     }
 
     /**

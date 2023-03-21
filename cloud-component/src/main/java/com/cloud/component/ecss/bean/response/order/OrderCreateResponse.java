@@ -49,14 +49,4 @@ public class OrderCreateResponse extends ECSSResponse {
 
     }
 
-//    public List<Result> getResults() {
-//        if (MapUtil.isEmpty(results)) {
-//            return Collections.emptyList();
-//        }
-//        // XML 转 MAP 的问题  list放到map里面去了
-//        if (results.containsKey(ECSSConst.RESULT_KEY)) {
-//            return results.get(ECSSConst.RESULT_KEY);
-//        }
-//        return Collections.emptyList();
-//    }
 }

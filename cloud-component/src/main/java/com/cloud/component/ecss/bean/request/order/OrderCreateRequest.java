@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -24,7 +23,6 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@XStreamAlias("request")
 @JacksonXmlRootElement(localName = "request")
 @EqualsAndHashCode(callSuper = true)
 public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> implements Serializable {
@@ -34,7 +32,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
     /**
      * 订单列表信息.
      */
-    @XStreamAlias("orderList")
     @JacksonXmlProperty(localName = "order")
     @JacksonXmlElementWrapper(localName = "orderList")
     private List<Order> orderList;
@@ -54,7 +51,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
      * 单张订单信息.
      */
     @Data
-    @XStreamAlias("order")
     @JacksonXmlRootElement(localName = "order")
     public static class Order implements Serializable {
 
@@ -63,28 +59,24 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
         /**
          * 订单内容.
          */
-        @XStreamAlias("orderInfo")
         @JacksonXmlProperty(localName = "orderInfo")
         private OrderInfo orderInfo;
 
         /**
          * 发货信息.
          */
-        @XStreamAlias("sendGoodsInfo")
         @JacksonXmlProperty(localName = "sendGoodsInfo")
         private SendGoodsInfo sendGoodsInfo;
 
         /**
          * 买家信息.
          */
-        @XStreamAlias("buyerInfo")
         @JacksonXmlProperty(localName = "buyerInfo")
         private BuyerInfo buyerInfo;
 
         /**
          * 发票信息.
          */
-        @XStreamAlias("receiptInfo")
         @JacksonXmlProperty(localName = "receiptInfo")
         private ReceiptInfo receiptInfo;
 
@@ -93,7 +85,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 各个平台的订单号
          * 是否必填：是
          */
-        @XStreamAlias("productList")
         @JacksonXmlProperty(localName = "productInfo")
         @JacksonXmlElementWrapper(localName = "productList")
         private List<ProductInfo> productList;
@@ -103,7 +94,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：名称:值;名称:值;.......
          * 例如：a:1;b:2;
          */
-        @XStreamAlias("expansion")
         @JacksonXmlProperty(localName = "expansion")
         private String expansion;
 
@@ -113,7 +103,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
      * 订单内容.
      */
     @Data
-    @XStreamAlias("orderInfo")
     @JacksonXmlRootElement(localName = "orderInfo")
     public static class OrderInfo implements Serializable {
 
@@ -124,7 +113,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 各个平台的订单号
          * 是否必填：是
          */
-        @XStreamAlias("orderId")
         @JacksonXmlProperty(localName = "orderId")
         private String orderId;
 
@@ -137,7 +125,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 云商盟信用购 13：待确认订单
          * 是否必填：是
          */
-        @XStreamAlias("orderCode")
         @JacksonXmlProperty(localName = "orderCode")
         private Integer orderCode;
 
@@ -156,7 +143,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 充值中
          * 是否必填：是
          */
-        @XStreamAlias("orderState")
         @JacksonXmlProperty(localName = "orderState")
         private String orderState;
 
@@ -166,7 +152,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：小数点后两位的正数
          * 是否必填：是
          */
-        @XStreamAlias("transactionPrice")
         @JacksonXmlProperty(localName = "transactionPrice")
         private BigDecimal transactionPrice;
 
@@ -175,7 +160,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 下单员账号
          * 是否必填：否
          */
-        @XStreamAlias("username")
         @JacksonXmlProperty(localName = "username")
         private String username;
 
@@ -184,7 +168,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 积分金额（对应的是 ：分）
          * 是否必填：否
          */
-        @XStreamAlias("payScore")
         @JacksonXmlProperty(localName = "payScore")
         private String payScore;
 
@@ -193,7 +176,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * （对应的是 ：分）
          * 是否必填：否
          */
-        @XStreamAlias("returnScore")
         @JacksonXmlProperty(localName = "returnScore")
         private String returnScore;
 
@@ -202,7 +184,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：小数点后两位的正数
          * 是否必填：否
          */
-        @XStreamAlias("payCommission")
         @JacksonXmlProperty(localName = "payCommission")
         private BigDecimal payCommission;
 
@@ -211,7 +192,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 0 否 ；1 是（必填）
          * 是否必填：是
          */
-        @XStreamAlias("depositOrder")
         @JacksonXmlProperty(localName = "depositOrder")
         private Integer depositOrder;
 
@@ -221,7 +201,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 4 :IPAD 5 :TV 6:乐芃
          * 是否必填：是
          */
-        @XStreamAlias("paApp")
         @JacksonXmlProperty(localName = "paApp")
         private Integer paApp;
 
@@ -231,7 +210,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 看附录
          * 是否必填：否
          */
-        @XStreamAlias("cityCode")
         @JacksonXmlProperty(localName = "cityCode")
         private Integer cityCode;
 
@@ -241,7 +219,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 退款 4：已取消 5：正在支付
          * 是否必填：是
          */
-        @XStreamAlias("payStatus")
         @JacksonXmlProperty(localName = "payStatus")
         private String payStatus;
 
@@ -260,7 +237,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 农行支付 99：默认
          * 是否必填：是
          */
-        @XStreamAlias("payType")
         @JacksonXmlProperty(localName = "payType")
         private Integer payType;
 
@@ -269,7 +245,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 各个平台的订单号
          * 是否必填：否
          */
-        @XStreamAlias("paymentAccount")
         @JacksonXmlProperty(localName = "paymentAccount")
         private String paymentAccount;
 
@@ -290,7 +265,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 17：和包
          * 是否必填：否
          */
-        @XStreamAlias("payInstitution")
         @JacksonXmlProperty(localName = "payInstitution")
         private Integer payInstitution;
 
@@ -299,7 +273,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式 yyyy-MM-dd HH:mm:ss
          * 是否必填：是
          */
-        @XStreamAlias("orderDate")
         @JacksonXmlProperty(localName = "orderDate")
         private String orderDate;
 
@@ -308,7 +281,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式 yyyy-MM-dd HH:mm:ss
          * 是否必填：是
          */
-        @XStreamAlias("transactionTime")
         @JacksonXmlProperty(localName = "transactionTime")
         private String transactionTime;
 
@@ -316,7 +288,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 最后修改账号.
          * 是否必填：否
          */
-        @XStreamAlias("lastUpdAccount")
         @JacksonXmlProperty(localName = "lastUpdAccount")
         private String lastUpdAccount;
 
@@ -325,7 +296,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式 yyyy-MM-dd HH:mm:ss
          * 是否必填：是
          */
-        @XStreamAlias("lastUpdTime")
         @JacksonXmlProperty(localName = "lastUpdTime")
         private String lastUpdTime;
 
@@ -334,7 +304,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：小数点后两位的正数
          * 是否必填：否
          */
-        @XStreamAlias("discount")
         @JacksonXmlProperty(localName = "discount")
         private String discount;
 
@@ -342,7 +311,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 内部便签.
          * 是否必填：否
          */
-        @XStreamAlias("note")
         @JacksonXmlProperty(localName = "note")
         private String note;
 
@@ -350,7 +318,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 买家留言.
          * 是否必填：否
          */
-        @XStreamAlias("buyerFeedback")
         @JacksonXmlProperty(localName = "buyerFeedback")
         private String buyerFeedback;
 
@@ -358,7 +325,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 卖家留言.
          * 是否必填：是
          */
-        @XStreamAlias("sellersMessage")
         @JacksonXmlProperty(localName = "sellersMessage")
         private String sellersMessage;
 
@@ -367,7 +333,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 0 否， 1 是
          * 是否必填：是
          */
-        @XStreamAlias("virtualGoods")
         @JacksonXmlProperty(localName = "virtualGoods")
         private Integer virtualGoods;
 
@@ -377,7 +342,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
      * 发货信息.
      */
     @Data
-    @XStreamAlias("sendGoodsInfo")
     @JacksonXmlRootElement(localName = "sendGoodsInfo")
     public static class SendGoodsInfo implements Serializable {
 
@@ -389,7 +353,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 如果包邮则填写 0
          * 是否必填：是
          */
-        @XStreamAlias("freight")
         @JacksonXmlProperty(localName = "freight")
         private BigDecimal freight;
 
@@ -398,7 +361,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 收货人姓名
          * 是否必填：是
          */
-        @XStreamAlias("consignee")
         @JacksonXmlProperty(localName = "consignee")
         private String consignee;
 
@@ -407,7 +369,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 座机
          * 是否必填：否
          */
-        @XStreamAlias("telephone")
         @JacksonXmlProperty(localName = "telephone")
         private String telephone;
 
@@ -416,7 +377,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 电话手机二选一
          * 是否必填：否
          */
-        @XStreamAlias("mobile")
         @JacksonXmlProperty(localName = "mobile")
         private String mobile;
 
@@ -424,7 +384,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 邮政编码.
          * 是否必填：否
          */
-        @XStreamAlias("buyerZip")
         @JacksonXmlProperty(localName = "buyerZip")
         private String buyerZip;
 
@@ -444,7 +403,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 辰物流 38：美团
          * 是否必填：否
          */
-        @XStreamAlias("express")
         @JacksonXmlProperty(localName = "express")
         private Integer express;
 
@@ -453,7 +411,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 快递单号
          * 是否必填：否
          */
-        @XStreamAlias("expressOrderNo")
         @JacksonXmlProperty(localName = "expressOrderNo")
         private String expressOrderNo;
 
@@ -462,7 +419,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 包含省市区极详细地址
          * 是否必填：是
          */
-        @XStreamAlias("buyerAddress")
         @JacksonXmlProperty(localName = "buyerAddress")
         private String buyerAddress;
 
@@ -471,7 +427,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 如：广东（广东省）
          * 是否必填：是
          */
-        @XStreamAlias("province")
         @JacksonXmlProperty(localName = "province")
         private String province;
 
@@ -480,7 +435,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 如：广州（广州市）
          * 是否必填：是
          */
-        @XStreamAlias("city")
         @JacksonXmlProperty(localName = "city")
         private String city;
 
@@ -489,7 +443,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 如：天河（天河区）
          * 是否必填：是
          */
-        @XStreamAlias("county")
         @JacksonXmlProperty(localName = "county")
         private String county;
 
@@ -499,7 +452,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 用背胶可只填 buyerAddress
          * 是否必填：是
          */
-        @XStreamAlias("supplyAddress")
         @JacksonXmlProperty(localName = "supplyAddress")
         private String supplyAddress;
 
@@ -508,7 +460,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 1：送货上门 2：自提
          * 是否必填：否
          */
-        @XStreamAlias("supplyType")
         @JacksonXmlProperty(localName = "supplyType")
         private String supplyType;
 
@@ -518,7 +469,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
      * 买家信息.
      */
     @Data
-    @XStreamAlias("buyerInfo")
     @JacksonXmlRootElement(localName = "buyerInfo")
     public static class BuyerInfo implements Serializable {
 
@@ -528,7 +478,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 买家昵称.
          * 是否必填：否
          */
-        @XStreamAlias("buyerNick")
         @JacksonXmlProperty(localName = "buyerNick")
         private String buyerNick;
 
@@ -536,7 +485,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 真实姓名.
          * 是否必填：否
          */
-        @XStreamAlias("realName")
         @JacksonXmlProperty(localName = "realName")
         private String realName;
 
@@ -544,7 +492,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 电子邮件.
          * 是否必填：否
          */
-        @XStreamAlias("email")
         @JacksonXmlProperty(localName = "email")
         private String email;
 
@@ -552,7 +499,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 买家的手机.
          * 是否必填：否
          */
-        @XStreamAlias("phone")
         @JacksonXmlProperty(localName = "phone")
         private String phone;
 
@@ -562,7 +508,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
      * 发票信息.
      */
     @Data
-    @XStreamAlias("receiptInfo")
     @JacksonXmlRootElement(localName = "receiptInfo")
     public static class ReceiptInfo implements Serializable {
 
@@ -573,7 +518,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 0 否，1 是
          * 是否必填：是
          */
-        @XStreamAlias("isNeedInvoice")
         @JacksonXmlProperty(localName = "isNeedInvoice")
         private Integer isNeedInvoice;
 
@@ -583,7 +527,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 如果需要开发票则必填
          * 是否必填：是
          */
-        @XStreamAlias("invoiceType")
         @JacksonXmlProperty(localName = "invoiceType")
         private Integer invoiceType;
 
@@ -593,7 +536,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 如果需要开发票则必填
          * 是否必填：是
          */
-        @XStreamAlias("invoiceStatus")
         @JacksonXmlProperty(localName = "invoiceStatus")
         private String invoiceStatus;
 
@@ -602,7 +544,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 如果需要开发票则必填
          * 是否必填：是
          */
-        @XStreamAlias("invoiceNo")
         @JacksonXmlProperty(localName = "invoiceNo")
         private String invoiceNo;
 
@@ -611,7 +552,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 各个平台的订单号
          * 是否必填：是
          */
-        @XStreamAlias("invoiceContent")
         @JacksonXmlProperty(localName = "invoiceContent")
         private String invoiceContent;
 
@@ -620,7 +560,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 默认打商品
          * 是否必填：否
          */
-        @XStreamAlias("invoiceCode")
         @JacksonXmlProperty(localName = "invoiceCode")
         private String invoiceCode;
 
@@ -629,7 +568,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 开票人姓名/账号
          * 是否必填：否
          */
-        @XStreamAlias("drawer")
         @JacksonXmlProperty(localName = "drawer")
         private String drawer;
 
@@ -638,7 +576,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：小数点后两位的正数
          * 是否必填：是
          */
-        @XStreamAlias("invoiceMoney")
         @JacksonXmlProperty(localName = "invoiceMoney")
         private BigDecimal invoiceMoney;
 
@@ -648,7 +585,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
      * 产品信息.
      */
     @Data
-    @XStreamAlias("productInfo")
     @JacksonXmlRootElement(localName = "productInfo")
     public static class ProductInfo implements Serializable {
 
@@ -658,7 +594,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 产品名称.
          * 是否必填：是
          */
-        @XStreamAlias("title")
         @JacksonXmlProperty(localName = "title")
         private String title;
 
@@ -666,7 +601,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 订货数量.
          * 是否必填：是
          */
-        @XStreamAlias("totalNum")
         @JacksonXmlProperty(localName = "totalNum")
         private String totalNum;
 
@@ -675,7 +609,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * Ecss 线下分配（ECSS与平台商品的唯一标识）
          * 是否必填：是
          */
-        @XStreamAlias("barCode")
         @JacksonXmlProperty(localName = "barCode")
         private String barCode;
 
@@ -684,7 +617,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：小数点后两位的正数
          * 是否必填：是
          */
-        @XStreamAlias("price")
         @JacksonXmlProperty(localName = "price")
         private BigDecimal price;
 
@@ -692,7 +624,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 规格.
          * 是否必填：否
          */
-        @XStreamAlias("spec")
         @JacksonXmlProperty(localName = "spec")
         private String spec;
 
@@ -702,7 +633,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：小数点后两位的正数
          * 是否必填：否
          */
-        @XStreamAlias("preferPrice")
         @JacksonXmlProperty(localName = "preferPrice")
         private BigDecimal preferPrice;
 
@@ -711,7 +641,6 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 格式：小数点后两位的正数
          * 是否必填：否
          */
-        @XStreamAlias("costPrice")
         @JacksonXmlProperty(localName = "costPrice")
         private BigDecimal costPrice;
 
