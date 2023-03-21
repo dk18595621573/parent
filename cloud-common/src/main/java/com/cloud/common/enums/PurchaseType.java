@@ -8,7 +8,7 @@ public enum PurchaseType implements BaseEnum {
     DROP_SHIPPING(2, "一件代发"),
     SOLITAIRE_MARKETING(3, "接龙抢单"),
     INQUIRY_PURCHASE(4, "群接龙"),
-    ACTUAL_PURCHASE(5,"实单采购");
+    ACTUAL_PURCHASE(5,"采购入仓");
 
 
     private final Integer code;
