@@ -1,43 +1,72 @@
 package com.cloud.common.enums;
 
-import java.util.Objects;
+import com.cloud.common.utils.StringUtils;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
 
 /**
- * 订单归属类型
+ * 订单归属类型.
+ *
+ * @author nlsm
+ * @date 2023-3-21 19:05:21
  */
+@Getter
+@AllArgsConstructor
 public enum BelongType {
+
+    /**
+     * 默认.
+     */
     DEFAULT("DEFAULT", "默认内部系统"),
-    HUASHENG("HUASHENG","华盛"),
-    GUANGYI("GUANGYI","广移"),
-    OTHERS("OTHERS","其他")
 
-    ;
+    /**
+     * 华盛.
+     */
+    HUASHENG("HUASHENG", "华盛"),
 
-    private String code;
+    /**
+     * 广移.
+     */
+    GUANGYI("GUANGYI", "广移"),
 
-    private String message;
+    /**
+     * 其它.
+     */
+    OTHERS("OTHERS", "其他");
 
-    BelongType(String code, String message) {
-        this.code = code;
-        this.message = message;
+    /**
+     * code.
+     */
+    private final String code;
+
+    /**
+     * message.
+     */
+    private final String message;
+
+    /**
+     * 根据code获取.
+     *
+     * @param code code
+     * @return 结果
+     */
+    public static BelongType fromCode(final String code) {
+        return Arrays.stream(BelongType.values()).filter(i -> i.getCode().equals(code)).findFirst().orElse(null);
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public static BelongType fromCode(String code) {
-        if (Objects.nonNull(code)) {
-            for (BelongType belongType : BelongType.values()) {
-                if (belongType.getCode().equals(code)) {
-                    return belongType;
-                }
-            }
+    /**
+     * 是否为外部订单.
+     *
+     * @param code code
+     * @return true：是、false：否
+     */
+    public static boolean isExternal(final String code) {
+        if (StringUtils.isBlank(code)) {
+            return false;
         }
-        return null;
+        return Arrays.asList(HUASHENG.getCode(), GUANGYI.getCode()).contains(code);
     }
+
 }
