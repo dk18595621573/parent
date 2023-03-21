@@ -58,10 +58,10 @@ public class ECSSResponse implements Serializable {
     }
 
     /**
-     * 返回错误消息.
+     * 返回成功消息.
      *
      * @param functionId API方法
-     * @return 错误消息
+     * @return 成功消息
      */
     public static ECSSResponse success(final String functionId) {
         return ECSSResponse.error(ECSSEnum.RespCode.CODE_0.getCode(), functionId, ECSSEnum.RespCode.CODE_0.getDesc());
