@@ -9,8 +9,10 @@ import cn.hutool.http.HttpUtil;
 import com.cloud.common.utils.sign.Md5Utils;
 import com.cloud.component.ecss.bean.request.BaseRequest;
 import com.cloud.component.ecss.bean.request.order.OrderCreateRequest;
+import com.cloud.component.ecss.bean.request.order.OrderInquiryRequest;
 import com.cloud.component.ecss.bean.response.ECSSResponse;
 import com.cloud.component.ecss.bean.response.order.OrderCreateResponse;
+import com.cloud.component.ecss.bean.response.order.OrderInquiryResponse;
 import com.cloud.component.ecss.consts.ECSSConst;
 import com.cloud.component.ecss.exception.ECSSApiException;
 import com.cloud.component.properties.ECSSProperties;
@@ -51,9 +53,22 @@ public class ECSSClient {
      */
     public OrderCreateResponse orderCreate(final OrderCreateRequest request) throws ECSSApiException {
         Assert.notNull(request, "请求参数不能为空");
-        log.info("[ECSS平台] - 订单同步接口请求参数：{}", request.getJsonParams());
+        log.info("[ECSS平台] - 订单同步接口请求参数：{}", request.getXmlParams());
         // 执行请求调度
-        return this.executeInternal(request);
+        return this.executeInternal(request, true);
+    }
+
+    /**
+     * 订单查询（获取）接口.
+     *
+     * @param request 请求参数
+     * @return 结果
+     */
+    public OrderInquiryResponse orderInquiry(final OrderInquiryRequest request) throws ECSSApiException {
+        Assert.notNull(request, "请求参数不能为空");
+        log.info("[ECSS平台] - 订单查询（获取）接口请求参数：{}", request.getJsonParams());
+        // 执行请求调度
+        return this.executeInternal(request, false);
     }
 
 
@@ -61,12 +76,13 @@ public class ECSSClient {
      * 执行请求调用.
      *
      * @param request 请求
+     * @param isXml   是否xml参数
      * @param <T>     具体的API响应类
      * @return 具体的API响应结果
      * @throws ECSSApiException API调用异常
      */
-    private <T extends ECSSResponse> T executeInternal(final BaseRequest<T> request) throws ECSSApiException {
-        // 接口请求参数
+    private <T extends ECSSResponse> T executeInternal(final BaseRequest<T> request, final boolean isXml) throws ECSSApiException {
+        // 接口系统请求参数
         HashMap<String, Object> hashMap = MapUtil.newHashMap();
         hashMap.put(ECSSConst.APP_KEY_KEY, ecssProperties.getAppKey());
         hashMap.put(ECSSConst.SESSION_KEY, ecssProperties.getSession());
@@ -77,9 +93,14 @@ public class ECSSClient {
         // 生成签名
         hashMap.put(ECSSConst.SIGN_KEY, getSign(hashMap));
         // 不参与签名的参数
-        hashMap.put(ECSSConst.XML_KEY, request.getXmlParams());
         hashMap.put(ECSSConst.SHOP_ID_KEY, ecssProperties.getShopId());
         hashMap.put(ECSSConst.APP_SECRET_KEY, ecssProperties.getAppSecret());
+        // 应用参数传递方式
+        if (isXml) {
+            hashMap.put(ECSSConst.XML_KEY, request.getXmlParams());
+        } else {
+            hashMap.putAll(request.getParams());
+        }
         // 请求地址
         String url = ecssProperties.getUrl();
         log.info("【请求地址】：{}", url);

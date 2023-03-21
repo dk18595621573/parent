@@ -3,6 +3,7 @@ package com.cloud.component.ecss.bean.response;
 import com.cloud.component.ecss.consts.ECSSEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JacksonXmlRootElement(localName = "response")
 public class ECSSResponse implements Serializable {
 
     private static final long serialVersionUID = -6811550517417623460L;

@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Map;
 
 /**
  * ECSS 基础 请求参数.
@@ -69,6 +70,16 @@ public abstract class BaseECSSRequest<T> implements BaseRequest<T> {
     @JsonIgnore
     public String getJsonParams() {
         return JsonUtil.toJson(BeanUtil.beanToMap(this, false, true));
+    }
+
+    /**
+     * 获取Map格式请求参数.
+     *
+     * @return map格式请求参数
+     */
+    @Override
+    public Map<String, Object> getParams() {
+        return BeanUtil.beanToMap(this, false, true);
     }
 
     /**
