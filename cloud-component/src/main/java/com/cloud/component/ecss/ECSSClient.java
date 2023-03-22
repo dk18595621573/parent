@@ -1,6 +1,5 @@
 package com.cloud.component.ecss;
 
-import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
@@ -25,7 +24,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -165,9 +163,11 @@ public class ECSSClient {
         appSecret = StringUtils.isBlank(appSecret) ? ecssProperties.getAppSecret() : appSecret;
         // key + value ...... key + value
         StringBuilder builder = new StringBuilder(appSecret);
-        // 跳过生成签名的数据
-        List<String> ignoreKey = ListUtil.toList(ECSSConst.SHOP_ID_KEY, ECSSConst.APP_SECRET_KEY, ECSSConst.XML_KEY);
         for (Map.Entry<String, Object> entry : treeMap.entrySet()) {
+            // 跳过生成签名的数据
+            if (ECSSConst.IGNORE_KEY.contains(entry.getKey())) {
+                continue;
+            }
             builder.append(entry.getKey()).append(entry.getValue());
         }
         builder.append(appSecret);
