@@ -445,6 +445,14 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
         private String province;
 
         /**
+         * 省代号.
+         * 如：国家省代号
+         * 是否必填：否
+         */
+        @JacksonXmlProperty(localName = "provinceCode")
+        private String provinceCode;
+
+        /**
          * 市.
          * 如：广州（广州市）
          * 是否必填：是
@@ -453,12 +461,28 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
         private String city;
 
         /**
+         * 市代号.
+         * 国家市代号
+         * 是否必填：否
+         */
+        @JacksonXmlProperty(localName = "cityCode")
+        private String cityCode;
+
+        /**
          * 区/县码.
          * 如：天河（天河区）
          * 是否必填：是
          */
         @JacksonXmlProperty(localName = "county")
         private String county;
+
+        /**
+         * 区代号.
+         * 国家区代号
+         * 是否必填：是
+         */
+        @JacksonXmlProperty(localName = "countyCode")
+        private String countyCode;
 
         /**
          * 地址（除省市区外）.
