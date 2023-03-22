@@ -1,5 +1,9 @@
 package com.cloud.component.ecss.consts;
 
+import cn.hutool.core.collection.ListUtil;
+
+import java.util.List;
+
 /**
  * ECSS平台常量.
  *
@@ -30,6 +34,8 @@ public interface ECSSConst {
     int FIVE = 5;
     String YES = "0";
     String NO = "1";
+
+    List<String> IGNORE_KEY = ListUtil.toList(ECSSConst.SHOP_ID_KEY, ECSSConst.APP_SECRET_KEY, ECSSConst.XML_KEY, ECSSConst.SIGN_KEY);
 
     /*************** 请求参数常量 ****************/
 
