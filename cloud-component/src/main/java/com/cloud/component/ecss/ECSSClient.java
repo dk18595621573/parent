@@ -163,8 +163,8 @@ public class ECSSClient {
         appSecret = StringUtils.isBlank(appSecret) ? ecssProperties.getAppSecret() : appSecret;
         // key + value ...... key + value
         StringBuilder builder = new StringBuilder(appSecret);
-        // 跳过生成签名的数据
         for (Map.Entry<String, Object> entry : treeMap.entrySet()) {
+            // 跳过生成签名的数据
             if (ECSSConst.IGNORE_KEY.contains(entry.getKey())) {
                 continue;
             }
