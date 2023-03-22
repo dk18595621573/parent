@@ -1,6 +1,6 @@
 package com.cloud.webmvc.config;
 
-import com.cloud.webmvc.interceptor.AuthorizeInterceptor;
+import com.cloud.webmvc.interceptor.AuthenticationInterceptor;
 import com.cloud.webmvc.interceptor.RepeatSubmitInterceptor;
 import com.cloud.webmvc.properties.SystemProperties;
 import org.apache.commons.lang3.ArrayUtils;
@@ -24,7 +24,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
     @Autowired(required = false)
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
     @Autowired
-    private AuthorizeInterceptor authorizeInterceptor;
+    private AuthenticationInterceptor authenticationInterceptor;
     @Autowired
     private SystemProperties systemProperties;
 
@@ -49,7 +49,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
             System.arraycopy(arr, 0, allowPathArr, ALLOW_VISIT_PATHS.length, arr.length);
         }
 
-        registry.addInterceptor(authorizeInterceptor).excludePathPatterns(allowPathArr).addPathPatterns("/**");
+        registry.addInterceptor(authenticationInterceptor).excludePathPatterns(allowPathArr).addPathPatterns("/**");
         if (Objects.nonNull(repeatSubmitInterceptor)) {
             registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
         }

@@ -40,18 +40,7 @@ public class RedisTokenStrategy implements TokenStrategy {
                 Long userId = CodeUtil.toId(claims.get(LOGIN_USER_CODE, String.class));
                 String userKey = getTokenKey(userId);
 
-                RequestUser loginUser = redisCache.getCacheMapValue(userKey, uuid);
-                long expireTime = loginUser.getExpireTime();
-                long currentTime = System.currentTimeMillis();
-                if (expireTime < currentTime) {
-                    delLoginUser(loginUser.getUserId(), loginUser.getToken());
-                    return null;
-                }
-
-                if (expireTime - currentTime <= MILLIS_MINUTE_TEN) {
-                    refreshToken(loginUser);
-                }
-                return loginUser;
+                return redisCache.getCacheMapValue(userKey, uuid);
             } catch (Exception ignored) {
             }
         }
@@ -116,7 +105,7 @@ public class RedisTokenStrategy implements TokenStrategy {
     private void refreshCache(final RequestUser loginUser) {
         loginUser.setLoginTime(System.currentTimeMillis());
         int expireTime = tokenProperties.getExpireTime();
-        loginUser.setExpireTime(loginUser.getLoginTime() + expireTime * MILLIS_MINUTE);
+        loginUser.setExpireTime(loginUser.getLoginTime() + expireTime * MINUTE_UNIT);
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getUserId());
 
