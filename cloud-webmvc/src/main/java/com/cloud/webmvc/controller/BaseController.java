@@ -1,18 +1,22 @@
 package com.cloud.webmvc.controller;
 
+import com.cloud.common.constant.Constants;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.model.AjaxResult;
 import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.core.page.Page;
+import com.cloud.common.enums.ClientType;
 import com.cloud.common.utils.DateUtils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.domain.TableDataInfo;
 import com.cloud.webmvc.utils.SecurityUtils;
+import com.cloud.webmvc.utils.ServletUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * web层通用数据处理
@@ -129,4 +133,41 @@ public class BaseController {
     public String getUsername() {
         return SecurityUtils.getUsername();
     }
+
+    /**
+     * 获取请求平台.
+     *
+     * @return 请求平台
+     */
+    public ClientType getClientType() {
+        String platform = ServletUtils.getParameter(Constants.PLATFORM);
+        return ClientType.getByValue(platform);
+    }
+
+    /**
+     * 获取请求平台code.
+     *
+     * @return 平台code
+     */
+    public Integer getPlatformCode() {
+        ClientType clientType = getClientType();
+        if (Objects.nonNull(clientType)) {
+            return clientType.getCode();
+        }
+        return null;
+    }
+
+    /**
+     * 获取请求平台value.
+     *
+     * @return 平台value
+     */
+    public String getPlatformValue() {
+        ClientType clientType = getClientType();
+        if (Objects.nonNull(clientType)) {
+            return clientType.getValue();
+        }
+        return null;
+    }
+
 }
