@@ -140,7 +140,7 @@ public class BaseController {
      * @return 请求平台
      */
     public ClientType getClientType() {
-        String platform = ServletUtils.getParameter(Constants.PLATFORM);
+        String platform = ServletUtils.getHeader(Constants.PLATFORM);
         return ClientType.getByValue(platform);
     }
 
