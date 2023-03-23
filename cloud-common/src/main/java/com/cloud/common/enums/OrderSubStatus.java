@@ -126,6 +126,7 @@ public enum OrderSubStatus implements BaseEnum {
     REVOKE_DELIVERED(134, "待发货撤销"),
     REVOKE_INQUIRY(135, "群接龙撤销出价"),
     ACTUAL_OVERTIME_STREAMING(136, "实单采购超时流拍"),
+    REVOKE_IN_QUOTATION(137,"报价中撤销"),
 
     /** 未追回订单 */
     NOT_RECOVERED_WAIT_INSPECTION_GOODS(140, "未追回订单-待验货(待寄回)"),
