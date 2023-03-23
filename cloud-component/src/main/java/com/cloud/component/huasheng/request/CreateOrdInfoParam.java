@@ -19,6 +19,11 @@ public class CreateOrdInfoParam implements Serializable {
     String provinceCode;
 
     /**
+     *  扩展字段(区分企业信息)
+     * */
+    String buyerMsg;
+
+    /**
      * 订单人电话	32
      */
     String mobile;
