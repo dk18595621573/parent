@@ -91,7 +91,16 @@ public enum SystemParams {
     /**
      * 小程序端交易市场展示的同省同sku的订单数
      */
-    WECHAT_SHOW_NUM("wechat.show.num","5");
+    WECHAT_SHOW_NUM("wechat.show.num","5"),
+    /**
+     * 小程序推荐列表随机数最小值.
+     */
+    APPLET_RECOMMEND_MIN_COUNT("applet.recommend.min.count", "5"),
+    /**
+     * 小程序推荐列表随机数最大值.
+     */
+    APPLET_RECOMMEND_MAX_COUNT("applet.recommend.max.count", "10")
+    ;
 
 
     
