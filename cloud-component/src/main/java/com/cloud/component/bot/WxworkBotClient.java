@@ -1,5 +1,6 @@
 package com.cloud.component.bot;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.map.MapUtil;
@@ -25,20 +26,24 @@ import com.cloud.component.bot.message.TextMessage;
 import com.cloud.component.bot.message.VideoMessage;
 import com.cloud.component.bot.request.BaseCallback;
 import com.cloud.component.bot.request.BotEvent;
+import com.cloud.component.bot.request.BroadcastCreateRequest;
 import com.cloud.component.bot.request.ConsumerInfo;
 import com.cloud.component.bot.request.ConsumerMessage;
 import com.cloud.component.bot.request.ContactRequest;
 import com.cloud.component.bot.request.ContactWayAddRequest;
+import com.cloud.component.bot.request.MessageSendRequest;
 import com.cloud.component.bot.request.SentResult;
 import com.cloud.component.bot.request.SyncConsumerInfo;
 import com.cloud.component.bot.response.ApiResponse;
 import com.cloud.component.bot.response.BotResponse;
 import com.cloud.component.bot.response.BotUser;
+import com.cloud.component.bot.response.BroadcastCreateResponse;
 import com.cloud.component.bot.response.ChatResponse;
 import com.cloud.component.bot.response.Contact;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
 import com.cloud.component.bot.response.MessageResponse;
+import com.cloud.component.bot.response.MessageSendResponse;
 import com.cloud.component.properties.WxworkBotProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -204,8 +209,36 @@ public class WxworkBotClient {
         return sendMessage(chatId, MessageType.MINI_PROGRAM, message);
     }
 
+    /**
+     * 发送视频消息
+     * @param chatId 会话id
+     * @param url 文件地址
+     */
     public MessageResponse sendVideo(final String chatId, final String url) {
         return sendMessage(chatId, MessageType.VIDEO, new VideoMessage(url));
+    }
+
+    /**
+     * 发送群发消息.
+     *
+     * @param request 请求
+     * @return
+     */
+    public BroadcastCreateResponse sendBroadcast(final BroadcastCreateRequest request) {
+        Map<String, Object> param = BeanUtil.beanToMap(request, false, true);
+        BotResponse response = exceute(BotApiEnums.BROADCAST_CREATE, param);
+        return JsonUtil.parse(JsonUtil.toJson(response.getData()), BroadcastCreateResponse.class);
+    }
+
+    /**
+     * 企业级发送消息.
+     *
+     * @param request 请求
+     * @return
+     */
+    public MessageSendResponse sendMessage(final MessageSendRequest request) {
+        Map<String, Object> param = BeanUtil.beanToMap(request, false, true);
+        return exceute(BotApiEnums.WXWORK_MESSAGE_SEND, param);
     }
 
     /**
