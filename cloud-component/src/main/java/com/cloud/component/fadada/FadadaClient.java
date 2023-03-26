@@ -547,4 +547,15 @@ public class FadadaClient {
         }
     }
 
+    /**
+     * 自动签署骑缝章
+     *
+     * @param params 入参
+     * @return 返回信息
+     */
+    public FadadaResultResponse docusignAcross(DocusignAcrossPageParams params) {
+        String result = fddExtraClient.invokeDocusignAcrossPage(params);
+        return JsonUtil.parse(result, FadadaResultResponse.class);
+    }
+
 }
