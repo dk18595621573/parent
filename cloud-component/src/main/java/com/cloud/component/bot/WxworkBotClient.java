@@ -42,6 +42,7 @@ import com.cloud.component.bot.response.ChatResponse;
 import com.cloud.component.bot.response.Contact;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
+import com.cloud.component.bot.response.GroupBotResponse;
 import com.cloud.component.bot.response.MessageResponse;
 import com.cloud.component.bot.response.MessageSendResponse;
 import com.cloud.component.properties.WxworkBotProperties;
@@ -144,6 +145,14 @@ public class WxworkBotClient {
     public List<Contact> contactList(final ContactRequest request) {
         BotResponse response = exceute(BotApiEnums.CONCAT_LIST, request.toMap());
         return JsonUtil.parseList(JsonUtil.toJson(response.getData()), Contact.class);
+    }
+
+    /**
+     * 获取托管账号所在微信分组的信息
+     * @return 托管账号所在微信分组的信息
+     */
+    public GroupBotResponse groupBots() {
+        return exceute(BotApiEnums.GET_GROUP_BOTS, CollUtil.newHashMap());
     }
 
     /**

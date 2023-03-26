@@ -5,6 +5,7 @@ import com.cloud.component.bot.response.BotResponse;
 import com.cloud.component.bot.response.ChatResponse;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
+import com.cloud.component.bot.response.GroupBotResponse;
 import com.cloud.component.bot.response.MessageSendResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public enum BotApiEnums implements BotApi {
     CONTACTWAY_ADD(BotConsts.WXWORK_API, Method.POST, "/api/v1/contactWay/add", ContactWayAddResponse.class),
     CONTACTWAY_GET(BotConsts.WXWORK_API, Method.GET, "/api/v1/contactWay/get", ContactWayResponse.class),
     WXWORK_MESSAGE_SEND(BotConsts.WXWORK_API, Method.POST, "/api/v2/message/send", MessageSendResponse.class),
+    GET_GROUP_BOTS(BotConsts.WXWORK_API, Method.GET, "/api/v1/bot/getGroupBots", GroupBotResponse.class),
     ;
 
     /**
