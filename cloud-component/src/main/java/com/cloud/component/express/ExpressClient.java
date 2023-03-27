@@ -8,12 +8,14 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.cloud.common.exception.ServiceException;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.express.consts.ErrorCode;
 import com.cloud.component.express.consts.SubscribeExpressCode;
 import com.cloud.component.express.domain.ExpressResult;
 import com.cloud.component.express.domain.SubscribeExpressParam;
+import com.cloud.component.express.domain.SubscribeOperateParam;
 import com.cloud.component.express.exception.ExpressException;
 import com.cloud.component.properties.ExpressProperties;
 import com.cloud.component.util.HttpClientUtil;
@@ -43,6 +45,8 @@ public class ExpressClient {
      * 接口超时时间
      */
     private static final int TIMEOUT = 5000;
+
+    private static final String SUCCEED = "200";
 
     private final ExpressProperties expressProperties;
 
@@ -185,6 +189,37 @@ public class ExpressClient {
             return SubscribeExpressCode.SUBSCRIPTION_FAIL;
         }
         return SubscribeExpressCode.SUBSCRIPTION_SUCCESS;
+    }
+
+    /**
+     * 修改订阅状态接口
+     * @param param 入参
+     * @return 是否修改成功
+     */
+    public Boolean subscribeOperate(SubscribeOperateParam param) {
+        Map<String, String> requestBody = MapUtil.newHashMap(5);
+        // 授权码，请申请企业版获取
+        requestBody.put("key", expressProperties.getCustomer());
+        requestBody.put("sign", sign(param + expressProperties.getKey() + expressProperties.getCustomer()));
+        String jsonStr = JSONUtil.toJsonStr(param);
+        requestBody.put("param", jsonStr);
+        try {
+            log.info("修改订阅状态接口发送参数---{}", jsonStr);
+            String result = HttpClientUtil.doHttpPost(expressProperties.getSubscribeUrl(), requestBody);
+            log.info("修改订阅状态接口返回参数：{}", result);
+            if (StrUtil.isBlank(result)) {
+                throw new ExpressException(ErrorCode.API_ERROR);
+            }
+            JSONObject jsonObject = JSONUtil.parseObj(result);
+            String code = jsonObject.getStr("code");
+            if (!SUCCEED.equals(code)) {
+                throw new ServiceException("修改订阅状态失败！");
+            }
+        } catch (Exception e) {
+            log.info("修改订阅状态接口异常:{}", e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     private SubscribeParameters infoSubscribeParameters(SubscribeExpressParam expressParam){
