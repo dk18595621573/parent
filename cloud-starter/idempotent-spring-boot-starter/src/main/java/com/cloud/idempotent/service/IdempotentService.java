@@ -24,6 +24,6 @@ public interface IdempotentService {
      * @param id 业务id
      * @return 返回业务数据
      */
-    IdempotentResult load(String module, String id, Class clazz);
+    IdempotentResult load(String module, String id, Class<?> clazz);
 
 }

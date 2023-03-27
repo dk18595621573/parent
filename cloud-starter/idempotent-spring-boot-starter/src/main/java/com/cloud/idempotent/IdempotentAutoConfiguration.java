@@ -1,8 +1,10 @@
 package com.cloud.idempotent;
 
+import com.cloud.core.redis.RedisCache;
 import com.cloud.idempotent.aspect.IdempotentAspect;
 import com.cloud.idempotent.service.IdempotentService;
 import com.cloud.idempotent.service.IdempotentServiceImpl;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +25,8 @@ public class IdempotentAutoConfiguration {
      * @return 锁拦截器
      */
     @Bean
-    public IdempotentAspect idempotentAspect() {
-        return new IdempotentAspect();
+    public IdempotentAspect idempotentAspect(final IdempotentService idempotentService, final RedissonClient redissonClient) {
+        return new IdempotentAspect(idempotentService, redissonClient);
     }
 
     /**
@@ -34,7 +36,7 @@ public class IdempotentAutoConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    public IdempotentService idempotentService() {
-        return new IdempotentServiceImpl();
+    public IdempotentService idempotentService(final RedisCache redisCache) {
+        return new IdempotentServiceImpl(redisCache);
     }
 }
