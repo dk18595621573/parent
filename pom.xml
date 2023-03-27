@@ -43,6 +43,7 @@
         <easyexcel.version>3.0.5</easyexcel.version>
         <qcloud-cos.version>5.6.28</qcloud-cos.version>
         <tencentcloud-sdk.version>3.1.507</tencentcloud-sdk.version>
+        <tencentcloud-im-sdk-java.version>1.0.8</tencentcloud-im-sdk-java.version>
         <nacos-client.version>2.0.3</nacos-client.version>
         <alibaba-spring-context.version>1.0.11</alibaba-spring-context.version>
         <rocketmq.version>4.7.1</rocketmq.version>
@@ -212,6 +213,13 @@
                 <groupId>com.tencentcloudapi</groupId>
                 <artifactId>tencentcloud-sdk-java</artifactId>
                 <version>${tencentcloud-sdk.version}</version>
+            </dependency>
+
+            <!-- 腾讯云即时通讯IM-->
+            <dependency>
+                <groupId>com.tencentcloudapi.im</groupId>
+                <artifactId>tencentcloud-im-sdk-java</artifactId>
+                <version>${tencentcloud-im-sdk-java.version}</version>
             </dependency>
 
             <!-- 接口文档 -->
