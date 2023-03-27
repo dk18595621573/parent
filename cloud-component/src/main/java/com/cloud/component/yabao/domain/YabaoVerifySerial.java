@@ -113,6 +113,10 @@ public class YabaoVerifySerial implements Serializable {
 
     private String estPurchaseDate;     //激活日期（该字段不一定一直有，特殊机器不返回）（苹果）
 
+    private String color; //机器颜色（苹果）
+
+    private String storage; //机器容量（苹果）
+
     private String name;     //推广型号（三星）
 
     private String carrier;     //购买运营商，国行可无视此字段为固定值（三星）
