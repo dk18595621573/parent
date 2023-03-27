@@ -4,6 +4,7 @@ import com.cloud.component.ecss.bean.request.BaseECSSRequest;
 import com.cloud.component.ecss.bean.response.order.DeliverGoodsResponse;
 import com.cloud.component.ecss.consts.ECSSEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -23,6 +24,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = "request")
 public class DeliverGoodsRequest extends BaseECSSRequest<DeliverGoodsResponse> implements Serializable {
 
@@ -51,12 +53,13 @@ public class DeliverGoodsRequest extends BaseECSSRequest<DeliverGoodsResponse> i
      */
     @Data
     @JacksonXmlRootElement(localName = "order")
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Order implements Serializable {
 
         private static final long serialVersionUID = 8422326011966662876L;
 
         /**
-         * 订单内容.
+         * 商家订单编号.
          */
         @JacksonXmlProperty(localName = "outOrderNo")
         private String outOrderNo;
@@ -111,6 +114,7 @@ public class DeliverGoodsRequest extends BaseECSSRequest<DeliverGoodsResponse> i
      */
     @Data
     @JacksonXmlRootElement(localName = "imei")
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Imei implements Serializable {
 
         private static final long serialVersionUID = -5672694497350611519L;

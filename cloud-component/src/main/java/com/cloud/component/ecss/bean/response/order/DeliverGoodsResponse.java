@@ -40,6 +40,7 @@ public class DeliverGoodsResponse extends ECSSResponse {
     @Data
     @Accessors(chain = true)
     @EqualsAndHashCode(callSuper = true)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Result extends BaseResult {
         private static final long serialVersionUID = -5925571455738929136L;
 

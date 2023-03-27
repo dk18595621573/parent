@@ -3,6 +3,7 @@ package com.cloud.component.ecss.utils;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.component.ecss.exception.ECSSRuntimeException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,11 @@ public class XmlUtil {
      * 创建XmlMapper对象，用于实体与Json和xml之间的相互转换.
      */
     private static final XmlMapper XML_MAPPER = new XmlMapper();
+
+    static {
+        // 反序列化时，若实体类没有对应的属性，是否抛出JsonMappingException异常，false忽略掉
+        XML_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     /**
      * 将bean转换为xml.

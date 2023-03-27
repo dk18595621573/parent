@@ -64,7 +64,7 @@ public class ECSSResponse implements Serializable {
      * @return 成功消息
      */
     public static ECSSResponse success(final String functionId) {
-        return ECSSResponse.error(ECSSEnum.RespCode.CODE_0.getCode(), functionId, ECSSEnum.RespCode.CODE_0.getDesc());
+        return ECSSResponse.success(ECSSEnum.RespCode.CODE_0.getCode(), functionId, ECSSEnum.RespCode.CODE_0.getDesc());
     }
 
     /**
@@ -75,7 +75,7 @@ public class ECSSResponse implements Serializable {
      * @return 成功消息
      */
     public static ECSSResponse success(final String functionId, final ECSSEnum.RespCode respCode) {
-        return ECSSResponse.error(respCode.getCode(), functionId, respCode.getDesc());
+        return ECSSResponse.success(respCode.getCode(), functionId, respCode.getDesc());
     }
 
     /**
@@ -86,7 +86,7 @@ public class ECSSResponse implements Serializable {
      * @return 成功消息
      */
     public static ECSSResponse success(final String functionId, final String desc) {
-        return ECSSResponse.error(ECSSEnum.RespCode.CODE_0.getCode(), functionId, desc);
+        return ECSSResponse.success(ECSSEnum.RespCode.CODE_0.getCode(), functionId, desc);
     }
 
     /**
