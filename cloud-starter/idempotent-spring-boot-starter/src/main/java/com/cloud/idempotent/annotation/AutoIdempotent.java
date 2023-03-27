@@ -36,6 +36,12 @@ public @interface AutoIdempotent {
     long expire() default 5L;
 
     /**
+     * 加锁失败 响应值.
+     * @return long
+     */
+    String message() default "正在处理，请稍后再试";
+
+    /**
      * 返回数据类型.
      * 注意点：返回类型是泛型时：不能是元素类型
      *

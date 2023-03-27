@@ -5,8 +5,8 @@ import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.core.redis.RedisCache;
 import com.cloud.idempotent.model.IdempotentResult;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -18,11 +18,11 @@ import java.util.concurrent.TimeUnit;
  * @date 2023/2/27
  */
 @Slf4j
+@AllArgsConstructor
 public class IdempotentServiceImpl implements IdempotentService {
 
     private static final String DATA_KEY_PREFIX = "IDEMPOTENT_DATA";
 
-    @Autowired
     private RedisCache redisCache;
 
     @Override
