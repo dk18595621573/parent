@@ -25,13 +25,27 @@ public class IdempotentServiceImpl implements IdempotentService {
 
     private RedisCache redisCache;
 
-    @Override
-    public void save(final String module, final String id, final Object result) {
-        redisCache.setCacheObject(genCacheKey(module, id), JsonUtil.toJson(result), 7, TimeUnit.DAYS);
+    /**
+     * 结果保存时间，单位（天）
+     */
+    private Long keepTime;
+
+    /**
+     * 默认缓存结果7天
+     * @param redisCache redisCache
+     */
+    public IdempotentServiceImpl(final RedisCache redisCache) {
+        this.redisCache = redisCache;
+        this.keepTime = 7L;
     }
 
     @Override
-    public IdempotentResult load(final String module, final String id, final Class clazz) {
+    public void save(final String module, final String id, final Object result) {
+        redisCache.setCacheObject(genCacheKey(module, id), JsonUtil.toJson(result), keepTime, TimeUnit.DAYS);
+    }
+
+    @Override
+    public IdempotentResult load(final String module, final String id, final Class<?> clazz) {
         String object = redisCache.getCacheObject(genCacheKey(module, id));
         if (Objects.isNull(object)) {
             return IdempotentResult.error();

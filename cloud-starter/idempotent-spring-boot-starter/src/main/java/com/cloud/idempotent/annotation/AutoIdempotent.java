@@ -47,5 +47,5 @@ public @interface AutoIdempotent {
      *
      * @return Class
      */
-    Class resultType() default Void.class;
+    Class<?> resultType() default Void.class;
 }
