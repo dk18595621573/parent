@@ -23,5 +23,7 @@ public class ExpressProperties {
 
     private String key;
 
+    private String secret;
+
     private String customer;
 }

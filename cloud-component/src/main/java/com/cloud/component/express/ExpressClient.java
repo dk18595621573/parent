@@ -199,10 +199,10 @@ public class ExpressClient {
     public Boolean subscribeOperate(SubscribeOperateParam param) {
         Map<String, String> requestBody = MapUtil.newHashMap(5);
         // 授权码，请申请企业版获取
-        requestBody.put("key", expressProperties.getCustomer());
-        requestBody.put("sign", sign(param + expressProperties.getKey() + expressProperties.getCustomer()));
+        requestBody.put("key", expressProperties.getKey());
         String jsonStr = JSONUtil.toJsonStr(param);
         requestBody.put("param", jsonStr);
+        requestBody.put("sign", sign(jsonStr + expressProperties.getKey() + expressProperties.getSecret()));
         try {
             log.info("修改订阅状态接口发送参数---{}", jsonStr);
             String result = HttpClientUtil.doHttpPost(expressProperties.getSubscribeUrl(), requestBody);
