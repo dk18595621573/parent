@@ -106,6 +106,7 @@ public enum OrderSubStatus implements BaseEnum {
     IMEI_INPUT_ERROR(94,"序列号错误"),
     IMEI_NOT_EXIST(95,"序列号不存在"),
     ERROR_MODEL_ERROR(96, "型号颜色错误"),
+    IMEI_ABNORMAL(97, "串码异常"),
 
     /** 物流异常 */
     LOGISTICS_DESTINATION_ABNORMAL(121, "物流目的地异常"),
