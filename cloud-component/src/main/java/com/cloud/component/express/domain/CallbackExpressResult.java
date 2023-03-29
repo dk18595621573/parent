@@ -55,7 +55,7 @@ public class CallbackExpressResult {
      */
     public ExpressResult getResult() {
         ExpressResult result = new ExpressResult();
-        result.setCompany(lastResult.getCom());
+        result.setCom(lastResult.getCom());
         result.setState(lastResult.getState());
         List<ExpressInfo> resultData = lastResult.getData();
         List<ExpressResult.ExpressItem> list = new ArrayList<>();
@@ -79,6 +79,8 @@ public class CallbackExpressResult {
         result.setData(list);
         result.setRouteInfo(lastResult.getRouteInfo());
         result.setSubscribed(true);
+        result.setTraceStatus(this.status);
+        result.setNu(lastResult.getNu());
         return result;
     }
 
