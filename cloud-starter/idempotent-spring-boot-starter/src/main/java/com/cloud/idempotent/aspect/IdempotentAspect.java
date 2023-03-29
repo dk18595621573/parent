@@ -75,7 +75,7 @@ public class IdempotentAspect {
                 throw new IdempotentException(idempotent.message());
             }
             //获取之前处理的结果
-            IdempotentResult idempotentResult = idempotentService.load(idempotent.module(), bizId, idempotent.resultType());
+            IdempotentResult<?> idempotentResult = idempotentService.load(idempotent.module(), bizId, idempotent.resultType());
             if (idempotentResult.getSuccess()) {
                 return idempotentResult.getData();
             }
