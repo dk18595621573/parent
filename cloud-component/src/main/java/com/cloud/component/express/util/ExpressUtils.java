@@ -98,6 +98,23 @@ public class ExpressUtils {
     }
 
     /**
+     * 默认快递
+     * @param expressCode 快递公司
+     * @param expressNo 快递单号
+     * @param subscribed 快递是否订阅
+     * @param state 状态
+     * @return 详情信息
+     */
+    public ExpressResult defaultExpress(String expressCode, String expressNo, Boolean subscribed, String state) {
+        ExpressResult routes = new ExpressResult();
+        routes.setCom(expressCode);
+        routes.setNu(expressNo);
+        routes.setState(state);
+        routes.setSubscribed(subscribed);
+        return routes;
+    }
+
+    /**
      * 判断是否添加数据还是默认数据
      * @param expressResult 数据
      * @param shipTime 默认时间

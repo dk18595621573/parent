@@ -14,6 +14,8 @@ public class LogisticsStatus {
 
     /** 未查询到 */
     public static final String STATE_NO = "-1";
+    /** 手机号错误 */
+    public static final String PHONE_ERROR = "-2";
 
     /**
      * 签收子状态
@@ -141,12 +143,21 @@ public class LogisticsStatus {
 
 
     /**
+     * 是否是手机号错误
+     * @param state 状态
+     * @return true：手机号错误 false：不是手机号错误
+     */
+    public static boolean phone(String state) {
+        return Objects.equals(LogisticsStatus.PHONE_ERROR, state);
+    }
+
+    /**
      * 判断是否未查询到数据
      * @param state 状态
      * @return true：未查询到 false：有数据
      */
     public static boolean query(String state) {
-        return Objects.equals(LogisticsStatus.STATE_NO, state);
+        return Objects.equals(LogisticsStatus.STATE_NO, state) || Objects.equals(LogisticsStatus.PHONE_ERROR, state);
     }
 
     /**
