@@ -4,6 +4,7 @@ import com.cloud.common.constant.HttpStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel("接口统一返回对象")
+@NoArgsConstructor
 public class Result<T> implements Serializable {
 
     private static final String SUCCESS_MSG = "操作成功";

@@ -1,5 +1,6 @@
 package com.cloud.idempotent.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * @date 2023/2/27
  */
 @Data
-public class IdempotentResult implements Serializable {
+public class IdempotentResult<T> implements Serializable {
 
     /**
      * 接口响应是否成功
@@ -21,20 +22,21 @@ public class IdempotentResult implements Serializable {
     /**
      * 接口响应结果
      */
-    private Object data;
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+    private T data;
 
     public IdempotentResult() {}
 
-    private IdempotentResult(final Boolean success, final Object data) {
+    private IdempotentResult(final Boolean success, final T data) {
         this.success = success;
         this.data = data;
     }
 
-    public static IdempotentResult success(final Object data) {
-        return new IdempotentResult(true, data);
+    public static <T> IdempotentResult<T> success(final T data) {
+        return new IdempotentResult<>(true, data);
     }
 
-    public static IdempotentResult error() {
-        return new IdempotentResult(false, null);
+    public static <T> IdempotentResult<T> error() {
+        return new IdempotentResult<>(false, null);
     }
 }

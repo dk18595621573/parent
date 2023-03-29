@@ -1,5 +1,6 @@
 package com.cloud.idempotent.service;
 
+import cn.hutool.json.JSONUtil;
 import com.cloud.common.utils.RedisKeyUtil;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
@@ -41,19 +42,19 @@ public class IdempotentServiceImpl implements IdempotentService {
 
     @Override
     public void save(final String module, final String id, final Object result) {
-        redisCache.setCacheObject(genCacheKey(module, id), JsonUtil.toJson(result), keepTime, TimeUnit.DAYS);
+        redisCache.setCacheObject(genCacheKey(module, id), result, keepTime, TimeUnit.DAYS);
     }
 
     @Override
-    public IdempotentResult load(final String module, final String id, final Class<?> clazz) {
-        String object = redisCache.getCacheObject(genCacheKey(module, id));
+    public <T> IdempotentResult<T> load(final String module, final String id, final Class<T> clazz) {
+        T object = redisCache.getCacheObject(genCacheKey(module, id));
         if (Objects.isNull(object)) {
             return IdempotentResult.error();
         }
-        if (StringUtils.equals("null", object)) {
+        if (clazz == Void.class) {
             return IdempotentResult.success(null);
         }
-        return IdempotentResult.success(JsonUtil.parse(object, clazz));
+        return IdempotentResult.success(object);
     }
 
     private String genCacheKey(final String module, final String id) {
