@@ -1,0 +1,30 @@
+package ${packageName}.convert;
+
+import ${packageName}.model.${ClassName}Param;
+import ${packageName}.model.${ClassName}Query;
+import ${packageName}.model.${ClassName}BO;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+
+/**
+ * ${functionName}数据转换.
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Mapper
+public interface ${ClassName}Convert {
+
+    ${ClassName}Convert INSTANCE = Mappers.getMapper(${ClassName}Convert.class);
+
+    ${ClassName} to${ClassName}(${ClassName}Param ${className}Param);
+
+    List<${ClassName}> to${ClassName}s(List<${ClassName}Param> ${className}ParamList);
+
+    ${ClassName}BO to${ClassName}BO(${ClassName} ${className});
+
+    List<${ClassName}BO> to${ClassName}BOs(List<${ClassName}> ${className}List);
+
+}

@@ -74,11 +74,18 @@ public class VelocityUtils {
     public static List<String> getTemplateList(String tplCategory) {
         List<String> templates = new ArrayList<String>();
         templates.add("vm/java/domain.java.vm");
+        templates.add("vm/java/bo.java.vm");
+        templates.add("vm/java/param.java.vm");
+        templates.add("vm/java/query.java.vm");
+        templates.add("vm/java/vo.java.vm");
+        templates.add("vm/java/form.java.vm");
+        templates.add("vm/java/queryForm.java.vm");
         templates.add("vm/java/mapper.java.vm");
         templates.add("vm/java/service.java.vm");
         templates.add("vm/java/serviceImpl.java.vm");
 //        templates.add("vm/java/controller.java.vm");
         templates.add("vm/java/manager.java.vm");
+        templates.add("vm/java/convert.java.vm");
         templates.add("vm/xml/mapper.xml.vm");
         templates.add("vm/sql/sql.vm");
         templates.add("vm/js/api.js.vm");
@@ -114,11 +121,25 @@ public class VelocityUtils {
 
         if (template.contains("domain.java.vm")) {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
+        } else if (template.contains("bo.java.vm")) {
+            fileName = StringUtils.format("{}/model/{}BO.java", javaPath, className);
+        } else if (template.contains("param.java.vm")) {
+            fileName = StringUtils.format("{}/model/{}Param.java", javaPath, className);
+        } else if (template.contains("query.java.vm")) {
+            fileName = StringUtils.format("{}/model/{}Query.java", javaPath, className);
+        } else if (template.contains("vo.java.vm")) {
+            fileName = StringUtils.format("{}/model/{}VO.java", javaPath, className);
+        } else if (template.contains("form.java.vm")) {
+            fileName = StringUtils.format("{}/model/{}Form.java", javaPath, className);
+        } else if (template.contains("queryForm.java.vm")) {
+            fileName = StringUtils.format("{}/model/{}QueryForm.java", javaPath, className);
         }
         if (template.contains("sub-domain.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, genTable.getSubTable().getClassName());
         } else if (template.contains("mapper.java.vm")) {
             fileName = StringUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
+        } else if (template.contains("convert.java.vm")) {
+            fileName = StringUtils.format("{}/convert/{}Convert.java", javaPath, className);
         } else if (template.contains("service.java.vm")) {
             fileName = StringUtils.format("{}/service/I{}Service.java", javaPath, className);
         } else if (template.contains("manager.java.vm")) {

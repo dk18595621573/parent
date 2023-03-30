@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cloud.common.core.page.PageParam;
 import com.cloud.common.utils.bean.ReflectUtils;
 import com.cloud.common.annotation.QueryField;
-import com.cloud.dal.model.SortBy;
+import com.cloud.common.core.model.SortBy;
 import com.cloud.dal.support.QueryCondition;
 import lombok.extern.slf4j.Slf4j;
 

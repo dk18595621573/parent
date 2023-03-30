@@ -18,17 +18,82 @@ import ${packageName}.domain.${subClassName};
 import ${packageName}.manager.${ClassName}Manager;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
+import com.cloud.common.core.page.Page;
+import com.cloud.common.core.page.PageParam;
+import com.cloud.common.core.model.SortBy;
+import com.cloud.dal.mybatis.PageUtils;
+import com.cloud.dal.mybatis.DynamicCondition;
+import ${packageName}.model.${ClassName}Param;
+import ${packageName}.model.${ClassName}Query;
+import ${packageName}.model.${ClassName}BO;
+import ${packageName}.convert.${ClassName}Convert;
 
 /**
- * ${functionName}Service业务层处理
+ * ${functionName}Service业务层处理.
  * 
  * @author ${author}
  * @date ${datetime}
  */
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
-{
+public class ${ClassName}ServiceImpl implements I${ClassName}Service {
+
     @Autowired
     private ${ClassName}Manager ${className}Manager;
+
+    @Override
+    public ${ClassName}BO save(final ${ClassName}Param param) {
+        ${ClassName} ${className} = ${ClassName}Convertor.INSTANCE.to${ClassName}(param);
+        boolean save = ${className}Manager.save(${className});
+        if (save) {
+            return ${ClassName}Convertor.INSTANCE.to${ClassName}BO(${className});
+        }
+        return null;
+    }
+
+    @Override
+    public boolean delete(final ${ClassName}Query query) {
+        Objects.requireNonNull(query, "query不能为空");
+        return ${className}Manager.remove(DynamicCondition.toWrapper(query)) > 0;
+    }
+
+    @Override
+    public boolean update(final ${ClassName}Param param, final ${ClassName}Query query) {
+        ${ClassName} ${className} = ${ClassName}Convertor.INSTANCE.to${ClassName}(param);
+        return ${className}Manager.update(${className}, DynamicCondition.toWrapper(query)) > 0;
+    }
+
+    @Override
+    public ${ClassName}BO findOne(final ${ClassName}Query queryParam) {
+        List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(queryParam));
+        if (CollectionUtil.isNotEmpty(list)) {
+            return ${ClassName}Convertor.INSTANCE.to${ClassName}BO(list.get(0));
+        }
+        return null;
+    }
+
+    @Override
+    public ${ClassName}BO findOne(final ${ClassName}Query query, final SortBy sort) {
+        List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(query, sort));
+        if (CollectionUtil.isNotEmpty(list)) {
+            return ${ClassName}Convertor.INSTANCE.to${ClassName}BO(list.get(0));
+        }
+        return null;
+    }
+
+    @Override
+    public List<${ClassName}BO> findAll(final ${ClassName}Query query, final SortBy sort) {
+        List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(query, sort));
+        if (CollectionUtil.isNotEmpty(list)) {
+            return ${ClassName}Convertor.INSTANCE.to${ClassName}BOs(list);
+        }
+        return null;
+    }
+
+    @Override
+    public Page<${ClassName}BO> pageList(final ${ClassName}Query query, final PageParam pageParam) {
+        PageUtils.startPage(pageParam);
+        List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(query));
+        return PageUtils.fromList(${ClassName}Convertor.INSTANCE.to${ClassName}BOs(list));
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.cloud.dal.model;
+package com.cloud.common.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
