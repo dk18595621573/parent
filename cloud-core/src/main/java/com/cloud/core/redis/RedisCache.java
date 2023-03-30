@@ -8,7 +8,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -304,7 +310,7 @@ public class RedisCache {
         }
         StringBuilder serialNumber = new StringBuilder(prefix).append(DateUtil.today().replace("-", ""));
         atomicLong.expireAt(DateUtil.endOfDay(date));
-        long id = atomicLong.getAndIncrement();
+        long id = atomicLong.incrementAndGet();
         if (id >= thousand){
             serialNumber.append(id);
         } else if (id >= hundred) {
