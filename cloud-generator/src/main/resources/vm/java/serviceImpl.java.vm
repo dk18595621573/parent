@@ -93,7 +93,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     public Page<${ClassName}BO> pageList(final ${ClassName}Query query, final PageParam pageParam) {
         PageUtils.startPage(pageParam);
         List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(query));
-        return PageUtils.fromList(${ClassName}Convertor.INSTANCE.to${ClassName}BOs(list));
+        return PageUtils.fromList(list, ${ClassName}Convertor.INSTANCE::to${ClassName}BOs);
     }
 
 }
