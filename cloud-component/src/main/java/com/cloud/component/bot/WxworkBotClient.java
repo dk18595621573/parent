@@ -336,7 +336,7 @@ public class WxworkBotClient {
                 return null;
             }
             if (response.getCode() != BotResponse.SUCCESS_CODE) {
-                throw new WxworkBotException(response.getMessage());
+                throw new WxworkBotException(response.getCode(), response.getMessage());
             }
             return (T) response;
         } else {
@@ -347,7 +347,7 @@ public class WxworkBotClient {
             }
             ApiResponse response = (ApiResponse) object;
             if (response.getErrcode() != ApiResponse.SUCCESS_CODE) {
-                throw new WxworkBotException(response.getErrmsg());
+                throw new WxworkBotException(response.getErrcode(), response.getErrmsg());
             }
             return (T) object;
         }
