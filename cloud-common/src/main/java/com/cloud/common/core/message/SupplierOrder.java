@@ -342,6 +342,11 @@ public class SupplierOrder implements Serializable {
          */
         private String releaseTime;
 
+        /**
+         * 仓库id集合.
+         */
+        private Long[] warehouseIds;
+
     }
 
 }

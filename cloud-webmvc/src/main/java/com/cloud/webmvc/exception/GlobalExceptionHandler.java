@@ -34,11 +34,21 @@ public class GlobalExceptionHandler {
     /**
      * 权限校验异常
      */
-    @ExceptionHandler(AuthorizationException.class)
-    public Result<?> handleAccessDeniedException(AuthorizationException e, HttpServletRequest request) {
+    @ExceptionHandler(AuthenticationException.class)
+    public Result<?> handleAuthorizeException(AuthenticationException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',权限校验失败'{}'", requestURI, e.getMessage());
         return Result.error(HttpStatus.FORBIDDEN, "没有权限，请联系管理员授权");
+    }
+
+    /**
+     * 授权校验异常
+     */
+    @ExceptionHandler(AuthorizationException.class)
+    public Result<?> handleAuthorizationException(AuthorizationException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',用户认证失败'{}'", requestURI, e.getMessage());
+        return Result.error(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
     /**

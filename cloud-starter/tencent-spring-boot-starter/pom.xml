@@ -53,6 +53,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- 腾讯云即时通讯IM-->
+        <dependency>
+            <groupId>com.tencentcloudapi.im</groupId>
+            <artifactId>tencentcloud-im-sdk-java</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

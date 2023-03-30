@@ -16,4 +16,10 @@ public interface BotConsts {
      * 错误码：请求太频繁
      */
     int ERROR_CODE_FREQUENT = -100;
+
+    /**
+     * 错误码：无效的chatId
+     */
+    int ERROR_CODE_INVALID = -1;
+
 }

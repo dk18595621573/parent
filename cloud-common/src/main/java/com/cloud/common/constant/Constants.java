@@ -130,6 +130,11 @@ public class Constants {
     public static final Long ROLE_ADMIN_ID = 1L;
 
     /**
+     * 请求平台.
+     */
+    public static final String PLATFORM = "plat-form";
+
+    /**
      * 登录用户ID
      */
     public static final String LOGIN_USERID = "userId:";

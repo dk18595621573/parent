@@ -124,6 +124,8 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 订单 10：无实物订单 11：代发订单 12：
          * 云商盟信用购 13：待确认订单
          * 是否必填：是
+         *
+         * @see com.cloud.component.ecss.consts.ECSSOrderEnum
          */
         @JacksonXmlProperty(localName = "orderCode")
         private Integer orderCode;
@@ -142,6 +144,8 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 待制单 19：充值成功 20：充值失败 21：
          * 充值中
          * 是否必填：是
+         *
+         * @see com.cloud.component.ecss.consts.ECSSOrderEnum
          */
         @JacksonXmlProperty(localName = "orderState")
         private String orderState;
@@ -200,6 +204,8 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 0:未区分 1: PC 2: APP 3:WAP
          * 4 :IPAD 5 :TV 6:乐芃
          * 是否必填：是
+         *
+         * @see com.cloud.component.ecss.consts.ECSSOrderEnum
          */
         @JacksonXmlProperty(localName = "paApp")
         private Integer paApp;
@@ -218,6 +224,8 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 0：未支付 1：已支付 2：待退款 3：已
          * 退款 4：已取消 5：正在支付
          * 是否必填：是
+         *
+         * @see com.cloud.component.ecss.consts.ECSSOrderEnum
          */
         @JacksonXmlProperty(localName = "payStatus")
         private String payStatus;
@@ -236,6 +244,8 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 浦发支付 25：云闪付 26：平安支付 27：
          * 农行支付 99：默认
          * 是否必填：是
+         *
+         * @see com.cloud.component.ecss.consts.ECSSOrderEnum
          */
         @JacksonXmlProperty(localName = "payType")
         private Integer payType;
@@ -264,6 +274,8 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 16：京东
          * 17：和包
          * 是否必填：否
+         *
+         * @see com.cloud.component.ecss.consts.ECSSOrderEnum
          */
         @JacksonXmlProperty(localName = "payInstitution")
         private Integer payInstitution;
@@ -402,6 +414,8 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
          * 家通 35：秦邦物流 36：速必达 37：海
          * 辰物流 38：美团
          * 是否必填：否
+         *
+         * @see com.cloud.component.ecss.consts.ECSSExpressEnum
          */
         @JacksonXmlProperty(localName = "express")
         private Integer express;
@@ -431,6 +445,14 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
         private String province;
 
         /**
+         * 省代号.
+         * 如：国家省代号
+         * 是否必填：否
+         */
+        @JacksonXmlProperty(localName = "provinceCode")
+        private String provinceCode;
+
+        /**
          * 市.
          * 如：广州（广州市）
          * 是否必填：是
@@ -439,12 +461,28 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
         private String city;
 
         /**
+         * 市代号.
+         * 国家市代号
+         * 是否必填：否
+         */
+        @JacksonXmlProperty(localName = "cityCode")
+        private String cityCode;
+
+        /**
          * 区/县码.
          * 如：天河（天河区）
          * 是否必填：是
          */
         @JacksonXmlProperty(localName = "county")
         private String county;
+
+        /**
+         * 区代号.
+         * 国家区代号
+         * 是否必填：是
+         */
+        @JacksonXmlProperty(localName = "countyCode")
+        private String countyCode;
 
         /**
          * 地址（除省市区外）.

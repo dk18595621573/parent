@@ -5,6 +5,7 @@ import com.cloud.component.ecss.bean.response.common.BaseResult;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -21,6 +22,7 @@ import java.util.List;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JacksonXmlRootElement(localName = "response")
 public class OrderCreateResponse extends ECSSResponse {
 
     private static final long serialVersionUID = -889303419942088773L;
@@ -38,6 +40,7 @@ public class OrderCreateResponse extends ECSSResponse {
     @Data
     @Accessors(chain = true)
     @EqualsAndHashCode(callSuper = true)
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Result extends BaseResult {
         private static final long serialVersionUID = -5925571455738929136L;
 

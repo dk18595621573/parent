@@ -90,6 +90,12 @@ public enum OrderSubStatus implements BaseEnum {
     REIMBURSE_HS(76,"华盛退款订单"),
     /** 华盛订单退货拦截 */
     RETURN_INTERCEPTION_HS(77,"华盛退货拦截"),
+
+    /** 华盛订单退款 */
+    REIMBURSE_GY(78,"广移退款订单"),
+    /** 华盛订单退货拦截 */
+    RETURN_INTERCEPTION_GY(79,"广移退货拦截"),
+
     /** 补全地址 */
     ADDRESS_COMPLETED_ERROR(81, "补全地址（未补全）"),
 
@@ -99,6 +105,8 @@ public enum OrderSubStatus implements BaseEnum {
     IMEI_ERROR(93, "串码错误"),
     IMEI_INPUT_ERROR(94,"序列号错误"),
     IMEI_NOT_EXIST(95,"序列号不存在"),
+    ERROR_MODEL_ERROR(96, "型号颜色错误"),
+    IMEI_ABNORMAL(97, "串码异常"),
 
     /** 物流异常 */
     LOGISTICS_DESTINATION_ABNORMAL(121, "物流目的地异常"),
@@ -107,6 +115,7 @@ public enum OrderSubStatus implements BaseEnum {
     LOGISTICS_NO_SIGN(124, "签收异常"),
     LOGISTICS_KNOTTY(125, "疑难"),
     NO_SIGN_DAYS(126, "7天未签收异常"),
+    LOGISTICS_PHONE_SUFFIX(127, "手机号后4位错误"),
 
     /** 售后 */
     AFTERMARKET_WAIT_INSPECTION_GOODS(100, "售后-待验货(待寄回)"),
@@ -119,6 +128,7 @@ public enum OrderSubStatus implements BaseEnum {
     REVOKE_DELIVERED(134, "待发货撤销"),
     REVOKE_INQUIRY(135, "群接龙撤销出价"),
     ACTUAL_OVERTIME_STREAMING(136, "实单采购超时流拍"),
+    REVOKE_IN_QUOTATION(137,"报价中撤销"),
 
     /** 未追回订单 */
     NOT_RECOVERED_WAIT_INSPECTION_GOODS(140, "未追回订单-待验货(待寄回)"),

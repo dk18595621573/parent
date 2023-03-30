@@ -30,7 +30,7 @@ public class ExpressResult implements Serializable {
     private String com;
 
     /**
-     * 快递单当前状态，默认为0在途，1揽收，2疑难，3签收，4退签，5派件，8清关，14拒签等10个基础物流状态，如需要返回高级物流状态，请参考 resultv2 传值
+     * 快递单当前状态，默认为 -2手机号错误，-1未查询到物流，0在途，1揽收，2疑难，3签收，4退签，5派件，8清关，14拒签等10个基础物流状态，如需要返回高级物流状态，请参考 resultv2 传值
      */
     private String state;
 

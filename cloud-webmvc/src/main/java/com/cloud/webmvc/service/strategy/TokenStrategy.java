@@ -17,11 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface TokenStrategy {
 
-    long MILLIS_SECOND = 1000L;
-
-    long MILLIS_MINUTE = 60 * MILLIS_SECOND;
-
-    long MILLIS_MINUTE_TEN = 20 * TokenStrategy.MILLIS_MINUTE;
+    long MINUTE_UNIT = 60 * 1000L;
 
     /**
      * 令牌前缀

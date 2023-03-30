@@ -2,9 +2,10 @@ package com.cloud.idempotent.aspect;
 
 import com.cloud.common.utils.RedisKeyUtil;
 import com.cloud.idempotent.annotation.AutoIdempotent;
+import com.cloud.idempotent.exception.IdempotentException;
 import com.cloud.idempotent.model.IdempotentResult;
 import com.cloud.idempotent.service.IdempotentService;
-import com.cloud.idempotent.exception.IdempotentException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,7 +16,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Aspect
+@AllArgsConstructor
 public class IdempotentAspect {
 
     private static final String LOCK_KEY_PREFIX = "IDEMPOTENT_LOCK";
@@ -47,10 +48,8 @@ public class IdempotentAspect {
 
     private static final ParameterNameDiscoverer NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
 
-    @Autowired
     private IdempotentService idempotentService;
 
-    @Autowired
     private RedissonClient redissonClient;
 
     /**
@@ -73,10 +72,10 @@ public class IdempotentAspect {
 
         try {
             if (!lock.tryLock(idempotent.expire(), TimeUnit.SECONDS)) {
-                throw new IdempotentException("正在处理，请稍后再试");
+                throw new IdempotentException(idempotent.message());
             }
             //获取之前处理的结果
-            IdempotentResult idempotentResult = idempotentService.load(idempotent.module(), bizId, idempotent.resultType());
+            IdempotentResult<?> idempotentResult = idempotentService.load(idempotent.module(), bizId, idempotent.resultType());
             if (idempotentResult.getSuccess()) {
                 return idempotentResult.getData();
             }
@@ -86,10 +85,7 @@ public class IdempotentAspect {
             return result;
         } catch (InterruptedException e) {
             log.error("[幂等] - module={}, bizId={}, 获取锁中断:", idempotent.module(), bizId, e);
-            throw new IdempotentException("正在处理，请稍后再试");
-        } catch (IdempotentException e) {
-            log.error("[幂等] - module={}, bizId={}, 业务处理异常:", idempotent.module(), bizId, e);
-            throw e;
+            throw new IdempotentException("未知异常，请稍后再试");
         } catch (Throwable e) {
             log.error("[幂等] - module={}, bizId={}, 业务处理异常:", idempotent.module(), bizId, e);
             if (e instanceof RuntimeException) {
@@ -170,7 +166,7 @@ public class IdempotentAspect {
         EvaluationContext eva;
         Object value;
         for (String key : defKeys) {
-            if (!StringUtils.isEmpty(key)) {
+            if (StringUtils.hasLength(key)) {
                 eva = new MethodBasedEvaluationContext(null, method, paraValues, NAME_DISCOVERER);
                 value = EXP_PARSER.parseExpression(key).getValue(eva);
                 if (Objects.isNull(value)) {

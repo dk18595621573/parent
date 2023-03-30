@@ -19,7 +19,11 @@ public class ExpressProperties {
 
     private String url;
 
+    private String subscribeUrl;
+
     private String key;
+
+    private String secret;
 
     private String customer;
 }

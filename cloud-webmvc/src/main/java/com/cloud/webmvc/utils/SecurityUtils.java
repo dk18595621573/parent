@@ -1,9 +1,8 @@
 package com.cloud.webmvc.utils;
 
-import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.core.model.RequestUser;
-import com.cloud.common.exception.ServiceException;
 import com.cloud.common.threads.RequestThread;
+import com.cloud.webmvc.exception.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +25,7 @@ public class SecurityUtils {
             return getLoginUser().getUserId();
         } catch (Exception e) {
             LOGGER.warn("获取用户ID异常", e);
-            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
+            throw new AuthorizationException("请先登录后再操作");
         }
     }
 
@@ -38,7 +37,7 @@ public class SecurityUtils {
             return getLoginUser().getDeptId();
         } catch (Exception e) {
             LOGGER.warn("获取部门ID异常", e);
-            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
+            throw new AuthorizationException("请先登录后再操作");
         }
     }
 
@@ -50,7 +49,7 @@ public class SecurityUtils {
             return getLoginUser().getUsername();
         } catch (Exception e) {
             LOGGER.warn("获取用户名异常", e);
-            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
+            throw new AuthorizationException("请先登录后再操作");
         }
     }
 
@@ -61,7 +60,7 @@ public class SecurityUtils {
         RequestUser user = RequestThread.getUser();
         if (Objects.isNull(user)) {
             LOGGER.warn("获取登录用户信息失败");
-            throw new ServiceException("请先登录后再操作", HttpStatus.UNAUTHORIZED);
+            throw new AuthorizationException("请先登录后再操作");
         }
         return user;
     }

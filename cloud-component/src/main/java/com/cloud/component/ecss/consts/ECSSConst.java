@@ -1,5 +1,9 @@
 package com.cloud.component.ecss.consts;
 
+import cn.hutool.core.collection.ListUtil;
+
+import java.util.List;
+
 /**
  * ECSS平台常量.
  *
@@ -20,6 +24,19 @@ public interface ECSSConst {
     String SHOP_ID_KEY = "shopId";
     String XML_KEY = "xml";
 
+    /*************** 常量 ****************/
+
+    int ZERO = 0;
+    int ONE = 1;
+    int TWO = 2;
+    int THREE = 3;
+    int FOUR = 4;
+    int FIVE = 5;
+    String YES = "0";
+    String NO = "1";
+
+    List<String> IGNORE_KEY = ListUtil.toList(ECSSConst.SHOP_ID_KEY, ECSSConst.APP_SECRET_KEY, ECSSConst.XML_KEY, ECSSConst.SIGN_KEY);
+
     /*************** 请求参数常量 ****************/
 
     // MD5加密方式
@@ -28,6 +45,5 @@ public interface ECSSConst {
     /*************** 响应参数常量 ****************/
 
     String RESULT_KEY = "result";
-    String ERR_MSG = "ErrMsg:";
 
 }

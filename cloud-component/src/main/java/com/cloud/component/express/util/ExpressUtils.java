@@ -23,6 +23,9 @@ import java.util.Objects;
 @UtilityClass
 public class ExpressUtils {
 
+    /** 快递100 订阅地址 */
+    public static final String EXPRESS_CALLBACK_URL = "%s/oms/express/callbackExpress?orderId=1&expressCode=1&expressNo=1&cellphone=1";
+
     /** 快递单号最小长度 */
     public final static int EXPRESS_NO_MIN = 6;
     /** 快递单号最大长度 */
@@ -93,6 +96,23 @@ public class ExpressUtils {
         routes.setCom(expressCode);
         routes.setNu(expressNo);
         routes.setState(LogisticsStatus.STATE_NO);
+        routes.setSubscribed(subscribed);
+        return routes;
+    }
+
+    /**
+     * 默认快递
+     * @param expressCode 快递公司
+     * @param expressNo 快递单号
+     * @param subscribed 快递是否订阅
+     * @param state 状态
+     * @return 详情信息
+     */
+    public ExpressResult defaultExpress(String expressCode, String expressNo, Boolean subscribed, String state) {
+        ExpressResult routes = new ExpressResult();
+        routes.setCom(expressCode);
+        routes.setNu(expressNo);
+        routes.setState(state);
         routes.setSubscribed(subscribed);
         return routes;
     }

@@ -1,6 +1,7 @@
 package com.cloud.component.ecss.bean.request;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * ECSS API 请求.
@@ -30,6 +31,13 @@ public interface BaseRequest<T> extends Serializable {
      * @return Json格式请求参数
      */
     String getJsonParams();
+
+    /**
+     * 获取Map格式请求参数.
+     *
+     * @return map格式请求参数
+     */
+    Map<String, Object> getParams();
 
     /**
      * 获取具体响应实现类的定义.

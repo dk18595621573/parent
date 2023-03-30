@@ -14,7 +14,7 @@ public enum InterfaceEnum implements BaseEnum {
 
 	HUAWEI_YB(10, "huawei_yb"),
 	HONOR_YB(20, "honor_yb"),
-	APPLE_WARRANTY_YB(30, "apple_warranty_yb"),
+	APPLE_WARRANTY_YB(30, "apple_warranty_plus_yb"),
 	SUMSUNG_YB(40, "sumsung_yb"),
 	XIAOMI_YB(50, "xiaomi_yb"),
 	;

@@ -324,16 +324,15 @@ public class FadadaClient {
      * 4002：文档已删除（已下载）
      * 4003：其他原因
      */
-    public FadadaResultResponse downLoadContract(String contractId, String path) {
+    public String downLoadContract(String contractId) {
         DownloadPdfParams params = new DownloadPdfParams();
         // 合同编号
         params.setContractId(contractId);
         //如下，传setPath参数可以直接保存文件到本地，不传则返回url
         // 指定路径，如：D:\\pdf\\uuidNew.pdf
-        params.setPath(path);
         String result = fddBaseClient.invokeDownloadPdf(params);
         log.info("法大大返回参数，合同下载：{}", result);
-        return JsonUtil.parse(result, FadadaResultResponse.class);
+        return result;
     }
 
     /**
@@ -546,6 +545,17 @@ public class FadadaClient {
         } catch (Exception var3) {
             throw new RuntimeException(var3);
         }
+    }
+
+    /**
+     * 自动签署骑缝章
+     *
+     * @param params 入参
+     * @return 返回信息
+     */
+    public FadadaResultResponse docusignAcross(DocusignAcrossPageParams params) {
+        String result = fddExtraClient.invokeDocusignAcrossPage(params);
+        return JsonUtil.parse(result, FadadaResultResponse.class);
     }
 
 }

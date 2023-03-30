@@ -1,7 +1,13 @@
 package ${packageName}.service;
 
+import com.cloud.common.core.page.Page;
+import com.cloud.common.core.page.PageParam;
+import com.cloud.common.core.model.SortBy;
+import ${packageName}.model.${ClassName}Param;
+import ${packageName}.model.${ClassName}Query;
+import ${packageName}.model.${ClassName}BO;
+
 import java.util.List;
-import ${packageName}.domain.${ClassName};
 
 /**
  * ${functionName}Service接口
@@ -10,5 +16,65 @@ import ${packageName}.domain.${ClassName};
  * @date ${datetime}
  */
 public interface I${ClassName}Service {
+
+    /**
+     * 新增.
+     *
+     * @param param param
+     * @return 结果
+     */
+    ${ClassName}BO save(${ClassName}Param param);
+
+    /**
+     * 删除.
+     *
+     * @param query query
+     * @return boolean
+     */
+    boolean delete(${ClassName}Query query);
+
+    /**
+     * 更新.
+     *
+     * @param param param
+     * @param query query
+     * @return boolean
+     */
+    boolean update(${ClassName}Param param, ${ClassName}Query query);
+
+    /**
+     * 动态查询单个.
+     *
+     * @param query query
+     * @return 结果
+     */
+    ${ClassName}BO findOne(${ClassName}Query query);
+
+    /**
+     * 动态查询单个.
+     *
+     * @param query query
+     * @param sort sort
+     * @return 结果
+     */
+    ${ClassName}BO findOne(${ClassName}Query query, SortBy sort);
+
+    /**
+     * 动态排序查询所有.
+     *
+     * @param query query
+     * @param sort sort
+     * @return 结果
+     */
+    List<${ClassName}BO> findAll(${ClassName}Query query, SortBy sort);
+
+    /**
+     * 分页查询.
+     *
+     *  @param query query
+     *  @param pageParam pageParam
+     *  @return 结果
+     */
+    Page<${ClassName}BO> pageList(${ClassName}Query query, PageParam pageParam);
 
 }

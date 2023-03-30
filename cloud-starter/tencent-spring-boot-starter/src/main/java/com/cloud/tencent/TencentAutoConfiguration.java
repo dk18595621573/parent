@@ -1,6 +1,7 @@
 package com.cloud.tencent;
 
 import com.cloud.tencent.config.CosConfig;
+import com.cloud.tencent.config.ImConfig;
 import com.cloud.tencent.config.TencentCloudConfig;
 import com.cloud.tencent.properties.TencentProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Import;
  * @author zenghao
  */
 @Configuration
-@Import(value = {CosConfig.class, TencentCloudConfig.class})
+@Import(value = {CosConfig.class, TencentCloudConfig.class, ImConfig.class})
 @EnableConfigurationProperties(TencentProperties.class)
 public class TencentAutoConfiguration {
 

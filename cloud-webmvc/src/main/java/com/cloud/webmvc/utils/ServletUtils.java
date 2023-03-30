@@ -21,6 +21,21 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 public class ServletUtils {
+
+    /**
+     * 获取String参数
+     */
+    public static String getHeader(String name) {
+        return getRequest().getHeader(name);
+    }
+
+    /**
+     * 获取String参数
+     */
+    public static String getHeader(String name, String defaultValue) {
+        return Convert.toStr(getRequest().getHeader(name), defaultValue);
+    }
+
     /**
      * 获取String参数
      */

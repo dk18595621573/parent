@@ -5,6 +5,8 @@ import com.cloud.component.bot.response.BotResponse;
 import com.cloud.component.bot.response.ChatResponse;
 import com.cloud.component.bot.response.ContactWayAddResponse;
 import com.cloud.component.bot.response.ContactWayResponse;
+import com.cloud.component.bot.response.GroupBotResponse;
+import com.cloud.component.bot.response.MessageSendResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,9 +23,12 @@ public enum BotApiEnums implements BotApi {
     BOT_LIST(BotConsts.BOT_API,  Method.GET, "/bot/list", BotResponse.class),
     CONCAT_LIST(BotConsts.BOT_API, Method.GET, "/contact/list", BotResponse.class),
     MESSAGE_SEND(BotConsts.BOT_API, Method.POST, "/message/send", BotResponse.class),
+    BROADCAST_CREATE(BotConsts.BOT_API, Method.POST, "/broadcast/create", BotResponse.class),
     GET_CHATID(BotConsts.WXWORK_API, Method.GET, "/api/v1/instantReply/getChatId", ChatResponse.class),
     CONTACTWAY_ADD(BotConsts.WXWORK_API, Method.POST, "/api/v1/contactWay/add", ContactWayAddResponse.class),
     CONTACTWAY_GET(BotConsts.WXWORK_API, Method.GET, "/api/v1/contactWay/get", ContactWayResponse.class),
+    WXWORK_MESSAGE_SEND(BotConsts.WXWORK_API, Method.POST, "/api/v2/message/send", MessageSendResponse.class),
+    GET_GROUP_BOTS(BotConsts.WXWORK_API, Method.GET, "/api/v1/bot/getGroupBots", GroupBotResponse.class),
     ;
 
     /**
