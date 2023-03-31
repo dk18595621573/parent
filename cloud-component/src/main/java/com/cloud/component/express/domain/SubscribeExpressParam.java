@@ -2,12 +2,14 @@ package com.cloud.component.express.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 订阅快递信息from
  * @author nlsm
  */
 @Data
-public class SubscribeExpressParam {
+public class SubscribeExpressParam implements Serializable {
 
     /**
      * 订单编码
