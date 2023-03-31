@@ -86,5 +86,17 @@ public class InterceptParams implements Serializable {
 
         /** 电话，如 18372266052 */
         private String phone;
+
+        public NewDestAddress() {
+        }
+
+        public NewDestAddress(String province, String city, String county, String address, String contact, String phone) {
+            this.province = province;
+            this.city = city;
+            this.county = county;
+            this.address = address;
+            this.contact = contact;
+            this.phone = phone;
+        }
     }
 }
