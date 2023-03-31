@@ -93,6 +93,10 @@ public enum SystemParams {
      */
     WECHAT_SHOW_NUM("wechat.show.num","5"),
     /**
+     * 交易市场展示数限制的品牌
+     */
+    DISPLAY_LIMITED_BRAND("display.limited.brand",""),
+    /**
      * 小程序推荐列表随机数最小值.
      */
     APPLET_RECOMMEND_MIN_COUNT("applet.recommend.min.count", "5"),
