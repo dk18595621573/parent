@@ -348,6 +348,19 @@ public class OrderCreateRequest extends BaseECSSRequest<OrderCreateResponse> imp
         @JacksonXmlProperty(localName = "virtualGoods")
         private Integer virtualGoods;
 
+        /**
+         * 合约机类型.
+         * 0:无 1:信用购 2:优惠购机 3:大顺差
+         * 4:积分购 5:信用购服务包 6:鉴权优惠
+         * 7:号码换卡 8:号码补卡 9:5G 金币 10
+         * 其他合约 11：顺差让利 12：顺差和金币
+         * 如果合约机类型是非 0 的，订单类型必须
+         * 填合约机
+         * 是否必填：否
+         */
+        @JacksonXmlProperty(localName = "businessType")
+        private Integer businessType;
+
     }
 
     /**
