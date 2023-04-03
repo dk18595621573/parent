@@ -464,7 +464,7 @@ public class OrderInquiryResponse extends ECSSResponse {
          * Ecss 审单人 账号
          */
         @JacksonXmlProperty(localName = "examinePerson")
-        private Integer examinePerson;
+        private String examinePerson;
 
         /**
          * 最后修改账号.
