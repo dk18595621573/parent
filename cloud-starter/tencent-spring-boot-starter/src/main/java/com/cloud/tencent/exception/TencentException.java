@@ -15,6 +15,11 @@ public class TencentException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    public TencentException(final String message, final Integer errorCode) {
+        super(message);
+        this.errorCode = String.valueOf(errorCode);
+    }
+
     public TencentException(final String message, final String errorCode, final Throwable cause) {
         super(message, cause);
         this.errorCode = errorCode;

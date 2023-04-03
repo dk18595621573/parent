@@ -35,6 +35,7 @@ public class ImConfig {
         defaultClient.setSdkappid(imProperties.getSdkAppId());
         defaultClient.setIdentifier(imProperties.getAdminUserId());
         defaultClient.setKey(imProperties.getSecretKey());
+        Configuration.setDefaultApiClient(defaultClient);
         return new ImService(defaultClient, imProperties);
     }
 
