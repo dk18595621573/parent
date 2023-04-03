@@ -22,4 +22,14 @@ public interface BotConsts {
      */
     int ERROR_CODE_INVALID = -1;
 
+    /**
+     * 5：私聊
+     */
+    int PRIVATE_CHAT = 5;
+
+    /**
+     * 6：群聊
+     */
+    int GROUP_CHAT = 6;
+
 }
