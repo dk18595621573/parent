@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthorizationException.class)
     public Result<?> handleAuthorizationException(AuthorizationException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',用户认证失败'{}'", requestURI, e.getMessage());
+        log.warn("请求地址'{}',用户认证失败'{}'", requestURI, e.getMessage());
         return Result.error(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 
