@@ -52,4 +52,13 @@ public interface ImConsts {
     String WX_MSG_TYPE_IMAGE = "image";
     String WX_MSG_TYPE_APPLET_CARD = "miniprogrampage";
 
+    /**
+     * 回调请求参数KEY.
+     */
+    String SDK_APPID_KEY = "SdkAppid";
+    String CALLBACK_COMMAND_KEY = "CallbackCommand";
+    String CONTENT_TYPE_KEY = "contenttype";
+    String CLIENT_IP_KEY = "ClientIP";
+    String OPT_PLAT_FORM_KEY = "OptPlatform";
+
 }
