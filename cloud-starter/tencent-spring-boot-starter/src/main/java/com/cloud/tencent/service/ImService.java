@@ -3,23 +3,30 @@ package com.cloud.tencent.service;
 import cn.hutool.core.util.RandomUtil;
 import com.cloud.tencent.exception.TencentException;
 import com.cloud.tencent.properties.ImProperties;
-import com.tencentcloudapi.im.ApiClient;
 import com.tencentcloudapi.im.ApiException;
 import com.tencentcloudapi.im.api.AccountApi;
 import com.tencentcloudapi.im.api.GroupApi;
+import com.tencentcloudapi.im.api.MuteApi;
+import com.tencentcloudapi.im.api.OperationApi;
+import com.tencentcloudapi.im.api.PortraitApi;
+import com.tencentcloudapi.im.api.RecentContactApi;
+import com.tencentcloudapi.im.api.SingleChatApi;
+import com.tencentcloudapi.im.model.AddGroupMemberRequest;
+import com.tencentcloudapi.im.model.AddGroupMemberResponse;
 import com.tencentcloudapi.im.model.CommonResponse;
 import com.tencentcloudapi.im.model.CreateGroupRequest;
 import com.tencentcloudapi.im.model.CreateGroupResponse;
+import com.tencentcloudapi.im.model.DeleteGroupMemberRequest;
 import com.tencentcloudapi.im.model.DestroyGroupRequest;
 import com.tencentcloudapi.im.model.MultiAccountImportRequest;
 import com.tencentcloudapi.im.model.MultiAccountImportResponse;
+import com.tencentcloudapi.im.model.PortraitSetRequest;
+import com.tencentcloudapi.im.model.PortraitSetResponse;
 import com.tencentyun.TLSSigAPIv2;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
-
 /**
- * IM服务.
+ * IM客户端服务.
  *
  * @author Luo
  * @date 2023-3-27 13:54:54
@@ -27,16 +34,24 @@ import java.util.List;
 @Slf4j
 public class ImService {
 
-    private final ApiClient apiClient;
-
     private final ImProperties imProperties;
 
+    // 消息相关
+    private final SingleChatApi singleChatApi = new SingleChatApi();
+    // 会话相关
+    private final RecentContactApi recentContactApi = new RecentContactApi();
+    // 账号管理
     private final AccountApi accountApi = new AccountApi();
-
+    // 用户资料
+    private final PortraitApi portraitApi = new PortraitApi();
+    // 群组管理
     private final GroupApi groupApi = new GroupApi();
+    // 全局禁言管理
+    private final MuteApi muteApi = new MuteApi();
+    // 运营管理
+    private final OperationApi operationApi = new OperationApi();
 
-    public ImService(final ApiClient apiClient, final ImProperties imProperties) {
-        this.apiClient = apiClient;
+    public ImService(final ImProperties imProperties) {
         this.imProperties = imProperties;
     }
 
@@ -64,17 +79,27 @@ public class ImService {
 
     /**
      * 导入多个帐号.
-     * 本接口单次最多支持导入100个帐号，同一个帐号重复导入仅会创建1个内部 ID。
-     * 本接口不支持导入帐号的昵称和头像信息，您可以调用 设置资料 接口设置昵称和头像等信息。
      *
-     * @param accounts 账号集合
+     * @param request 请求
+     * @return 结果
      */
-    public List<String> multiAccountImport(final List<String> accounts) {
-        MultiAccountImportRequest request = new MultiAccountImportRequest();
-        request.setAccounts(accounts);
+    public MultiAccountImportResponse multiAccountImport(final MultiAccountImportRequest request) {
         try {
-            MultiAccountImportResponse response = accountApi.multiAccountImport(getRandom(), request);
-            return response.getFailAccounts();
+            return accountApi.multiAccountImport(getRandom(), request);
+        } catch (ApiException e) {
+            throw new TencentException(e.getMessage(), e.getCode());
+        }
+    }
+
+    /**
+     * 设置资料.
+     *
+     * @param request 请求
+     * @return 结果
+     */
+    public PortraitSetResponse portraitSet(final PortraitSetRequest request) {
+        try {
+            return portraitApi.portraitSet(getRandom(), request);
         } catch (ApiException e) {
             throw new TencentException(e.getMessage(), e.getCode());
         }
@@ -83,13 +108,40 @@ public class ImService {
     /**
      * 创建群组.
      *
+     * @param request 请求
+     * @return 结果
      */
-    public void createGroup() {
-        CreateGroupRequest request = new CreateGroupRequest();
-
+    public CreateGroupResponse createGroup(final CreateGroupRequest request) {
         try {
-            CreateGroupResponse response = groupApi.createGroup(getRandom(), request);
+            return groupApi.createGroup(getRandom(), request);
+        } catch (ApiException e) {
+            throw new TencentException(e.getMessage(), e.getCode());
+        }
+    }
 
+    /**
+     * 增加群成员.
+     *
+     * @param request 请求
+     * @return 结果
+     */
+    public AddGroupMemberResponse addGroupMember(final AddGroupMemberRequest request) {
+        try {
+            return groupApi.addGroupMember(getRandom(), request);
+        } catch (ApiException e) {
+            throw new TencentException(e.getMessage(), e.getCode());
+        }
+    }
+
+    /**
+     * 删除群成员.
+     *
+     * @param request 请求
+     * @return 结果
+     */
+    public CommonResponse deleteGroupMember(final DeleteGroupMemberRequest request) {
+        try {
+            return groupApi.deleteGroupMember(getRandom(), request);
         } catch (ApiException e) {
             throw new TencentException(e.getMessage(), e.getCode());
         }
@@ -98,13 +150,12 @@ public class ImService {
     /**
      * 解散群组.
      *
+     * @param request 请求
+     * @return 结果
      */
-    public void destroyGroup() {
-        DestroyGroupRequest request = new DestroyGroupRequest();
-
+    public CommonResponse destroyGroup(final DestroyGroupRequest request) {
         try {
-            CommonResponse response = groupApi.destroyGroup(getRandom(), request);
-
+            return groupApi.destroyGroup(getRandom(), request);
         } catch (ApiException e) {
             throw new TencentException(e.getMessage(), e.getCode());
         }

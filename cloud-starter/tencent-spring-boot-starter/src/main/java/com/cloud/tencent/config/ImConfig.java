@@ -36,7 +36,7 @@ public class ImConfig {
         defaultClient.setIdentifier(imProperties.getAdminUserId());
         defaultClient.setKey(imProperties.getSecretKey());
         Configuration.setDefaultApiClient(defaultClient);
-        return new ImService(defaultClient, imProperties);
+        return new ImService(imProperties);
     }
 
 }
