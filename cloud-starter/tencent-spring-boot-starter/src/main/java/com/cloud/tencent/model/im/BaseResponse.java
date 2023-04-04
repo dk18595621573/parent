@@ -1,5 +1,6 @@
 package com.cloud.tencent.model.im;
 
+import cn.hutool.core.annotation.Alias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -21,14 +22,26 @@ public class BaseResponse implements Serializable {
 
     private static final long serialVersionUID = 5591572268463163013L;
 
+    /**
+     * 请求处理的结果，OK 表示处理成功，FAIL 表示失败.
+     */
+    @Alias("ActionStatus")
     @JsonProperty("ActionStatus")
     private String actionStatus;
 
-    @JsonProperty("ErrorInfo")
-    private String errorInfo;
-
+    /**
+     * 错误码.
+     */
+    @Alias("ErrorCode")
     @JsonProperty("ErrorCode")
     private Integer errorCode;
+
+    /**
+     * 错误描述.
+     */
+    @Alias("ErrorInfo")
+    @JsonProperty("ErrorInfo")
+    private String errorInfo;
 
     /**
      * 返回成功消息.
