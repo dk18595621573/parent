@@ -1,6 +1,5 @@
 package com.cloud.webmvc.exception;
 
-import cn.hutool.http.ContentType;
 import com.cloud.common.constant.HttpStatus;
 import com.cloud.common.exception.CallbackException;
 import com.cloud.common.exception.DemoModeException;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -68,8 +66,7 @@ public class GlobalExceptionHandler {
      * 业务异常
      */
     @ExceptionHandler(ServiceException.class)
-    public Result<?> handleServiceException(ServiceException e, HttpServletResponse response) {
-        response.setContentType(ContentType.JSON.getValue());
+    public Result<?> handleServiceException(ServiceException e) {
         log.error("业务异常[{}]:{}", e.getCode(), e.getMessage());
         Integer code = e.getCode();
         return StringUtils.isNotNull(code) ? Result.error(code, e.getMessage()) : Result.error(e.getMessage());
