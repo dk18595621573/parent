@@ -50,6 +50,10 @@ public enum OrderSubStatus implements BaseEnum {
     AFTER_SHIPMENTS(44, "售后-重新发货"),
     /** 一件代发收货,待发货 */
     COLLECT_UNDERTAKES_TO(45, "一件代发收货,待发货"),
+    /** 预发货状态 */
+    TENTATIVE_SHIPPED(46, "预发货"),
+    /** 冻结（操作、发货、预发货）无法点击 */
+    FREEZE(47, "冻结"),
 
     /** 已发货待提交串码 */
     SEND_TO_BE_COMPLETE(50, "已发货待提交串码"),
