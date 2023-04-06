@@ -56,6 +56,8 @@ public enum OrderSubStatus implements BaseEnum {
     TENTATIVE_SHIPPED(46, "预发货"),
     /** 冻结（操作、发货、预发货）无法点击 */
     FREEZE(47, "冻结"),
+    /** 已销售 */
+    SOLD(48, "已销售"),
 
     /** 已发货待提交串码 */
     SEND_TO_BE_COMPLETE(50, "已发货待提交串码"),
