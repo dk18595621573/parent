@@ -28,6 +28,8 @@ public enum OrderSubStatus implements BaseEnum {
     REVOKE_DESTROY(27, "毁单"),
     /** 供应商疫情原因毁单 */
     REVOKE_EPIDEMIC(29, "供应商疫情原因撤销"),
+    /** 超时未上传串码撤销 */
+    OVERTIME_UPLOAD_IMPL(22, "超时发货"),
 
     /** 待抢单 */
     PENDING_ORDER(30, "待抢单（默认均在交易市场不显示）"),
