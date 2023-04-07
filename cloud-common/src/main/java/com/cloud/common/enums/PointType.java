@@ -6,7 +6,8 @@ public enum PointType implements BaseEnum{
     BATCH_COMPETE_CLOSE(2,"一键抢单关闭"),
     BATCH_COMPETE_RECOMMEND(3,"推荐页抢单"),
     BATCH_COMPETE_DOUBLE_CONFIRM(4,"一键抢单2次确认"),
-    BATCH_COMPETE_CLOSE_DOUBLE_CLOSE(5,"一键抢单二次关闭");
+    BATCH_COMPETE_CLOSE_DOUBLE_CLOSE(5,"一键抢单二次关闭"),
+    HUAWEI_BATCH_COMPETE_RECOMMEND(6,"华为推荐页抢单");
 
     private final Integer code;
 
