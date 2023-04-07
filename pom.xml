@@ -6,7 +6,7 @@
 
     <groupId>com.cloud</groupId>
     <artifactId>cloud-parent</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <description>醒市无仓平台</description>
 
@@ -16,7 +16,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <cloud-parent.version>1.2.3-SNAPSHOT</cloud-parent.version>
+        <revision>1.2.4-SNAPSHOT</revision>
+        <cloud-parent.version>1.2.4-SNAPSHOT</cloud-parent.version>
 
         <druid.version>1.2.8</druid.version>
         <bitwalker.version>1.21</bitwalker.version>
@@ -601,7 +602,7 @@
                         <dependency>
                             <groupId>com.cloud</groupId>
                             <artifactId>build-tools</artifactId>
-                            <version>${cloud-parent.version}</version>
+                            <version>${project.version}</version>
                         </dependency>
                     </dependencies>
                     <executions>
@@ -628,8 +629,41 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>1.2.7</version>
+                    <configuration>
+                        <updatePomFile>true</updatePomFile>
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+
     </build>
 
     <distributionManagement>
