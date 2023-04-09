@@ -1,19 +1,32 @@
 package com.cloud.core.utils;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.http.*;
+import cn.hutool.http.ContentType;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpStatus;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.http.Method;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.Map;
 
+@Slf4j
 public class QWRobotUtil {
 
-    // 企微机器人API URL
-    private static final String API_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=%s&type=file";
-    private static final String SEND_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=%s";
+    /**
+     * 企微机器人文件上传URL
+     */
+    private static final String MEDIA_UPLOAD_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key=%s&type=file";
+    /**
+     * 企微机器人发送消息URL
+     */
+    private static final String SEND_MESSAGE_URL = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=%s";
 
-    // 上传文件最大大小，单位字节
+    /**
+     * 上传文件最大大小，单位字节
+     */
     private static final long MAX_FILE_SIZE = 15L * 1024 * 1024;
 
     /**
@@ -22,10 +35,9 @@ public class QWRobotUtil {
      * @param content 文本消息内容
      * @return true 发送成功 ; false 发送失败
      */
-    public static boolean sendTextMsg(String secret, String content) {
+    public static boolean sendTextMsg(final String secret, final String content) {
         String json = "{\"msgtype\": \"text\",\"text\": {\"content\": \"" + content + "\"}}";
-        HttpResponse response = HttpUtil.createPost(String.format(SEND_URL, secret)).body(json).contentType(ContentType.JSON.toString()).execute();
-        return response.getStatus() == HttpStatus.HTTP_OK;
+        return sendMsg(secret, json);
     }
 
     /**
@@ -34,10 +46,9 @@ public class QWRobotUtil {
      * @param content markdown格式消息
      * @return true 发送成功 ; false 发送失败
      */
-    public static boolean sendMarkdownMsg(String secret, String content) {
+    public static boolean sendMarkdownMsg(final String secret, final String content) {
         String json = "{\"msgtype\": \"markdown\",\"markdown\": {\"content\": \"" + content + "\"}}";
-        HttpResponse response = HttpUtil.createPost(String.format(SEND_URL, secret)).body(json).contentType(ContentType.JSON.toString()).execute();
-        return response.getStatus() == HttpStatus.HTTP_OK;
+        return sendMsg(secret, json);
     }
 
     /**
@@ -47,31 +58,42 @@ public class QWRobotUtil {
      * @param file file
      * @return true 发送成功 ; false 发送失败
      */
-    public static boolean sendFileMsg(String secret, File file) {
-        if (!file.exists() || file.length() > MAX_FILE_SIZE) {
+    public static boolean sendFileMsg(final String secret, final File file) {
+        if (!file.exists() || file.isDirectory() || file.length() > MAX_FILE_SIZE) {
             // 文件不存在或者超过最大大小
             return false;
         }
         // 上传素材
-        Map<String, Object> params = CollUtil.newHashMap();
-        params.put("media", file);
-        String apiUrl = String.format(API_URL, secret);
+        String apiUrl = String.format(MEDIA_UPLOAD_URL, secret);
         String responseStr = HttpUtil.createRequest(Method.POST, apiUrl)
                 .contentType(ContentType.MULTIPART.toString())
-                .form(params)
+                .form("media", file)
                 .execute()
                 .body();
-        Map<String, Object> responseMap = JSONUtil.parseObj(responseStr);
+        JSONObject responseMap = JSONUtil.parseObj(responseStr);
         if (!responseMap.containsKey("media_id")) {
             // 素材上传失败
             return false;
         }
-        String mediaId = responseMap.get("media_id").toString();
-
         // 发送文件消息
-        String json = "{\"msgtype\": \"file\",\"file\": {\"media_id\": \"" + mediaId + "\"}}";
-        HttpResponse response = HttpUtil.createPost(String.format(SEND_URL, secret)).body(json).contentType(ContentType.JSON.toString()).execute();
-        return response.getStatus() == HttpStatus.HTTP_OK;
+        String json = "{\"msgtype\": \"file\",\"file\": {\"media_id\": \"" + responseMap.getStr("media_id") + "\"}}";
+        return sendMsg(secret, json);
+    }
+
+    /**
+     * 发送消息
+     * @param secret 企微群机器人密钥
+     * @param requestBody 请求体
+     * @return 请求结果
+     */
+    private static boolean sendMsg(final String secret, final String requestBody) {
+        HttpRequest httpRequest = HttpUtil.createPost(String.format(SEND_MESSAGE_URL, secret)).body(requestBody).timeout(5000).contentType(ContentType.JSON.toString());
+        try (HttpResponse response = httpRequest.execute()){
+            return response.getStatus() == HttpStatus.HTTP_OK;
+        } catch (Exception e) {
+            log.error("企微群机器人消息发送失败[{}]:{} ", secret, requestBody, e);
+        }
+        return false;
     }
 
 }
