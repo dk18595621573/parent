@@ -17,7 +17,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <revision>1.2.4-SNAPSHOT</revision>
-        <cloud-parent.version>1.2.4-SNAPSHOT</cloud-parent.version>
 
         <druid.version>1.2.8</druid.version>
         <bitwalker.version>1.21</bitwalker.version>
@@ -394,105 +393,105 @@
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-common</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- 组件库-->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-component</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- 数据访问层 -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-dal</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- 组件扩展-->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-core</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-generator</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- webmvc -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>cloud-webmvc</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- log-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>log-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- xlock-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>xlock-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- xxl-job-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>xxljob-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- tencent-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>tencent-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- dubbo-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- seata-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- rocketmq-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- swagger-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>swagger-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- idempotent-starter -->
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>idempotent-spring-boot-starter</artifactId>
-                <version>${cloud-parent.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!--基于Jackson序列化实现数据脱敏-->

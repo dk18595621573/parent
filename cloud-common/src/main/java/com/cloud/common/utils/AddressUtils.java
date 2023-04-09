@@ -8,7 +8,9 @@ import java.util.regex.Pattern;
 
 /**
  * 地址工具类
+ * @deprecated 2023年04月09日之后不再使用，后续版本删除该工具类
  */
+@Deprecated
 public class AddressUtils {
     /**
      * 返回值对象
@@ -132,18 +134,18 @@ public class AddressUtils {
      * 拼接“省”，“市”后缀
      *
      * @param address
-     * @param $suffix
+     * @param suffix
      * @param s
      * @return
      */
-    private static String restructure(String address, String $suffix, String s) {
-        if (address.indexOf($suffix) == 0) {
+    private static String restructure(String address, String suffix, String s) {
+        if (address.indexOf(suffix) == 0) {
             //拼接“省”，“市”关键字
             return address;
         } else {
             if (address.indexOf(s) == 0) {
                 //拼接“省”，“市”关键字
-                return address.replaceFirst(s, $suffix);
+                return address.replaceFirst(s, suffix);
             }
         }
         return null;

@@ -9,6 +9,7 @@
         <property name="fileExtensions" value="java"/>
     </module>
     <!-- 检查文件是否包含制表符-->
+    <!-- 检查文件是否包含制表符-->
     <module name="FileTabCharacter">
         <property name="eachLine" value="true"/>
     </module>
@@ -339,13 +340,17 @@
         <!-- 检查Javadoc段落 -->
         <module name="JavadocParagraph"/>
         <!-- 检查javadoc的格式 -->
-        <module name="JavadocStyle"/>
+        <module name="JavadocStyle">
+            <property name="checkFirstSentence" value="false" />
+        </module>
         <!-- 检查@子句中延续行的缩进-->
         <module name="JavadocTagContinuationIndentation"/>
         <!-- 检查JavaDoc块是否适合单行并且不包含@子句 -->
         <module name="SingleLineJavadoc"/>
         <!-- 检查Javadoc摘要语句是否包含不建议使用的短语 -->
-        <module name="SummaryJavadoc"/>
+        <module name="SummaryJavadoc">
+            <property name="period" value="" />
+        </module>
 
         <!-- 检查方法的javadoc的注释
              scope: 可以检查的方法的范围，例如：public只能检查public修饰的方法，private可以检查所有的方法
