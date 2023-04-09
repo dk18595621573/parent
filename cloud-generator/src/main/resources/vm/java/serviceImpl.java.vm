@@ -27,6 +27,7 @@ import ${packageName}.model.${ClassName}Param;
 import ${packageName}.model.${ClassName}Query;
 import ${packageName}.model.${ClassName}BO;
 import ${packageName}.convert.${ClassName}Convert;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author ${author}
  * @date ${datetime}
  */
+@Slf4j
 @DubboService
 public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
@@ -55,40 +57,37 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Override
     public boolean delete(final ${ClassName}Query query) {
         Objects.requireNonNull(query, "query不能为空");
-        return ${className}Manager.remove(DynamicCondition.toWrapper(query)) > 0;
+        return ${className}Manager.remove(DynamicCondition.toWrapper(query));
     }
 
     @Override
     public boolean update(final ${ClassName}Param param, final ${ClassName}Query query) {
         ${ClassName} ${className} = ${ClassName}Convert.INSTANCE.to${ClassName}(param);
-        return ${className}Manager.update(${className}, DynamicCondition.toWrapper(query)) > 0;
+        return ${className}Manager.update(${className}, DynamicCondition.toWrapper(query));
     }
 
     @Override
     public ${ClassName}BO findOne(final ${ClassName}Query queryParam) {
-        List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(queryParam));
-        if (CollectionUtil.isNotEmpty(list)) {
-            return ${ClassName}Convert.INSTANCE.to${ClassName}BO(list.get(0));
-        }
-        return null;
+        return findOne(query, null);
     }
 
     @Override
     public ${ClassName}BO findOne(final ${ClassName}Query query, final SortBy sort) {
         List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(query, sort));
-        if (CollectionUtil.isNotEmpty(list)) {
-            return ${ClassName}Convert.INSTANCE.to${ClassName}BO(list.get(0));
+        if (CollectionUtil.isEmpty(list)) {
+            return null;
         }
-        return null;
+        return ${ClassName}Convert.INSTANCE.to${ClassName}BO(list.get(0));
+    }
+
+    @Override
+    public List<${ClassName}BO> findAll(final ${ClassName}Query query) {
+        return findAll(query, null);
     }
 
     @Override
     public List<${ClassName}BO> findAll(final ${ClassName}Query query, final SortBy sort) {
-        List<${ClassName}> list = ${className}Manager.list(DynamicCondition.toWrapper(query, sort));
-        if (CollectionUtil.isNotEmpty(list)) {
-            return ${ClassName}Convert.INSTANCE.to${ClassName}BOs(list);
-        }
-        return null;
+        return ${ClassName}Convert.INSTANCE.to${ClassName}BOs(${className}Manager.list(DynamicCondition.toWrapper(query, sort)));
     }
 
     @Override

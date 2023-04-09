@@ -60,6 +60,14 @@ public interface I${ClassName}Service {
     ${ClassName}BO findOne(${ClassName}Query query, SortBy sort);
 
     /**
+     * 动态查询所有.
+     *
+     * @param query query
+     * @return 结果
+     */
+    List<${ClassName}BO> findAll(${ClassName}Query query);
+
+    /**
      * 动态排序查询所有.
      *
      * @param query query
