@@ -103,7 +103,11 @@ public enum SystemParams {
     /**
      * 小程序推荐列表随机数最大值.
      */
-    APPLET_RECOMMEND_MAX_COUNT("applet.recommend.max.count", "10")
+    APPLET_RECOMMEND_MAX_COUNT("applet.recommend.max.count", "10"),
+    /**
+     * 未填串码超时时间. 默认3小时
+     */
+    UPLOAD_IMPL_DELAY_TIME("upload.impl.delay.time", "10800")
     ;
 
 
