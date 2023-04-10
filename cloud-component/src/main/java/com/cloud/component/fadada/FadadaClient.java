@@ -294,6 +294,7 @@ public class FadadaClient {
         params.setKeywordStrategy(extsignRequest.getKeywordStrategy());
         // 签署结果异步通知url
         params.setNotifyUrl(extsignRequest.getNotifyUrl());
+        params.setAcrossPageCustomerId(extsignRequest.getAcrosspageCustomerId());
         String result = fddBaseClient.invokeExtSign(params);
         log.info("法大大返回参数，手动签署：{}", result);
         return result;
