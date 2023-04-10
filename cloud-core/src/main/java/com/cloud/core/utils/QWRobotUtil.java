@@ -5,7 +5,6 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpStatus;
 import cn.hutool.http.HttpUtil;
-import cn.hutool.http.Method;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -64,8 +63,7 @@ public class QWRobotUtil {
             return false;
         }
         // 上传素材
-        String apiUrl = String.format(MEDIA_UPLOAD_URL, secret);
-        String responseStr = HttpUtil.createRequest(Method.POST, apiUrl)
+        String responseStr = HttpUtil.createPost(String.format(MEDIA_UPLOAD_URL, secret))
                 .contentType(ContentType.MULTIPART.toString())
                 .form("media", file)
                 .execute()
@@ -86,7 +84,7 @@ public class QWRobotUtil {
      * @param requestBody 请求体
      * @return 请求结果
      */
-    private static boolean sendMsg(final String secret, final String requestBody) {
+    public static boolean sendMsg(final String secret, final String requestBody) {
         HttpRequest httpRequest = HttpUtil.createPost(String.format(SEND_MESSAGE_URL, secret)).body(requestBody).timeout(5000).contentType(ContentType.JSON.toString());
         try (HttpResponse response = httpRequest.execute()){
             return response.getStatus() == HttpStatus.HTTP_OK;
