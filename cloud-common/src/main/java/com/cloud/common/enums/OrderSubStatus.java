@@ -71,6 +71,7 @@ public enum OrderSubStatus implements BaseEnum {
     SEND_COLLECT_PORTION(55,"已发货,部分收货"),
     /** 已发货,已拣货 */
     SEND_UNDERTAKES_NO(56,"已发货,已拣货,待发货"),
+    SEND_NORMAL_SHIPMENT(57,"物流审核成功，正常发货"),
 
     /** 采购入库收货 */
     SEND_PURCHASING(60, "采购入库收货，签收状态"),
