@@ -107,7 +107,15 @@ public enum SystemParams {
     /**
      * 未填串码超时时间. 默认3小时
      */
-    UPLOAD_IMPL_DELAY_TIME("upload.impl.delay.time", "10800")
+    UPLOAD_IMPL_DELAY_TIME("upload.impl.delay.time", "10800"),
+    /**
+     * 未填串码超时开始时间
+     */
+    UPLOAD_IMPL_DELAY_TIME_BEGIN("upload.impl.delay.time.begin", "11:00:00"),
+    /**
+     * 未填串码超时结束时间
+     */
+    UPLOAD_IMPL_DELAY_TIME_END("upload.impl.delay.time.end", "18:00:00")
     ;
 
 
