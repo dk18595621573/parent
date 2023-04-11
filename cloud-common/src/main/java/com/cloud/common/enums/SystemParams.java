@@ -115,7 +115,15 @@ public enum SystemParams {
     /**
      * 未填串码超时结束时间
      */
-    UPLOAD_IMPL_DELAY_TIME_END("upload.impl.delay.time.end", "18:00:00")
+    UPLOAD_IMPL_DELAY_TIME_END("upload.impl.delay.time.end", "18:00:00"),
+    /**
+     * 预警通知间隔1
+     */
+    UPLOAD_IMPL_INTERVAL1("upload.impl.interval1", "12:35:00"),
+    /**
+     * 预警通知间隔2
+     */
+    UPLOAD_IMPL_INTERVAL2("upload.impl.interval2", "18:40:00"),
     ;
 
 
