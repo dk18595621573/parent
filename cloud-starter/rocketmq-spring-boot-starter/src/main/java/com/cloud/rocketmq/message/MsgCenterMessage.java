@@ -73,8 +73,9 @@ public class MsgCenterMessage extends BaseEvent {
      * @param feedbackType    操作反馈类型
      * @param feedbackContent 操作反馈内容
      */
-    public MsgCenterMessage(String messageTypeCode, String messageBody, Long receiverId, Integer feedbackType, String feedbackContent) {
+    public MsgCenterMessage(String messageTypeCode, String messageTitle, String messageBody, Long receiverId, Integer feedbackType, String feedbackContent) {
         this.messageTypeCode = messageTypeCode;
+        this.messageTitle = messageTitle;
         this.messageBody = messageBody;
         this.receiverType = MsgCenterConstants.ReceiverType.COMPANY.getCode();  // 默认接收人为公司
         this.receiverId = receiverId;
@@ -90,8 +91,9 @@ public class MsgCenterMessage extends BaseEvent {
      * @param messageBody     消息内容
      * @param receiverId      消息接收人id
      */
-    public MsgCenterMessage(String messageTypeCode, String messageBody, Long receiverId) {
+    public MsgCenterMessage(String messageTypeCode, String messageTitle, String messageBody, Long receiverId) {
         this.messageTypeCode = messageTypeCode;
+        this.messageTitle = messageTitle;
         this.messageBody = messageBody;
         this.receiverType = MsgCenterConstants.ReceiverType.COMPANY.getCode();  // 默认接收人为公司
         this.receiverId = receiverId;
