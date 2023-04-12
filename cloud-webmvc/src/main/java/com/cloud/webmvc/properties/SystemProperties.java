@@ -38,6 +38,11 @@ public class SystemProperties {
     private String admDomain;
 
     /**
+     * user项目域名
+     */
+    private String userDomain;
+
+    /**
      * 获取地址开关
      */
     private boolean addressEnabled;
