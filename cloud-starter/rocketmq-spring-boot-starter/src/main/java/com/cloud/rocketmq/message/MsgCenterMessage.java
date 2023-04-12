@@ -1,6 +1,7 @@
 package com.cloud.rocketmq.message;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.cloud.common.constant.MsgCenterConstants;
 import com.cloud.rocketmq.base.BaseEvent;
 import lombok.Data;
@@ -83,6 +84,7 @@ public class MsgCenterMessage extends BaseEvent {
         this.feedbackContent = feedbackContent;
         this.pushTime = DateUtil.date();
         this.pushType = MsgCenterConstants.PushType.IN_SITE_MAIL.getCode(); // 默认推送方式为站内信
+        super.keys = StrUtil.toString(System.currentTimeMillis());
     }
 
 
@@ -100,6 +102,7 @@ public class MsgCenterMessage extends BaseEvent {
         this.feedbackType = MsgCenterConstants.FeedbackType.NO_FEEDBACK.getCode(); // 默认为无反馈
         this.pushTime = DateUtil.date();
         this.pushType = MsgCenterConstants.PushType.IN_SITE_MAIL.getCode(); // 默认推送方式为站内信
+        super.keys = StrUtil.toString(System.currentTimeMillis());
     }
 
 
