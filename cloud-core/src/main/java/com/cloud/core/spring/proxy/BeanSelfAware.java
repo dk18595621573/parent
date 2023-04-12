@@ -1,4 +1,4 @@
-package com.cloud.webmvc.spring.proxy;
+package com.cloud.core.spring.proxy;
 
 /**
  * spring 自身注入自身方法 , 解决内部方法调用不走代理的问题.
