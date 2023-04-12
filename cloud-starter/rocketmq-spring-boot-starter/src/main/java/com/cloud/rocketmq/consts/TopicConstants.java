@@ -62,4 +62,9 @@ public interface TopicConstants {
      */
     String COMPANY_MESSAGE_PUSH = "TOPIC-COMPANY-MESSAGE-PUSH";
 
+    /**
+     * 消息中心推送
+     */
+    String MSG_CENTER_PUSH= "TOPIC-MSG-CENTER-MESSAGE-PUSH";
+
 }
