@@ -6,6 +6,7 @@ import com.cloud.common.constant.MsgCenterConstants;
 import com.cloud.rocketmq.base.BaseEvent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.Date;
@@ -20,6 +21,7 @@ import java.util.Objects;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
 @Accessors(chain = true)
 public class MsgCenterMessage extends BaseEvent {
     /**
