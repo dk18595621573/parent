@@ -37,4 +37,15 @@ public enum LogisticsCode {
     public String getMsg() {
         return msg;
     }
+
+    public static String getCodeByMsg(String msg) {
+        LogisticsCode[] logisticsCodes = values();
+        for (LogisticsCode logisticsCode : logisticsCodes) {
+            if (msg.equals(logisticsCode.getMsg())) {
+                return logisticsCode.getCode();
+            }
+        }
+        return null;
+    }
+
 }
