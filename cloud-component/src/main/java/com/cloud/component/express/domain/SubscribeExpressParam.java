@@ -36,5 +36,14 @@ public class SubscribeExpressParam implements Serializable {
      */
     private String expressCallBackUrl;
 
+    /**
+     * 出发地城市，省-市-区，非必填，填了有助于提升签收状态的判断的准确率，请尽量提供
+     */
+    private String from;
+    /**
+     * 目的地城市，省-市-区，非必填，填了有助于提升签收状态的判断的准确率，且到达目的地后会加大监控频率，请尽量提供
+     */
+    private String to;
+
 
 }

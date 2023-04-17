@@ -239,6 +239,8 @@ public class ExpressClient {
         param.setParameters(parameter);
         param.setCompany(expressParam.getExpressCode());
         param.setNumber(expressParam.getExpressNo());
+        param.setFrom(expressParam.getFrom());
+        param.setTo(expressParam.getTo());
         return param;
     }
 
