@@ -1,6 +1,8 @@
 package com.cloud.component.express.util;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.PatternPool;
 import cn.hutool.core.lang.Validator;
@@ -10,8 +12,8 @@ import com.cloud.common.core.model.LogisticsStatus;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.component.express.domain.ExpressResult;
 import lombok.experimental.UtilityClass;
-import org.jetbrains.annotations.NotNull;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
@@ -32,13 +34,24 @@ public class ExpressUtils {
     public final static int EXPRESS_NO_MAX = 32;
     /** 下划线 */
     public final static String UNDERLINE =  "_";
+    /** 揽收超时时间 */
+    private final static Integer COLLECT_TIMEOUT = 24;
+
+    /**
+     * 判断揽收时间是否超时（和当前时间比较）
+     * @param collectTime 揽收时间
+     * @return true超时 false未超时
+     */
+    public static Boolean collectTimeout(Date collectTime) {
+        DateTime date = DateUtil.date();
+        return DateUtil.between(date, collectTime, DateUnit.HOUR, true) >= COLLECT_TIMEOUT;
+    }
 
     /**
      * 提取手机号
      * @param cellphone 手机号
      * @return 截取之后手机号
      */
-    @NotNull
     public static String phoneCutOut(String cellphone) {
         // 去除特殊字符
         if (StrUtil.isBlank(cellphone)) {
