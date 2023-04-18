@@ -37,6 +37,16 @@ import java.util.TreeMap;
 @Slf4j
 public class ECSSClient {
 
+    /**
+     * 超时时间.
+     */
+    private static final int SOCKET_TIMEOUT = 15000;
+
+    /**
+     * 连接超时时间.
+     */
+    private static final int CONNECT_TIMEOUT = 15000;
+
     private final ECSSProperties ecssProperties;
 
     public ECSSClient(ECSSProperties ecssProperties) {
@@ -131,7 +141,10 @@ public class ECSSClient {
         String response;
         ECSSResponse ecssResponse;
         try {
-            response = HttpUtil.createPost(url).form(hashMap).charset(CharsetUtil.UTF_8).contentType(ContentType.FORM_URLENCODED.getValue()).execute().body();
+            response = HttpUtil.createPost(url)
+                .setReadTimeout(SOCKET_TIMEOUT)
+                .setConnectionTimeout(CONNECT_TIMEOUT).form(hashMap).charset(CharsetUtil.UTF_8)
+                .contentType(ContentType.FORM_URLENCODED.getValue()).execute().body();
             log.info("【响应参数】：{}", response);
             // 数据转换
             ecssResponse = XmlUtil.toBean(response, ECSSResponse.class);
