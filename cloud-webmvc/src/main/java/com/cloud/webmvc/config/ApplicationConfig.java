@@ -3,6 +3,7 @@ package com.cloud.webmvc.config;
 import com.cloud.webmvc.filter.XssFilter;
 import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.webmvc.properties.XssProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -24,11 +25,12 @@ import java.util.TimeZone;
 public class ApplicationConfig {
 
     /**
-     * 时区配置
+     * Jackson序列化配置.
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jacksonObjectMapperCustomization() {
-        return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault());
+        return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.timeZone(TimeZone.getDefault())
+            .serializationInclusion(JsonInclude.Include.NON_EMPTY);
     }
 
     /**
