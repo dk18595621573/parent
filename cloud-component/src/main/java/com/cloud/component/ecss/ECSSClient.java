@@ -40,12 +40,12 @@ public class ECSSClient {
     /**
      * 超时时间.
      */
-    private static final int SOCKET_TIMEOUT = 15000;
+    private static final int SOCKET_TIMEOUT = 45000;
 
     /**
      * 连接超时时间.
      */
-    private static final int CONNECT_TIMEOUT = 15000;
+    private static final int CONNECT_TIMEOUT = 45000;
 
     private final ECSSProperties ecssProperties;
 
