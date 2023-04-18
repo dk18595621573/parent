@@ -35,11 +35,11 @@ public class CustomExceptionFilter extends AbstractFilter implements Filter, Fil
             try {
                 Throwable exception = appResponse.getException();
 
-                // directly throw if it's checked exception
+                // 非运行时异常，并且为 checked 异常，直接抛出
                 if (!(exception instanceof RuntimeException) && (exception instanceof Exception)) {
                     return;
                 }
-                // directly throw if the exception appears in the signature
+                // 方法上声名的异常直接抛出
                 try {
                     Method method = invoker.getInterface().getMethod(invocation.getMethodName(), invocation.getParameterTypes());
                     Class<?>[] exceptionClassses = method.getExceptionTypes();
@@ -51,27 +51,28 @@ public class CustomExceptionFilter extends AbstractFilter implements Filter, Fil
                 } catch (NoSuchMethodException e) {
                     return;
                 }
+                String className = exception.getClass().getName();
+                // 排除项目已定义异常类
+                if (className.startsWith(PROJECT_PACKAGE)) {
+                    LOGGER.warn("dubbo业务抛出异常【{}】{}: {}", methodInfo(invoker, invocation),
+                        exception.getClass().getName(),exception.getMessage());
+                    return;
+                }
+                // 打印异常日志.
+                LOGGER.error("dubbo业务异常【{}】异常: [{}:{}]", methodInfo(invoker, invocation),
+                    exception.getClass().getName(), exception.getMessage(), exception);
 
-                // for the exception not found in method's signature, print ERROR message in server's log.
-                LOGGER.error("dubbo业务异常【" + methodInfo(invoker, invocation) + "】异常: "
-                    + exception.getClass().getName() + ": " + exception.getMessage(), exception);
-
-                // directly throw if exception class and interface class are in the same jar file.
+                // 如果是JDK异常，直接抛出
+                if (className.startsWith("java.") || className.startsWith("javax.")) {
+                    return;
+                }
+                // 校验异常类和接口类是否在同一个jar包.
                 String serviceFile = ReflectUtils.getCodeBase(invoker.getInterface());
                 String exceptionFile = ReflectUtils.getCodeBase(exception.getClass());
                 if (serviceFile == null || exceptionFile == null || serviceFile.equals(exceptionFile)) {
                     return;
                 }
-                // directly throw if it's JDK exception
-                String className = exception.getClass().getName();
-                if (className.startsWith("java.") || className.startsWith("javax.")) {
-                    return;
-                }
-                // 排除项目已定义异常类
-                if (className.startsWith(PROJECT_PACKAGE)) {
-                    return;
-                }
-                // directly throw if it's dubbo exception
+                // 是否为dubbo内部的异常
                 if (exception instanceof RpcException) {
                     return;
                 }
@@ -80,19 +81,19 @@ public class CustomExceptionFilter extends AbstractFilter implements Filter, Fil
 //                    return;
 //                }
 
-                // otherwise, wrap with RuntimeException and throw back to the client
+                // 以上都不是，包装成 RuntimeException 抛出
                 appResponse.setException(new RuntimeException(StringUtils.toString(exception)));
             } catch (Throwable e) {
-                LOGGER.warn("dubbo异常过滤器执行失败【" + methodInfo(invoker, invocation) + ", 失败原因: "
-                    + e.getClass().getName() + ": " + e.getMessage(), e);
+                LOGGER.warn("dubbo异常过滤器执行失败【{}】, 失败原因:[{}:{}] ", methodInfo(invoker, invocation)
+                    , e.getClass().getName(), e.getMessage(), e);
             }
         }
     }
 
     @Override
     public void onError(final Throwable e, final Invoker<?> invoker, final Invocation invocation) {
-        LOGGER.error("dubbo业务异常【" + methodInfo(invoker, invocation) + "】 exception: "
-            + e.getClass().getName() + ": " + e.getMessage(), e);
+        LOGGER.error("dubbo业务异常【{}】exception: [{}:{}]", methodInfo(invoker, invocation),
+            e.getClass().getName(), e.getMessage(), e);
     }
 
     @Override
