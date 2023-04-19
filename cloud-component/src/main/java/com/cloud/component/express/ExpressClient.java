@@ -168,6 +168,7 @@ public class ExpressClient {
             request.setParam(changeToJson(param));
             log.info("快递100调用发送参数--{}", JSONUtil.toJsonStr(param));
             HttpResult httpResult = subscribe.execute(request);
+            log.info("快递100调用返回参数--{}", JSONUtil.toJsonStr(httpResult));
             if (HttpStatus.HTTP_OK == httpResult.getStatus()) {
                 String bodyData = httpResult.getBody();
                 SubscribeResp response = new Gson().fromJson(httpResult.getBody(), SubscribeResp.class);
