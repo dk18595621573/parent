@@ -66,7 +66,7 @@ public class ExpressClient {
         String num = expressNo.replace(" ", "").replaceAll("[\\p{Cf}]", "");;
         Map<String, String> paramMap = MapUtil.newHashMap(8);
         // 结果排序
-        paramMap.put("order", "desc");
+        paramMap.put("order", "asc");
         // 快递公司
         paramMap.put("com", expressCode);
         // 快递单号

@@ -140,7 +140,7 @@ public class ExpressUtils {
         if (CollectionUtil.isEmpty(expressResult.getData())) {
             expressResult.setData(Collections.singletonList(ExpressUtils.defaultItem(shipTime)));
         } else {
-            expressResult.getData().add(expressResult.getData().size()-1, ExpressUtils.defaultItem(shipTime));
+            expressResult.getData().add(0, ExpressUtils.defaultItem(shipTime));
         }
     }
 
