@@ -35,16 +35,16 @@ public class ExpressUtils {
     /** 下划线 */
     public final static String UNDERLINE =  "_";
     /** 揽收超时时间 */
-    private final static Integer COLLECT_TIMEOUT = 24;
+    private final static Integer COLLECT_TIMEOUT = 22;
 
     /**
-     * 判断揽收时间是否超时（和当前时间比较）
-     * @param collectTime 揽收时间
+     * 判断揽收时间是否超时
+     * @param startTime 起始时间
+     * @param endTime 结束时间
      * @return true超时 false未超时
      */
-    public static Boolean collectTimeout(Date collectTime) {
-        DateTime date = DateUtil.date();
-        return DateUtil.between(date, collectTime, DateUnit.HOUR, true) >= COLLECT_TIMEOUT;
+    public static Boolean collectTimeout(Date startTime, Date endTime) {
+        return DateUtil.between(startTime, endTime, DateUnit.HOUR, true) >= COLLECT_TIMEOUT;
     }
 
     /**
