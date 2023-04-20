@@ -261,7 +261,7 @@ public class SupplierOrder implements Serializable {
         /**
          * 订单成交价
          */
-        // private BigDecimal tradePrice;
+        private BigDecimal tradePrice;
 
         /**
          * 当前企业最后一次出价
@@ -287,7 +287,7 @@ public class SupplierOrder implements Serializable {
         /**
          * 当日抢单状态码 1.抢单中（已抢单还待确认） 2.再次抢单（已抢单但被人抢走） 3.待发货（已抢单成交待发货） 4.已发货（已抢单成交已发货） 5.已收货（已抢单成交仓库已收货） 6.已取消（已抢单成交但需求方撤销）
          */
-        // private Integer todayStatus;
+        private Integer todayStatus;
 
         /**
          * 税票要求
