@@ -1,6 +1,7 @@
 package com.cloud.webmvc.domain;
 
 import com.cloud.common.constant.HttpStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Result<T> implements Serializable {
     private String msg;
 
     @ApiModelProperty("数据")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     /**
