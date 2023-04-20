@@ -4,6 +4,9 @@ import com.cloud.common.constant.Constants;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.io.Serializable;
+import java.util.Map;
+
 /**
  * 广移配置属性.
  *
@@ -22,23 +25,39 @@ public class ECSSProperties {
     private String url;
 
     /**
-     * 分配给平台的 AppKey，由 ECSS 分配.
+     * ECSS平台配置.
      */
-    private String appKey;
+    private Map<String, EcssConfig> configs;
 
     /**
-     * 分配给平台的 app_secret(secret)，由 ECSS 分配.
+     * ECSS平台配置.
      */
-    private String appSecret;
+    @Data
+    public static class EcssConfig implements Serializable {
 
-    /**
-     * 分配给用户的 SessionKey(或 Access Token）.
-     */
-    private String session;
+        private static final long serialVersionUID = -6396137599853936353L;
 
-    /**
-     * Ecss分配，不用参加加密.
-     */
-    private String shopId;
+        /**
+         * 分配给平台的 AppKey，由 ECSS 分配.
+         */
+        private String appKey;
+
+        /**
+         * 分配给平台的 app_secret(secret)，由 ECSS 分配.
+         */
+        private String appSecret;
+
+        /**
+         * 分配给用户的 SessionKey(或 Access Token）.
+         */
+        private String session;
+
+        /**
+         * Ecss分配，不用参加加密.
+         */
+        private String shopId;
+
+    }
+
 
 }

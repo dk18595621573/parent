@@ -15,10 +15,13 @@ import com.cloud.component.ecss.bean.response.ECSSResponse;
 import com.cloud.component.ecss.bean.response.order.DeliverGoodsResponse;
 import com.cloud.component.ecss.bean.response.order.OrderCreateResponse;
 import com.cloud.component.ecss.bean.response.order.OrderInquiryResponse;
+import com.cloud.component.ecss.config.EcssConfigHolder;
 import com.cloud.component.ecss.consts.ECSSConst;
 import com.cloud.component.ecss.exception.ECSSApiException;
+import com.cloud.component.ecss.exception.ECSSRuntimeException;
 import com.cloud.component.ecss.utils.XmlUtil;
 import com.cloud.component.properties.ECSSProperties;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -35,6 +38,7 @@ import java.util.TreeMap;
  * @date 2023-3-17 13:19:33
  */
 @Slf4j
+@AllArgsConstructor
 public class ECSSClient {
 
     /**
@@ -49,8 +53,19 @@ public class ECSSClient {
 
     private final ECSSProperties ecssProperties;
 
-    public ECSSClient(ECSSProperties ecssProperties) {
-        this.ecssProperties = ecssProperties;
+    /**
+     * 切换平台客户端.
+     *
+     * @param name 配置名称
+     * @return 客户端
+     */
+    public ECSSClient switchoverTo(String name) {
+        if (ecssProperties.getConfigs().containsKey(name)) {
+            EcssConfigHolder.set(name);
+            return this;
+        }
+        log.error("ECSS平台配置【{}】不存在", name);
+        throw new ECSSRuntimeException("ECSS平台配置不存在");
     }
 
     /**
@@ -115,10 +130,12 @@ public class ECSSClient {
      * @throws ECSSApiException API调用异常
      */
     private <T extends ECSSResponse> T executeInternal(final BaseRequest<T> request, final boolean isXml) throws ECSSApiException {
+        // 获取配置
+        ECSSProperties.EcssConfig ecssConfig = getEcssConfig(EcssConfigHolder.get());
         // 接口系统请求参数
         HashMap<String, Object> hashMap = MapUtil.newHashMap();
-        hashMap.put(ECSSConst.APP_KEY_KEY, ecssProperties.getAppKey());
-        hashMap.put(ECSSConst.SESSION_KEY, ecssProperties.getSession());
+        hashMap.put(ECSSConst.APP_KEY_KEY, ecssConfig.getAppKey());
+        hashMap.put(ECSSConst.SESSION_KEY, ecssConfig.getSession());
         hashMap.put(ECSSConst.METHOD_KEY, request.getMethod());
         hashMap.put(ECSSConst.SIGN_METHOD_KEY, ECSSConst.MD5);
         String now = DateUtil.now();
@@ -126,8 +143,8 @@ public class ECSSClient {
         // 生成签名
         hashMap.put(ECSSConst.SIGN_KEY, getSign(hashMap));
         // 不参与签名的参数
-        hashMap.put(ECSSConst.SHOP_ID_KEY, ecssProperties.getShopId());
-        hashMap.put(ECSSConst.APP_SECRET_KEY, ecssProperties.getAppSecret());
+        hashMap.put(ECSSConst.SHOP_ID_KEY, ecssConfig.getShopId());
+        hashMap.put(ECSSConst.APP_SECRET_KEY, ecssConfig.getAppSecret());
         // 应用参数传递方式
         if (isXml) {
             hashMap.put(ECSSConst.XML_KEY, request.getXmlParams());
@@ -173,7 +190,9 @@ public class ECSSClient {
         TreeMap<String, Object> treeMap = MapUtil.newTreeMap(map, String::compareTo);
         // 头和尾需要拼接appSecret
         String appSecret = MapUtil.getStr(map, ECSSConst.APP_SECRET_KEY);
-        appSecret = StringUtils.isBlank(appSecret) ? ecssProperties.getAppSecret() : appSecret;
+        // 获取配置
+        ECSSProperties.EcssConfig ecssConfig = getEcssConfig(EcssConfigHolder.get());
+        appSecret = StringUtils.isBlank(appSecret) ? ecssConfig.getAppSecret() : appSecret;
         // key + value ...... key + value
         StringBuilder builder = new StringBuilder(appSecret);
         for (Map.Entry<String, Object> entry : treeMap.entrySet()) {
@@ -190,6 +209,31 @@ public class ECSSClient {
         return sign;
     }
 
+    /**
+     * 获取当前需要平台配置.
+     *
+     * @param configName 配置名称
+     * @return ECSS平台配置
+     */
+    private ECSSProperties.EcssConfig getEcssConfig(String configName) {
+        checkEcssConfig();
+        ECSSProperties.EcssConfig config = ecssProperties.getConfigs().get(configName);
+        if (Objects.isNull(config)) {
+            log.error("没有找到【{}】相关企微机器人配置：{}", configName, ecssProperties);
+            throw new ECSSRuntimeException("ECSS平台配置错误");
+        }
+        return config;
+    }
+
+    /**
+     * 校验配置.
+     */
+    private void checkEcssConfig() {
+        if (MapUtil.isEmpty(ecssProperties.getConfigs())) {
+            log.error("没有找到ECSS平台配置：{}", ecssProperties);
+            throw new ECSSRuntimeException("ECSS平台配置错误");
+        }
+    }
 
     /**
      * 根据skuid获取广移的库存
