@@ -6,6 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 供应商订单.
@@ -39,18 +40,37 @@ public class SupplierOrder implements Serializable {
 
     public static SupplierOrder ofAdd(Long hangOrderId, OrderDetail data) {
         OrderDetail detail = new OrderDetail();
-        detail.setOrderId(data.getOrderId());
-        detail.setBrand(data.getBrand());
-        detail.setBuyerCompanyId(data.getBuyerCompanyId());
-        detail.setCategory(data.getCategory());
-        detail.setCommonName(data.getCommonName());
-        detail.setProvince(data.getProvince());
-        detail.setQuantity(data.getQuantity());
-        return of(STATUS_ADD, hangOrderId, data);
+        if (Objects.nonNull(data)){
+            detail.setOrderId(data.getOrderId());
+            detail.setBrand(data.getBrand());
+            detail.setBuyerCompanyId(data.getBuyerCompanyId());
+            detail.setCategory(data.getCategory());
+            detail.setCommonName(data.getCommonName());
+            detail.setProvince(data.getProvince());
+            detail.setQuantity(data.getQuantity());
+        }
+        return of(STATUS_ADD, hangOrderId, detail);
     }
 
     public static SupplierOrder ofModify(Long hangOrderId, OrderDetail data) {
-        return of(STATUS_MODIFY, hangOrderId, data);
+        OrderDetail detail = new OrderDetail();
+        if (Objects.nonNull(data)){
+            detail.setOrderStatus(data.getOrderStatus());
+            detail.setOrderSubStatus(data.getOrderSubStatus());
+            detail.setPriceHighest(data.getPriceHighest());
+            detail.setPriceHighestStatus(data.getPriceHighestStatus());
+            detail.setPriceHign(data.getPriceHign());
+            detail.setPriceHignStatus(data.getPriceHignStatus());
+            detail.setPriceLow(data.getPriceLow());
+            detail.setPriceLowStatus(data.getPriceLowStatus());
+            detail.setPriceLowest(data.getPriceLowest());
+            detail.setQuantity(data.getQuantity());
+            detail.setRemainTime(data.getRemainTime());
+            detail.setSelfPrice(data.getSelfPrice());
+            detail.setTradePrice(data.getTradePrice());
+            detail.setTodayStatus(data.getTodayStatus());
+        }
+        return of(STATUS_MODIFY, hangOrderId, detail);
     }
 
     public static SupplierOrder ofDelete(Long hangOrderId, Long companyId, String province, String brand, String commonName, Long quantity, String category) {
