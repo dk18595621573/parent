@@ -1,11 +1,9 @@
 package com.cloud.common.core.message;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * 供应商订单.
@@ -38,6 +36,14 @@ public class SupplierOrder implements Serializable {
     private OrderDetail data;
 
     public static SupplierOrder ofAdd(Long hangOrderId, OrderDetail data) {
+        OrderDetail detail = new OrderDetail();
+        detail.setOrderId(data.getOrderId());
+        detail.setBrand(data.getBrand());
+        detail.setBuyerCompanyId(data.getBuyerCompanyId());
+        detail.setCategory(data.getCategory());
+        detail.setCommonName(data.getCommonName());
+        detail.setProvince(data.getProvince());
+        detail.setQuantity(data.getQuantity());
         return of(STATUS_ADD, hangOrderId, data);
     }
 
@@ -79,12 +85,12 @@ public class SupplierOrder implements Serializable {
         /**
          * 订单挂单id
          */
-        private Long hangOrderId;
+        // private Long hangOrderId;
 
         /**
          * 订单编号
          */
-        private String orderNo;
+        // private String orderNo;
 
         /**
          * 采购方企业id
@@ -94,12 +100,12 @@ public class SupplierOrder implements Serializable {
         /**
          * 采购方企业名称
          */
-        private String buyerCompanyName;
+        // private String buyerCompanyName;
 
         /**
          * 采购类型（批量采购，一件代发）
          */
-        private String purchaseType;
+        // private String purchaseType;
 
         /**
          * 产品类别
@@ -114,7 +120,7 @@ public class SupplierOrder implements Serializable {
         /**
          * 产品型号
          */
-        private String productModel;
+        // private String productModel;
 
         /**
          * 通用名
@@ -124,12 +130,12 @@ public class SupplierOrder implements Serializable {
         /**
          * 通用sku
          */
-        private String commonSku;
+        // private String commonSku;
 
         /**
          * 通用编码
          */
-        private String commonCode;
+        // private String commonCode;
 
         /**
          * 省 名称
@@ -139,27 +145,27 @@ public class SupplierOrder implements Serializable {
         /**
          * 市 名称
          */
-        private String city;
+        // private String city;
 
         /**
          * 区 名称
          */
-        private String area;
+        // private String area;
 
         /**
          * 收货地址
          */
-        private String address;
+        // private String address;
 
         /**
          * 收货人
          */
-        private String receiver;
+        // private String receiver;
 
         /**
          * 手机号
          */
-        private String cellphone;
+        // private String cellphone;
 
         /**
          * 数量
@@ -169,7 +175,7 @@ public class SupplierOrder implements Serializable {
         /**
          * 是否指定供应商
          */
-        private Boolean specifyCompany;
+        // private Boolean specifyCompany;
 
         /**
          * 订单主状态 1: 未报价；2: 待发布；3:报价中；4:待发货；5: 已发货；6:已完成
@@ -189,18 +195,18 @@ public class SupplierOrder implements Serializable {
         /**
          * 发货时间
          */
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-        private Date shipmentsTime;
+        // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+        // private Date shipmentsTime;
 
         /**
          * 账期类型（1:字典；2:自定义）
          */
-        private Long accountingPeriodType;
+        // private Long accountingPeriodType;
 
         /**
          * 账期值
          */
-        private String accountingPeriodValue;
+        // private String accountingPeriodValue;
 
         /**
          * 挂单价（最高）
@@ -265,18 +271,18 @@ public class SupplierOrder implements Serializable {
         /**
          * 最后一次出价时间
          */
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-        private Date tradeTime;
+        // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+        // private Date tradeTime;
 
         /**
          * 抢单人
          */
-        private String competeUser;
+        // private String competeUser;
 
         /**
          * 企业信誉度 1:已合作，无固定额度 2:已合作，固定额度内 3:已合作，额度已用完 4:平台担保 5:未合作 6:黑名单
          */
-        private Integer companyCredit;
+        // private Integer companyCredit;
 
         /**
          * 当日抢单状态码 1.抢单中（已抢单还待确认） 2.再次抢单（已抢单但被人抢走） 3.待发货（已抢单成交待发货） 4.已发货（已抢单成交已发货） 5.已收货（已抢单成交仓库已收货） 6.已取消（已抢单成交但需求方撤销）
@@ -286,67 +292,67 @@ public class SupplierOrder implements Serializable {
         /**
          * 税票要求
          */
-        private Long taxRequire;
+        // private Long taxRequire;
 
         /**
          * 快递要求
          */
-        private String[] logisticRequire;
+        // private String[] logisticRequire;
 
         /**
          * 其他要求
          */
-        private String otherRequire;
+        // private String otherRequire;
 
         /**
          * 发货时效（距离当前的时间差 0为今天，1为明天 以此类推）
          */
-        private Integer deliveryDeadline;
+        // private Integer deliveryDeadline;
 
         /**
          * 发货剩余时间 仅发货时效为今天时有值
          */
-        private Long deliveryRemainTime;
+        // private Long deliveryRemainTime;
 
         /**
          * 发货时间 仅时分
          */
-        private String deliveryTime;
+        // private String deliveryTime;
 
         /**
          * 串码要求
          */
-        private String[] codeRequire;
+        // private String[] codeRequire;
 
         /**
          * 串码选项
          */
-        private Long codeOptions;
+        // private Long codeOptions;
 
         /**
          * 包装要求
          */
-        private String[] packingRequire;
+        // private String[] packingRequire;
 
         /**
          * 是否无仓地址
          */
-        private Long warehouseAddress;
+        // private Long warehouseAddress;
 
         /**
          * 串码异常
          */
-        private Long imeiAbnormalCount;
+        // private Long imeiAbnormalCount;
 
         /**
          * 发布时间
          */
-        private String releaseTime;
+        // private String releaseTime;
 
         /**
          * 仓库id集合.
          */
-        private Long[] warehouseIds;
+        // private Long[] warehouseIds;
 
     }
 
