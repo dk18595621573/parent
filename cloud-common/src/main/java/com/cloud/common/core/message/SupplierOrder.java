@@ -1,6 +1,7 @@
 package com.cloud.common.core.message;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -64,6 +65,7 @@ public class SupplierOrder implements Serializable {
             detail.setPriceLow(data.getPriceLow());
             detail.setPriceLowStatus(data.getPriceLowStatus());
             detail.setPriceLowest(data.getPriceLowest());
+            detail.setPriceLowestStatus(data.getPriceLowestStatus());
             detail.setQuantity(data.getQuantity());
             detail.setRemainTime(data.getRemainTime());
             detail.setSelfPrice(data.getSelfPrice());
@@ -97,6 +99,7 @@ public class SupplierOrder implements Serializable {
     }
 
     @Data
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class OrderDetail implements Serializable {
 
         /**
