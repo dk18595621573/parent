@@ -14,6 +14,47 @@ import java.util.Arrays;
 public class ECSSEnum {
 
     /**
+     * 平台类型.
+     */
+    @Getter
+    @AllArgsConstructor
+    public enum Type {
+
+        /**
+         * 拼多多.
+         */
+        PIN_DUO_DUO("pinduoduo", "拼多多"),
+
+        /**
+         * 天猫.
+         */
+        T_MALL("tmall", "天猫"),
+
+        ;
+
+        /**
+         * code.
+         */
+        private final String code;
+
+        /**
+         * 说明.
+         */
+        private final String explain;
+
+        /**
+         * 根据code获取.
+         *
+         * @param code code
+         * @return 结果
+         */
+        public static Type getByCode(final String code) {
+            return Arrays.stream(Type.values()).filter(i -> i.getCode().equals(code)).findFirst().orElse(null);
+        }
+
+    }
+
+    /**
      * 请求方法枚举.
      */
     @Getter

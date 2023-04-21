@@ -1,7 +1,6 @@
 package com.cloud.component.express.util;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.PatternPool;
@@ -13,7 +12,6 @@ import com.cloud.common.exception.ServiceException;
 import com.cloud.component.express.domain.ExpressResult;
 import lombok.experimental.UtilityClass;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
