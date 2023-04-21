@@ -42,6 +42,7 @@ public class SupplierOrder implements Serializable {
     public static SupplierOrder ofAdd(Long hangOrderId, OrderDetail data) {
         OrderDetail detail = new OrderDetail();
         if (Objects.nonNull(data)){
+            detail.setOrderSubStatus(data.getOrderSubStatus());
             detail.setOrderId(data.getOrderId());
             detail.setBrand(data.getBrand());
             detail.setBuyerCompanyId(data.getBuyerCompanyId());
