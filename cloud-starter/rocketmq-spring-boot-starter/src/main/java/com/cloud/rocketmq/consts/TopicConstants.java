@@ -67,4 +67,8 @@ public interface TopicConstants {
      */
     String MSG_CENTER_PUSH= "TOPIC-MSG-CENTER-MESSAGE-PUSH";
 
+    /**
+     * fms保存账单消息推送
+     */
+    String FMS_BILL_PUSH = "TOPIC-FMS-BILL-PUSH";
 }
