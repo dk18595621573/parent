@@ -33,7 +33,7 @@ public class ExpressUtils {
     /** 下划线 */
     public final static String UNDERLINE =  "_";
     /** 揽收超时时间 */
-    private final static Integer COLLECT_TIMEOUT = 22;
+    private final static Integer COLLECT_TIMEOUT = 24;
 
     /**
      * 判断揽收时间是否超时
