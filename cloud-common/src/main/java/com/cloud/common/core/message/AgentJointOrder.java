@@ -1,5 +1,6 @@
 package com.cloud.common.core.message;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author m
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AgentJointOrder implements Serializable {
 
     /**
