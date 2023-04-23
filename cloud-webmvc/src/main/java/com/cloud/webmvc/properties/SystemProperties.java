@@ -72,7 +72,7 @@ public class SystemProperties {
      *
      * @return 项目域名
      */
-    private String getModuleDomain() {
+    public String getModuleDomain() {
         if (StringUtils.isBlank(module)) {
             return apiDomain;
         }

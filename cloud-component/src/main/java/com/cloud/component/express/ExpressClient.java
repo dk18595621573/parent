@@ -187,6 +187,7 @@ public class ExpressClient {
                 return SubscribeExpressCode.SUBSCRIPTION_FAIL;
             }
         } catch (Exception e) {
+            log.info("快递100订阅出现异常{}", e.getMessage());
             return SubscribeExpressCode.SUBSCRIPTION_FAIL;
         }
         return SubscribeExpressCode.SUBSCRIPTION_SUCCESS;
