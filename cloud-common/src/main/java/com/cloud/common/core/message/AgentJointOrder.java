@@ -13,7 +13,6 @@ import java.util.List;
  * @author m
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AgentJointOrder implements Serializable {
 
     /**
@@ -32,6 +31,7 @@ public class AgentJointOrder implements Serializable {
     private OrderMarketing data;
 
     @Data
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class OrderMarketing implements Serializable {
         /**
          * 接龙订单id
