@@ -24,7 +24,7 @@ import java.util.Objects;
 public class ExpressUtils {
 
     /** 快递100 订阅地址 */
-    public static final String EXPRESS_CALLBACK_URL = "%s/oms/express/callbackExpress?orderId=1&expressCode=1&expressNo=1&cellphone=1";
+    public static final String EXPRESS_CALLBACK_URL = "%s/express/callbackExpress?orderId=1&expressCode=1&expressNo=1&cellphone=1";
 
     /** 快递单号最小长度 */
     public final static int EXPRESS_NO_MIN = 6;
