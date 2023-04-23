@@ -1,4 +1,4 @@
-package com.cloud.core.spring;
+package com.cloud.webmvc.spring;
 
 import org.slf4j.Logger;
 import org.springframework.context.ConfigurableApplicationContext;
