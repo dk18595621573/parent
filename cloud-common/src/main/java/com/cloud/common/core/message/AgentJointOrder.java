@@ -1,5 +1,6 @@
 package com.cloud.common.core.message;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -30,6 +31,7 @@ public class AgentJointOrder implements Serializable {
     private OrderMarketing data;
 
     @Data
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class OrderMarketing implements Serializable {
         /**
          * 接龙订单id
