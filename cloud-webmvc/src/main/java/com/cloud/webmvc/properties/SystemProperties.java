@@ -23,7 +23,7 @@ public class SystemProperties {
     private String module;
 
     /**
-     * api项目域名
+     * api域名
      */
     private String apiDomain;
 
@@ -36,11 +36,6 @@ public class SystemProperties {
      * 运营平台域名
      */
     private String admDomain;
-
-    /**
-     * user项目域名
-     */
-    private String userDomain;
 
     /**
      * 获取地址开关
@@ -68,7 +63,7 @@ public class SystemProperties {
     private XssProperties xss = new XssProperties();
 
     /**
-     * 获取项目域名.
+     * 获取当前项目域名.
      *
      * @return 项目域名
      */
