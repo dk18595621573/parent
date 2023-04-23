@@ -24,7 +24,7 @@ public class InjectBeanSelfProcessor implements BeanPostProcessor {
     public Object postProcessAfterInitialization(final Object bean, final String beanName) throws BeansException {
         if (bean instanceof BeanSelfAware) {
             if (log.isDebugEnabled()) {
-                log.debug(" Bean {}  Inject {} himself ");
+                log.debug("Bean {}  Inject himself", beanName);
             }
             BeanSelfAware myBean = (BeanSelfAware) bean;
             myBean.setSelf(bean);
