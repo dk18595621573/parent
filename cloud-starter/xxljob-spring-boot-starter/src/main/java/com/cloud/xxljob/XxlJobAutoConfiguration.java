@@ -1,5 +1,6 @@
 package com.cloud.xxljob;
 
+import com.cloud.xxljob.aspect.JobTraceAspect;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -39,4 +40,15 @@ public class XxlJobAutoConfiguration {
         xxlJobSpringExecutor.setLogRetentionDays(properties.getExecutor().getLogRetentionDays());
         return xxlJobSpringExecutor;
     }
+
+    /**
+     * 调度日志拦截.
+     *
+     * @return 调度日志拦截
+     */
+    @Bean
+    public JobTraceAspect jobTraceAspect() {
+        return new JobTraceAspect();
+    }
+
 }
