@@ -124,6 +124,10 @@ public enum SystemParams {
      * 预警通知间隔2
      */
     UPLOAD_IMPL_INTERVAL2("upload.impl.interval2", "18:40:00"),
+    /**
+     * 拼多多最晚发货时效
+     */
+    PDD_DELIVERY_DEADLINE("pdd.delivery.deadline", "30"),
     ;
 
 
