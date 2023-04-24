@@ -191,8 +191,7 @@ public class ECSSClient {
         // 头和尾需要拼接appSecret
         String appSecret = MapUtil.getStr(map, ECSSConst.APP_SECRET_KEY);
         // 获取配置
-        ECSSProperties.EcssConfig ecssConfig = getEcssConfig(EcssConfigHolder.get());
-        appSecret = StringUtils.isBlank(appSecret) ? ecssConfig.getAppSecret() : appSecret;
+        appSecret = StringUtils.isBlank(appSecret) ? getEcssConfig(EcssConfigHolder.get()).getAppSecret() : appSecret;
         // key + value ...... key + value
         StringBuilder builder = new StringBuilder(appSecret);
         for (Map.Entry<String, Object> entry : treeMap.entrySet()) {
@@ -219,7 +218,7 @@ public class ECSSClient {
         checkEcssConfig();
         ECSSProperties.EcssConfig config = ecssProperties.getConfigs().get(configName);
         if (Objects.isNull(config)) {
-            log.error("没有找到【{}】相关企微机器人配置：{}", configName, ecssProperties);
+            log.error("没有找到【{}】相关平台配置：{}", configName, ecssProperties);
             throw new ECSSRuntimeException("ECSS平台配置错误");
         }
         return config;
