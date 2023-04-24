@@ -9,7 +9,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 
@@ -21,7 +20,6 @@ import java.io.File;
  */
 @Slf4j
 @Aspect
-@Component
 public class JobTraceAspect {
 
     @Before(value = "@annotation(xxlJob)")
