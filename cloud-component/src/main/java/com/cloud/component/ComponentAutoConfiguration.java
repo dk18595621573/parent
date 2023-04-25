@@ -7,6 +7,7 @@ import com.cloud.component.config.ExpressConfig;
 import com.cloud.component.config.FadadaConfig;
 import com.cloud.component.config.HSConfig;
 import com.cloud.component.config.HolidayConfig;
+import com.cloud.component.config.HonorConfig;
 import com.cloud.component.config.SerialConfig;
 import com.cloud.component.config.SfConfig;
 import com.cloud.component.config.WxworkBotConfig;
@@ -21,6 +22,7 @@ import org.springframework.context.annotation.Import;
  */
 @Import(value = {FadadaConfig.class, ChinaPayConfig.class, ExpressConfig.class,
     SerialConfig.class, CMBConfig.class, WxworkBotConfig.class,
-    HSConfig.class, HolidayConfig.class, YaBaoConfig.class, SfConfig.class, ECSSConfig.class})
+    HSConfig.class, HolidayConfig.class, YaBaoConfig.class, SfConfig.class, ECSSConfig.class,
+    HonorConfig.class})
 public class ComponentAutoConfiguration {
 }
