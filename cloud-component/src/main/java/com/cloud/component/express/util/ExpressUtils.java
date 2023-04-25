@@ -9,6 +9,7 @@ import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import com.cloud.common.core.model.LogisticsStatus;
 import com.cloud.common.exception.ServiceException;
+import com.cloud.common.utils.DateUtils;
 import com.cloud.component.express.domain.ExpressResult;
 import lombok.experimental.UtilityClass;
 
@@ -34,6 +35,18 @@ public class ExpressUtils {
     public final static String UNDERLINE =  "_";
     /** 揽收超时时间 */
     private final static Integer COLLECT_TIMEOUT = 24;
+    /** 申请超时时间 */
+    private final static Integer APPLY_TIMEOUT_TIME = 22;
+
+    /**
+     * 判断是否可以申请修改物流
+     * @param shipmentsTime 起始时间
+     * @return true超时 false未超时
+     */
+    public static Boolean applyTimeout(Date shipmentsTime) {
+        Date nowDate = DateUtils.getNowDate();
+        return DateUtil.between(shipmentsTime, nowDate, DateUnit.HOUR, true) >= APPLY_TIMEOUT_TIME;
+    }
 
     /**
      * 判断揽收时间是否超时
