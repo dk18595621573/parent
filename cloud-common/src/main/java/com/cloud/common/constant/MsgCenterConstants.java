@@ -51,7 +51,8 @@ public class MsgCenterConstants {
     @AllArgsConstructor
     public enum FeedbackType {
         NO_FEEDBACK(0, "无反馈"),
-        IN_SITE_JUMP(1, "站内跳转")
+        IN_SITE_JUMP(1, "站内跳转"),
+        IN_SITE_POP(2,"站内弹窗")
 
         ;
         private final int code;
