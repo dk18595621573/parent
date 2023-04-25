@@ -23,6 +23,7 @@ public class MsgCenterConstants {
         AUDIT("audit", "审核"),
         REFUND("refund", "售后"),
         OTHER("other", "其他"),
+        MAJOR("major","重要"),
 
         ;
 
