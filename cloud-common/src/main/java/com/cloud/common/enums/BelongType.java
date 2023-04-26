@@ -32,6 +32,11 @@ public enum BelongType {
     GUANGYI("GUANGYI", "广移"),
 
     /**
+     * 运营商.
+     */
+    OPERATOR("OPERATOR", "运营商"),
+
+    /**
      * 其它.
      */
     OTHERS("OTHERS", "其他");
@@ -66,7 +71,7 @@ public enum BelongType {
         if (StringUtils.isBlank(code)) {
             return false;
         }
-        return Arrays.asList(HUASHENG.getCode(), GUANGYI.getCode()).contains(code);
+        return Arrays.asList(HUASHENG.getCode(), GUANGYI.getCode(), OPERATOR.getCode()).contains(code);
     }
 
 }
