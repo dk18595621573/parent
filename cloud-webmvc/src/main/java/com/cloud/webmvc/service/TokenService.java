@@ -7,7 +7,6 @@ import com.cloud.common.utils.StringUtils;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.common.utils.uuid.IdUtils;
 import com.cloud.webmvc.properties.TokenProperties;
-import com.cloud.webmvc.exception.AuthorizationException;
 import com.cloud.webmvc.utils.ServletUtils;
 import com.cloud.webmvc.utils.ip.AddressUtils;
 import com.cloud.webmvc.utils.ip.IpUtils;
@@ -95,20 +94,6 @@ public class TokenService {
      */
     public String refreshToken(RequestUser loginUser) {
         return createToken(loginUser);
-    }
-
-    /**
-     * 删除用户身份信息
-     */
-    public void delLoginUser(Long userId, String token) {
-        throw new AuthorizationException("系统踢出");
-    }
-
-    /**
-     * 清除过期无效的token
-     */
-    public void clearInvalidToken() {
-
     }
 
     /**
