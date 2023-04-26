@@ -156,14 +156,14 @@ public class OrderCreateRequest extends BaseHonorRequest<OrderCreateResponse> im
         private String city;
 
         /**
-         * 收货乡镇/街道.
+         * 县区.
          */
         @Alias("region")
         @JsonProperty("region")
         private String region;
 
         /**
-         * 商品数量.
+         * 乡镇/街道.
          */
         @Alias("street")
         @JsonProperty("street")

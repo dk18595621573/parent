@@ -1,7 +1,7 @@
 package com.cloud.component.honor.bean.request;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.cloud.common.utils.json.JsonUtil;
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -48,7 +48,7 @@ public abstract class BaseHonorRequest<T> implements BaseRequest<T> {
     @Override
     @JsonIgnore
     public String getJsonParams() {
-        return JsonUtil.toJson(BeanUtil.beanToMap(this, false, true));
+        return JSONUtil.toJsonStr(BeanUtil.beanToMap(this, false, true));
     }
 
     /**

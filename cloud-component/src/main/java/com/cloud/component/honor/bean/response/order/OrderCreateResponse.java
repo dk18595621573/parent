@@ -2,6 +2,7 @@ package com.cloud.component.honor.bean.response.order;
 
 import cn.hutool.core.annotation.Alias;
 import com.cloud.component.honor.bean.response.HonorResponse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OrderCreateResponse extends HonorResponse implements Serializable {
 
     private static final long serialVersionUID = -1L;
