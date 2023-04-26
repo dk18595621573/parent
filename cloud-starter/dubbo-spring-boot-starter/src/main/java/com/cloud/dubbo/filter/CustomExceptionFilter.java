@@ -51,6 +51,13 @@ public class CustomExceptionFilter extends AbstractFilter implements Filter, Fil
                 } catch (NoSuchMethodException e) {
                     return;
                 }
+                // 校验异常类和接口类是否在同一个jar包.
+                String serviceFile = ReflectUtils.getCodeBase(invoker.getInterface());
+                String exceptionFile = ReflectUtils.getCodeBase(exception.getClass());
+                if (serviceFile == null || exceptionFile == null || serviceFile.equals(exceptionFile)) {
+                    return;
+                }
+
                 String className = exception.getClass().getName();
                 // 排除项目已定义异常类
                 if (className.startsWith(PROJECT_PACKAGE)) {
@@ -66,12 +73,7 @@ public class CustomExceptionFilter extends AbstractFilter implements Filter, Fil
                 if (className.startsWith("java.") || className.startsWith("javax.")) {
                     return;
                 }
-                // 校验异常类和接口类是否在同一个jar包.
-                String serviceFile = ReflectUtils.getCodeBase(invoker.getInterface());
-                String exceptionFile = ReflectUtils.getCodeBase(exception.getClass());
-                if (serviceFile == null || exceptionFile == null || serviceFile.equals(exceptionFile)) {
-                    return;
-                }
+
                 // 是否为dubbo内部的异常
                 if (exception instanceof RpcException) {
                     return;
