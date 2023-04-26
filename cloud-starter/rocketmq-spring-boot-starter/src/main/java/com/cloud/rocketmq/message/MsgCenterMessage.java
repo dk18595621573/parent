@@ -60,6 +60,11 @@ public class MsgCenterMessage extends BaseEvent {
     private String feedbackContent;
 
     /**
+     * 业务数据
+     */
+    private String bizContent;
+
+    /**
      * 推送方式（1 - 站内信）
      */
     private Integer pushType;
@@ -102,6 +107,29 @@ public class MsgCenterMessage extends BaseEvent {
         this.receiverType = MsgCenterConstants.ReceiverType.COMPANY.getCode();  // 默认接收人为公司
         this.receiverId = receiverId;
         this.feedbackType = MsgCenterConstants.FeedbackType.NO_FEEDBACK.getCode(); // 默认为无反馈
+        this.pushTime = DateUtil.date();
+        this.pushType = MsgCenterConstants.PushType.IN_SITE_MAIL.getCode(); // 默认推送方式为站内信
+        super.keys = IdUtil.fastSimpleUUID();
+    }
+
+
+    /**
+     * @param messageTypeCode 消息分类编码
+     * @param messageBody     消息内容
+     * @param receiverId      消息接收人id
+     * @param feedbackType    操作反馈类型
+     * @param feedbackContent 操作反馈内容
+     * @param bizContent      业务数据
+     */
+    public MsgCenterMessage(String messageTypeCode, String messageTitle, String messageBody, Long receiverId, Integer feedbackType, String feedbackContent, String bizContent) {
+        this.messageTypeCode = messageTypeCode;
+        this.messageTitle = messageTitle;
+        this.messageBody = messageBody;
+        this.receiverType = MsgCenterConstants.ReceiverType.COMPANY.getCode();  // 默认接收人为公司
+        this.receiverId = receiverId;
+        this.feedbackType = Objects.isNull(feedbackType) ? MsgCenterConstants.FeedbackType.NO_FEEDBACK.getCode() : feedbackType;
+        this.feedbackContent = feedbackContent;
+        this.bizContent = bizContent;
         this.pushTime = DateUtil.date();
         this.pushType = MsgCenterConstants.PushType.IN_SITE_MAIL.getCode(); // 默认推送方式为站内信
         super.keys = IdUtil.fastSimpleUUID();
