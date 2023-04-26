@@ -41,4 +41,9 @@ public class HonorProperties {
      */
     private String shopNo;
 
+    /**
+     * 支付方式 线上：5、测试：3.
+     */
+    private String payMode;
+
 }

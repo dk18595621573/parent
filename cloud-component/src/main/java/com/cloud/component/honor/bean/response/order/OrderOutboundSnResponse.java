@@ -51,8 +51,8 @@ public class OrderOutboundSnResponse extends HonorResponse implements Serializab
         /**
          * 数据集合.
          */
-        @Alias(" sn_list")
-        @JsonProperty(" sn_list")
+        @Alias("sn_list")
+        @JsonProperty("sn_list")
         private List<Sn> snList;
 
     }

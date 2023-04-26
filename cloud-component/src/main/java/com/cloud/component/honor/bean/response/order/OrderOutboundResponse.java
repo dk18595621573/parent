@@ -51,8 +51,8 @@ public class OrderOutboundResponse extends HonorResponse implements Serializable
         /**
          * 数据集合.
          */
-        @Alias(" outbound_list")
-        @JsonProperty(" outbound_list")
+        @Alias("outbound_list")
+        @JsonProperty("outbound_list")
         private List<Outbound> outboundList;
 
     }
