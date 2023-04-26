@@ -44,7 +44,7 @@ public class ExpressClient {
     /**
      * 接口超时时间
      */
-    private static final int TIMEOUT = 5000;
+    private static final int TIMEOUT = 30000;
 
     private static final String SUCCEED = "200";
 
@@ -167,6 +167,7 @@ public class ExpressClient {
         try {
             request.setParam(changeToJson(param));
             log.info("快递100调用发送参数--{}", JSONUtil.toJsonStr(param));
+            subscribe.setTimeOut(TIMEOUT, TIMEOUT);
             HttpResult httpResult = subscribe.execute(request);
             log.info("快递100调用返回参数--{}", JSONUtil.toJsonStr(httpResult));
             if (HttpStatus.HTTP_OK == httpResult.getStatus()) {
