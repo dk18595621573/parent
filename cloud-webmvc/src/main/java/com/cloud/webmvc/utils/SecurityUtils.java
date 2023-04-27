@@ -1,10 +1,9 @@
 package com.cloud.webmvc.utils;
 
+import com.cloud.common.constant.Constants;
 import com.cloud.common.core.model.RequestUser;
 import com.cloud.common.threads.RequestThread;
 import com.cloud.webmvc.exception.AuthorizationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
@@ -15,14 +14,14 @@ import java.util.Objects;
  */
 public class SecurityUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityUtils.class);
-
     /**
      * 用户ID
      **/
     public static Long getUserId() {
         try {
-            return getLoginUser().getUserId();
+            String userIdStr = ServletUtils.getRequest().getHeader(Constants.MDC_USER_ID);
+
+            return Long.valueOf(userIdStr);
         } catch (Exception e) {
             throw new AuthorizationException("请先登录后再操作");
         }
@@ -33,18 +32,8 @@ public class SecurityUtils {
      **/
     public static Long getDeptId() {
         try {
-            return getLoginUser().getDeptId();
-        } catch (Exception e) {
-            throw new AuthorizationException("请先登录后再操作");
-        }
-    }
-
-    /**
-     * 获取用户账户
-     **/
-    public static String getUsername() {
-        try {
-            return getLoginUser().getUsername();
+            String deptIdStr = ServletUtils.getRequest().getHeader(Constants.MDC_COMPANY_ID);
+            return Long.valueOf(deptIdStr);
         } catch (Exception e) {
             throw new AuthorizationException("请先登录后再操作");
         }
