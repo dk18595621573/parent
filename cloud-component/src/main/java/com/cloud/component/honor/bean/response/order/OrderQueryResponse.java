@@ -30,15 +30,15 @@ public class OrderQueryResponse extends HonorResponse implements Serializable {
     /**
      * 返回结果数量.
      */
-    @Alias("totalNumber")
-    @JsonProperty("totalNumber")
+    @Alias("TotalNumber")
+    @JsonProperty("TotalNumber")
     private Integer totalNumber;
 
     /**
      * 数据.
      */
-    @Alias("data")
-    @JsonProperty("data")
+    @Alias("Data")
+    @JsonProperty("Data")
     private DataDTO data;
 
     /**

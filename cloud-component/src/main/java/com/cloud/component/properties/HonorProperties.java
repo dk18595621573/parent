@@ -31,4 +31,19 @@ public class HonorProperties {
      */
     private String appKey;
 
+    /**
+     * 客户（买家）编码.
+     */
+    private String custId;
+
+    /**
+     * 店铺编码(供应商).
+     */
+    private String shopNo;
+
+    /**
+     * 支付方式 线上：5、测试：3.
+     */
+    private String payMode;
+
 }

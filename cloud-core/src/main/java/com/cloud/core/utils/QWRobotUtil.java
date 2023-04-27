@@ -29,6 +29,17 @@ public class QWRobotUtil {
     private static final long MAX_FILE_SIZE = 15L * 1024 * 1024;
 
     /**
+     * 艾特用户.
+     *
+     * @param user 用户
+     * @return true 发送成功 ; false 发送失败
+     */
+    public static boolean at(final String secret, final String user) {
+        String json = "{\"msgtype\": \"text\",\"text\": {\"mentioned_mobile_list\":[\"" + user + "\"]}}";
+        return sendMsg(secret, json);
+    }
+
+    /**
      * 发送企微机器人文本消息
      *
      * @param content 文本消息内容
