@@ -40,6 +40,19 @@ public class SecurityUtils {
     }
 
     /**
+     * 获取用户账户
+     * @deprecated 2023年04月27日 此方法没啥用，后续考虑移除
+     **/
+    @Deprecated
+    public static String getUsername() {
+        try {
+            return getLoginUser().getUsername();
+        } catch (Exception e) {
+            throw new AuthorizationException("请先登录后再操作");
+        }
+    }
+
+    /**
      * 获取用户
      **/
     public static RequestUser getLoginUser() {

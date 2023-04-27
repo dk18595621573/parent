@@ -129,7 +129,9 @@ public class BaseController {
 
     /**
      * 获取登录用户名
-     */
+     * @deprecated 2023年04月27日 此方法没啥用，后续考虑移除
+     **/
+    @Deprecated
     public String getUsername() {
         return SecurityUtils.getUsername();
     }
