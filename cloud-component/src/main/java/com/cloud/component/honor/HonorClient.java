@@ -6,10 +6,16 @@ import cn.hutool.core.net.url.UrlQuery;
 import cn.hutool.http.HttpUtil;
 import com.cloud.common.utils.json.JsonUtil;
 import com.cloud.component.honor.bean.request.BaseRequest;
+import com.cloud.component.honor.bean.request.logistics.LogisticsQueryRequest;
 import com.cloud.component.honor.bean.request.order.OrderCreateRequest;
+import com.cloud.component.honor.bean.request.order.OrderOutboundRequest;
+import com.cloud.component.honor.bean.request.order.OrderOutboundSnRequest;
 import com.cloud.component.honor.bean.request.order.OrderQueryRequest;
 import com.cloud.component.honor.bean.response.HonorResponse;
+import com.cloud.component.honor.bean.response.logistics.LogisticsQueryResponse;
 import com.cloud.component.honor.bean.response.order.OrderCreateResponse;
+import com.cloud.component.honor.bean.response.order.OrderOutboundResponse;
+import com.cloud.component.honor.bean.response.order.OrderOutboundSnResponse;
 import com.cloud.component.honor.bean.response.order.OrderQueryResponse;
 import com.cloud.component.honor.consts.HonorConst;
 import com.cloud.component.honor.exception.HonorApiException;
@@ -60,6 +66,45 @@ public class HonorClient {
     public OrderQueryResponse orderQuery(final OrderQueryRequest request) throws HonorApiException {
         Assert.notNull(request, "请求参数不能为空");
         log.info("[荣耀平台] - 订单查询接口请求参数：{}", request.getJsonParams());
+        // 执行请求调度
+        return this.executeInternal(request);
+    }
+
+    /**
+     * 出库信息查询接口.
+     *
+     * @param request 请求参数
+     * @return 结果
+     */
+    public OrderOutboundResponse orderOutbound(final OrderOutboundRequest request) throws HonorApiException {
+        Assert.notNull(request, "请求参数不能为空");
+        log.info("[荣耀平台] - 出库信息查询接口请求参数：{}", request.getJsonParams());
+        // 执行请求调度
+        return this.executeInternal(request);
+    }
+
+    /**
+     * 出库串码查询接口.
+     *
+     * @param request 请求参数
+     * @return 结果
+     */
+    public OrderOutboundSnResponse orderOutboundSn(final OrderOutboundSnRequest request) throws HonorApiException {
+        Assert.notNull(request, "请求参数不能为空");
+        log.info("[荣耀平台] - 出库串码查询接口请求参数：{}", request.getJsonParams());
+        // 执行请求调度
+        return this.executeInternal(request);
+    }
+
+    /**
+     * 实时物流信息查询.
+     *
+     * @param request 请求参数
+     * @return 结果
+     */
+    public LogisticsQueryResponse logisticsQuery(final LogisticsQueryRequest request) throws HonorApiException {
+        Assert.notNull(request, "请求参数不能为空");
+        log.info("[荣耀平台] - 实时物流信息查询请求参数：{}", request.getJsonParams());
         // 执行请求调度
         return this.executeInternal(request);
     }

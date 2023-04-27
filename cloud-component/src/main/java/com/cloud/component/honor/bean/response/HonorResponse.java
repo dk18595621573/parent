@@ -1,6 +1,7 @@
 package com.cloud.component.honor.bean.response;
 
 import cn.hutool.core.annotation.Alias;
+import com.cloud.component.honor.consts.HonorEnum;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -48,7 +49,7 @@ public class HonorResponse implements Serializable {
      * @return 结果
      */
     public boolean success() {
-        return Boolean.TRUE.equals(getResult());
+        return Boolean.TRUE.equals(getResult()) && HonorEnum.ErrCode.success(getErrCode());
     }
 
 }
