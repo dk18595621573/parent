@@ -115,6 +115,15 @@ public class Constants {
      */
     public static final String TOKEN_PREFIX = "Bearer ";
 
+    /**
+     * 令牌前缀
+     */
+    public static final String LOGIN_USER_KEY = "login_user_key";
+
+    public static final String VERSION_KEY = "version";
+
+    public static final int TOKEN_CURRENT_VERSION = 1;
+
     public static final String MDC_TRACE_ID = "TRACE";
 
     public static final String MDC_USER_ID = "USER";

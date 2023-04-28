@@ -7,7 +7,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Objects;
@@ -27,13 +26,6 @@ public class ResourcesConfig implements WebMvcConfigurer {
     private AuthenticationInterceptor authenticationInterceptor;
     @Autowired
     private SystemProperties systemProperties;
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /** swagger配置 */
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
 
     /**
      * 自定义拦截规则

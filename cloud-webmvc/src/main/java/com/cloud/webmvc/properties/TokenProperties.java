@@ -1,13 +1,16 @@
 package com.cloud.webmvc.properties;
 
-import com.cloud.common.utils.RedisKeyUtil;
-import com.cloud.common.utils.StringUtils;
+import com.cloud.common.constant.Constants;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serializable;
 
 @Data
+@ConfigurationProperties(prefix = TokenProperties.PREFIX)
 public class TokenProperties implements Serializable {
+
+    public static final String PREFIX = Constants.CONFIG_PREFIX + "token";
 
     /**
      * 令牌自定义标识
@@ -24,20 +27,4 @@ public class TokenProperties implements Serializable {
      */
     private int expireTime = 30;
 
-    /**
-     * 是否缓存token数据.
-     */
-    private boolean cached = true;
-
-    /**
-     * 缓存前缀
-     */
-    private String cachePrefix = "login_tokens";
-
-    public void setCachePrefix(final String cachePrefix) {
-        this.cachePrefix = cachePrefix;
-        if (!StringUtils.endsWith(cachePrefix, RedisKeyUtil.DELIMITER)) {
-            this.cachePrefix = cachePrefix + RedisKeyUtil.DELIMITER;
-        }
-    }
 }

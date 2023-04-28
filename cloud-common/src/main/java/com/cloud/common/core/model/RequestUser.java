@@ -47,11 +47,6 @@ public class RequestUser extends BaseRequestInfo {
     private Long loginTime;
 
     /**
-     * 过期时间
-     */
-    private Long expireTime;
-
-    /**
      * 权限列表
      */
     private Set<String> permissions;
