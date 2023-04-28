@@ -48,11 +48,6 @@ public class SystemProperties {
     private String captchaType;
 
     /**
-     * token配置
-     */
-    private TokenProperties token = new TokenProperties();
-
-    /**
      * 权限相关配置
      */
     private SecurityProperties security = new SecurityProperties();

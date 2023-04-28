@@ -7,8 +7,8 @@ import com.cloud.core.redis.RedisCache;
 import com.cloud.webmvc.annotation.RepeatSubmit;
 import com.cloud.webmvc.filter.RepeatedlyRequestWrapper;
 import com.cloud.webmvc.interceptor.RepeatSubmitInterceptor;
-import com.cloud.webmvc.properties.SystemProperties;
 import com.cloud.webmvc.utils.http.HttpHelper;
+import com.cloud.webmvc.utils.ip.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +26,6 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
     public final String REPEAT_PARAMS = "repeatParams";
 
     public final String REPEAT_TIME = "repeatTime";
-
-    // 令牌自定义标识
-    @Autowired
-    private SystemProperties systemProperties;
 
     @Autowired
     private RedisCache redisCache;
@@ -55,7 +51,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
         String url = request.getRequestURI();
 
         // 唯一值（没有消息头则使用请求地址）
-        String submitKey = StringUtils.trimToEmpty(request.getHeader(systemProperties.getToken().getHeader()));
+        String submitKey = StringUtils.trimToEmpty(IpUtils.getIpAddr(request));
 
         // 唯一标识（指定key + url + 消息头）
         String cacheRepeatKey = Constants.REPEAT_SUBMIT_KEY + url + submitKey;

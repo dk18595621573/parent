@@ -51,6 +51,19 @@ public class QWRobotUtil {
     }
 
     /**
+     * 发送企微机器人文本消息
+     *
+     * @param secret 机器人密钥
+     * @param content 文本消息内容
+     * @param atUser 需要 @ 的用户的手机号
+     * @return true 发送成功 ; false 发送失败
+     */
+    public static boolean sendTextMsg(final String secret, final String content, final String atUser) {
+        String json = "{\"msgtype\": \"text\",\"text\": {\"content\": \"" + content + "\", \"mentioned_mobile_list\":[\"" + atUser + "\"]}}";
+        return sendMsg(secret, json);
+    }
+
+    /**
      * 发送企微机器人markdown格式消息
      *
      * @param content markdown格式消息

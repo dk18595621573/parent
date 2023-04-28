@@ -173,7 +173,7 @@ public class RocketMQBuilder {
      * @param function 方法体
      * @param <T>      实体类
      */
-    public <T extends BaseEvent> void process(final String key, final T event, final Consumer<T> function) {
+    public <T> void process(final String key, final T event, final Consumer<T> function) {
         if (redisCache.setIfAbsent(RedisKeyUtil.generate(REDIS_REPEAT_PREFIX_KEY, key), "", 60, TimeUnit.MINUTES)) {
             try {
                 log.info("[MQ消息-开始处理]--[{}]:{}", key, event);
