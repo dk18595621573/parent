@@ -1,5 +1,6 @@
 package com.cloud.rocketmq.message;
 
+import cn.hutool.core.util.IdUtil;
 import com.cloud.rocketmq.base.BaseEvent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,5 +27,8 @@ public class MsgCenterBatchMessage extends BaseEvent {
      */
     private List<MsgCenterMessage> messageList;
 
-
+    public MsgCenterBatchMessage(List<MsgCenterMessage> messageList) {
+        this.messageList = messageList;
+        super.keys = IdUtil.fastSimpleUUID();
+    }
 }
