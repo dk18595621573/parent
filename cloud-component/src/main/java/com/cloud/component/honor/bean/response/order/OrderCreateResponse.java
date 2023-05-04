@@ -29,6 +29,6 @@ public class OrderCreateResponse extends HonorResponse implements Serializable {
      */
     @Alias("honor_contract_no")
     @JsonProperty("honor_contract_no")
-    private String honorContract_no;
+    private String honorContractNo;
 
 }
