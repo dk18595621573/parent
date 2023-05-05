@@ -20,6 +20,11 @@ public class ECSSProperties {
     public static final String ECSS_PREFIX = Constants.CONFIG_PREFIX + "ecss";
 
     /**
+     * 是否同步订单.
+     */
+    private boolean syncOrder;
+
+    /**
      * 接口请求地址.
      */
     private String url;

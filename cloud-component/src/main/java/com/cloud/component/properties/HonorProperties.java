@@ -17,6 +17,11 @@ public class HonorProperties {
     public static final String HONOR_PREFIX = Constants.CONFIG_PREFIX + "honor";
 
     /**
+     * 是否同步订单.
+     */
+    private boolean syncOrder;
+
+    /**
      * 接口请求地址.
      */
     private String url;
