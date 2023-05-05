@@ -47,6 +47,7 @@
         <nacos-client.version>2.0.3</nacos-client.version>
         <alibaba-spring-context.version>1.0.11</alibaba-spring-context.version>
         <rocketmq.version>4.7.1</rocketmq.version>
+        <liteflow.version>2.10.2</liteflow.version>
 
         <spring-boot-seata.version>1.4.2</spring-boot-seata.version>
         <springboot.version>2.5.13</springboot.version>
@@ -372,6 +373,18 @@
                 <version>${xxl-job.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>liteflow-spring-boot-starter</artifactId>
+                <version>${liteflow.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.yomahub</groupId>
+                <artifactId>liteflow-rule-nacos</artifactId>
+                <version>${liteflow.version}</version>
+            </dependency>
+
             <!-- 银联SDK -->
             <dependency>
                 <groupId>com.chinapay</groupId>
@@ -493,6 +506,12 @@
             <dependency>
                 <groupId>com.cloud</groupId>
                 <artifactId>idempotent-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>liteflow-spring-boot-starter</artifactId>
                 <version>${revision}</version>
             </dependency>
 

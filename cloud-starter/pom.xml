@@ -22,6 +22,7 @@
         <module>seata-spring-boot-starter</module>
         <module>idempotent-spring-boot-starter</module>
         <module>swagger-spring-boot-starter</module>
+        <module>liteflow-spring-boot-starter</module>
     </modules>
 
     <properties>
