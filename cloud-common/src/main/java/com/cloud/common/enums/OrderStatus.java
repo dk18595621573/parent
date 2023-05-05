@@ -21,8 +21,7 @@ public enum OrderStatus implements BaseEnum {
     REVOKE(13, "撤销"),
     NOT_RECOVERED(14, "未追回订单"),
     AUCTION_OFFER(15, "竞拍出价"),
-    PENDING_PROCESSING(16,"待处理"),
-    REMOVE(17,"已撤销")
+    PENDING_PROCESSING(16,"待处理")
     ;
 
 
