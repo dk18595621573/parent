@@ -96,6 +96,17 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 模块业务异常
+     */
+    @ResponseStatus
+    @ExceptionHandler(NullPointerException.class)
+    public Result<?> handleNullPointerException(NullPointerException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',发生NPE异常.", requestURI, e);
+        return Result.error("NPE异常，请联系管理员");
+    }
+
+    /**
      * 未知的系统异常
      */
     @ExceptionHandler(Exception.class)
