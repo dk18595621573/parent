@@ -79,4 +79,17 @@ public enum BelongType {
         return Arrays.asList(HUASHENG.getCode(), GUANGYI.getCode(), HONOR.getCode(), OPERATOR.getCode()).contains(code);
     }
 
+    /**
+     * 是否为自动成交.
+     *
+     * @param code code
+     * @return true：是、false：否
+     */
+    public static boolean isAutoDeal(final String code) {
+        if (StringUtils.isBlank(code)) {
+            return false;
+        }
+        return Arrays.asList(GUANGYI.getCode(), HONOR.getCode()).contains(code);
+    }
+
 }
