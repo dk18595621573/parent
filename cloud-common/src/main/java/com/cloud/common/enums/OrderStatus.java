@@ -52,4 +52,17 @@ public enum OrderStatus implements BaseEnum {
         }
         return null;
     }
+
+    public static String convertMag(Integer code) {
+        OrderStatus[] var1 = values();
+        int var2 = var1.length;
+
+        for(int var3 = 0; var3 < var2; ++var3) {
+            OrderStatus status = var1[var3];
+            if (status.getCode().equals(code)) {
+                return status.getMsg();
+            }
+        }
+        return NOT_QUOTED.getMsg();
+    }
 }
