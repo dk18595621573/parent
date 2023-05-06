@@ -16,9 +16,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class AsyncManager {
 
-    // 核心线程池大小
+    /**
+     * 核心线程池大小.
+     */
     private static final int CORE_POOL_SIZE = 6;
+    /**
+     * 最大线程池大小
+     */
     private static final int MAX_SIZE = 10;
+    /**
+     * 任务队列大小
+     */
     private static final int QUEUE_CAPACITY = 1000;
 
     /**

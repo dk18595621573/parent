@@ -70,7 +70,8 @@ public class Threads {
             }
         }
         if (t != null) {
-            logger.error(t.getMessage(), t);
+            logger.error("线程处理出现异常[{}]:", t.getMessage(), t);
+
         }
     }
 }
