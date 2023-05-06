@@ -5,9 +5,7 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.slf4j.MDC;
 
 import java.util.Map;
-import java.util.TimerTask;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -19,19 +17,18 @@ import java.util.concurrent.TimeUnit;
 public class AsyncManager {
 
     // 核心线程池大小
-    private static final int CORE_POOL_SIZE = 10;
-    /**
-     * 操作延迟10毫秒
-     */
-    private static final int OPERATE_DELAY_TIME = 10;
+    private static final int CORE_POOL_SIZE = 6;
+    private static final int MAX_SIZE = 10;
+    private static final int QUEUE_CAPACITY = 1000;
 
     /**
      * 异步操作任务调度线程池
      */
-    private static final ScheduledExecutorService executor;
+    private static final ThreadPoolExecutor executor;
 
     static {
-        executor = new ScheduledThreadPoolExecutor(CORE_POOL_SIZE,
+        executor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_SIZE, 2, TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(QUEUE_CAPACITY),
             new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
             new ThreadPoolExecutor.CallerRunsPolicy()) {
             @Override
@@ -59,19 +56,16 @@ public class AsyncManager {
      */
     public void execute(AsyncExecute exec) {
         Map<String, String> contextMap = MDC.getCopyOfContextMap();
-        executor.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    if (contextMap != null) {
-                        MDC.setContextMap(contextMap);
-                    }
-                    exec.run();
-                } finally {
-                    MDC.clear();
+        executor.submit(() -> {
+            try {
+                if (contextMap != null) {
+                    MDC.setContextMap(contextMap);
                 }
+                exec.run();
+            } finally {
+                MDC.clear();
             }
-        }, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
+        });
     }
 
     /**
