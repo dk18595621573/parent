@@ -1,5 +1,6 @@
 package com.cloud.core.log.decorator;
 
+import com.cloud.common.utils.Threads;
 import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;
 
@@ -11,18 +12,17 @@ import java.util.Map;
 public class MdcTaskDecorator implements TaskDecorator {
 
     @Override
-    public Runnable decorate(Runnable runnable) {
-        // Right now: Web thread context !
-        // (Grab the current thread MDC data)
+    public Runnable decorate(final Runnable runnable) {
         Map<String, String> contextMap = MDC.getCopyOfContextMap();
         return () -> {
             try {
-                // Right now: @Async thread context !
-                // (Restore the Web thread context's MDC data)
                 if (contextMap != null) {
                     MDC.setContextMap(contextMap);
                 }
                 runnable.run();
+            } catch (Throwable e) {
+                //执行出现异常，打印异常信息
+                Threads.printException(runnable, e);
             } finally {
                 MDC.clear();
             }
