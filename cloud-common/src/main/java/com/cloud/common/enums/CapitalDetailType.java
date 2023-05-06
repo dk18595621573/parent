@@ -29,7 +29,10 @@ public enum CapitalDetailType implements BaseEnum {
 
     LOGISTICS_ABNORMAL(8, "物流异常"),
 
-    JOINT_ORDER(9, "接龙抢单");
+    JOINT_ORDER(9, "接龙抢单"),
+
+    ACTUAL_PURCHASE(10, "采购入仓")
+    ;
 
     private final Integer code;
 
@@ -47,4 +50,14 @@ public enum CapitalDetailType implements BaseEnum {
     public String getMsg() {
         return msg;
     }
+
+    public static String fromCode(Integer code) {
+        for (CapitalDetailType type : CapitalDetailType.values()) {
+            if (type.getCode().equals(code)) {
+                return type.msg;
+            }
+        }
+        return null;
+    }
+
 }
