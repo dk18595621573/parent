@@ -27,7 +27,11 @@ public class AsyncManager {
     /**
      * 任务队列大小
      */
-    private static final int QUEUE_CAPACITY = 1000;
+    private static final int QUEUE_CAPACITY = 100;
+    /**
+     * 空闲线程存活时间
+     */
+    private static final int ALIVE_TIME = 2000;
 
     /**
      * 异步操作任务调度线程池
@@ -35,7 +39,7 @@ public class AsyncManager {
     private static final ThreadPoolExecutor executor;
 
     static {
-        executor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_SIZE, 2, TimeUnit.SECONDS,
+        executor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_SIZE, ALIVE_TIME, TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>(QUEUE_CAPACITY),
             new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
             new ThreadPoolExecutor.CallerRunsPolicy()) {
@@ -83,4 +87,16 @@ public class AsyncManager {
         Threads.shutdownAndAwaitTermination(executor);
     }
 
+//    public static void main(String[] args) {
+//        Thread.currentThread().setName("nlsm");
+//        long start = System.currentTimeMillis();
+//        AtomicInteger integer = new AtomicInteger(0);
+//        for (int i = 0; i < 1000; i++) {
+//            AsyncManager.me().execute(() -> System.out.println(integer.incrementAndGet() + "\t> " +Thread.currentThread().getName()));
+//            Threads.sleep(0);
+//        }
+//        long end = System.currentTimeMillis();
+//
+//        System.out.println("over:" + (end-start));
+//    }
 }
