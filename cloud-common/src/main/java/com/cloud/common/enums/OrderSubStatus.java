@@ -129,6 +129,7 @@ public enum OrderSubStatus implements BaseEnum {
     /** 售后 */
     AFTERMARKET_WAIT_INSPECTION_GOODS(100, "售后-待验货(待寄回)"),
     AFTERMARKET_INSPECTION_GOODS(101, "售后-已验货(已寄回)"),
+    AFTERMARKET_HANDLE_ITSELF(102, "售后-自留"),
 
     /** 撤销 */
     REVOKE_NEW(131, "新建采购撤销"),
