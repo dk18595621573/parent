@@ -36,7 +36,7 @@ public class ExpressUtils {
     /** 揽收超时时间 */
     private final static Integer COLLECT_TIMEOUT = 24;
     /** 申请超时时间 */
-    private final static Integer APPLY_TIMEOUT_TIME = 22;
+    private final static Integer APPLY_TIMEOUT_TIME = 23;
 
     /**
      * 判断是否可以申请修改物流

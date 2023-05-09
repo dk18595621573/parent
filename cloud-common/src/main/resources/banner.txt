@@ -1,4 +1,4 @@
-Application Version: ${cloud-parent.version}
+Application Version: 1.2.6-SNAPSHOT
 Spring Boot Version: ${spring-boot.version}
 ////////////////////////////////////////////////////////////////////
 //                          _ooOoo_                               //
