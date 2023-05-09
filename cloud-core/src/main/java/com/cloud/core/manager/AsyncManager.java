@@ -27,7 +27,7 @@ public class AsyncManager {
     /**
      * 任务队列大小
      */
-    private static final int QUEUE_CAPACITY = 100;
+    private static final int QUEUE_CAPACITY = 1000;
     /**
      * 空闲线程存活时间
      */

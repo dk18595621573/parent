@@ -3,7 +3,7 @@ package com.cloud.core;
 import com.cloud.core.config.RedisConfig;
 import com.cloud.core.log.LogService;
 import com.cloud.core.log.SimpleLogServiceImpl;
-import com.cloud.core.log.decorator.MdcTaskDecorator;
+import com.cloud.core.thread.MdcTaskDecorator;
 import com.cloud.core.manager.ShutdownManager;
 import com.cloud.core.utils.SpringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

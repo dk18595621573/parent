@@ -1,6 +1,5 @@
-package com.cloud.core.log.decorator;
+package com.cloud.core.thread;
 
-import com.cloud.common.utils.Threads;
 import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;
 
@@ -20,9 +19,6 @@ public class MdcTaskDecorator implements TaskDecorator {
                     MDC.setContextMap(contextMap);
                 }
                 runnable.run();
-            } catch (Throwable e) {
-                //执行出现异常，打印异常信息
-                Threads.printException(runnable, e);
             } finally {
                 MDC.clear();
             }

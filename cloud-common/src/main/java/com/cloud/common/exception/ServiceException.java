@@ -28,6 +28,7 @@ public final class ServiceException extends RuntimeException {
      * 空构造方法，避免反序列化问题
      */
     public ServiceException() {
+        this.message = "业务异常";
     }
 
     public ServiceException(String message) {
