@@ -119,10 +119,11 @@ public class PostInvokeFilter extends AbstractFilter implements Filter, Filter.L
         }
         if (arg instanceof Collection || arg instanceof Map || arg.getClass().isArray()) {
             int len = ObjectUtil.length(arg);
-            if (len > 20) {
-                return String.format("%s@%s", arg.getClass(), len);
-            }
-            return JsonUtil.toJson(arg);
+//            if (len > 20) {
+//                return String.format("%s@%s", arg.getClass(), len);
+//            }
+//            return JsonUtil.toJson(arg);
+            return String.format("%s@%s", arg.getClass(), len);
         }
         Map<String, Object> map = new HashMap<>();
         ReflectionUtils.doWithFields(arg.getClass(), f -> {
