@@ -87,6 +87,9 @@ public class InterceptParams implements Serializable {
         /** 电话，如 18372266052 */
         private String phone;
 
+        /** 网点代码，如 755WQ */
+        private String areaCode;
+
         public NewDestAddress() {
         }
 
