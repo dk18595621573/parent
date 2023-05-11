@@ -78,4 +78,8 @@ public interface TopicConstants {
     String FMS_BILL_PUSH = "TOPIC-FMS-BILL-PUSH";
 
 
+    /**
+     * oms一键抢单埋点
+     */
+    String OMS_BATCH_COMPETE_POINT = "TOPIC-OMS-BATCH-COMPETE-POINT";
 }
