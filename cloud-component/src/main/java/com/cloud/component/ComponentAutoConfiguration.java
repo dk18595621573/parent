@@ -1,17 +1,6 @@
 package com.cloud.component;
 
-import com.cloud.component.config.CMBConfig;
-import com.cloud.component.config.ChinaPayConfig;
-import com.cloud.component.config.ECSSConfig;
-import com.cloud.component.config.ExpressConfig;
-import com.cloud.component.config.FadadaConfig;
-import com.cloud.component.config.HSConfig;
-import com.cloud.component.config.HolidayConfig;
-import com.cloud.component.config.HonorConfig;
-import com.cloud.component.config.SerialConfig;
-import com.cloud.component.config.SfConfig;
-import com.cloud.component.config.WxworkBotConfig;
-import com.cloud.component.config.YaBaoConfig;
+import com.cloud.component.config.*;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -23,6 +12,6 @@ import org.springframework.context.annotation.Import;
 @Import(value = {FadadaConfig.class, ChinaPayConfig.class, ExpressConfig.class,
     SerialConfig.class, CMBConfig.class, WxworkBotConfig.class,
     HSConfig.class, HolidayConfig.class, YaBaoConfig.class, SfConfig.class, ECSSConfig.class,
-    HonorConfig.class})
+    HonorConfig.class, QichachaConfig.class})
 public class ComponentAutoConfiguration {
 }
