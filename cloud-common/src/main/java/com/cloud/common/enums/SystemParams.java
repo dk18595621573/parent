@@ -128,6 +128,11 @@ public enum SystemParams {
      * 拼多多最晚发货时效
      */
     PDD_DELIVERY_DEADLINE("pdd.delivery.deadline", "30"),
+    /**
+     * 自动成交推送人手机号
+     */
+    AUTOTRADE_MESSAGE_PHONE("autoTrade.message.phone", "18256927010"),
+
     ;
 
 
