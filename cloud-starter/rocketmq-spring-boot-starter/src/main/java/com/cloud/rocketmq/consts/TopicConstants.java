@@ -88,14 +88,9 @@ public interface TopicConstants {
     interface OMS {
 
         /**
-         * 外部订单自动成交消息.
+         * 外部订单消息.
          */
-        String AUTO_DEAL_ORDER = "TOPIC-OMS-AUTO-DEAL-ORDER";
-
-        /**
-         * 外部订单发货消息.
-         */
-        String DELIVER_GOODS_ORDER = "TOPIC-OMS-DELIVER-GOODS-ORDER";
+        String EXTERNAL_ORDER = "TOPIC-OMS-EXTERNAL-ORDER";
 
     }
 
