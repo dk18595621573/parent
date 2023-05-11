@@ -84,12 +84,12 @@ public class RocketMQBuilder {
      */
     public <T extends BaseEvent> void send(final String topic, final T event) {
         Message<T> message = buildMessage(event);
+        log.info("[MQ消息-生产消息][{}]--{}", topic, message);
         if (StringUtils.isBlank(properties.getNamespace())) {
             streamBridge.send(topic, message);
         } else {
             streamBridge.send(properties.getNamespace() + "%" +topic, message);
         }
-        log.info("[MQ消息-生产消息][{}]--{}", topic, message);
     }
 
     /**
@@ -102,12 +102,12 @@ public class RocketMQBuilder {
      */
     public <T extends BaseEvent> void sendDelay(final String topic, final T event, final long delayTime) {
         Message<T> message = this.buildDelayMessage(event, delayTime);
+        log.info("[MQ消息-生产延时消息][{},{}]--{}", topic, delayTime, message);
         if (StringUtils.isBlank(properties.getNamespace())) {
             streamBridge.send(topic, message);
         } else {
             streamBridge.send(properties.getNamespace() + "%" +topic, message);
         }
-        log.info("[MQ消息-生产延时消息][{},{}]--{}", topic, delayTime, message);
     }
 
 
