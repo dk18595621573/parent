@@ -82,4 +82,10 @@ public interface TopicConstants {
      * oms一键抢单埋点
      */
     String OMS_BATCH_COMPETE_POINT = "TOPIC-OMS-BATCH-COMPETE-POINT";
+
+    /**
+     * 外部订单消息.
+     */
+    String OMS_EXTERNAL_ORDER = "TOPIC-OMS-EXTERNAL-ORDER";
+
 }
