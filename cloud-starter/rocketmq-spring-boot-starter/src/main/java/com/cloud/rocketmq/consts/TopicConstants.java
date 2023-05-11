@@ -77,15 +77,54 @@ public interface TopicConstants {
      */
     String FMS_BILL_PUSH = "TOPIC-FMS-BILL-PUSH";
 
-
     /**
      * oms一键抢单埋点
      */
     String OMS_BATCH_COMPETE_POINT = "TOPIC-OMS-BATCH-COMPETE-POINT";
 
     /**
-     * 外部订单消息.
+     * 订单.
      */
-    String OMS_EXTERNAL_ORDER = "TOPIC-OMS-EXTERNAL-ORDER";
+    interface OMS {
+
+        /**
+         * 外部订单自动成交消息.
+         */
+        String AUTO_DEAL_ORDER = "TOPIC-OMS-AUTO-DEAL-ORDER";
+
+        /**
+         * 外部订单发货消息.
+         */
+        String DELIVER_GOODS_ORDER = "TOPIC-OMS-DELIVER-GOODS-ORDER";
+
+    }
+
+    /**
+     * 用户.
+     */
+    interface USER {
+
+    }
+
+    /**
+     * 财务.
+     */
+    interface FMS {
+
+    }
+
+    /**
+     * 系统.
+     */
+    interface SYSTEM {
+
+    }
+
+    /**
+     * 消息.
+     */
+    interface MESSAGE {
+
+    }
 
 }
