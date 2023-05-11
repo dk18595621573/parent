@@ -1,13 +1,16 @@
 package com.cloud.webmvc.excel;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.handler.WriteHandler;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.cloud.common.exception.ServiceException;
 import com.cloud.common.utils.StringUtils;
 import com.cloud.webmvc.excel.listener.ProcessAllListener;
 import com.cloud.webmvc.excel.listener.ProcessBatchListener;
 import com.cloud.webmvc.excel.listener.ProcessRowListener;
+import com.cloud.webmvc.excel.strategy.MultipleWrite;
 import com.cloud.webmvc.excel.strategy.RowMergeStrategy;
 import lombok.experimental.UtilityClass;
 
@@ -99,6 +102,36 @@ public class ExcelUtil {
                 .registerWriteHandler(writeHandler)
                 .sheet(sheetName)
                 .doWrite(datas);
+    }
+
+    /**
+     * 分批次写入文件.
+     * @param outputStream 输出流
+     * @param sheetName 第一个sheet页名称
+     * @param multipleWrite 分次写入方法
+     * @param <T> 列表数据类型
+     */
+    public static <T> void batchWrite(OutputStream outputStream, String sheetName, MultipleWrite<T> multipleWrite) {
+        batchWrite(outputStream, sheetName, new LongestMatchColumnWidthStyleStrategy(), multipleWrite);
+    }
+
+    /**
+     * 分批次写入文件.
+     * @param outputStream 输出流
+     * @param sheetName 第一个sheet页名称
+     * @param multipleWrite 分次写入方法
+     * @param <T> 列表数据类型
+     * @param writeHandler 拦截器对象
+     */
+    public static <T> void batchWrite(OutputStream outputStream, String sheetName, WriteHandler writeHandler, MultipleWrite<T> multipleWrite) {
+        ExcelWriter write = EasyExcel.write(outputStream, multipleWrite.getDataClass())
+            .registerWriteHandler(writeHandler).build();
+        WriteSheet sheet = EasyExcel.writerSheet(sheetName).build();
+
+        while (multipleWrite.hasData()) {
+            write.write(multipleWrite.datas(), sheet);
+        }
+        write.finish();
     }
 
     /**
