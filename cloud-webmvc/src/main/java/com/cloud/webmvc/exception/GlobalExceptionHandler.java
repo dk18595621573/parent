@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
                                                           HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',不支持'{}'请求", requestURI, e.getMethod());
-        return Result.error(HttpStatus.NOT_FOUND, "不支持该请求，请刷新页面后重试");
+        return Result.error(HttpStatus.NOT_FOUND, "非法请求，请刷新页面后重试");
     }
 
     /**
