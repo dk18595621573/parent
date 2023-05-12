@@ -1,6 +1,5 @@
 package com.cloud.component.config;
 
-import com.cloud.component.properties.CMBProperties;
 import com.cloud.component.properties.QichachaProperties;
 import com.cloud.component.qichacha.QichachaClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(value = QichachaProperties.class)
-@ConditionalOnProperty(prefix = CMBProperties.CMB_PREFIX, name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = QichachaProperties.QICHACHA_PREFIX, name = "enabled", havingValue = "true")
 public class QichachaConfig {
 
     @Bean
