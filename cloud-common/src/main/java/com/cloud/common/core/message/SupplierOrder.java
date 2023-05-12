@@ -50,6 +50,7 @@ public class SupplierOrder implements Serializable {
             detail.setCommonName(data.getCommonName());
             detail.setProvince(data.getProvince());
             detail.setQuantity(data.getQuantity());
+            detail.setPurchaseType(data.getPurchaseType());
         }
         return of(STATUS_ADD, hangOrderId, detail);
     }
@@ -72,6 +73,7 @@ public class SupplierOrder implements Serializable {
             detail.setSelfPrice(data.getSelfPrice());
             detail.setTradePrice(data.getTradePrice());
             detail.setTodayStatus(data.getTodayStatus());
+            detail.setPurchaseType(data.getPurchaseType());
         }
         return of(STATUS_MODIFY, hangOrderId, detail);
     }
@@ -84,6 +86,18 @@ public class SupplierOrder implements Serializable {
         detail.setCommonName(commonName);
         detail.setQuantity(quantity);
         detail.setCategory(category);
+        return of(STATUS_DELETE, hangOrderId, detail);
+    }
+
+    public static SupplierOrder ofDelete(Long hangOrderId, Long companyId, String province, String brand, String commonName, Long quantity, String category, String purchaseType) {
+        OrderDetail detail = new OrderDetail();
+        detail.setBuyerCompanyId(companyId);
+        detail.setProvince(province);
+        detail.setBrand(brand);
+        detail.setCommonName(commonName);
+        detail.setQuantity(quantity);
+        detail.setCategory(category);
+        detail.setPurchaseType(purchaseType);
         return of(STATUS_DELETE, hangOrderId, detail);
     }
 
