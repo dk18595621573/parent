@@ -1,6 +1,8 @@
 package com.cloud.rocketmq.message.order;
 
 import cn.hutool.core.util.StrUtil;
+import com.cloud.common.constant.Constants;
+import com.cloud.common.utils.StringUtils;
 import com.cloud.rocketmq.base.BaseEvent;
 import com.cloud.rocketmq.consts.FmsMQConstants;
 import lombok.Data;
@@ -42,10 +44,10 @@ public class OmsBatchCompeteMessage extends BaseEvent {
 
     @Override
     public String keys() {
-        String keys = super.keys;
-        if (Objects.nonNull(keys)) {
-            return StrUtil.format("{}-{}-{}", keys, "batch_compete", this.orderId);
+        String keys = super.keys();
+        if (StringUtils.isBlank(keys)) {
+            return Constants.snowflake.nextIdStr();
         }
-        return StrUtil.format("{}-{}-{}", "batch_compete", System.currentTimeMillis(), this.orderId);
+        return keys;
     }
 }
