@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -97,18 +96,18 @@ public class IdempotentAspect {
         }
     }
 
-    /**
-     * 异常处理.
-     *
-     * @param joinPoint 切面方法
-     * @param idempotent 幂等性注解
-     * @param ex        异常处理
-     * @throws Throwable 异常
-     */
-    @AfterThrowing(value = "@annotation(idempotent)", throwing = "ex")
-    public void afterThrowing(final JoinPoint joinPoint, final AutoIdempotent idempotent, final Throwable ex) {
-        log.error("[幂等] - 拦截内部异常", ex);
-    }
+//    /**
+//     * 异常处理.
+//     *
+//     * @param joinPoint 切面方法
+//     * @param idempotent 幂等性注解
+//     * @param ex        异常处理
+//     * @throws Throwable 异常
+//     */
+//    @AfterThrowing(value = "@annotation(idempotent)", throwing = "ex")
+//    public void afterThrowing(final JoinPoint joinPoint, final AutoIdempotent idempotent, final Throwable ex) {
+//        log.error("[幂等] - 拦截内部异常", ex);
+//    }
 
     /**
      * 正常返回处理.

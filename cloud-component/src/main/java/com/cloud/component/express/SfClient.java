@@ -3,6 +3,7 @@ package com.cloud.component.express;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.cloud.common.exception.ServiceException;
@@ -15,6 +16,7 @@ import com.cloud.component.util.HttpClientUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * 顺丰接口对接
@@ -96,15 +98,19 @@ public class SfClient {
             log.info("顺丰拦截返回参数--{}", httpPost);
             if (!JSONUtil.isJson(httpPost)) {
                 log.info("顺丰拦截失败--{}", httpPost);
-                throw new ServiceException("顺丰拦截失败");
+                return new InterceptResult("500", "返回报文错误");
             }
             JSONObject resultJson = JSONUtil.parseObj(httpPost);
+            if (Objects.isNull(resultJson.get(HTTP_CODE_NAME))) {
+                // 没有找到返回状态码
+                return new InterceptResult("500", resultJson.get("message").toString());
+            }
             if (!HTTP_STATUS.equals(resultJson.get(HTTP_CODE_NAME).toString())) {
                 return new InterceptResult(resultJson.get("errorCode").toString(), resultJson.get("message").toString());
             }
         } catch (Exception e) {
-            log.info("顺丰拦截出现异常--{}", e.getMessage());
-            throw new RuntimeException(e);
+            log.error("顺丰拦截出现异常--{}", e.getMessage());
+            return new InterceptResult("500", e.getMessage());
         }
         return new InterceptResult(true);
     }
