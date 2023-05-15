@@ -30,7 +30,7 @@ public class QichachaClient {
      */
     public CompanyInfoResponse getCompanyInfo(String keyword) {
         String reqInterNme = "https://api.qichacha.com/FuzzySearch/GetList";
-        String paramStr = "keyword=" + keyword;
+        String paramStr = "searchKey=" + keyword;
         // 获取Auth Code
         String timeSpan = String.valueOf(System.currentTimeMillis() / 1000);
         String[] autherHeader = new String[]{DigestUtils.md5Hex(qichachaProperties.getAppkey().concat(timeSpan).concat(qichachaProperties.getSecretKey())).toUpperCase(), timeSpan};
