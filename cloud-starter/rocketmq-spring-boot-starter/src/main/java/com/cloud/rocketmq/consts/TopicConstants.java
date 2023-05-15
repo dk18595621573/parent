@@ -88,9 +88,14 @@ public interface TopicConstants {
     interface OMS {
 
         /**
+         * 前缀.
+         */
+        String PREFIX = "TOPIC-OMS-";
+
+        /**
          * 外部订单消息.
          */
-        String EXTERNAL_ORDER = "TOPIC-OMS-EXTERNAL-ORDER";
+        String EXTERNAL_ORDER = PREFIX + "EXTERNAL-ORDER";
 
     }
 
@@ -99,12 +104,22 @@ public interface TopicConstants {
      */
     interface USER {
 
+        /**
+         * 前缀.
+         */
+        String PREFIX = "TOPIC-USER-";
+
     }
 
     /**
      * 财务.
      */
     interface FMS {
+
+        /**
+         * 前缀.
+         */
+        String PREFIX = "TOPIC-FMS-";
 
     }
 
@@ -113,12 +128,22 @@ public interface TopicConstants {
      */
     interface SYSTEM {
 
+        /**
+         * 前缀.
+         */
+        String PREFIX = "TOPIC-SYS-";
+
     }
 
     /**
      * 消息.
      */
     interface MESSAGE {
+
+        /**
+         * 前缀.
+         */
+        String PREFIX = "TOPIC-MSG-";
 
     }
 
