@@ -1,10 +1,14 @@
 package com.cloud.rocketmq.message.order;
 
+import cn.hutool.core.util.StrUtil;
 import com.cloud.rocketmq.base.BaseEvent;
+import com.cloud.rocketmq.consts.FmsMQConstants;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.Objects;
 
 /**
  * 小程序一键抢单消息体
@@ -35,4 +39,13 @@ public class OmsBatchCompeteMessage extends BaseEvent {
 
     //订单Id
     private Integer id;
+
+    @Override
+    public String keys() {
+        String keys = super.keys;
+        if (Objects.nonNull(keys)) {
+            return StrUtil.format("{}-{}-{}", keys, "batch_compete", this.orderId);
+        }
+        return StrUtil.format("{}-{}-{}", "batch_compete", System.currentTimeMillis(), this.orderId);
+    }
 }
