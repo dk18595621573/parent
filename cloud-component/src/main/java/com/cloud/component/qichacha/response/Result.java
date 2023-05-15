@@ -1,8 +1,10 @@
 package com.cloud.component.qichacha.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author m
@@ -28,7 +30,8 @@ public class Result implements Serializable {
     /**
      * 成立日期
      */
-    public String startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    public Date startDate;
 
     /**
      * 法定代表人姓名
