@@ -133,6 +133,11 @@ public enum SystemParams {
      */
     AUTOTRADE_MESSAGE_PHONE("autoTrade.message.phone", "18256927010"),
 
+    /**
+     * 补全订单查询数量（单次请求）
+     */
+    QUERYADDRESS_SINGLE_ORDERSIZE("queryAddress.single.orderSize","5"),
+
     ;
 
 
