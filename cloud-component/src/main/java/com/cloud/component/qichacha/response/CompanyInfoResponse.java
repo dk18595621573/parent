@@ -11,9 +11,12 @@ import java.util.List;
 @Data
 public class CompanyInfoResponse implements Serializable {
 
-    public String status;
-    public String message;
-    public String orderNumber;
-    public List<Result> result;
+    public String Status;
+
+    public String Message;
+
+    public String OrderNumber;
+
+    public List<Result> Result;
 
 }

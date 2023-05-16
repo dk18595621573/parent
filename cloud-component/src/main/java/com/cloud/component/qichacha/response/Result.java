@@ -15,41 +15,41 @@ public class Result implements Serializable {
     /**
      * KeyNo
      */
-    public String keyNo;
+    public String KeyNo;
 
     /**
      * 企业名称
      */
-    public String name;
+    public String Name;
 
     /**
      * 统一社会信用代码
      */
-    public String creditCode;
+    public String CreditCode;
 
     /**
      * 成立日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    public Date startDate;
+    public Date StartDate;
 
     /**
      * 法定代表人姓名
      */
-    public String operName;
+    public String OperName;
 
     /**
      * 状态
      */
-    public String status;
+    public String Status;
 
     /**
      * 注册号
      */
-    public String no;
+    public String No;
 
     /**
      * 注册地址
      */
-    public String address;
+    public String Address;
 }
