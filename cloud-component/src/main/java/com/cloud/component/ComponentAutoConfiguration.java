@@ -12,6 +12,6 @@ import org.springframework.context.annotation.Import;
 @Import(value = {FadadaConfig.class, ChinaPayConfig.class, ExpressConfig.class,
     SerialConfig.class, CMBConfig.class, WxworkBotConfig.class,
     HSConfig.class, HolidayConfig.class, YaBaoConfig.class, SfConfig.class, ECSSConfig.class,
-    HonorConfig.class, QichachaConfig.class, ShadowBotConfig.class})
+    HonorConfig.class, QichachaConfig.class})
 public class ComponentAutoConfiguration {
 }
