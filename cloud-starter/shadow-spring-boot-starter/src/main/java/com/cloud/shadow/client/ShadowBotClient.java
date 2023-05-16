@@ -45,7 +45,9 @@ public class ShadowBotClient {
 
     /**
      * 启动任务接口.
-     * 文档地址：<a href="https://www.winrobot360.com/yddoc/management/5c42596f8da1e38aadbe8d426d66f18f.html">...</a>
+     * <p>
+     * <a href="https://www.winrobot360.com/yddoc/management/5c42596f8da1e38aadbe8d426d66f18f.html">文档地址</a>
+     * </p>
      *
      * @param request 请求参数
      * @return 结果
@@ -59,7 +61,9 @@ public class ShadowBotClient {
 
     /**
      * 查询任务运行结果接口.
-     * 文档地址：<a href="https://www.winrobot360.com/yddoc/management/65cf3a312c84222a24dfe8c1d6640dcf.html">...</a>
+     * <p>
+     * <a href="https://www.winrobot360.com/yddoc/management/65cf3a312c84222a24dfe8c1d6640dcf.html">文档地址</a>
+     * </p>
      *
      * @param request 请求参数
      * @return 结果
@@ -73,7 +77,9 @@ public class ShadowBotClient {
 
     /**
      * 停止任务接口.
-     * 文档地址：<a href="https://www.winrobot360.com/yddoc/management/65cf3a312c84222a24dfe8c1d6640dcf.html">...</a>
+     * <p>
+     * <a href="https://www.winrobot360.com/yddoc/management/65cf3a312c84222a24dfe8c1d6640dcf.html">文档地址</a>
+     * </p>
      *
      * @param request 请求参数
      * @return 结果
@@ -124,7 +130,9 @@ public class ShadowBotClient {
 
     /**
      * 获取token.
-     * 文档地址：<a href="https://www.winrobot360.com/yddoc/language/zh-cn/%E7%AE%A1%E7%90%86%E6%96%87%E6%A1%A3/%E5%BC%80%E6%94%BEapi/api%E6%8E%A5%E5%8F%A3/%E9%89%B4%E6%9D%83.html">...</a>
+     * <p>
+     * <a href="https://www.winrobot360.com/yddoc/language/zh-cn/%E7%AE%A1%E7%90%86%E6%96%87%E6%A1%A3/%E5%BC%80%E6%94%BEapi/api%E6%8E%A5%E5%8F%A3/%E9%89%B4%E6%9D%83.html">文档地址</a>
+     * </p>
      *
      * @return token
      */
