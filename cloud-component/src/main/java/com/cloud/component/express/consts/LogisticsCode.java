@@ -21,6 +21,8 @@ public enum LogisticsCode {
     JD("jd", "京东"),
      /** 中通 */
     ZHONGTONG("zhongtong", "中通"),
+    /** 德邦 */
+    DE_BANG("debangwuliu", "德邦"),
     ;
     private final String code;
     private final String msg;
