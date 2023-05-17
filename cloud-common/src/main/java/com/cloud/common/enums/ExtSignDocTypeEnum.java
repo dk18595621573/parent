@@ -8,7 +8,9 @@ import java.util.Objects;
  * @author author
  */
 public enum ExtSignDocTypeEnum {
-    FRAME(0, "框架合同"), SALE(1, "销售合同");
+    FRAME(0, "框架合同"),
+    SALE(1, "销售合同"),
+    RECEIPT(2, "收货确认单");
 
     private final int code;
     private final String info;
