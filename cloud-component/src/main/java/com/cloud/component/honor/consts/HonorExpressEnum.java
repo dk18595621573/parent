@@ -20,6 +20,16 @@ public enum HonorExpressEnum {
      */
     CODE_1("SF", "shunfeng", "顺丰速运"),
 
+    /**
+     * 邮政.
+     */
+    CODE_2("YZBG", "youzhengguonei", "国际邮政"),
+
+    /**
+     * EMS.
+     */
+    CODE_3("EMS-TCBC", "EMS", "国际邮政"),
+
     ;
 
     /**
