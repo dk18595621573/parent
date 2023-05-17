@@ -560,4 +560,15 @@ public class FadadaClient {
         return JsonUtil.parse(result, FadadaResultResponse.class);
     }
 
+    /**
+     * 删除印章
+     *
+     * @param params 入参
+     * @return 执行结果
+     */
+    public FadadaBaseResponse removeSignature(RemoveSignatureParams params) {
+        String result = fddExtraClient.invokeRemoveSignature(params);
+        return JsonUtil.parse(result, FadadaBaseResponse.class);
+    }
+
 }
