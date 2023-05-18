@@ -251,12 +251,12 @@ public class CosService {
             log.debug("开始上传文件至COS：【{}】", filename);
             PutObjectResult putObjectResult = cosClient.putObject(cosProperties.getBucketName(), filePath, inputStream, meta);
             log.debug("文件上传至COS：【{}】【{}】 成功，返回数据: {}", filename, filePath, putObjectResult.getRequestId());
-            //上传完成删除临时文件
-            if (!tempFile.delete()) {
-                log.warn("删除临时文件【{}】失败", tempFile.getAbsolutePath());
-            }
         } catch (Exception e) {
             log.error("文件上传到COS：【{}】失败，失败原因为：", filename, e);
+        }
+        //上传完成删除临时文件
+        if (!tempFile.delete()) {
+            log.warn("删除临时文件【{}】失败", tempFile.getAbsolutePath());
         }
     }
 
