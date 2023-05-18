@@ -109,6 +109,11 @@ public interface TopicConstants {
          */
         String PREFIX = "TOPIC-USER-";
 
+        /**
+         * 框架合同推送
+         */
+        String FRAME_CONTRACT_PUSH = PREFIX + "FRAME-CONTRACT-PUSH";
+
     }
 
     /**
