@@ -268,6 +268,7 @@ public class FadadaClient {
         params.setKeywordStrategy(extsignRequest.getKeywordStrategy());
         // 客户角色 1-接入平台；
         params.setClientRole("1");
+        params.setSignatureId(extsignRequest.getSignatureId());
         String result = fddBaseClient.invokeExtSignAuto(params);
         log.info("法大大返回参数，自动签署：{}", result);
         return JsonUtil.parse(result, FadadaResultResponse.class);
