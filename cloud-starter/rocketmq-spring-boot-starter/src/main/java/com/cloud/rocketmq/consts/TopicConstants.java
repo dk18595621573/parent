@@ -83,6 +83,23 @@ public interface TopicConstants {
     String OMS_BATCH_COMPETE_POINT = "TOPIC-OMS-BATCH-COMPETE-POINT";
 
     /**
+     * API.
+     */
+    interface API {
+
+        /**
+         * 前缀.
+         */
+        String PREFIX = "TOPIC-API-";
+
+        /**
+         * 影刀通知消息.
+         */
+        String SHADOW_NOTIFY = PREFIX + "SHADOW-NOTIFY";
+
+    }
+
+    /**
      * 订单.
      */
     interface OMS {
