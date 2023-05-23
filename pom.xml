@@ -696,10 +696,14 @@
     <distributionManagement>
         <repository>
             <!--必须与 settings.xml 的 id 一致-->
-            <id>xingshiapp-xswc-cloud</id>
-            <name>cloud</name>
-            <url>https://xingshiapp-maven.pkg.coding.net/repository/xswc/cloud/</url>
+            <id>rdc-releases</id>
+            <url>https://packages.aliyun.com/maven/repository/2377657-release-77kzTX/</url>
         </repository>
+        <snapshotRepository>
+            <!--必须与 settings.xml 的 id 一致-->
+            <id>rdc-snapshots</id>
+            <url>https://packages.aliyun.com/maven/repository/2377657-snapshot-Er50pq/</url>
+        </snapshotRepository>
     </distributionManagement>
 
 </project>
