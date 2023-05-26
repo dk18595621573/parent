@@ -10,6 +10,7 @@ import com.cloud.core.exception.BaseException;
 import com.cloud.webmvc.domain.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -80,6 +81,16 @@ public class GlobalExceptionHandler {
         String message = e.getMessage();
         log.error("[{}]模块出现异常【{}】【{}】:", e.getModule(), message, e.getArgs(), e);
         return Result.error(message);
+    }
+
+    /**
+     * 数据访问异常
+     */
+    @ExceptionHandler(DataAccessException.class)
+    public Result<?> handleDataAccessException(final DataAccessException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',数据异常", requestURI, e);
+        return Result.error( "系统数据异常，请联系管理员");
     }
 
     /**
