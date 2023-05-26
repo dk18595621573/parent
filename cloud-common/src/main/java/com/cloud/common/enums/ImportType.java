@@ -16,7 +16,11 @@ public enum ImportType {
     /**
      * 华盛订单导入
      */
-    HS_ORDER(1);
+    HS_ORDER(1),
+    /**
+     * 预付采购导入
+     */
+    ADVANCE_ORDER(2);
 
     private final int code;
 }
