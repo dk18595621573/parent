@@ -125,6 +125,7 @@ public enum OrderSubStatus implements BaseEnum {
     LOGISTICS_KNOTTY(125, "疑难"),
     NO_SIGN_DAYS(126, "7天未签收异常"),
     LOGISTICS_PHONE_SUFFIX(127, "手机号后4位错误"),
+    COLLECT_ERROR(128, "揽收异常"),
 
     /** 售后 */
     AFTERMARKET_WAIT_INSPECTION_GOODS(100, "售后-待验货(待寄回)"),

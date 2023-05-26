@@ -4,6 +4,7 @@ import com.cloud.component.honor.HonorClient;
 import com.cloud.component.properties.HonorProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +26,7 @@ public class HonorConfig {
      * @return 结果
      */
     @Bean
+    @RefreshScope
     public HonorClient honorClient(HonorProperties honorProperties) {
         return new HonorClient(honorProperties);
     }

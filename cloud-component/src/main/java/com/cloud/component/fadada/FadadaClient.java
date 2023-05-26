@@ -268,6 +268,7 @@ public class FadadaClient {
         params.setKeywordStrategy(extsignRequest.getKeywordStrategy());
         // 客户角色 1-接入平台；
         params.setClientRole("1");
+        params.setSignatureId(extsignRequest.getSignatureId());
         String result = fddBaseClient.invokeExtSignAuto(params);
         log.info("法大大返回参数，自动签署：{}", result);
         return JsonUtil.parse(result, FadadaResultResponse.class);
@@ -295,6 +296,8 @@ public class FadadaClient {
         // 签署结果异步通知url
         params.setNotifyUrl(extsignRequest.getNotifyUrl());
         params.setAcrossPageCustomerId(extsignRequest.getAcrosspageCustomerId());
+        // 签章ID
+        params.setSignatureId(extsignRequest.getSignatureId());
         log.info("法大大手动签署，参数【{}】", extsignRequest);
         String result = fddBaseClient.invokeExtSign(params);
         log.info("法大大返回参数，手动签署：{}", result);
@@ -558,6 +561,17 @@ public class FadadaClient {
     public FadadaResultResponse docusignAcross(DocusignAcrossPageParams params) {
         String result = fddExtraClient.invokeDocusignAcrossPage(params);
         return JsonUtil.parse(result, FadadaResultResponse.class);
+    }
+
+    /**
+     * 删除印章
+     *
+     * @param params 入参
+     * @return 执行结果
+     */
+    public FadadaBaseResponse removeSignature(RemoveSignatureParams params) {
+        String result = fddExtraClient.invokeRemoveSignature(params);
+        return JsonUtil.parse(result, FadadaBaseResponse.class);
     }
 
 }

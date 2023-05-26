@@ -2,68 +2,125 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-
-    <localRepository>/root/maven/repo</localRepository>
-
-    <pluginGroups>
-    </pluginGroups>
-
-    <servers>
-        <server>
-            <id>xingshiapp-xswc-cloud</id>
-            <username>cloud-1654571764818</username>
-            <password>137611566d3c640ef6700a9db9c1029a96da320c</password>
-        </server>
-    </servers>
-
     <mirrors>
         <mirror>
-            <id>nexus-tencentyun</id>
-            <!-- 此配置避免了本仓库制品的拉取流量被切换到腾讯云镜像源，保证您在使用镜像加速的同时可以从本仓库拉取制品 -->
-            <mirrorOf>!xingshiapp-xswc-cloud</mirrorOf>
-            <name>Nexus tencentyun</name>
-            <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+            <id>mirror</id>
+            <mirrorOf>central,jcenter,!rdc-releases,!rdc-snapshots</mirrorOf>
+            <name>mirror</name>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
         </mirror>
-    </mirrors>
 
+    </mirrors>
+    <servers>
+        <server>
+            <id>rdc-releases</id>
+            <username>6466dc33593d2161bca7b0a9</username>
+            <password>IkruEm5DDkSH</password>
+        </server>
+        <server>
+            <id>rdc-snapshots</id>
+            <username>6466dc33593d2161bca7b0a9</username>
+            <password>IkruEm5DDkSH</password>
+        </server>
+    </servers>
     <profiles>
         <profile>
-            <id>Repository Proxy</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+            <id>rdc</id>
+            <properties>
+                <altReleaseDeploymentRepository>
+                    rdc-releases::default::https://packages.aliyun.com/maven/repository/2377657-release-77kzTX/
+                </altReleaseDeploymentRepository>
+                <altSnapshotDeploymentRepository>
+                    rdc-snapshots::default::https://packages.aliyun.com/maven/repository/2377657-snapshot-Er50pq/
+                </altSnapshotDeploymentRepository>
+            </properties>
             <repositories>
                 <repository>
-                    <id>xingshiapp-xswc-cloud</id>
-                    <name>cloud</name>
-                    <url>https://xingshiapp-maven.pkg.coding.net/repository/xswc/cloud/</url>
+                    <id>central</id>
+                    <url>https://maven.aliyun.com/nexus/content/groups/public</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
                     <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>snapshots</id>
+                    <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>rdc-releases</id>
+                    <url>https://packages.aliyun.com/maven/repository/2377657-release-77kzTX/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>rdc-snapshots</id>
+                    <url>https://packages.aliyun.com/maven/repository/2377657-snapshot-Er50pq/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
                     </snapshots>
                 </repository>
             </repositories>
-
             <pluginRepositories>
                 <pluginRepository>
-                    <id>xingshiapp-xswc-cloud</id>
-                    <name>cloud</name>
-                    <url>https://xingshiapp-maven.pkg.coding.net/repository/xswc/cloud/</url>
+                    <id>central</id>
+                    <url>https://maven.aliyun.com/nexus/content/groups/public</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
                     <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>snapshots</id>
+                    <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>rdc-releases</id>
+                    <url>https://packages.aliyun.com/maven/repository/2377657-release-77kzTX/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>rdc-snapshots</id>
+                    <url>https://packages.aliyun.com/maven/repository/2377657-snapshot-Er50pq/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
                     </snapshots>
                 </pluginRepository>
             </pluginRepositories>
         </profile>
     </profiles>
     <activeProfiles>
-        <activeProfile>Repository Proxy</activeProfile>
+        <activeProfile>rdc</activeProfile>
     </activeProfiles>
 </settings>

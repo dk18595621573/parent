@@ -5,6 +5,7 @@ package com.cloud.common.enums;
  */
 public enum PaymentSummaryStatusEnum implements BaseEnum {
     UN_REACH(10, "未开票"),
+    DELAY_PLAN(15, "延期开票"),
     SOME_REACH(20, "部分到票"),
     FINISH(100, "核验成功");
 

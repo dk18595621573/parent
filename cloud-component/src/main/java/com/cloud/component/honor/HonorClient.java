@@ -137,7 +137,7 @@ public class HonorClient {
             throw new HonorApiException("调用荣耀平台接口异常");
         }
         if (Objects.isNull(honorResponse)) {
-            throw new HonorApiException("调用荣耀平台接口失败");
+            throw new HonorApiException(response);
         }
         // 判断是否请求成功
         if (!honorResponse.success()) {

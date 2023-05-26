@@ -11,6 +11,8 @@ import java.util.List;
 @Data
 public class CompanyInfoResponse implements Serializable {
 
+    public static final String SUCCESS = "200";
+
     public String Status;
 
     public String Message;

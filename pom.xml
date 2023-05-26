@@ -8,7 +8,7 @@
     <artifactId>cloud-parent</artifactId>
     <version>${revision}</version>
 
-    <description>醒市无仓平台</description>
+    <description>醒市公共父模块</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -515,6 +515,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- shadow-starter -->
+            <dependency>
+                <groupId>com.cloud</groupId>
+                <artifactId>shadow-spring-boot-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <!--基于Jackson序列化实现数据脱敏-->
             <dependency>
                 <groupId>io.github.ealenxie</groupId>
@@ -689,10 +696,14 @@
     <distributionManagement>
         <repository>
             <!--必须与 settings.xml 的 id 一致-->
-            <id>xingshiapp-xswc-cloud</id>
-            <name>cloud</name>
-            <url>https://xingshiapp-maven.pkg.coding.net/repository/xswc/cloud/</url>
+            <id>rdc-releases</id>
+            <url>https://packages.aliyun.com/maven/repository/2377657-release-77kzTX/</url>
         </repository>
+        <snapshotRepository>
+            <!--必须与 settings.xml 的 id 一致-->
+            <id>rdc-snapshots</id>
+            <url>https://packages.aliyun.com/maven/repository/2377657-snapshot-Er50pq/</url>
+        </snapshotRepository>
     </distributionManagement>
 
 </project>

@@ -10,6 +10,7 @@ import com.cloud.core.exception.BaseException;
 import com.cloud.webmvc.domain.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -83,6 +84,16 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 数据访问异常
+     */
+    @ExceptionHandler(DataAccessException.class)
+    public Result<?> handleDataAccessException(final DataAccessException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',数据异常", requestURI, e);
+        return Result.error( "系统数据异常，请联系管理员");
+    }
+
+    /**
      * 拦截未知的运行时异常
      */
     @ExceptionHandler(RuntimeException.class)
@@ -90,7 +101,7 @@ public class GlobalExceptionHandler {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',发生异常.", requestURI, e);
         if ("org.apache.dubbo.rpc.RpcException".equals(e.getClass().getName())) {
-            return Result.error("服务异常，请稍后再试");
+            return Result.error("服务升级中，请稍候再试…");
         }
         return Result.error("系统异常，请联系管理员");
     }
