@@ -138,6 +138,11 @@ public enum SystemParams {
      */
     QUERYADDRESS_SINGLE_ORDERSIZE("queryAddress.single.orderSize","5"),
 
+    /**
+     * 自动降价最大值
+     */
+    AUTO_CUT_PRICE_MAX("auto.cut.price.max","10"),
+
     ;
 
 
